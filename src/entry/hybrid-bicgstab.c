@@ -26,8 +26,8 @@
 // Structure to store parsed arguments
 struct arguments {
     char *input_matrix;
-    char *input_vector;
-    char *output_vector;
+    char *input_x;
+    char *output_x;
 };
 
 // Option keys
@@ -52,10 +52,10 @@ static error_t parse_opt(int key, char *arg, struct argp_state *state) {
             arguments->input_matrix = arg;
             break;
         case OPT_INPUT_VECTOR:
-            arguments->input_vector = arg;
+            arguments->input_x = arg;
             break;
         case OPT_OUTPUT:
-            arguments->output_vector = arg;
+            arguments->output_x = arg;
             break;
         case ARGP_KEY_ARG:
             return 0;
@@ -108,7 +108,7 @@ static struct {
     ;
 }times = {};
 
-int* readPartVect(char* fileName, int size) ;
+int* readVectorFile(char* fileName, int size) ;
 
 // TODO: use GNU Octave to prepare some input output samples to test the functions
 // TODO: Premake the vectors for CPU and re-implement the spmxv
@@ -121,14 +121,14 @@ int main(int argc, char* argv[]) {  // matrix file ve part vector
     struct arguments arguments = {};
     // Default values
     arguments.input_matrix = NULL;
-    arguments.input_vector = NULL;
-    arguments.output_vector = NULL;
+    arguments.input_x = NULL;
+    arguments.output_x = NULL;
 
     // Parse arguments
     argp_parse(&argp, argc, argv, 0, 0, &arguments);
 
     // Check if all required arguments are provided
-    if (!arguments.input_matrix || !arguments.input_vector || !arguments.output_vector) {
+    if (!arguments.input_matrix || !arguments.input_x || !arguments.output_x) {
         fprintf(stderr, "Error: All input and output files must be specified.\n");
         return EXIT_FAILURE;
     }
@@ -139,8 +139,8 @@ int main(int argc, char* argv[]) {  // matrix file ve part vector
         return EXIT_FAILURE;
     }
 
-    if (access(arguments.input_vector, F_OK) == -1) {
-        fprintf(stderr, "Error: Input vector file '%s' does not exist\n", arguments.input_vector);
+    if (access(arguments.input_x, F_OK) == -1) {
+        fprintf(stderr, "Error: Input vector file '%s' does not exist\n", arguments.input_x);
         return EXIT_FAILURE;
     }
 
@@ -160,7 +160,7 @@ int main(int argc, char* argv[]) {  // matrix file ve part vector
     printf("Matrix name : %s\n",arguments.input_matrix);
 //-------------------------------------------------------------------------------------------------------
     // Read partition vectors mapping rows to GPU(0) CPU(1)
-    int* part_vec = readPartVect(arguments.input_vector, rmatrix.m) ;
+    int* part_vec = readVectorFile(arguments.input_x, rmatrix.m) ;
     time_stamps.file_read_end = omp_get_wtime();
    
 //-------------------------------------------------------------------------------------------------------
@@ -179,10 +179,10 @@ do{
     time_stamps.matrix_split_begin = omp_get_wtime();
 
     // SPLIT_CSR* splits =  cleanSplit( rmatrix, part_vec) ;
-    SPLIT_CSR* splits =  sparseSplit( rmatrix, part_vec) ;
+    SHARD_CSR* splits =  sparseSplit( rmatrix, part_vec) ;
 
-    SPLIT_CSR sm_gpu = splits[0] ; 
-    SPLIT_CSR sm_cpu = splits[1] ; 
+    SHARD_CSR sm_gpu = splits[0] ; 
+    SHARD_CSR sm_cpu = splits[1] ; 
     
     printf("Vector sizes: loc.n=%d, shr.n=%d, loc.m=%d\n", 
         sm_gpu.loc.n, sm_gpu.shr.n, sm_gpu.loc.m);
@@ -216,6 +216,14 @@ do{
         h_Y.vals[i] = 0;
     }
 
+    // BICGStab variables
+    double rho = 1.0;
+    double alpha = 1.0;
+    double omega = 1.0;
+
+    Vector V = vector_init(Y.nvals); // Add pieces for this
+    Vector P = vector_init(Y.nvals); // Add pieces for this
+
 
 //-------------------------------------------------------------------------------------------------------
     time_stamps.gpu_transfer_begin = omp_get_wtime();
@@ -226,8 +234,8 @@ do{
     CHECK_CUSPARSE( cusparseCreate(&handle) )
 
     // Y = α * (M * X) + β * Y
-    const double alpha = 1.0f;
-    const double beta = 1.0f;
+    const double mul_alpha = 1.0f;
+    const double mul_beta = 1.0f;
 
     Device_CSR  d_csr_loc = {};
     Device_CSR  d_csr_shr = {};
@@ -250,8 +258,8 @@ do{
 
     Device_Buffer_SpMV  d_buf_loc = NULL;
     Device_Buffer_SpMV  d_buf_shr = NULL;
-    CHECK_CUSPARSE(device_buffer_spmv_create(handle, d_csr_loc, d_X_loc, d_Y, &alpha, &beta, &d_buf_loc))
-    CHECK_CUSPARSE(device_buffer_spmv_create(handle, d_csr_shr, d_X_shr, d_Y, &alpha, &beta, &d_buf_shr))
+    CHECK_CUSPARSE(device_buffer_spmv_create(handle, d_csr_loc, d_X_loc, d_Y, &mul_alpha, &mul_beta, &d_buf_loc))
+    CHECK_CUSPARSE(device_buffer_spmv_create(handle, d_csr_shr, d_X_shr, d_Y, &mul_alpha, &mul_beta, &d_buf_shr))
 
     time_stamps.gpu_transfer_end = omp_get_wtime();
 //-------------------------------------------------------------------------------------------------------
@@ -265,8 +273,8 @@ do{
         vector_zero(Y);
         CHECK_CUSPARSE(device_vector_zero(d_Y))
 
-        CHECK_CUSPARSE(device_spmv(handle, d_csr_loc, d_X_loc, d_Y, &alpha, &beta, d_buf_loc))
-        CHECK_CUSPARSE(device_spmv(handle, d_csr_shr, d_X_shr, d_Y, &alpha, &beta, d_buf_shr))
+        CHECK_CUSPARSE(device_spmv(handle, d_csr_loc, d_X_loc, d_Y, &mul_alpha, &mul_beta, d_buf_loc))
+        CHECK_CUSPARSE(device_spmv(handle, d_csr_shr, d_X_shr, d_Y, &mul_alpha, &mul_beta, d_buf_shr))
 
 
 
@@ -342,7 +350,7 @@ do{
 
     return 0 ;
 }
-int* readPartVect(char* fileName, int size) {
+int* readVectorFile(char* fileName, int size) {
 
     int* part_vec;
     int pv_size = size;

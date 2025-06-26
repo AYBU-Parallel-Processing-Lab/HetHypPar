@@ -15,11 +15,10 @@ CSC COO_to_CSC(const COO *in);
 
 COO CSR_to_COO(const CSR *in);
 
-CSC CSR_to_CSC(const CSR *in);
+CSC CSR_to_CSC(CSR csr);
 
+SHARD_CSC MPI_CSR_split_row(CSR big, iVector partvec);
 
-SPLIT_CSR* cleanSplit(CSR in, int* partvec);
-SPLIT_CSR* sparseSplit(CSR big, int* partvec);
-SPLIT_CSR combineSplit(const SPLIT_CSR in);
+void SHARD_CSC_destroy(SHARD_CSC *A);
 
 #endif /* B07E3622_7549_4990_91E6_440BF5799438 */

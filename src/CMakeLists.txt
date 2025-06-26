@@ -57,8 +57,12 @@ link_libraries(
 add_library(inner_lib STATIC ${C_SOURCE_FILES})
 
 
-add_executable(mxv-gpu-bicgstab entry/hybrid-bicgstab.c)  # BICG-Stab using GPU-CPU hybrid SpMxV
-target_link_libraries(mxv-gpu-bicgstab inner_lib)
+# add_executable(mxv-gpu-bicgstab entry/hybrid-bicgstab.c)  # BICG-Stab using GPU-CPU hybrid SpMxV
+add_executable(mxv-gpu-bicgstab-cpu entry/hybrid-bicgstab_cpu.c)  # BICG-Stab using GPU-CPU hybrid SpMxV
+add_executable(mxv-gpu-bicgstab-mpi entry/hybrid-bicgstab_mpi.c)  # BICG-Stab using GPU-CPU hybrid SpMxV
+# target_link_libraries(mxv-gpu-bicgstab inner_lib)
+target_link_libraries(mxv-gpu-bicgstab-cpu inner_lib)
+target_link_libraries(mxv-gpu-bicgstab-mpi inner_lib)
 
 
 add_subdirectory(tests)

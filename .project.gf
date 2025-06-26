@@ -1,0 +1,4 @@
+[executable]
+path=./build/mxv-gpu-bicgstab-mpi
+arguments=-m data/sample320/in/A.mtx -n 20 -o data/sample320/out/X1.txt -p data/sample320/in/row_part_2 -x data/sample320/in/X_init.txt -y data/sample320/in/B.txt
+ask_directory=1

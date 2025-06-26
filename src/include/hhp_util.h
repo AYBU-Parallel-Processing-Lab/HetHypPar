@@ -1,22 +1,18 @@
-#ifndef BE756794_8911_449E_AB4A_F7B215A27484
-#define BE756794_8911_449E_AB4A_F7B215A27484
+#pragma once
 
 #include <stdio.h>
 #include <stdlib.h>
 
-#ifndef MPI_VERSION
-#define ABORT(message, args...)                                                \
-  {                                                                            \
-    fprintf(stderr, "ABORT [%s:%d]: " message "\n",__FILE__, __LINE__, ##args);                           \
-    exit(EXIT_FAILURE);                                                        \
+#define ABORT(message, args...)                                                 \
+  {                                                                             \
+    fprintf(stderr, "ABORT [%s:%d]: " message "\n",__FILE__, __LINE__, ##args); \
+    exit(EXIT_FAILURE);                                                         \
   }
-#else
-#define ABORT(message, args...)                                                \
-  {                                                                            \
-    fprintf(stderr, "ABORT: " message "\n", ##args);                           \
-    MPI_Abort( MPI_COMM_WORLD, EXIT_FAILURE);                                            \
+#define MPI_ABORT(message, args...)                                             \
+  {                                                                             \
+    fprintf(stderr, "ABORT [%s:%d]: " message "\n",__FILE__, __LINE__, ##args);                            \
+    MPI_Abort( MPI_COMM_WORLD, EXIT_FAILURE);                                   \
   }
-#endif
 
 
 #ifndef NDEBUG
@@ -107,4 +103,23 @@ static inline size_t st_mult(size_t a, size_t b) {
   } while (0)
 
 
-#endif /* BE756794_8911_449E_AB4A_F7B215A27484 */
+  /**
+ * MPI_CHECK - Check MPI function return codes with detailed error reporting
+ * 
+ * Usage: MPI_CHECK(MPI_function_call)
+ * 
+ * On success: Returns the MPI return code (MPI_SUCCESS)
+ * On failure: Prints detailed error message and terminates all MPI processes
+ */
+#define MPI_CHECK(mpi_call) do { \
+    int _mpi_err = (mpi_call); \
+    if (_mpi_err != MPI_SUCCESS) { \
+        char _error_string[MPI_MAX_ERROR_STRING]; \
+        int _error_string_len; \
+        MPI_Error_string(_mpi_err, _error_string, &_error_string_len); \
+        fprintf(stderr, "MPI Error at %s:%d - %s failed with code %d: %s\n", \
+                __FILE__, __LINE__, #mpi_call, _mpi_err, _error_string); \
+        fflush(stderr); \
+        MPI_Abort(MPI_COMM_WORLD, _mpi_err); \
+    } \
+} while(0)
