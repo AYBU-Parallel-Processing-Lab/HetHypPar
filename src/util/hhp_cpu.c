@@ -128,7 +128,40 @@ void vector_div_seq(Vector vecA, Vector vecB, Vector out){
     }
 }
 
-iVector MPI_ivector_read_all(char* fileName, int size) {
+int MPI_ivector_read_scatter(char* fileName, int size) {
+    int mpi_rank, mpi_size;
+    MPI_Comm_rank(MPI_COMM_WORLD, &mpi_rank);
+    MPI_Comm_size(MPI_COMM_WORLD, &mpi_size);
+
+    int out;
+
+    if (mpi_rank == 0) {
+        
+        iVector big = ivector_init(size);
+
+        FILE* f = fopen(fileName, "r");
+        if (f == NULL)
+            MPI_ABORT("Could not open file: %s", fileName)
+
+        int i=0;
+        while(i<size && fscanf(f, "%d",&big.vals[i++]) == 1);
+
+        fclose(f);
+    
+        if (i < size) 
+            MPI_ABORT("File (%s) is smaller than expected (%d)",fileName, size)
+
+        MPI_CHECK(MPI_Scatter(big.vals, 1, MPI_INT, &out, 1, MPI_INT, 0, MPI_COMM_WORLD));
+
+        ivector_destroy(&big);
+    }else{
+        MPI_CHECK(MPI_Scatter(NULL, 1, MPI_INT, &out, 1, MPI_INT, 0, MPI_COMM_WORLD));
+    }
+    return out;
+}
+
+
+iVector MPI_ivector_read_bcast(char* fileName, int size) {
     int mpi_rank, mpi_size;
     MPI_Comm_rank(MPI_COMM_WORLD, &mpi_rank);
     MPI_Comm_size(MPI_COMM_WORLD, &mpi_size);

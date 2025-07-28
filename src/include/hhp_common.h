@@ -46,6 +46,11 @@ typedef struct {
     CSR data;
 }Device_CSR;
 
+typedef struct {
+    cusparseSpMatDescr_t desc; // Matrix descriptor
+    CSC data;
+}Device_CSC;
+
 
 /**
  * @struct COMM
@@ -148,6 +153,15 @@ typedef struct{
     COMM send;              // Holds information on what items to send from input X of current process
     COMM recv;              // Holds information on what items to receive from input X of other processes for shr
 } SHARD_CSC;
+
+
+typedef struct{
+    Device_CSC loc;                // Local Matrix
+    Device_CSC shr;                // Shared Matrix (needs communication to complete)
+    iVector gind;           // Global indices of the columns. Has both loc and shr columns starting at gind.vals[0] and gind.vals[loc.n]. Size is loc.n + shr.n
+    COMM send;              // Holds information on what items to send from input X of current process
+    COMM recv;              // Holds information on what items to receive from input X of other processes for shr
+} Device_SHARD_CSC;
 
 // returns an array containing the rank of each row.
 // NEEDS TO BE FREED.

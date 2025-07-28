@@ -20,7 +20,8 @@ void ivector_destroy(iVector* vec);
 void vector_write(char* fileName, Vector vec);
 Vector vector_read(char* fileName, int size);
 
-iVector MPI_ivector_read_all(char* fileName, int size) ;
+iVector MPI_ivector_read_bcast(char* fileName, int size) ;
+int MPI_ivector_read_scatter(char* fileName, int size);
 Vector MPI_vector_read_parted(char* fileName, int size, iVector partvec);
 double MPI_vector_dot(Vector vecA, Vector vecB, MPI_Comm comm);
 void MPI_vector_gather(Vector loc, Vector big, iVector gind, int root, MPI_Comm comm);

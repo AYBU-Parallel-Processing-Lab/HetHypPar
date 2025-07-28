@@ -17,8 +17,13 @@ set(CMAKE_CUDA_COMPILER "/usr/local/cuda-12.9/bin/nvcc")
 find_package(CUDA REQUIRED)
 find_package(OpenMP REQUIRED)
 
-# Rest of your CMakeLists.txt remains the same...
-
+# Find cuBLAS (part of CUDA toolkit)
+find_library(CUBLAS_LIBRARY 
+    NAMES cublas
+    PATHS ${CUDA_TOOLKIT_ROOT_DIR}/lib64
+    NO_DEFAULT_PATH
+    REQUIRED
+)
 
 # Add Unity testing framework
 include(FetchContent)
@@ -54,24 +59,23 @@ link_libraries(
 		OpenMP::OpenMP_C
 		${CUDA_LIBRARIES}
 		${CUDA_cusparse_LIBRARY}
+		${CUBLAS_LIBRARY}
 		m
 )
-
 
 # Create library target for source files
 add_library(inner_lib STATIC ${C_SOURCE_FILES})
 
-
 # add_executable(mxv-gpu-bicgstab entry/hybrid-bicgstab.c)  # BICG-Stab using GPU-CPU hybrid SpMxV
-add_executable(mxv-gpu-bicgstab-cpu entry/hybrid-bicgstab_cpu.c)  # BICG-Stab using CPU SpMxV
-add_executable(mxv-gpu-bicgstab-mpi entry/hybrid-bicgstab_mpi.c)  # BICG-Stab using MPI SpMxV
-add_executable(mxv-gpu-bicgstab-gpu entry/hybrid-bicgstab_gpu.c)  # BICG-Stab using GPU hybrid SpMxV
-add_executable(sample-gpu entry/sample_gpu.c)  # BICG-Stab using GPU hybrid SpMxV
+add_executable(bicgstab-cpu entry/bicgstab_cpu.c)  # BICG-Stab using CPU SpMxV
+add_executable(bicgstab-mpi entry/bicgstab_mpi.c)  # BICG-Stab using MPI SpMxV
+add_executable(bicgstab-gpu entry/bicgstab_gpu.c)  # BICG-Stab using GPU hybrid SpMxV
+add_executable(bicgstab-mpi-gpu entry/bicgstab_mpi_gpu.c)  # BICG-Stab using MPI SpMxV
 # target_link_libraries(mxv-gpu-bicgstab inner_lib)
-target_link_libraries(mxv-gpu-bicgstab-cpu inner_lib)
-target_link_libraries(mxv-gpu-bicgstab-mpi inner_lib)
-target_link_libraries(mxv-gpu-bicgstab-gpu inner_lib)
-target_link_libraries(sample-gpu inner_lib)
-
+target_link_libraries(bicgstab-cpu inner_lib)
+target_link_libraries(bicgstab-mpi inner_lib)
+# target_link_libraries(mxv-gpu-bicgstab-gpu inner_lib)
+target_link_libraries(bicgstab-mpi-gpu inner_lib)
+target_link_libraries(bicgstab-gpu inner_lib)
 
 add_subdirectory(tests)
