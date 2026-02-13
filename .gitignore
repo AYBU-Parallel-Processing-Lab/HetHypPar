@@ -2,3 +2,8 @@
 /.vscode
 /build
 /compile_commands.json
+/data/matrices/*
+/data/weights/*
+/data/cage13/*
+/data/circuit5M_dc/*
+/data/temporary/*

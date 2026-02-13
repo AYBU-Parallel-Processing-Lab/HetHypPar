@@ -231,10 +231,11 @@ int main(int argc, char* argv[]) {  // matrix file ve part vector
     
     if (isgpu){ // GPU PROCESS
         //-------------------------------------------------------------------------------------------------------
-        
+        CHECK_CUDA(cudaSetDevice(0))
+
         cublasHandle_t  cublasHandle   = NULL;
-        cusparseHandle_t cusparseHandle = NULL;
         CHECK_CUBLAS( cublasCreate(&cublasHandle) )
+        cusparseHandle_t cusparseHandle = NULL;
         CHECK_CUSPARSE( cusparseCreate(&cusparseHandle) )
         //-------------------------------------------------------------------------------------------------------
         
@@ -252,9 +253,9 @@ int main(int argc, char* argv[]) {  // matrix file ve part vector
         CHECK_CUSPARSE(device_csc_create(A.loc, &dA.loc))
         CHECK_CUSPARSE(device_csc_create(A.shr, &dA.shr))
         
-        // GET RID OF CPU matrices right away to avoid duplication. Edit: Keep them for hybrid methods (GPU local and CPU shared)
-        freeSparseMatrix(&A.loc);
-        freeSparseMatrix(&A.shr);
+        // // GET RID OF CPU matrices right away to avoid duplication. Edit: Keep them for hybrid methods (GPU local and CPU shared)
+        // freeSparseMatrix(&A.loc);
+        // freeSparseMatrix(&A.shr);
         
         Device_Vector dX;
         Device_Vector dX_shr;

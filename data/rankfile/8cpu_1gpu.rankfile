@@ -1,0 +1,69 @@
+#####################################################################
+# OpenMPI Rankfile: 9 ranks on single node
+# Date: 2025-08-02
+# Description: 8 worker ranks (1 core each) + 1 master rank (all cores)
+# File: data/rankfile/8cpu_1gpu.rankfile
+#####################################################################
+
+# USAGE:
+# mpirun --bind-to :overload-allowed --map-by rankfile:file=data/rankfile/8cpu_1gpu.rankfile -np 9 ./your_application
+#
+# REQUIRED FLAGS:
+# --bind-to :overload-allowed  - Allows rank 8 to share cores with ranks 0-7
+# --map-by rankfile:file=data/rankfile/8cpu_1gpu.rankfile - Use this rankfile for process placement
+# -np 9 - Launch exactly 9 MPI processes
+#
+# VERIFICATION (check bindings before running your app):
+# mpirun --bind-to :overload-allowed --map-by rankfile:file=data/rankfile/8cpu_1gpu.rankfile --report-bindings -np 9 hostname
+#
+# ALTERNATIVE HOSTNAME FORMATS:
+# Replace 'localhost' with actual hostname if needed:
+# - Short hostname: mynode
+# - FQDN: mynode.cluster.edu
+# - IP address: 192.168.1.100
+#
+# CORE COUNT ADJUSTMENT:
+# If your system has different number of cores, adjust slot ranges:
+# - For 16 cores: change rank 8 slot to 0-15
+# - For 4 cores: change rank 8 slot to 0-3 and reduce worker ranks accordingly
+#
+# TROUBLESHOOTING:
+# If you get "oversubscribed" errors, ensure you're using --bind-to :overload-allowed
+# If hostname resolution fails, try using actual hostname instead of 'localhost'
+
+# Worker ranks - each gets one dedicated core (CPU tasks)
+rank 0=localhost slot=0    # CPU worker process on core 0
+rank 1=localhost slot=1    # CPU worker process on core 1
+rank 2=localhost slot=2    # CPU worker process on core 2
+rank 3=localhost slot=3    # CPU worker process on core 3
+rank 4=localhost slot=4    # CPU worker process on core 4
+rank 5=localhost slot=5    # CPU worker process on core 5
+rank 6=localhost slot=6    # CPU worker process on core 6
+rank 7=localhost slot=7    # CPU worker process on core 7
+
+# GPU/Master rank - has access to all cores for GPU coordination and management
+rank 8=localhost slot=0-7  # GPU/Master rank using all 8 cores (shares with CPU workers)
+
+#####################################################################
+# EXAMPLE USAGE SCENARIOS:
+#
+# 1. Basic execution:
+#    mpirun --bind-to :overload-allowed --map-by rankfile:file=data/rankfile/8cpu_1gpu.rankfile -np 9 ./my_app
+#
+# 2. With debugging output:
+#    mpirun --bind-to :overload-allowed --map-by rankfile:file=data/rankfile/8cpu_1gpu.rankfile --report-bindings -np 9 ./my_app
+#
+# 3. Dry run to check mapping:
+#    mpirun --bind-to :overload-allowed --map-by rankfile:file=data/rankfile/8cpu_1gpu.rankfile --display-map --dry-run -np 9 ./my_app
+#
+# 4. With environment variables for hybrid workload:
+#    export OMP_NUM_THREADS=1  # Disable OpenMP threading for CPU worker ranks
+#    export CUDA_VISIBLE_DEVICES=0  # Ensure GPU rank can access GPU 0
+#    mpirun --bind-to :overload-allowed --map-by rankfile:file=data/rankfile/8cpu_1gpu.rankfile -np 9 ./my_app
+#
+# 5. From different directory (using relative path):
+#    mpirun --bind-to :overload-allowed --map-by rankfile:file=data/rankfile/8cpu_1gpu.rankfile -np 9 ./my_app
+#
+# 6. Using absolute path (modify as needed):
+#    mpirun --bind-to :overload-allowed --map-by rankfile:file=/full/path/to/data/rankfile/8cpu_1gpu.rankfile -np 9 ./my_app
+#####################################################################

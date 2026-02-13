@@ -405,17 +405,7 @@ time_stamps.begin = omp_get_wtime(); // The very Beginning timestamp
     time_stamps.file_read_end = omp_get_wtime();
 
 //-------------------------------------------------------------------------------------------------------
-    // Print the sum of all non-zeros in the matrix
-#ifndef NDEBUG
-do{
-    double sum = 0;
-    for (size_t i = 0; i < rmatrix.nnz; i++)
-    {
-        sum += rmatrix.val[i];
-    }
-    DEBUGLOG("Sum of all values in matrix is %lf", sum);
-}while(0);
-#endif // !NDEBUG
+
 //-------------------------------------------------------------------------------------------------------
 
 

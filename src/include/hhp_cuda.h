@@ -10,8 +10,8 @@
 {                                                                              \
     cudaError_t status = (func);                                               \
     if (status != cudaSuccess) {                                               \
-        printf("CUDA API failed at line %d with error: %s (%d)\n",             \
-               __LINE__, cudaGetErrorString(status), status);                  \
+        printf("CUDA API failed at line %d with error: %s (%d) -> %s\n",             \
+               __LINE__, cudaGetErrorString(status), status, #func);                  \
         return EXIT_FAILURE;                                                   \
     }                                                                          \
 }
@@ -20,8 +20,8 @@
 {                                                                              \
     cusparseStatus_t status = (func);                                          \
     if (status != CUSPARSE_STATUS_SUCCESS) {                                   \
-        printf("cuSPARSE API failed at line %d with error: %s (%d)\n",         \
-               __LINE__, cusparseGetErrorString(status), status);              \
+        printf("cuSPARSE API failed at line %d with error: %s (%d) -> %s\n",         \
+               __LINE__, cusparseGetErrorString(status), status, #func);              \
         return EXIT_FAILURE;                                                   \
     }                                                                          \
 }
@@ -30,8 +30,8 @@
 {                                                                              \
     cublasStatus_t status = (func);                                            \
     if (status != CUBLAS_STATUS_SUCCESS) {                                     \
-        printf("CUBLAS API failed at line %d with error: %d\n",                \
-               __LINE__, status);                                              \
+        printf("CUBLAS API failed at line %d with error: %d -> %s\n",                \
+               __LINE__, status, #func);                                              \
         return EXIT_FAILURE;                                                   \
     }                                                                          \
 }

@@ -333,7 +333,7 @@ cusparseStatus_t MPI_device_SHARD_CSC_mpi_spmxv(Device_SHARD_CSC A, Vector X, De
     { // Shared SpMxV
         MPI_CHECK(MPI_Waitall(A.recv.num, recv_reqs, MPI_STATUSES_IGNORE));
         Vector temp = {
-            .nvals = A.shr.data.m,
+            .nvals = A.shr.data.n,
             .vals = A.recv.val
         };
         CHECK_CUSPARSE(device_vector_toGPU(temp, dX_shr))

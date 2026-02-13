@@ -1,0 +1,4 @@
+micromamba activate octave
+
+python tools/python/matrix_partition.py -w data/weights/hybrid-cpu-gpu -o hybrid-cpu-gpu-2
+python tools/python/sample_mpi_gpu.py

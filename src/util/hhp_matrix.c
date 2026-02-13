@@ -1421,8 +1421,11 @@ void COMM_destroy(COMM *c){
              .m = csr.m,
              .n = csr.n};
   // Empty matrix case
-  if (csr.nnz == 0)
-    ABORT("Tried to convert enmpty matrix to CSC");
+  if (csr.nnz == 0){
+    ABORT("Tried to convert empty matrix to CSC");
+    // CALLOC_ARRAY(csc.I, csc.n + 1);
+    // return csc;
+  }
 
   // Allocate memory for CSC structure
   CALLOC_ARRAY(csc.I, csc.n + 1); // Column pointers (n+1 entries)
