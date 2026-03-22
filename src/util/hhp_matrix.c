@@ -1178,23 +1178,36 @@ static void internal_setup_communication(SHARD_CSC *result, iVector partvec, int
     for (size_t i = 0; i < result->loc.n; i++)
       locmap.vals[result->gind.vals[i]] = i; // map loc entries
 
-    // send to recv targets
+    // FIX: Use-after-free race condition in MPI communication.
+    //
+    // Previously this used MPI_Isend + MPI_Request_free (fire-and-forget),
+    // then freed recv_gJ after only waiting on receives. MPI_Request_free
+    // detaches the handle but does NOT guarantee the send has completed —
+    // if the receiver (slower rank) hasn't consumed the data yet, MPI may
+    // still be reading from recv_gJ when it gets freed, causing the receiver
+    // to get garbage in send.J and segfault at the locmap lookup below.
+    //
+    // This was non-deterministic and correlated with structurally asymmetric
+    // matrices (lhr14, bayer02, g7jac*, etc.) which create lopsided
+    // communication patterns — one rank finishes much faster and frees the
+    // buffer before the other rank's receive completes.
+    //
+    // Fix: track send requests and MPI_Waitall on them before freeing recv_gJ.
+    MPI_Request *send_reqs2 = NULL;
+    if (result->recv.num > 0)
+      ALLOC_ARRAY(send_reqs2, result->recv.num);
     for (size_t i = 0; i < result->recv.num; i++)
     {
       int target = result->recv.ranks[i];
       int size = result->recv.I[i+1] - result->recv.I[i];
-      // Communicate with every other rank to communicate the ranks they must give
-      // We are not interested in send state, only recv
-      MPI_Request temp_req;
-      MPI_CHECK( MPI_Isend(recv_gJ.vals + result->recv.I[i], size, MPI_INT, target, 0, MPI_COMM_WORLD, &temp_req) );
-      MPI_CHECK(MPI_Request_free(&temp_req)); // We are not interested in this result
+      MPI_CHECK( MPI_Isend(recv_gJ.vals + result->recv.I[i], size, MPI_INT, target, 0, MPI_COMM_WORLD, send_reqs2 + i) );
     }
 
     // receive for send targets
     for (size_t i = 0; i < send.num; i++)
     {
       int target = send.ranks[i];
-      int size = send.I[i+1] - send.I[i]; 
+      int size = send.I[i+1] - send.I[i];
       if (size <= 0)
         MPI_ABORT("Rank %d got invalid size (%d) at i=%d", mpi_rank, size,(int)i);
       // reuse reqs
@@ -1202,6 +1215,11 @@ static void internal_setup_communication(SHARD_CSC *result, iVector partvec, int
     }
 
     MPI_CHECK(MPI_Waitall(send.num, reqs, stats));
+    // Wait for sends to complete before freeing the send buffer (recv_gJ)
+    if (result->recv.num > 0) {
+      MPI_CHECK(MPI_Waitall(result->recv.num, send_reqs2, MPI_STATUSES_IGNORE));
+      FREE_AND_NULL(send_reqs2);
+    }
 
     // convert global index in send.J into local index
     for (size_t i = 0; i < send.I[send.num]; i++)
@@ -1215,7 +1233,6 @@ static void internal_setup_communication(SHARD_CSC *result, iVector partvec, int
   if (mpi_rank == 0)
     DEBUGLOG("Send filled out");
   
-  // Another barrier for good measure. Since we didn't wait for sends to be complete.
   MPI_CHECK(MPI_Barrier(MPI_COMM_WORLD));
 
   // WE ARE DONE HERE
