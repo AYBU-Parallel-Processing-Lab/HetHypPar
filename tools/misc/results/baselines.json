@@ -1,0 +1,28 @@
+{
+  "cpu": {
+    "command": "/home/bugra/Workspace/C/HetHypPar_rewrite/build/bicgstab-cpu -m /matrices/cage13.mtx -n 200 -o /home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/cage13/out/X_cpu.txt -x /home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/cage13/in/X_init.txt -y /home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/cage13/in/B.txt",
+    "returncode": 0,
+    "stdout": "\n\t****\tMatrix File readed\t****Matrix name : /matrices/cage13.mtx\nn_iters : 200 \nspmv : 2.539478 \nfile_read : 1.134661 \nrelative_residual : 2.990001E-16\neverything_total : 3.682817\n\n----------------------------------------------------------------------\n",
+    "stderr": "",
+    "metrics": {
+      "n_iters": 200,
+      "spmv": 2.539478,
+      "file_read": 1.134661,
+      "relative_residual": 2.990001e-16,
+      "everything_total": 3.682817
+    }
+  },
+  "gpu": {
+    "command": "/home/bugra/Workspace/C/HetHypPar_rewrite/build/bicgstab-gpu -m /matrices/cage13.mtx -n 200 -o /home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/cage13/out/X_gpu.txt -x /home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/cage13/in/X_init.txt -y /home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/cage13/in/B.txt",
+    "returncode": 0,
+    "stdout": "\n\t****\tMatrix File readed\t****Matrix name : /matrices/cage13.mtx\nn_iters : 200 \nspmv : 0.226179 \nfile_read : 1.175826 \nrelative_residual : 2.583459E-16\neverything_total : 1.834562\n\n----------------------------------------------------------------------\n",
+    "stderr": "",
+    "metrics": {
+      "n_iters": 200,
+      "spmv": 0.226179,
+      "file_read": 1.175826,
+      "relative_residual": 2.583459e-16,
+      "everything_total": 1.834562
+    }
+  }
+}

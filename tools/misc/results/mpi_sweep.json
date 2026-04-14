@@ -1,0 +1,66 @@
+{
+  "mpi_2rank": {
+    "nranks": 2,
+    "weight_file": "data/weights/experiment-pcore/equal_2.txt",
+    "rankfile": "data/rankfile/experiment/2pcore.rankfile",
+    "part_file": "data/matrices/cage13/in/part/2r_i1_9c806f14.part",
+    "returncode": 0,
+    "stdout": "Matrix name : /matrices/cage13.mtx\n\n\t****\tMatrix File readed\t****LOG: Finished Creating Shard CSC\nLOG: Finished Creating Vectors\nn_iters : 200 \nspmv : 2.003474 \nfile_read : 1.242915 \nrelative_residual : 3.001022E-16\neverything_total : 3.250768\n\n----------------------------------------------------------------------\n",
+    "stderr": "[aybu-13700-16c-ubuntu:3530403] MCW rank 0 bound to socket 0[core 0[hwt 0-1]]: [BB/../../../../../../.././././././././.]\n[aybu-13700-16c-ubuntu:3530403] MCW rank 1 bound to socket 0[core 2[hwt 0-1]]: [../../BB/../../../../.././././././././.]\n",
+    "metrics": {
+      "n_iters": 200,
+      "spmv": 2.003474,
+      "file_read": 1.242915,
+      "relative_residual": 3.001022e-16,
+      "everything_total": 3.250768
+    }
+  },
+  "mpi_4rank": {
+    "nranks": 4,
+    "weight_file": "data/weights/experiment-pcore/equal_4.txt",
+    "rankfile": "data/rankfile/experiment/4pcore.rankfile",
+    "part_file": "data/matrices/cage13/in/part/4r_i1_724b1bfb.part",
+    "returncode": 0,
+    "stdout": "Matrix name : /matrices/cage13.mtx\n\n\t****\tMatrix File readed\t****LOG: Finished Creating Shard CSC\nLOG: Finished Creating Vectors\nn_iters : 200 \nspmv : 1.622616 \nfile_read : 1.244477 \nrelative_residual : 3.016844E-16\neverything_total : 2.869895\n\n----------------------------------------------------------------------\n",
+    "stderr": "[aybu-13700-16c-ubuntu:3530419] MCW rank 0 bound to socket 0[core 0[hwt 0-1]]: [BB/../../../../../../.././././././././.]\n[aybu-13700-16c-ubuntu:3530419] MCW rank 1 bound to socket 0[core 2[hwt 0-1]]: [../../BB/../../../../.././././././././.]\n[aybu-13700-16c-ubuntu:3530419] MCW rank 2 bound to socket 0[core 4[hwt 0-1]]: [../../../../BB/../../.././././././././.]\n[aybu-13700-16c-ubuntu:3530419] MCW rank 3 bound to socket 0[core 6[hwt 0-1]]: [../../../../../../BB/.././././././././.]\n",
+    "metrics": {
+      "n_iters": 200,
+      "spmv": 1.622616,
+      "file_read": 1.244477,
+      "relative_residual": 3.016844e-16,
+      "everything_total": 2.869895
+    }
+  },
+  "mpi_6rank": {
+    "nranks": 6,
+    "weight_file": "data/weights/experiment-pcore/equal_6.txt",
+    "rankfile": "data/rankfile/experiment/6pcore.rankfile",
+    "part_file": "data/matrices/cage13/in/part/6r_i1_421d08ad.part",
+    "returncode": 0,
+    "stdout": "Matrix name : /matrices/cage13.mtx\n\n\t****\tMatrix File readed\t****LOG: Finished Creating Shard CSC\nLOG: Finished Creating Vectors\nn_iters : 200 \nspmv : 1.939988 \nfile_read : 1.271588 \nrelative_residual : 3.027103E-16\neverything_total : 3.213239\n\n----------------------------------------------------------------------\n",
+    "stderr": "[aybu-13700-16c-ubuntu:3530448] MCW rank 5 bound to socket 0[core 10[hwt 0]]: [../../../../../../../../././B/././././.]\n[aybu-13700-16c-ubuntu:3530448] MCW rank 0 bound to socket 0[core 0[hwt 0-1]]: [BB/../../../../../../.././././././././.]\n[aybu-13700-16c-ubuntu:3530448] MCW rank 1 bound to socket 0[core 2[hwt 0-1]]: [../../BB/../../../../.././././././././.]\n[aybu-13700-16c-ubuntu:3530448] MCW rank 2 bound to socket 0[core 4[hwt 0-1]]: [../../../../BB/../../.././././././././.]\n[aybu-13700-16c-ubuntu:3530448] MCW rank 3 bound to socket 0[core 6[hwt 0-1]]: [../../../../../../BB/.././././././././.]\n[aybu-13700-16c-ubuntu:3530448] MCW rank 4 bound to socket 0[core 8[hwt 0]]: [../../../../../../../../B/././././././.]\n",
+    "metrics": {
+      "n_iters": 200,
+      "spmv": 1.939988,
+      "file_read": 1.271588,
+      "relative_residual": 3.027103e-16,
+      "everything_total": 3.213239
+    }
+  },
+  "mpi_8rank": {
+    "nranks": 8,
+    "weight_file": "data/weights/experiment-pcore/equal_8.txt",
+    "rankfile": "data/rankfile/experiment/8pcore.rankfile",
+    "part_file": "data/matrices/cage13/in/part/8r_i1_b1994bc3.part",
+    "returncode": 0,
+    "stdout": "Matrix name : /matrices/cage13.mtx\n\n\t****\tMatrix File readed\t****LOG: Finished Creating Shard CSC\nLOG: Finished Creating Vectors\nn_iters : 200 \nspmv : 1.662911 \nfile_read : 1.276272 \nrelative_residual : 3.040307E-16\neverything_total : 2.940574\n\n----------------------------------------------------------------------\n",
+    "stderr": "[aybu-13700-16c-ubuntu:3530494] MCW rank 1 bound to socket 0[core 2[hwt 0-1]]: [../../BB/../../../../.././././././././.]\n[aybu-13700-16c-ubuntu:3530494] MCW rank 2 bound to socket 0[core 4[hwt 0-1]]: [../../../../BB/../../.././././././././.]\n[aybu-13700-16c-ubuntu:3530494] MCW rank 3 bound to socket 0[core 6[hwt 0-1]]: [../../../../../../BB/.././././././././.]\n[aybu-13700-16c-ubuntu:3530494] MCW rank 4 bound to socket 0[core 8[hwt 0]]: [../../../../../../../../B/././././././.]\n[aybu-13700-16c-ubuntu:3530494] MCW rank 5 bound to socket 0[core 10[hwt 0]]: [../../../../../../../../././B/././././.]\n[aybu-13700-16c-ubuntu:3530494] MCW rank 6 bound to socket 0[core 12[hwt 0]]: [../../../../../../../../././././B/././.]\n[aybu-13700-16c-ubuntu:3530494] MCW rank 7 bound to socket 0[core 14[hwt 0]]: [../../../../../../../../././././././B/.]\n[aybu-13700-16c-ubuntu:3530494] MCW rank 0 bound to socket 0[core 0[hwt 0-1]]: [BB/../../../../../../.././././././././.]\n",
+    "metrics": {
+      "n_iters": 200,
+      "spmv": 1.662911,
+      "file_read": 1.276272,
+      "relative_residual": 3.040307e-16,
+      "everything_total": 2.940574
+    }
+  }
+}

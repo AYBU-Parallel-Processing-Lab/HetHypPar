@@ -5,6 +5,8 @@
 /data/matrices/*
 /data/weights/*
 /data/cage13/*
+/data/logs*
+/data/result*
 /data/circuit5M_dc/*
 /data/temporary/*
 /octave-workspace

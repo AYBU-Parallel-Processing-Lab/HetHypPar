@@ -27,6 +27,7 @@ cd build && ctest
 
 Four executables, all accept: `-m <matrix> -x <x_vec> -y <b_vec> -o <output> -n <iters>`
 MPI variants also accept: `-p <partition_vector>`
+MPI+GPU variant also accepts: `-g <is_gpu_file>`
 
 | Target | Entry Point | Description |
 |--------|-------------|-------------|
@@ -34,6 +35,11 @@ MPI variants also accept: `-p <partition_vector>`
 | `bicgstab-gpu` | `src/entry/bicgstab_gpu.c` | Single-process GPU solver (cuSPARSE/cuBLAS) |
 | `bicgstab-mpi` | `src/entry/bicgstab_mpi.c` | MPI-distributed CPU solver |
 | `bicgstab-mpi-gpu` | `src/entry/bicgstab_mpi_gpu.c` | Hybrid MPI+GPU solver |
+
+## Solver Output Format
+
+All four solvers print the same metrics to stdout:
+`n_iters`, `spmv`, `file_read`, `relative_residual`, `everything_total` (format: `key : value`).
 
 ## Architecture
 
@@ -58,9 +64,14 @@ Uses Unity v2.6.1 (fetched via CMake FetchContent). Tests are in `src/tests/test
 
 To run MPI solvers locally (fewer cores than ranks): `mpirun --oversubscribe -bind-to none -n <N> ./build/bicgstab-mpi ...`
 
+## Notes
+
+- **Shell copy-paste:** When providing terminal commands for the user to run in tmux/terminal, prefer single-line commands over multi-line with `\` continuations — backslashes often get lost when pasting.
+- **Weight file parsing:** Count ranks via `.read_text().split()`, not line count — some weight files lack a trailing newline, so `wc -l` undercounts.
+
 ## Known Issues & Fixes
 
-- **MPI send buffer use-after-free (fixed):** `internal_setup_communication` in `hhp_matrix.c` previously used `MPI_Isend` + `MPI_Request_free` (fire-and-forget) when exchanging global column indices between ranks. The send buffer (`recv_gJ`) was freed after waiting only on receives, causing segfaults on ~84% of MPI failures (5,429/6,468). Fixed by tracking send requests and calling `MPI_Waitall` before freeing the buffer. Affected structurally asymmetric matrices most (lhr14, bayer02, g7jac*, fd18).
+- **MPI send buffer use-after-free (fixed):** `internal_setup_communication` in `hhp_matrix.c` had a send buffer freed before `MPI_Isend` completed. Fixed by tracking send requests and calling `MPI_Waitall` before freeing. See commit `0814a13`.
 - **"Vector of size 0" errors (open):** 876 failures across matrices like `std1_Jac2_db`, `shyy161`, `ex35`. Caused by partitions that assign zero rows to a rank. Separate from the segfault bug.
 
 ## Error Checking Macros
@@ -96,6 +107,8 @@ python tools/python/init_matrices.py --matrix-list <names.txt>
 ### Step 2: Generate partition vectors
 
 `tools/python/matrix_partition.py` runs the `patpart` binary (PaToH wrapper) to produce row partition files. It reads weight files from a directory (`-w`) and writes partition files into `data/matrices/<name>/in/part/<outdir>/`.
+
+`patpart` CLI: `patpart <matrix_path> <npart> <weight_path> <imbal_percent> <seed> <output.part> <output.log>` (binary at `~/.local/bin/patpart`, source at `/home/bugra/Workspace/C/HetHypPar`)
 
 ```bash
 python tools/python/matrix_partition.py -w data/weights -o <outdir_name>
@@ -162,10 +175,32 @@ data/results/
 
 `tools/python/parse_benchmark_results.py` walks this directory, parses metrics from successful runs (and error reasons from stderr for failures), and writes `data/results/benchmark_summary.tsv`.
 
+### Two benchmark pipelines
+
+There are two independent benchmark pipelines — do not confuse them:
+
+1. **`run_benchmarks.py` pipeline** (used for the main analysis):
+   - `gen_commands.py` (in `~/Templates/results_medium/`) generates `commands.tsv` with iteration count baked in (`ITERATIONS` constant)
+   - `run_benchmarks.py` executes commands from TSV → writes to `data/results/`
+   - `parse_benchmark_results.py` parses `data/results/` → `data/results/benchmark_summary.tsv`
+   - `commands.tsv` and partition vectors live in `~/Templates/results_medium/`
+
+2. **`sample_mpi_gpu.py` pipeline** (self-contained, writes to `data/logs/`):
+   - Runs CPU, GPU, and MPI+GPU directly with `--iterations` CLI arg
+   - Writes per-matrix TSV files to `data/logs/`
+   - Has hash-based deduplication (skips matrices with existing results)
+   - Not consumed by `parse_benchmark_results.py`
+   - Auto-detects MPI rank count from partition files (counts unique partition IDs)
+   - Preferred for multi-rank benchmarks since `gen_commands.py` is hardcoded to 2 ranks
+   - **Known issue:** `parse_output` raises `ValueError` on NAN/- residuals, excluding successful runs from TSV. Affects 134 matrices (including cage13, cage14, Hamrle3). Timing data is valid; only residual is unparseable.
+
 `benchmark_summary.tsv` columns: `matrix, solver_type, imbalance, weight, seed, n_iters, spmv, file_read, relative_residual, everything_total, status, error_reason`. File is large (~2MB+); use `awk`/`cut` for analysis, not direct reads.
 
 ### Other Python tools
 
+- `tools/python/quick_mpi_test.py` — Quick single-matrix MPI test: partitions via patpart + runs bicgstab-mpi in one command. Importable: `from quick_mpi_test import run; result = run(weight_file=Path("data/weights/cpu-p-e/w100_16.txt"))`. Returns dict with stdout, stderr, returncode, parsed metrics, part_path, nranks. All relative paths resolve to project root (safe to call from notebooks in any directory).
+- `tools/python/quick_mpi_gpu_test.py` — Same as above for MPI+GPU (bicgstab-mpi-gpu). Extra `gpu_rank` param (default: last rank). Auto-creates is_gpu files in `data/is_gpu/` named `<nranks>r_gpu<rank>.txt`.
+- Quick-test scripts use partition naming: `<nranks>r_i<imbal>_<hash8>.part` where hash8 = first 8 chars of SHA256 of weight file contents. Saved directly in `data/matrices/<name>/in/part/`.
 - `tools/python/sample_mpi.py` — Batch benchmarking script for CPU, GPU, and MPI solvers (no MPI+GPU). Runs all matrices in `data/matrices/`, skips already-completed runs via hash-based deduplication, writes per-matrix TSV results to `data/matrices/<name>/log/`.
 - `tools/python/split_partitioned_matrix.py` — Splits sparse matrices by rows according to partition vectors. Reads `.mtx` files and `.part` files, outputs per-partition sub-matrices with row/column mappings. Usage: `python tools/python/split_partitioned_matrix.py -p <part_dir> -o <output_dir>`.
 
@@ -173,3 +208,14 @@ data/results/
 
 - `tools/python/gpu_matrix_partition.py` — Hierarchical GPU/CPU partitioner using PaToH directly. Designed to do a two-step partition (GPU vs CPU, then P-core vs E-core) but is not currently functional.
 - `tools/notebook/kahypar.py` and `tools/notebook/kahypar-gpu.ipynb` — mt-KaHyPar-based partitioning. Abandoned because KaHyPar does not support heterogeneous partitioning with different block weights.
+
+## Multi-Rank Benchmark Configurations
+
+The number of MPI ranks is determined by the **weight file** (one line per rank) → **partition file** (one partition ID per rank) chain. Rankfile and is_gpu file must match.
+
+| Config | Rankfile | is_gpu | Weights dir | Partition dir | Status |
+|--------|----------|--------|-------------|---------------|--------|
+| 2-rank (1C+1G) | `1cpu_1gpu.rankfile` | `g2_2.txt` | `weights/gpu-cpu/` | `in/part/gpu-cpu/` | Ready |
+| 16-rank (16C, MPI-only) | — | — | `weights/cpu-p-e/` | `in/part/w*_16_*.part` (directly in `in/part/`) | Ready |
+| 17-rank (16C+1G) | `16cpu_1gpu.rankfile` | `g17_17.txt` | `weights/hybrid-cpu-gpu/` | `in/part/hybrid-cpu-gpu/` | Ready |
+| 9-rank (8C+1G) | `8cpu_1gpu.rankfile` | — | — | — | Needs setup |

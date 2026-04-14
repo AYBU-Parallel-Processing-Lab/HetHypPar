@@ -360,6 +360,8 @@ int niters = arguments.n_iters;
 time_stamps.begin = omp_get_wtime(); // The very Beginning timestamp
 //-------------------------------------------------------------------------------------------------------
 
+    CHECK_CUDA( cudaSetDevice(0) )
+
     cublasHandle_t   cublasHandle   = NULL;
     cusparseHandle_t cusparseHandle = NULL;
     CHECK_CUBLAS( cublasCreate(&cublasHandle) )

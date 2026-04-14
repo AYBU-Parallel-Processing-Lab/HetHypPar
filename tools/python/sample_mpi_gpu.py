@@ -11,7 +11,7 @@ import hashlib
 
 # Configuration
 MATRICES_DIR = Path("data/matrices")
-LOGS_DIR = Path("data/logs")  # <--- NEW: Unified log directory
+LOGS_DIR = Path("data/logs")
 BUILD_DIR = Path("build")
 BICGSTAB_MPI_GPU_BINARY = BUILD_DIR / "bicgstab-mpi-gpu"
 BICGSTAB_MPI_BINARY = BUILD_DIR / "bicgstab-mpi"
@@ -352,8 +352,7 @@ def process_matrix(
     except Exception as e:
         failed += 1
         pbar_matrix.write(f"✗ {matrix_name}/cpu failed: {e}")
-        pbar_matrix.write(f"⏭ Skipping remaining benchmarks for {matrix_name}")
-        return pd.DataFrame()
+        pbar_part.update(1)
 
     # Run GPU benchmark
     try:
@@ -364,8 +363,7 @@ def process_matrix(
     except Exception as e:
         failed += 1
         pbar_matrix.write(f"✗ {matrix_name}/gpu failed: {e}")
-        pbar_matrix.write(f"⏭ Skipping remaining benchmarks for {matrix_name}")
-        return pd.DataFrame()
+        pbar_part.update(1)
 
     # Run MPI benchmarks for all partition files
     for part_file in part_files:
@@ -377,8 +375,7 @@ def process_matrix(
         except Exception as e:
             failed += 1
             pbar_matrix.write(f"✗ {matrix_name}/{part_file.name} failed: {e}")
-            pbar_matrix.write(f"⏭ Skipping remaining partition files for {matrix_name}")
-            return pd.DataFrame()
+            pbar_part.update(1)
     
     for part_gpu_file in part_gpu_files:
         try:
@@ -389,12 +386,15 @@ def process_matrix(
         except Exception as e:
             failed += 1
             pbar_matrix.write(f"✗ {matrix_name}/{part_gpu_file.name} failed: {e}")
-            pbar_matrix.write(f"⏭ Skipping remaining partition files for {matrix_name}")
-            return pd.DataFrame()
+            pbar_part.update(1)
 
 
     # Convert to DataFrame
     df = pd.DataFrame(results)
+
+    if df.empty:
+        pbar_matrix.write(f"⚠ {matrix_name}: No successful benchmarks.")
+        return df
 
     # Reorder columns
     columns = [

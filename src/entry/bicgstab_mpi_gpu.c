@@ -232,7 +232,7 @@ int main(int argc, char* argv[]) {  // matrix file ve part vector
     if (isgpu){ // GPU PROCESS
         //-------------------------------------------------------------------------------------------------------
         CHECK_CUDA(cudaSetDevice(0))
-
+        
         cublasHandle_t  cublasHandle   = NULL;
         CHECK_CUBLAS( cublasCreate(&cublasHandle) )
         cusparseHandle_t cusparseHandle = NULL;

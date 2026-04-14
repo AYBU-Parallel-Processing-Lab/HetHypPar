@@ -165,7 +165,7 @@ int main(int argc, char* argv[]) {  // matrix file ve part vector
     }
 
     int niters = arguments.n_iters;
-
+    
     time_stamps.begin = omp_get_wtime(); // The very Beginning timestamp
     
 //-------------------------------------------------------------------------------------------------------    

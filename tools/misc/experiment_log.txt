@@ -1,0 +1,106 @@
+================================================================================
+EXPERIMENT LOG: Beat GPU SpMV on cage13 with MPI/MPI+GPU
+Date: 2026-04-07
+================================================================================
+
+OBJECTIVE
+---------
+Find a CPU MPI or hybrid MPI+GPU configuration whose SpMV time beats GPU-only
+on cage13 (445,315 x 445,315, 7,479,343 nonzeros). All runs use 200 iterations.
+
+HARDWARE
+--------
+- CPU: Intel i7-13700F (8 P-cores @ up to 5.2 GHz, 8 E-cores @ 4.1 GHz)
+- GPU: NVIDIA GeForce RTX 3070 (8 GB)
+- Only P-cores used (physical cores 0-7, pinned via rankfiles to CPUs 0,2,4,6,8,10,12,14)
+
+STEPS TO REPRODUCE
+------------------
+
+0. Prerequisites:
+   - Project built: cmake -S src -B build -G Ninja && cmake --build build
+   - Python env: micromamba (env name: octave)
+   - patpart binary at ~/.local/bin/patpart
+   - cage13 input files in data/matrices/cage13/in/
+
+1. Create experiment files (weight files, rankfiles, is_gpu files):
+   micromamba run -n octave python tools/misc/00_create_experiment_files.py
+
+   Creates:
+   - data/weights/experiment-pcore/equal_{2,4,6,8}.txt  (uniform MPI weights)
+   - data/weights/experiment-pcore-gpu/<N>cpu_1gpu_w<W>.txt  (heterogeneous weights)
+   - data/rankfile/experiment/{2,4,6,8}pcore.rankfile  (MPI-only, P-core pinning)
+   - data/rankfile/experiment/{1,2,3,4,7}pcore_1gpu.rankfile  (MPI+GPU, P-core pinning)
+   - data/is_gpu/{2,3,4,5,8}r_gpu{1,2,3,4,7}.txt
+
+2. Phase 1 — Baselines (CPU-only and GPU-only):
+   micromamba run -n octave python tools/misc/01_run_baselines.py
+
+   Results -> tools/misc/results/baselines.json
+
+3. Phase 2 — MPI-only sweep (2, 4, 6, 8 P-core ranks):
+   micromamba run -n octave python tools/misc/02_run_mpi_sweep.py
+
+   Uses quick_mpi_test.run() with rankfile parameter for P-core pinning.
+   Results -> tools/misc/results/mpi_sweep.json
+
+4. Phase 3 — MPI+GPU sweep (1-7 CPU ranks + 1 GPU, weight ratios 500-2720):
+   micromamba run -n octave python tools/misc/03_run_mpi_gpu_sweep.py
+
+   Uses quick_mpi_gpu_test.run() with rankfile parameter for P-core pinning.
+   Results -> tools/misc/results/mpi_gpu_sweep.json
+
+5. Phase 4 — Analyze all results:
+   micromamba run -n octave python tools/misc/04_analyze_results.py
+
+RESULTS
+-------
+
+Baselines (200 iterations):
+  CPU (1 process):   spmv = 2.5395s
+  GPU (1 process):   spmv = 0.2262s   <-- target
+
+MPI-only (P-cores, uniform weights):
+  2 ranks:  spmv = 2.0035s  (8.86x slower than GPU)
+  4 ranks:  spmv = 1.6226s  (7.17x slower than GPU)
+  6 ranks:  spmv = 1.9400s  (8.58x slower than GPU)
+  8 ranks:  spmv = 1.6629s  (7.35x slower than GPU)
+
+MPI+GPU (P-cores + RTX 3070):
+  Best configs (top 5):
+  1. 4cpu_1gpu_w1500:  spmv = 0.6132s  (2.71x slower than GPU)
+  2. 2cpu_1gpu_w500:   spmv = 0.6184s  (2.73x slower than GPU)
+  3. 7cpu_1gpu_w2720:  spmv = 0.6271s  (2.77x slower than GPU)
+  4. 7cpu_1gpu_w2000:  spmv = 0.6298s  (2.78x slower than GPU)
+  5. 4cpu_1gpu_w1000:  spmv = 0.6496s  (2.87x slower than GPU)
+
+CONCLUSIONS
+-----------
+- GPU-only is decisively faster: no configuration beat it.
+- MPI-only CPU barely scales — 4 ranks only gets 1.57x speedup over single CPU
+  (ideal would be 4x). MPI communication overhead dominates for cage13.
+- MPI+GPU best is 2.71x slower than GPU-only. The hybrid approach helps vs pure
+  MPI (0.61s vs 1.62s best) but still can't match standalone GPU.
+- The SpMV bottleneck is memory bandwidth, not compute. The RTX 3070 has
+  ~448 GB/s memory bandwidth vs ~50 GB/s for DDR4. For sparse matrix-vector
+  multiply (bandwidth-bound), the GPU's memory subsystem advantage is decisive.
+- Increasing CPU ranks adds MPI communication costs that outweigh parallelism
+  gains at 6+ ranks (6-rank is slower than 4-rank).
+
+FILES CREATED
+-------------
+Scripts:
+  tools/misc/00_create_experiment_files.py
+  tools/misc/01_run_baselines.py
+  tools/misc/02_run_mpi_sweep.py
+  tools/misc/03_run_mpi_gpu_sweep.py
+  tools/misc/04_analyze_results.py
+
+Results:
+  tools/misc/results/baselines.json
+  tools/misc/results/mpi_sweep.json
+  tools/misc/results/mpi_gpu_sweep.json
+
+Modified (added rankfile support):
+  tools/python/quick_mpi_test.py      (added rankfile parameter to run())
+  tools/python/quick_mpi_gpu_test.py  (added rankfile parameter to run())

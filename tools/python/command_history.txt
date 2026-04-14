@@ -2,3 +2,10 @@ micromamba activate octave
 
 python tools/python/matrix_partition.py -w data/weights/hybrid-cpu-gpu -o hybrid-cpu-gpu-2
 python tools/python/sample_mpi_gpu.py
+
+python tools/python/matrix_partition.py -w data/weights/gpu-cpu -o gpu-cpu
+python tools/python/sample_mpi_gpu.py \
+    --iterations 20 \
+    --mpi-gpu-part-dir "in/part/gpu-cpu" \
+    --rankfile "data/rankfile/1cpu_1gpu.rankfile" \
+    --is-gpu-file "data/is_gpu/g2_2.txt"
