@@ -251,24 +251,28 @@ int main(int argc, char* argv[]) {  // matrix file ve part vector
         };
         
         CHECK_CUSPARSE(device_csc_create(A.loc, &dA.loc))
-        CHECK_CUSPARSE(device_csc_create(A.shr, &dA.shr))
-        
+        int has_shr = (A.shr.n > 0);
+        if (has_shr)
+            CHECK_CUSPARSE(device_csc_create(A.shr, &dA.shr))
+
         // // GET RID OF CPU matrices right away to avoid duplication. Edit: Keep them for hybrid methods (GPU local and CPU shared)
         // freeSparseMatrix(&A.loc);
         // freeSparseMatrix(&A.shr);
-        
+
         Device_Vector dX;
-        Device_Vector dX_shr;
+        Device_Vector dX_shr = {0};
         Device_Vector dB;
         CHECK_CUSPARSE(device_vector_init(X.nvals, &dX))
-        CHECK_CUSPARSE(device_vector_init(dA.shr.data.n, &dX_shr))
+        if (has_shr)
+            CHECK_CUSPARSE(device_vector_init(dA.shr.data.n, &dX_shr))
         CHECK_CUSPARSE(device_vector_init(B.nvals, &dB))
-        
+
         Device_Buffer_SpMV dA_loc_buf;
-        Device_Buffer_SpMV dA_shr_buf;
-        
+        Device_Buffer_SpMV dA_shr_buf = NULL;
+
         CHECK_CUSPARSE(device_buffer_spmv_create(cusparseHandle, dA.loc.desc, dX, dB, &mx_alpha, &mx_beta, &dA_loc_buf))
-        CHECK_CUSPARSE(device_buffer_spmv_create(cusparseHandle, dA.shr.desc, dX_shr, dB, &mx_alpha, &mx_alpha, &dA_shr_buf))
+        if (has_shr)
+            CHECK_CUSPARSE(device_buffer_spmv_create(cusparseHandle, dA.shr.desc, dX_shr, dB, &mx_alpha, &mx_alpha, &dA_shr_buf))
         
         CHECK_CUSPARSE(device_vector_toGPU(X, dX))
         CHECK_CUSPARSE(device_vector_toGPU(B, dB))
@@ -410,7 +414,8 @@ int main(int argc, char* argv[]) {  // matrix file ve part vector
         //-------------------------------------------------------------------------------------------------------
 
         CHECK_CUSPARSE(device_csc_destroy(&dA.loc))
-        CHECK_CUSPARSE(device_csc_destroy(&dA.shr))
+        if (has_shr)
+            CHECK_CUSPARSE(device_csc_destroy(&dA.shr))
 
         CHECK_CUBLAS(cublasDestroy(cublasHandle))
         CHECK_CUSPARSE(cusparseDestroy(cusparseHandle))

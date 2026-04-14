@@ -1161,13 +1161,19 @@ static void internal_setup_communication(SHARD_CSC *result, iVector partvec, int
     ivector_destroy(&send_count);
 
     // [x] IS FREED?
-    iVector recv_gJ = ivector_init(result->shr.n);
-    for (size_t i = 0 ; i < result->shr.n; i++)
-    {
-      int lind = result->recv.J[i];
-      int gind = result->gind.vals[result->loc.n + lind];
+    // recv_gJ maps each shared column to its global index for the
+    // Isend/Irecv exchange below. When shr.n == 0 (cutsize 0 on this
+    // rank), there are no shared columns so we use an empty sentinel.
+    iVector recv_gJ = {.nvals = 0, .vals = NULL};
+    if (result->shr.n > 0) {
+      recv_gJ = ivector_init(result->shr.n);
+      for (size_t i = 0 ; i < result->shr.n; i++)
+      {
+        int lind = result->recv.J[i];
+        int gind = result->gind.vals[result->loc.n + lind];
 
-      recv_gJ.vals[i] = gind;
+        recv_gJ.vals[i] = gind;
+      }
     }
 
     // [x] IS FREED?
@@ -1226,8 +1232,9 @@ static void internal_setup_communication(SHARD_CSC *result, iVector partvec, int
       send.J[i] = locmap.vals[send.J[i]];
 
     ivector_destroy(&locmap);
-    ivector_destroy(&recv_gJ);
-    
+    if (recv_gJ.vals)
+      ivector_destroy(&recv_gJ);
+
     result->send = send;
   }
   if (mpi_rank == 0)
