@@ -6,6 +6,7 @@
 #include <driver_types.h>
 #include <library_types.h>
 #include <math.h>
+#include <omp.h>
 #include <stdint.h>
 #include <stdio.h>               // printf
 #include <stdlib.h>              // EXIT_FAILURE
@@ -241,110 +242,90 @@ cusparseStatus_t device_csr_spmv(cusparseHandle_t handle, Device_CSR mat, Device
  *  - Y is of length A.loc.m
  *  - Y must be zeroed before this function
  */
-cusparseStatus_t MPI_device_SHARD_CSC_mpi_spmxv(Device_SHARD_CSC A, Vector X, Device_Vector dX, Device_Vector dX_shr, Device_Vector Y, MPI_Comm comm, cusparseHandle_t handle, const double alpha, const double beta, Device_Buffer_SpMV locbuf, Device_Buffer_SpMV shrbuf) {
+cusparseStatus_t MPI_device_SHARD_CSC_mpi_spmxv(Device_SHARD_CSC A, Vector X, Device_Vector dX, Device_Vector dX_shr, Device_Vector Y, MPI_Comm comm, cusparseHandle_t handle, const double alpha, const double beta, Device_Buffer_SpMV locbuf, Device_Buffer_SpMV shrbuf, SpMV_Profile *prof) {
 
     int mpi_rank;
     int mpi_size;
     MPI_CHECK(MPI_Comm_rank(comm, &mpi_rank));
     MPI_CHECK(MPI_Comm_size(comm, &mpi_size));
 
-
-    // // TODO: REMOVE AFTER DEBUG
-    // char fpath[256] = {};
-    // sprintf(fpath, "DEBUG_PRINT_Xloc_%d.txt",mpi_rank);
-    // FILE* f = fopen(fpath, "w");
-    // print_vector(f, X);
-    // fclose(f);
+    double t0, t1;
 
     CHECK_CUSPARSE(device_vector_zero(Y))
     CHECK_CUSPARSE(device_vector_toCPU(dX, X))
-    
-    // [x] IS FREED?
+
     MPI_Request *recv_reqs;
     ALLOC_ARRAY(recv_reqs, A.recv.num);
-    // [x] IS FREED?
     MPI_Request *send_reqs;
     ALLOC_ARRAY(send_reqs, A.send.num);
 
-    {   // COMMUNICATE BETWEEN PROCESSES
-        
-        // fill send buffer
-        int nsend = A.send.I[A.send.num];
-        for (size_t i = 0; i < nsend; i++)
-        {
-            int idx = A.send.J[i];
-            A.send.val[i] = X.vals[idx];
-        }
+    // ── Send buffer fill + issue comms ──
+    t0 = omp_get_wtime();
 
-        // ISSUE SENDS
-        for (size_t i = 0; i < A.send.num; i++)
-        {
-            int js = A.send.I[i];
-            int je = A.send.I[i+1];
-            int recipient = A.send.ranks[i];
-            int nsend = je - js;
-
-            MPI_CHECK( MPI_Isend( A.send.val + js, nsend, MPI_DOUBLE, recipient, 0, comm, send_reqs + i) );
-        }
-
-        // ISSUE RECVS
-        for (size_t i = 0; i < A.recv.num; i++)
-        {
-            int js = A.recv.I[i];
-            int je = A.recv.I[i+1];
-            int sender = A.recv.ranks[i];
-            int nrecv = je - js;
-
-            MPI_CHECK(MPI_Irecv(A.recv.val + js, nrecv, MPI_DOUBLE, sender, 0, comm, recv_reqs + i));
-        }
+    int nsend = A.send.I[A.send.num];
+    for (size_t i = 0; i < nsend; i++)
+    {
+        int idx = A.send.J[i];
+        A.send.val[i] = X.vals[idx];
     }
 
-
-    {   // LOCAL SpMxV
-        CHECK_CUSPARSE(device_csc_spmv(handle, A.loc, dX, Y, alpha, beta, locbuf))
+    for (size_t i = 0; i < A.send.num; i++)
+    {
+        int js = A.send.I[i];
+        int je = A.send.I[i+1];
+        int recipient = A.send.ranks[i];
+        int nsend = je - js;
+        MPI_CHECK( MPI_Isend( A.send.val + js, nsend, MPI_DOUBLE, recipient, 0, comm, send_reqs + i) );
     }
 
-
-    // // TODO: REMOVE AFTER DEBUG
-    // sprintf(fpath, "DEBUG_PRINT_Ylocloc_%d.txt",mpi_rank);
-    // f = fopen(fpath, "w");
-    // print_vector(f, Y);
-    // fclose(f);
-
-    // for (size_t received=0; received < A.recv.num; received++)
-    // {   // SHARED SpMxV
-
-    //     int recv_idx;
-    //     MPI_CHECK(MPI_Waitany(A.recv.num, recv_reqs, &recv_idx, MPI_STATUS_IGNORE));
-
-    //     // SpMxV on the Received columns
-    //     int is = A.recv.I[recv_idx];
-    //     int ie = A.recv.I[recv_idx+1];
-    //     for (size_t i = is; i < ie; i++)
-    //     {
-    //         int ii = A.recv.J[i];
-    //         double ival = A.recv.val[i];
-    //         for (size_t j = A.shr.I[ii]; j < A.shr.I[ii + 1]; j++)
-    //         {
-    //             Y.vals[A.shr.J[j]] += A.shr.val[j]*ival;
-    //         }
-    //     }
-    // }
-    { // Shared SpMxV
-        MPI_CHECK(MPI_Waitall(A.recv.num, recv_reqs, MPI_STATUSES_IGNORE));
-        if (A.shr.data.n > 0) {
-            Vector temp = {
-                .nvals = A.shr.data.n,
-                .vals = A.recv.val
-            };
-            CHECK_CUSPARSE(device_vector_toGPU(temp, dX_shr))
-            CHECK_CUSPARSE(device_csc_spmv(handle, A.shr, dX_shr, Y, alpha, alpha, shrbuf))
-        }
+    for (size_t i = 0; i < A.recv.num; i++)
+    {
+        int js = A.recv.I[i];
+        int je = A.recv.I[i+1];
+        int sender = A.recv.ranks[i];
+        int nrecv = je - js;
+        MPI_CHECK(MPI_Irecv(A.recv.val + js, nrecv, MPI_DOUBLE, sender, 0, comm, recv_reqs + i));
     }
-    
+
+    t1 = omp_get_wtime();
+    if (prof) prof->send_fill += t1 - t0;
+
+    // ── Local SpMxV (GPU) ──
+    t0 = omp_get_wtime();
+    CHECK_CUSPARSE(device_csc_spmv(handle, A.loc, dX, Y, alpha, beta, locbuf))
+    if (prof) cudaDeviceSynchronize();
+    t1 = omp_get_wtime();
+    if (prof) prof->local_spmv += t1 - t0;
+
+    // ── Wait for receives + shared SpMxV ──
+    t0 = omp_get_wtime();
+    MPI_CHECK(MPI_Waitall(A.recv.num, recv_reqs, MPI_STATUSES_IGNORE));
+    if (prof) {
+        t1 = omp_get_wtime();
+        prof->comm_wait += t1 - t0;
+    }
+
+    t0 = omp_get_wtime();
+    if (A.shr.data.n > 0) {
+        Vector temp = {
+            .nvals = A.shr.data.n,
+            .vals = A.recv.val
+        };
+        CHECK_CUSPARSE(device_vector_toGPU(temp, dX_shr))
+        CHECK_CUSPARSE(device_csc_spmv(handle, A.shr, dX_shr, Y, alpha, alpha, shrbuf))
+        if (prof) cudaDeviceSynchronize();
+    }
+    t1 = omp_get_wtime();
+    if (prof) prof->shared_spmv += t1 - t0;
+
     FREE_AND_NULL(recv_reqs);
-    
+
+    // ── Wait for sends ──
+    t0 = omp_get_wtime();
     MPI_CHECK(MPI_Waitall(A.send.num, send_reqs, MPI_STATUSES_IGNORE));
+    t1 = omp_get_wtime();
+    if (prof) prof->send_wait += t1 - t0;
+
     FREE_AND_NULL(send_reqs);
 
     // // TODO: REMOVE AFTER DEBUG

@@ -61,4 +61,4 @@ cusparseStatus_t device_vector_toCPU(Device_Vector src, Vector dest);
 cudaError_t device_vector_GPUtoGPU(Device_Vector src, Device_Vector dst);
 cusparseStatus_t device_csr_spmv(cusparseHandle_t handle, Device_CSR mat, Device_Vector X, Device_Vector Y, const double alpha, const double beta, Device_Buffer_SpMV buf);
 cusparseStatus_t device_csc_spmv(cusparseHandle_t handle, Device_CSC mat, Device_Vector X, Device_Vector Y, const double alpha, const double beta, Device_Buffer_SpMV buf);
-cusparseStatus_t MPI_device_SHARD_CSC_mpi_spmxv(Device_SHARD_CSC A, Vector X, Device_Vector dX, Device_Vector dX_shr, Device_Vector Y, MPI_Comm comm, cusparseHandle_t handle, const double alpha, const double beta, Device_Buffer_SpMV locbuf, Device_Buffer_SpMV shrbuf);
+cusparseStatus_t MPI_device_SHARD_CSC_mpi_spmxv(Device_SHARD_CSC A, Vector X, Device_Vector dX, Device_Vector dX_shr, Device_Vector Y, MPI_Comm comm, cusparseHandle_t handle, const double alpha, const double beta, Device_Buffer_SpMV locbuf, Device_Buffer_SpMV shrbuf, SpMV_Profile *prof);

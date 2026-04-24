@@ -22,6 +22,22 @@ typedef struct{
 
 typedef void* Device_Buffer_SpMV;
 
+// Per-SpMV-call timing breakdown. Accumulated across calls when reused.
+typedef struct {
+    double send_fill;    // packing X values into send buffer
+    double local_spmv;   // local SpMV computation
+    double comm_wait;    // blocked waiting for MPI receives
+    double shared_spmv;  // SpMV on received shared data
+    double send_wait;    // waiting for MPI sends to complete
+} SpMV_Profile;
+
+// Per-iteration timing breakdown for BiCGStab solver.
+typedef struct {
+    double spmv;           // total time in SpMV calls
+    double vector_ops;     // dot products, scales, adds
+    SpMV_Profile spmv_detail; // SpMV sub-timings accumulated over the iteration
+} Iter_Profile;
+
 // TODO: Verify restrict does what you think it does
 // Column sorted Coordinate.
 typedef struct {

@@ -228,7 +228,8 @@ int main(int argc, char* argv[]) {  // matrix file ve part vector
     //-------------------------------------------------------------------------------------------------------
     
     double relative_residual;
-    
+    Iter_Profile *iprof = calloc(niters, sizeof(Iter_Profile));
+
     if (isgpu){ // GPU PROCESS
         //-------------------------------------------------------------------------------------------------------
         CHECK_CUDA(cudaSetDevice(0))
@@ -302,110 +303,75 @@ int main(int argc, char* argv[]) {  // matrix file ve part vector
         CHECK_CUSPARSE(device_vector_init(B.nvals, &R))
         CHECK_CUDA(device_vector_GPUtoGPU(dB, R))
         
-        // TODO: IMPLEMENT SpMxV
-        // MPI_SHARD_CSC_mpi_spmxv_seq(A, X, Y, MPI_COMM_WORLD);
-        CHECK_CUSPARSE(MPI_device_SHARD_CSC_mpi_spmxv(dA, X, dX, dX_shr, Y, MPI_COMM_WORLD, cusparseHandle, mx_alpha, mx_beta, dA_loc_buf, dA_shr_buf))
+        CHECK_CUSPARSE(MPI_device_SHARD_CSC_mpi_spmxv(dA, X, dX, dX_shr, Y, MPI_COMM_WORLD, cusparseHandle, mx_alpha, mx_beta, dA_loc_buf, dA_shr_buf, NULL))
         CHECK_CUBLAS(device_vector_axpy(cublasHandle, Y, -1.0, R))
         CHECK_CUSPARSE(device_vector_zero(Y))
-        // vector_sub_seq(R, Y, R);
-        // vector_zero(Y);
-        
-        // [ ] IS FREED?
-        Device_Vector R_0; // = vector_init_clone(R);
+
+        Device_Vector R_0;
         CHECK_CUSPARSE(device_vector_init(R.nvals, &R_0))
         CHECK_CUDA(device_vector_GPUtoGPU(R, R_0))
-        // [ ] IS FREED?
-        Device_Vector S; // = vector_init(Y.nvals);
+        Device_Vector S;
         CHECK_CUSPARSE(device_vector_init(Y.nvals, &S))
-        // [ ] IS FREED?
-        Device_Vector T; // = vector_init(Y.nvals);
+        Device_Vector T;
         CHECK_CUSPARSE(device_vector_init(Y.nvals, &T))
 
         if (mpi_rank == 0)
             printf("LOG: Finished Creating Vectors\n");
-        
-        
+
         //-------------------------------------------------------------------------------------------------------
 
-                // double times[4] = {};
         time_stamps.spmxv_begin = omp_get_wtime();
 
         for (size_t i = 0; i < niters; i++)
         {
-            // calc rho_n+1
-            double temp_rho; // = MPI_vector_dot(R, R_0, MPI_COMM_WORLD);
+            SpMV_Profile sp = {0};
+            double t_vec0 = omp_get_wtime();
+
+            double temp_rho;
             CHECK_CUBLAS(MPI_device_vector_dot(cublasHandle, R, R_0, &temp_rho, MPI_COMM_WORLD))
-            //==============
-            // calc Beta
             double beta = (temp_rho / rho) * (alpha / omega);
-            rho = temp_rho; // old rho is never used again after here
-            //==============
-            // calc P_n+1
-            // vector_scale_seq(V, omega, V); // Changed V
+            rho = temp_rho;
             CHECK_CUBLAS(device_vector_scale(cublasHandle, omega, V))
-            // vector_sub_seq(P, V, P);
             CHECK_CUBLAS(device_vector_axpy(cublasHandle, V, mx_neg, P))
-            // vector_scale_seq(P, beta, P);
             CHECK_CUBLAS(device_vector_scale(cublasHandle, beta, P))
-            // vector_add_seq(P, R, P);
             CHECK_CUBLAS(device_vector_axpy(cublasHandle, R, mx_alpha, P))
-            //==============
-            // calc V_n+1
-            // CHECK_CUSPARSE(device_csr_spmv(cusparseHandle, dA, P, V, mx_alpha, mx_beta, dA_buf))
-            CHECK_CUSPARSE(MPI_device_SHARD_CSC_mpi_spmxv(dA, X, P, dX_shr, V, MPI_COMM_WORLD, cusparseHandle, mx_alpha, mx_beta, dA_loc_buf, dA_shr_buf))
-            
-            //==============
-            // calc alpha_n+1
+
+            cudaDeviceSynchronize();
+            double t_spmv0 = omp_get_wtime();
+            CHECK_CUSPARSE(MPI_device_SHARD_CSC_mpi_spmxv(dA, X, P, dX_shr, V, MPI_COMM_WORLD, cusparseHandle, mx_alpha, mx_beta, dA_loc_buf, dA_shr_buf, &sp))
+            double t_spmv1 = omp_get_wtime();
+
             double temp_rv;
-            // CHECK_CUBLAS(device_vector_dot(cublasHandle, R_0, V, &temp_rv))
             CHECK_CUBLAS(MPI_device_vector_dot(cublasHandle, R_0, V, &temp_rv, MPI_COMM_WORLD))
-            alpha = rho/temp_rv; //vector_dot_seq(R_0, V);
-            //==============
-            // calc S
-            // vector_scale_seq(V, alpha, S);
+            alpha = rho/temp_rv;
             CHECK_CUDA(device_vector_GPUtoGPU(R, S))
-            // vector_sub_seq(R, S, S);
             CHECK_CUBLAS(device_vector_axpy(cublasHandle, V, -alpha, S))
-            //==============
-            // calc T
-            // CSR_spmxv_seq(A, S, T);
-            // CHECK_CUSPARSE(device_csr_spmv(cusparseHandle, dA, S, T, mx_alpha, mx_beta, dA_buf))
-            CHECK_CUSPARSE(MPI_device_SHARD_CSC_mpi_spmxv(dA, X, S, dX_shr, T, MPI_COMM_WORLD, cusparseHandle, mx_alpha, mx_beta, dA_loc_buf, dA_shr_buf))
-            //==============
-            // calc omega_n+1
+
+            cudaDeviceSynchronize();
+            double t_spmv2 = omp_get_wtime();
+            CHECK_CUSPARSE(MPI_device_SHARD_CSC_mpi_spmxv(dA, X, S, dX_shr, T, MPI_COMM_WORLD, cusparseHandle, mx_alpha, mx_beta, dA_loc_buf, dA_shr_buf, &sp))
+            double t_spmv3 = omp_get_wtime();
+
             double temp_ts;
-            // CHECK_CUBLAS(device_vector_dot(cublasHandle, T, S, &temp_ts))
             CHECK_CUBLAS(MPI_device_vector_dot(cublasHandle, T, S, &temp_ts, MPI_COMM_WORLD))
             double temp_tt;
-            // CHECK_CUBLAS(device_vector_dot(cublasHandle, T, T, &temp_tt))
             CHECK_CUBLAS(MPI_device_vector_dot(cublasHandle, T, T, &temp_tt, MPI_COMM_WORLD))
-            // omega = vector_dot_seq(T, S)/vector_dot_seq(T, T);
             omega = temp_ts/temp_tt;
-            
-            //==============
-            // calc X_n+1
-            // vector_scale_seq(P, alpha, Y);
-            // vector_add_seq(X, Y, X);
-            // vector_scale_seq(S, omega, Y);
-            // vector_add_seq(X, Y, X);
+
             CHECK_CUBLAS(device_vector_axpy(cublasHandle, P, alpha, dX))
             CHECK_CUBLAS(device_vector_axpy(cublasHandle, S, omega, dX))
-            //==============
-            // calc R_n+1
-            // vector_scale_seq(T, omega, R);
-            // vector_sub_seq(S, R, R);
             CHECK_CUDA(device_vector_GPUtoGPU(S, R))
             CHECK_CUBLAS(device_vector_axpy(cublasHandle, T, -omega, R))
-            //==============
-            // calc tol
-            double tol;// = vector_dot_seq(S, S);
-            // CHECK_CUBLAS(device_vector_dot(cublasHandle, S, S, &tol))
+            double tol;
             CHECK_CUBLAS(MPI_device_vector_dot(cublasHandle, S, S, &tol, MPI_COMM_WORLD))
+
+            double t_vec1 = omp_get_wtime();
+            double spmv_total = (t_spmv1 - t_spmv0) + (t_spmv3 - t_spmv2);
+            iprof[i].spmv = spmv_total;
+            iprof[i].vector_ops = (t_vec1 - t_vec0) - spmv_total;
+            iprof[i].spmv_detail = sp;
         }
 
-        // // TODO: REMOVE THIS AFTER TESTING
-        // MPI_SHARD_CSC_mpi_spmxv_seq(A, X, Y, MPI_COMM_WORLD);
-        
         time_stamps.spmxv_end = omp_get_wtime();
         time_stamps.end = time_stamps.spmxv_end;
 
@@ -439,74 +405,61 @@ int main(int argc, char* argv[]) {  // matrix file ve part vector
         // [x] IS FREED?
         Vector R = vector_init_clone(B); // Add pieces for this
         
-        // TODO: IMPLEMENT SpMxV
-        MPI_SHARD_CSC_mpi_spmxv_seq(A, X, Y, MPI_COMM_WORLD);
+        MPI_SHARD_CSC_mpi_spmxv_seq(A, X, Y, MPI_COMM_WORLD, NULL);
         vector_sub_seq(R, Y, R);
         vector_zero(Y);
-        
-        // [x] IS FREED?
+
         Vector R_0 = vector_init_clone(R);
-        // [x] IS FREED?
         Vector S = vector_init(Y.nvals);
-        // [x] IS FREED?
         Vector T = vector_init(Y.nvals);
 
         if (mpi_rank == 0)
             printf("LOG: Finished Creating Vectors\n");
 
     //-------------------------------------------------------------------------------------------------------
-        // double times[4] = {};
         time_stamps.spmxv_begin = omp_get_wtime();
 
         for (size_t i = 0; i < niters; i++)
         {
-            // calc rho_n+1
+            SpMV_Profile sp = {0};
+            double t_vec0 = omp_get_wtime();
+
             double temp_rho = MPI_vector_dot(R, R_0, MPI_COMM_WORLD);
-            //==============
-            // calc Beta
             double beta = (temp_rho / rho) * (alpha / omega);
-            rho = temp_rho; // old rho is never used again after here
-            //==============
-            // calc P_n+1
-            vector_scale_seq(V, omega, V); // Changed V
+            rho = temp_rho;
+            vector_scale_seq(V, omega, V);
             vector_sub_seq(P, V, P);
             vector_scale_seq(P, beta, P);
             vector_add_seq(P, R, P);
-            //==============
-            // calc V_n+1
-            MPI_SHARD_CSC_mpi_spmxv_seq(A, P, V, MPI_COMM_WORLD);  // result in V
-            //==============
-            // calc alpha_n+1
+
+            double t_spmv0 = omp_get_wtime();
+            MPI_SHARD_CSC_mpi_spmxv_seq(A, P, V, MPI_COMM_WORLD, &sp);
+            double t_spmv1 = omp_get_wtime();
+
             alpha = rho/MPI_vector_dot(R_0, V, MPI_COMM_WORLD);
-            //==============
-            // calc S
             vector_scale_seq(V, alpha, S);
             vector_sub_seq(R, S, S);
-            //==============
-            // calc T
-            MPI_SHARD_CSC_mpi_spmxv_seq(A, S, T, MPI_COMM_WORLD);
-            //==============
-            // calc omega_n+1
+
+            double t_spmv2 = omp_get_wtime();
+            MPI_SHARD_CSC_mpi_spmxv_seq(A, S, T, MPI_COMM_WORLD, &sp);
+            double t_spmv3 = omp_get_wtime();
+
             omega = MPI_vector_dot(T, S,MPI_COMM_WORLD)/MPI_vector_dot(T, T,MPI_COMM_WORLD);
-            //==============
-            // calc X_n+1
             vector_scale_seq(P, alpha, Y);
             vector_add_seq(X, Y, X);
             vector_scale_seq(S, omega, Y);
             vector_add_seq(X, Y, X);
-            //==============
-            // calc R_n+1
             vector_scale_seq(T, omega, R);
             vector_sub_seq(S, R, R);
-            //==============
-            // calc tol
             double tol = MPI_vector_dot(S, S,MPI_COMM_WORLD);
-            //==============
+
+            double t_vec1 = omp_get_wtime();
+            double spmv_total = (t_spmv1 - t_spmv0) + (t_spmv3 - t_spmv2);
+            iprof[i].spmv = spmv_total;
+            iprof[i].vector_ops = (t_vec1 - t_vec0) - spmv_total;
+            iprof[i].spmv_detail = sp;
         }
 
-        // // TODO: REMOVE THIS AFTER TESTING
-        // MPI_SHARD_CSC_mpi_spmxv_seq(A, X, Y, MPI_COMM_WORLD);
-        
         time_stamps.spmxv_end = omp_get_wtime();
         time_stamps.end = time_stamps.spmxv_end;
         
@@ -526,15 +479,13 @@ int main(int argc, char* argv[]) {  // matrix file ve part vector
     
     Vector tempVec = vector_init(B.nvals);
 
-    MPI_SHARD_CSC_mpi_spmxv_seq(A, X, tempVec, MPI_COMM_WORLD);
+    MPI_SHARD_CSC_mpi_spmxv_seq(A, X, tempVec, MPI_COMM_WORLD, NULL);
     vector_sub_seq(B, tempVec, tempVec);
     double sy = MPI_vector_dot(tempVec, tempVec, MPI_COMM_WORLD);
     double sb = MPI_vector_dot(B, B, MPI_COMM_WORLD);
     relative_residual = sqrt(sy/sb);
 
     //-------------------------------------------------------------------------------------------------------
-
-
 
     if (mpi_rank == 0){
         printf(
@@ -553,6 +504,33 @@ int main(int argc, char* argv[]) {  // matrix file ve part vector
 
         printf("\n----------------------------------------------------------------------\n");
     }
+
+    // Per-iteration profile (all ranks print, prefixed with rank)
+    {
+        SpMV_Profile acc = {0};
+        double acc_spmv = 0, acc_vecops = 0;
+
+        printf("PROFILE_HEADER rank iter spmv vecops send_fill local_spmv comm_wait shared_spmv send_wait\n");
+        for (size_t i = 0; i < niters; i++) {
+            Iter_Profile *p = &iprof[i];
+            printf("PROFILE_ITER %d %zu %.6e %.6e %.6e %.6e %.6e %.6e %.6e\n",
+                mpi_rank, i, p->spmv, p->vector_ops,
+                p->spmv_detail.send_fill, p->spmv_detail.local_spmv,
+                p->spmv_detail.comm_wait, p->spmv_detail.shared_spmv,
+                p->spmv_detail.send_wait);
+            acc_spmv += p->spmv;
+            acc_vecops += p->vector_ops;
+            acc.send_fill += p->spmv_detail.send_fill;
+            acc.local_spmv += p->spmv_detail.local_spmv;
+            acc.comm_wait += p->spmv_detail.comm_wait;
+            acc.shared_spmv += p->spmv_detail.shared_spmv;
+            acc.send_wait += p->spmv_detail.send_wait;
+        }
+        printf("PROFILE_ACCUM %d spmv=%.6e vecops=%.6e send_fill=%.6e local_spmv=%.6e comm_wait=%.6e shared_spmv=%.6e send_wait=%.6e\n",
+            mpi_rank, acc_spmv, acc_vecops,
+            acc.send_fill, acc.local_spmv, acc.comm_wait, acc.shared_spmv, acc.send_wait);
+    }
+    free(iprof);
 
 //-------------------------------------------------------------------------------------------------------
 

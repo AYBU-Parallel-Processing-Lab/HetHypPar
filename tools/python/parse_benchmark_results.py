@@ -26,6 +26,18 @@ METRIC_PATTERNS = {
     "everything_total": r"everything_total\s*:\s*([\d.]+)",
 }
 
+# Fields in PROFILE_ACCUM lines (order must match output)
+PROFILE_ACCUM_FIELDS = [
+    "spmv", "vecops", "send_fill", "local_spmv",
+    "comm_wait", "shared_spmv", "send_wait",
+]
+
+# Fields in PROFILE_ITER lines (positional after rank and iter)
+PROFILE_ITER_FIELDS = [
+    "spmv", "vecops", "send_fill", "local_spmv",
+    "comm_wait", "shared_spmv", "send_wait",
+]
+
 
 def parse_metrics(stdout_text):
     """Extract metrics from stdout. Returns dict or None if parsing fails."""
@@ -37,6 +49,47 @@ def parse_metrics(stdout_text):
         else:
             return None  # incomplete output
     return metrics
+
+
+def parse_profile(stdout_text):
+    """Extract profiling data from PROFILE_ACCUM and PROFILE_ITER lines.
+
+    Returns a dict with:
+      - "profile_accum": {rank_int: {field: value, ...}, ...}
+      - "profile_iter":  [{rank, iter, field: value, ...}, ...]
+    or None if no profiling data is present.
+    """
+    accum = {}
+    iters = []
+
+    for line in stdout_text.splitlines():
+        if line.startswith("PROFILE_ACCUM "):
+            parts = line.split(None, 2)  # "PROFILE_ACCUM", rank, key=val pairs
+            if len(parts) < 3:
+                continue
+            rank = int(parts[1])
+            kvs = {}
+            for token in parts[2].split():
+                if "=" in token:
+                    k, v = token.split("=", 1)
+                    kvs[k] = float(v)
+            accum[rank] = kvs
+
+        elif line.startswith("PROFILE_ITER "):
+            tokens = line.split()
+            # PROFILE_ITER rank iter val val val val val val val
+            if len(tokens) < 2 + 1 + len(PROFILE_ITER_FIELDS):
+                continue
+            rank = int(tokens[1])
+            iteration = int(tokens[2])
+            vals = {f: float(tokens[3 + i]) for i, f in enumerate(PROFILE_ITER_FIELDS)}
+            vals["rank"] = rank
+            vals["iter"] = iteration
+            iters.append(vals)
+
+    if not accum and not iters:
+        return None
+    return {"profile_accum": accum, "profile_iter": iters}
 
 
 def extract_error_reason(stderr_path):
@@ -75,6 +128,29 @@ def extract_error_reason(stderr_path):
             return line[:200]  # truncate long lines
 
     return "unknown error (see stderr)"
+
+
+def _add_profile_columns(row, stdout_text):
+    """Parse profiling data from stdout and add columns to row.
+
+    Adds per-rank accumulated columns (r<N>_<field>) and a
+    profile_iterations JSON column with per-iteration detail.
+    """
+    import json
+
+    prof = parse_profile(stdout_text)
+    if prof is None:
+        return
+
+    # Accumulated columns: r0_spmv, r0_vecops, ..., r1_spmv, ...
+    for rank in sorted(prof["profile_accum"]):
+        for field in PROFILE_ACCUM_FIELDS:
+            col = f"r{rank}_{field}"
+            row[col] = prof["profile_accum"][rank].get(field, "")
+
+    # Per-iteration data as JSON
+    if prof["profile_iter"]:
+        row["profile_iterations"] = json.dumps(prof["profile_iter"])
 
 
 def process_unpartitioned(results_dir):
@@ -130,7 +206,6 @@ def process_partitioned(logs_dir):
     for imbalance_dir in sorted(logs_dir.iterdir()):
         if not imbalance_dir.is_dir():
             continue
-        # Extract imbalance value: imbalance_3 -> 3
         imb_match = re.match(r"imbalance_(\d+)", imbalance_dir.name)
         if not imb_match:
             continue
@@ -139,7 +214,6 @@ def process_partitioned(logs_dir):
         for weight_dir in sorted(imbalance_dir.iterdir()):
             if not weight_dir.is_dir():
                 continue
-            # Extract weight: weight_90_10 -> 90_10
             wt_match = re.match(r"weight_(\d+_\d+)", weight_dir.name)
             if not wt_match:
                 continue
@@ -148,7 +222,6 @@ def process_partitioned(logs_dir):
             for run_dir in sorted(weight_dir.iterdir()):
                 if not run_dir.is_dir():
                     continue
-                # Extract matrix and seed: cage10_seed-1 -> cage10, -1
                 seed_match = re.match(r"^(.+?)_seed(.+)$", run_dir.name)
                 if not seed_match:
                     continue
@@ -177,6 +250,7 @@ def process_partitioned(logs_dir):
                         row.update(metrics)
                         row["status"] = "success"
                         row["error_reason"] = ""
+                        _add_profile_columns(row, stdout_text)
                     else:
                         row.update({k: "" for k in METRIC_PATTERNS})
                         row["status"] = "failed"
@@ -200,8 +274,8 @@ def main():
 
     df = pd.DataFrame(rows)
 
-    # Reorder columns
-    columns = [
+    # Reorder columns: fixed columns first, then profile columns, then iterations JSON
+    fixed_columns = [
         "matrix",
         "solver_type",
         "imbalance",
@@ -215,7 +289,15 @@ def main():
         "status",
         "error_reason",
     ]
-    df = df[columns]
+    # Profile accumulated columns (r0_spmv, r0_vecops, ..., r1_spmv, ...)
+    profile_cols = sorted(
+        [c for c in df.columns if re.match(r"r\d+_", c)],
+        key=lambda c: (int(re.match(r"r(\d+)_", c).group(1)), c),
+    )
+    # JSON column last
+    tail_cols = ["profile_iterations"] if "profile_iterations" in df.columns else []
+    columns = fixed_columns + profile_cols + tail_cols
+    df = df.reindex(columns=columns)
 
     # Summary
     total = len(df)

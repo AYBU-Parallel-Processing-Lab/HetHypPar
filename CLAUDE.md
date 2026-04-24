@@ -72,7 +72,14 @@ To run MPI solvers locally (fewer cores than ranks): `mpirun --oversubscribe -bi
 ## Known Issues & Fixes
 
 - **MPI send buffer use-after-free (fixed):** `internal_setup_communication` in `hhp_matrix.c` had a send buffer freed before `MPI_Isend` completed. Fixed by tracking send requests and calling `MPI_Waitall` before freeing. See commit `0814a13`.
-- **"Vector of size 0" errors (open):** 876 failures across matrices like `std1_Jac2_db`, `shyy161`, `ex35`. Caused by partitions that assign zero rows to a rank. Separate from the segfault bug.
+- **"Vector of size 0" from cutsize-0 partitions (fixed):** `internal_setup_communication` called `ivector_init(result->shr.n)` unconditionally — crashes when `shr.n == 0` (no shared columns). Fixed by guarding the allocation. GPU path also needed guards around `device_csc_create`/`device_vector_init`/`device_buffer_spmv_create` for empty shared matrices (`bicgstab_mpi_gpu.c`, `hhp_cuda.c`).
+- **"Vector of size 0" from zero-row partitions (open):** Remaining failures across matrices like `std1_Jac2_db`, `shyy161`, `ex35`. Caused by partitions that assign zero rows to a rank. The solver should either reject these partitions at startup or handle empty ranks gracefully.
+
+## Profiling
+
+`SpMV_Profile` and `Iter_Profile` structs defined in `hhp_common.h`. Both MPI SpMV functions (`hhp_cpu.c`, `hhp_cuda.c`) accept an optional `SpMV_Profile *prof` parameter (NULL skips profiling). GPU path uses `cudaDeviceSynchronize()` before timing boundaries only when `prof != NULL`.
+
+Solver output includes `PROFILE_ITER` (per-rank per-iteration) and `PROFILE_ACCUM` (per-rank totals) lines. `parse_benchmark_results.py` extracts these into per-rank accumulated columns (`r0_spmv`, `r1_comm_wait`, etc.) and a `profile_iterations` JSON column.
 
 ## Error Checking Macros
 
@@ -184,6 +191,8 @@ There are two independent benchmark pipelines — do not confuse them:
    - `run_benchmarks.py` executes commands from TSV → writes to `data/results/`
    - `parse_benchmark_results.py` parses `data/results/` → `data/results/benchmark_summary.tsv`
    - `commands.tsv` and partition vectors live in `~/Templates/results_medium/`
+   - 2-rank partition vectors: `~/Templates/results_medium/logs/imbalance_<X>/weight_<W>/<matrix>_seed<S>_partvec.txt`
+   - Partition metadata (cutsize, partition sizes): `~/Templates/results_medium/master_summary_clean.csv`
 
 2. **`sample_mpi_gpu.py` pipeline** (self-contained, writes to `data/logs/`):
    - Runs CPU, GPU, and MPI+GPU directly with `--iterations` CLI arg
@@ -194,7 +203,12 @@ There are two independent benchmark pipelines — do not confuse them:
    - Preferred for multi-rank benchmarks since `gen_commands.py` is hardcoded to 2 ranks
    - **Known issue:** `parse_output` raises `ValueError` on NAN/- residuals, excluding successful runs from TSV. Affects 134 matrices (including cage13, cage14, Hamrle3). Timing data is valid; only residual is unparseable.
 
-`benchmark_summary.tsv` columns: `matrix, solver_type, imbalance, weight, seed, n_iters, spmv, file_read, relative_residual, everything_total, status, error_reason`. File is large (~2MB+); use `awk`/`cut` for analysis, not direct reads.
+`benchmark_summary.tsv` columns: `matrix, solver_type, imbalance, weight, seed, n_iters, spmv, file_read, relative_residual, everything_total, status, error_reason`, plus per-rank profile columns (`r0_spmv`, `r0_vecops`, `r0_send_fill`, `r0_local_spmv`, `r0_comm_wait`, `r0_shared_spmv`, `r0_send_wait`, same for `r1_`), and `profile_iterations` (JSON). File is large; use `awk`/`cut` for analysis, not direct reads.
+
+### Benchmark result backups (`data/`)
+
+- `results_backup_1000iter` -- 1000-iteration run, pre-cutsize-0-fix (has segfaults/vector-size-0 errors)
+- `results_backup_20iter_noprofile` -- 20-iteration run, post-cutsize-0-fix, no profiling instrumentation
 
 ### Other Python tools
 

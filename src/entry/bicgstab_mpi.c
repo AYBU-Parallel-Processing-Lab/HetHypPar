@@ -237,88 +237,81 @@ int main(int argc, char* argv[]) {  // matrix file ve part vector
     // [x] IS FREED?
     Vector R = vector_init_clone(B); // Add pieces for this
     
-    // TODO: IMPLEMENT SpMxV
-    MPI_SHARD_CSC_mpi_spmxv_seq(A, X, Y, MPI_COMM_WORLD);
+    MPI_SHARD_CSC_mpi_spmxv_seq(A, X, Y, MPI_COMM_WORLD, NULL);
     vector_sub_seq(R, Y, R);
     vector_zero(Y);
-    
-    // [x] IS FREED?
+
     Vector R_0 = vector_init_clone(R);
-    // [x] IS FREED?
     Vector S = vector_init(Y.nvals);
-    // [x] IS FREED?
     Vector T = vector_init(Y.nvals);
 
     if (mpi_rank == 0)
         printf("LOG: Finished Creating Vectors\n");
 
 //-------------------------------------------------------------------------------------------------------
-    // double times[4] = {};
+    Iter_Profile *iprof = calloc(niters, sizeof(Iter_Profile));
+
     time_stamps.spmxv_begin = omp_get_wtime();
 
     for (size_t i = 0; i < niters; i++)
     {
+        SpMV_Profile sp = {0};
+        double t_vec0 = omp_get_wtime();
+
         // calc rho_n+1
         double temp_rho = MPI_vector_dot(R, R_0, MPI_COMM_WORLD);
-        //==============
-        // calc Beta
         double beta = (temp_rho / rho) * (alpha / omega);
-        rho = temp_rho; // old rho is never used again after here
-        //==============
+        rho = temp_rho;
         // calc P_n+1
-        vector_scale_seq(V, omega, V); // Changed V
+        vector_scale_seq(V, omega, V);
         vector_sub_seq(P, V, P);
         vector_scale_seq(P, beta, P);
         vector_add_seq(P, R, P);
-        //==============
-        // calc V_n+1
-        MPI_SHARD_CSC_mpi_spmxv_seq(A, P, V, MPI_COMM_WORLD);  // result in V
-        //==============
-        // calc alpha_n+1
+
+        double t_spmv0 = omp_get_wtime();
+        MPI_SHARD_CSC_mpi_spmxv_seq(A, P, V, MPI_COMM_WORLD, &sp);
+        double t_spmv1 = omp_get_wtime();
+
+        // calc alpha, S
         alpha = rho/MPI_vector_dot(R_0, V, MPI_COMM_WORLD);
-        //==============
-        // calc S
         vector_scale_seq(V, alpha, S);
         vector_sub_seq(R, S, S);
-        //==============
-        // calc T
-        MPI_SHARD_CSC_mpi_spmxv_seq(A, S, T, MPI_COMM_WORLD);
-        //==============
-        // calc omega_n+1
+
+        double t_spmv2 = omp_get_wtime();
+        MPI_SHARD_CSC_mpi_spmxv_seq(A, S, T, MPI_COMM_WORLD, &sp);
+        double t_spmv3 = omp_get_wtime();
+
+        // calc omega, X, R, tol
         omega = MPI_vector_dot(T, S,MPI_COMM_WORLD)/MPI_vector_dot(T, T,MPI_COMM_WORLD);
-        //==============
-        // calc X_n+1
         vector_scale_seq(P, alpha, Y);
         vector_add_seq(X, Y, X);
         vector_scale_seq(S, omega, Y);
         vector_add_seq(X, Y, X);
-        //==============
-        // calc R_n+1
         vector_scale_seq(T, omega, R);
         vector_sub_seq(S, R, R);
-        //==============
-        // calc tol
         double tol = MPI_vector_dot(S, S,MPI_COMM_WORLD);
-        //==============
-    }
 
-    // // TODO: REMOVE THIS AFTER TESTING
-    // MPI_SHARD_CSC_mpi_spmxv_seq(A, X, Y, MPI_COMM_WORLD);
+        double t_vec1 = omp_get_wtime();
+
+        double spmv_total = (t_spmv1 - t_spmv0) + (t_spmv3 - t_spmv2);
+        iprof[i].spmv = spmv_total;
+        iprof[i].vector_ops = (t_vec1 - t_vec0) - spmv_total;
+        iprof[i].spmv_detail = sp;
+    }
 
     time_stamps.spmxv_end = omp_get_wtime();
     time_stamps.end = time_stamps.spmxv_end;
 
     //-------------------------------------------------------------------------------------------------------
-    // Calculate Relavtive residual (|| Ax - b || / || b ||)
+    // Calculate Relative residual (|| Ax - b || / || b ||)
 
-    MPI_SHARD_CSC_mpi_spmxv_seq(A, X, Y, MPI_COMM_WORLD);
+    MPI_SHARD_CSC_mpi_spmxv_seq(A, X, Y, MPI_COMM_WORLD, NULL);
     vector_sub_seq(B, Y, Y);
     double sy = MPI_vector_dot(Y, Y, MPI_COMM_WORLD);
     double sb = MPI_vector_dot(B, B, MPI_COMM_WORLD);
     double relative_residual = sqrt(sy/sb);
 
     //-------------------------------------------------------------------------------------------------------
-
 
     if (mpi_rank == 0){
         printf(
@@ -336,7 +329,34 @@ int main(int argc, char* argv[]) {  // matrix file ve part vector
         printf("everything_total : %lf\n",time_stamps.end - time_stamps.begin) ;
 
         printf("\n----------------------------------------------------------------------\n");
-    }   
+    }
+
+    // Per-iteration profile (all ranks print, prefixed with rank)
+    {
+        SpMV_Profile acc = {0};
+        double acc_spmv = 0, acc_vecops = 0;
+
+        printf("PROFILE_HEADER rank iter spmv vecops send_fill local_spmv comm_wait shared_spmv send_wait\n");
+        for (size_t i = 0; i < niters; i++) {
+            Iter_Profile *p = &iprof[i];
+            printf("PROFILE_ITER %d %zu %.6e %.6e %.6e %.6e %.6e %.6e %.6e\n",
+                mpi_rank, i, p->spmv, p->vector_ops,
+                p->spmv_detail.send_fill, p->spmv_detail.local_spmv,
+                p->spmv_detail.comm_wait, p->spmv_detail.shared_spmv,
+                p->spmv_detail.send_wait);
+            acc_spmv += p->spmv;
+            acc_vecops += p->vector_ops;
+            acc.send_fill += p->spmv_detail.send_fill;
+            acc.local_spmv += p->spmv_detail.local_spmv;
+            acc.comm_wait += p->spmv_detail.comm_wait;
+            acc.shared_spmv += p->spmv_detail.shared_spmv;
+            acc.send_wait += p->spmv_detail.send_wait;
+        }
+        printf("PROFILE_ACCUM %d spmv=%.6e vecops=%.6e send_fill=%.6e local_spmv=%.6e comm_wait=%.6e shared_spmv=%.6e send_wait=%.6e\n",
+            mpi_rank, acc_spmv, acc_vecops,
+            acc.send_fill, acc.local_spmv, acc.comm_wait, acc.shared_spmv, acc.send_wait);
+    }
+    free(iprof);   
 
 //-------------------------------------------------------------------------------------------------------
 

@@ -498,82 +498,66 @@ void print_vector(FILE *f, Vector v){
  *  - Y is of length A.loc.m
  *  - Y must be zeroed before this function
  */
-void MPI_SHARD_CSC_mpi_spmxv_seq(SHARD_CSC A, Vector X, Vector Y, MPI_Comm comm) {
+void MPI_SHARD_CSC_mpi_spmxv_seq(SHARD_CSC A, Vector X, Vector Y, MPI_Comm comm, SpMV_Profile *prof) {
 
     int mpi_rank;
     int mpi_size;
     MPI_CHECK(MPI_Comm_rank(comm, &mpi_rank));
     MPI_CHECK(MPI_Comm_size(comm, &mpi_size));
 
-
-    // // TODO: REMOVE AFTER DEBUG
-    // char fpath[256] = {};
-    // sprintf(fpath, "DEBUG_PRINT_Xloc_%d.txt",mpi_rank);
-    // FILE* f = fopen(fpath, "w");
-    // print_vector(f, X);
-    // fclose(f);
+    double t0, t1;
 
     vector_zero(Y);
-    
-    // [x] IS FREED?
+
     MPI_Request *recv_reqs;
     ALLOC_ARRAY(recv_reqs, A.recv.num);
-    // [x] IS FREED?
     MPI_Request *send_reqs;
     ALLOC_ARRAY(send_reqs, A.send.num);
 
-    {   // COMMUNICATE BETWEEN PROCESSES
-        
-        // fill send buffer
-        int nsend = A.send.I[A.send.num];
-        for (size_t i = 0; i < nsend; i++)
-        {
-            int idx = A.send.J[i];
-            A.send.val[i] = X.vals[idx];
-        }
+    // ── Send buffer fill + issue comms ──
+    t0 = omp_get_wtime();
 
-        // ISSUE SENDS
-        for (size_t i = 0; i < A.send.num; i++)
-        {
-            int js = A.send.I[i];
-            int je = A.send.I[i+1];
-            int recipient = A.send.ranks[i];
-            int nsend = je - js;
-
-            MPI_CHECK( MPI_Isend( A.send.val + js, nsend, MPI_DOUBLE, recipient, 0, comm, send_reqs + i) );
-        }
-
-        // ISSUE RECVS
-        for (size_t i = 0; i < A.recv.num; i++)
-        {
-            int js = A.recv.I[i];
-            int je = A.recv.I[i+1];
-            int sender = A.recv.ranks[i];
-            int nrecv = je - js;
-
-            MPI_CHECK(MPI_Irecv(A.recv.val + js, nrecv, MPI_DOUBLE, sender, 0, comm, recv_reqs + i));
-        }
+    int nsend = A.send.I[A.send.num];
+    for (size_t i = 0; i < nsend; i++)
+    {
+        int idx = A.send.J[i];
+        A.send.val[i] = X.vals[idx];
     }
 
-
-    {   // LOCAL SpMxV
-        CSC_spmxv_seq_acc(A.loc, X, Y);
+    for (size_t i = 0; i < A.send.num; i++)
+    {
+        int js = A.send.I[i];
+        int je = A.send.I[i+1];
+        int recipient = A.send.ranks[i];
+        int nsend = je - js;
+        MPI_CHECK( MPI_Isend( A.send.val + js, nsend, MPI_DOUBLE, recipient, 0, comm, send_reqs + i) );
     }
 
+    for (size_t i = 0; i < A.recv.num; i++)
+    {
+        int js = A.recv.I[i];
+        int je = A.recv.I[i+1];
+        int sender = A.recv.ranks[i];
+        int nrecv = je - js;
+        MPI_CHECK(MPI_Irecv(A.recv.val + js, nrecv, MPI_DOUBLE, sender, 0, comm, recv_reqs + i));
+    }
 
-    // // TODO: REMOVE AFTER DEBUG
-    // sprintf(fpath, "DEBUG_PRINT_Ylocloc_%d.txt",mpi_rank);
-    // f = fopen(fpath, "w");
-    // print_vector(f, Y);
-    // fclose(f);
+    t1 = omp_get_wtime();
+    if (prof) prof->send_fill += t1 - t0;
 
+    // ── Local SpMxV ──
+    t0 = omp_get_wtime();
+    CSC_spmxv_seq_acc(A.loc, X, Y);
+    t1 = omp_get_wtime();
+    if (prof) prof->local_spmv += t1 - t0;
+
+    // ── Wait for receives + shared SpMxV ──
+    t0 = omp_get_wtime();
     for (size_t received=0; received < A.recv.num; received++)
-    {   // SHARED SpMxV
-
+    {
         int recv_idx;
         MPI_CHECK(MPI_Waitany(A.recv.num, recv_reqs, &recv_idx, MPI_STATUS_IGNORE));
 
-        // SpMxV on the Received columns
         int is = A.recv.I[recv_idx];
         int ie = A.recv.I[recv_idx+1];
         for (size_t i = is; i < ie; i++)
@@ -586,16 +570,19 @@ void MPI_SHARD_CSC_mpi_spmxv_seq(SHARD_CSC A, Vector X, Vector Y, MPI_Comm comm)
             }
         }
     }
-    FREE_AND_NULL(recv_reqs);
-    
-    MPI_CHECK(MPI_Waitall(A.send.num, send_reqs, MPI_STATUSES_IGNORE));
-    FREE_AND_NULL(send_reqs);
+    t1 = omp_get_wtime();
+    // comm_wait and shared_spmv are interleaved in Waitany loop; report combined
+    if (prof) prof->comm_wait += t1 - t0;
 
-    // // TODO: REMOVE AFTER DEBUG
-    // sprintf(fpath, "DEBUG_PRINT_Yloc_%d.txt",mpi_rank);
-    // f = fopen(fpath, "w");
-    // print_vector(f, Y);
-    // fclose(f);
+    FREE_AND_NULL(recv_reqs);
+
+    // ── Wait for sends ──
+    t0 = omp_get_wtime();
+    MPI_CHECK(MPI_Waitall(A.send.num, send_reqs, MPI_STATUSES_IGNORE));
+    t1 = omp_get_wtime();
+    if (prof) prof->send_wait += t1 - t0;
+
+    FREE_AND_NULL(send_reqs);
 
     return;
 }
