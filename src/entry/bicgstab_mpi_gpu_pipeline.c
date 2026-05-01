@@ -550,31 +550,15 @@ int main(int argc, char* argv[]) {  // matrix file ve part vector
                 MPI_SHARD_CSC_mpi_spmxv_seq(A, W, T, MPI_COMM_WORLD, NULL); // t = A*w
             }
 
-            // p = r + beta * (p_prev - omega * s_prev)
-            vector_scale_seq(S_prev, -omega, P);
-            vector_add_seq(P_prev, P, P);
-            vector_scale_seq(P, beta, P);
-            vector_add_seq(R, P, P);
-            
-            // s = w + beta * (s_prev - omega * z_prev)
-            vector_scale_seq(Z_prev, -omega, S);
-            vector_add_seq(S_prev, S, S);
-            vector_scale_seq(S, beta, S);
-            vector_add_seq(W, S, S);
-            
-            // z = t + beta * (z_prev - omega * v_prev)
-            vector_scale_seq(V_prev, -omega, Z);
-            vector_add_seq(Z_prev, Z, Z);
-            vector_scale_seq(Z, beta, Z);
-            vector_add_seq(T, Z, Z);
-            
-            // q = r - alpha * s
-            vector_scale_seq(S, -alpha, Q);
-            vector_add_seq(R, Q, Q);
-            
-            // y = w - alpha * z
-            vector_scale_seq(Z, -alpha, Y);
-            vector_add_seq(W, Y, Y);
+            // FUSED LOOP 1: Calculate P, S, Z, Q, Y in one pass
+            #pragma omp parallel for
+            for(size_t k = 0; k < B.nvals; k++) {
+                P.vals[k] = R.vals[k] + beta * (P_prev.vals[k] - omega * S_prev.vals[k]);
+                S.vals[k] = W.vals[k] + beta * (S_prev.vals[k] - omega * Z_prev.vals[k]);
+                Z.vals[k] = T.vals[k] + beta * (Z_prev.vals[k] - omega * V_prev.vals[k]);
+                Q.vals[k] = R.vals[k] - alpha * S.vals[k];
+                Y.vals[k] = W.vals[k] - alpha * Z.vals[k];
+            }
 
             // Global reduction 1
             double local_dots1[2];
@@ -593,22 +577,13 @@ int main(int argc, char* argv[]) {  // matrix file ve part vector
             MPI_Wait(&req1, MPI_STATUS_IGNORE);
             omega = global_dots1[0] / global_dots1[1];
             
-            // x = x + alpha * p + omega * q
-            Vector temp = vector_init(B.nvals);
-            vector_scale_seq(P, alpha, temp);
-            vector_add_seq(X, temp, X);
-            vector_scale_seq(Q, omega, temp);
-            vector_add_seq(X, temp, X);
-            
-            // r_next = q - omega * y
-            vector_scale_seq(Y, -omega, R_next);
-            vector_add_seq(Q, R_next, R_next);
-            
-            // w_next = y - omega * (t - alpha * v)
-            vector_scale_seq(V, -alpha, W_next);
-            vector_add_seq(T, W_next, W_next);
-            vector_scale_seq(W_next, -omega, W_next);
-            vector_add_seq(Y, W_next, W_next);
+            // FUSED LOOP 2: Calculate X, R_next, W_next in one pass
+            #pragma omp parallel for
+            for(size_t k = 0; k < B.nvals; k++) {
+                X.vals[k] = X.vals[k] + alpha * P.vals[k] + omega * Q.vals[k];
+                R_next.vals[k] = Q.vals[k] - omega * Y.vals[k];
+                W_next.vals[k] = Y.vals[k] - omega * (T.vals[k] - alpha * V.vals[k]);
+            }
 
             // Global reduction 2
             double local_dots2[4];
@@ -637,17 +612,16 @@ int main(int argc, char* argv[]) {  // matrix file ve part vector
             alpha = r0_dot_r_next / (r0_dot_w_next + beta * r0_dot_s - beta * omega * r0_dot_z);
             r0_dot_r = r0_dot_r_next;
             
-            // Rotate vectors
-            memcpy(P_prev.vals, P.vals, P.nvals * sizeof(double));
-            memcpy(S_prev.vals, S.vals, S.nvals * sizeof(double));
-            memcpy(Z_prev.vals, Z.vals, Z.nvals * sizeof(double));
-            memcpy(V_prev.vals, V.vals, V.nvals * sizeof(double));
+            // Rotate vectors using zero-copy pointer swaps
+            double* tmp_ptr;
+            tmp_ptr = P_prev.vals; P_prev.vals = P.vals; P.vals = tmp_ptr;
+            tmp_ptr = S_prev.vals; S_prev.vals = S.vals; S.vals = tmp_ptr;
+            tmp_ptr = Z_prev.vals; Z_prev.vals = Z.vals; Z.vals = tmp_ptr;
+            tmp_ptr = V_prev.vals; V_prev.vals = V.vals; V.vals = tmp_ptr;
             
-            memcpy(R.vals, R_next.vals, R.nvals * sizeof(double));
-            memcpy(W.vals, W_next.vals, W.nvals * sizeof(double));
-            memcpy(T.vals, T_next.vals, T.nvals * sizeof(double));
-            
-            vector_destroy(&temp);
+            tmp_ptr = R.vals; R.vals = R_next.vals; R_next.vals = tmp_ptr;
+            tmp_ptr = W.vals; W.vals = W_next.vals; W_next.vals = tmp_ptr;
+            tmp_ptr = T.vals; T.vals = T_next.vals; T_next.vals = tmp_ptr;
 
             double t_vec1 = omp_get_wtime();
             double spmv_total = (t_spmv1 - t_spmv0) + (t_spmv3 - t_spmv2);
