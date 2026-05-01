@@ -63,10 +63,13 @@ add_executable(bicgstab-cpu entry/bicgstab_cpu.c)
 add_executable(bicgstab-mpi entry/bicgstab_mpi.c)
 add_executable(bicgstab-gpu entry/bicgstab_gpu.c)
 add_executable(bicgstab-mpi-gpu entry/bicgstab_mpi_gpu.c)
+add_executable(bicgstab-mpi-gpu-pipeline entry/bicgstab_mpi_gpu_pipeline.c)
+target_compile_options(bicgstab-mpi-gpu-pipeline PRIVATE -g -O0)
 
 target_link_libraries(bicgstab-cpu inner_lib)
 target_link_libraries(bicgstab-mpi inner_lib)
 target_link_libraries(bicgstab-mpi-gpu inner_lib)
+target_link_libraries(bicgstab-mpi-gpu-pipeline inner_lib)
 target_link_libraries(bicgstab-gpu inner_lib)
 
 add_subdirectory(tests)
