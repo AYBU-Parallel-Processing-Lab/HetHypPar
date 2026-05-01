@@ -14,7 +14,7 @@ function process_matrix()
         fprintf('Processing matrix: %s\n', matname);
 
         % Construct input matrix path
-        matrix_path = sprintf("/matrices/%s.mtx", matname);
+        matrix_path = sprintf("data/matrices/%s.mtx", matname);
 
         % Check if matrix file exists
         if ~exist(matrix_path, 'file')
