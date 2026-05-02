@@ -32,3 +32,23 @@ rm -rf build/;
 cmake -S src -B build -G Ninja;
 cmake --build build;
 ```
+
+## Running
+
+### Exports openmpi to LD_LIBRARY_PATH
+```
+export LD_LIBRARY_PATH=/usr/lib64/openmpi/lib:$LD_LIBRARY_PATH 
+```
+
+### Run the solver
+```
+mpirun --report-bindings -bind-to core -n 2 \
+./build/bicgstab-mpi-gpu \
+-g data/matrices/circuit5M_dc/in/is_gpu.txt \
+-m data/matrices/circuit5M_dc/in/circuit5M_dc.mtx \
+-n 100 \
+-o data/matrices/circuit5M_dc/out/X_mpi_gpu_pipe.txt \
+-p data/matrices/circuit5M_dc/in/row_part_2 \
+-x data/matrices/circuit5M_dc/in/X_init.txt \
+-y data/matrices/circuit5M_dc/in/B.txt
+```
