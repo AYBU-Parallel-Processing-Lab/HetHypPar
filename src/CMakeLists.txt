@@ -38,6 +38,8 @@ set(C_SOURCE_FILES
 include_directories(
     include
     ${CUDAToolkit_INCLUDE_DIRS}
+    ${MPI_C_INCLUDE_DIRS}
+    /usr/include/openmpi-x86_64
 )
 
 link_libraries(
@@ -64,12 +66,20 @@ add_executable(bicgstab-mpi entry/bicgstab_mpi.c)
 add_executable(bicgstab-gpu entry/bicgstab_gpu.c)
 add_executable(bicgstab-mpi-gpu entry/bicgstab_mpi_gpu.c)
 add_executable(bicgstab-mpi-gpu-pipeline entry/bicgstab_mpi_gpu_pipeline.c)
+add_executable(bicgstab-mpi-gpu-fusion entry/bicgstab_mpi_gpu_fusion.cu)
+add_executable(bicgstab-mpi-gpu-pipeline-fusion entry/bicgstab_mpi_gpu_pipeline_fusion.cu)
+
 target_compile_options(bicgstab-mpi-gpu-pipeline PRIVATE -g -O0)
+target_compile_options(bicgstab-mpi-gpu-fusion PRIVATE -g -O3)
+target_include_directories(bicgstab-mpi-gpu-fusion PRIVATE ${MPI_C_INCLUDE_DIRS} /usr/include/openmpi-x86_64)
+target_include_directories(bicgstab-mpi-gpu-pipeline-fusion PRIVATE ${MPI_C_INCLUDE_DIRS} /usr/include/openmpi-x86_64)
 
 target_link_libraries(bicgstab-cpu inner_lib)
 target_link_libraries(bicgstab-mpi inner_lib)
 target_link_libraries(bicgstab-mpi-gpu inner_lib)
 target_link_libraries(bicgstab-mpi-gpu-pipeline inner_lib)
+target_link_libraries(bicgstab-mpi-gpu-fusion inner_lib)
+target_link_libraries(bicgstab-mpi-gpu-pipeline-fusion inner_lib)
 target_link_libraries(bicgstab-gpu inner_lib)
 
 add_subdirectory(tests)

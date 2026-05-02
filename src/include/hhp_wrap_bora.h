@@ -3,6 +3,9 @@
 #include "hhp_common.h"
 #include "bora_spmxv.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
 /* Aout is the partitioned matrix after the distribution.
  * Ain is the CSC matrix read using our functions. Only defined in Master node.
  * partScheme can bee either PART_BY_ROWS or PART_BY_COLUMNS.
@@ -29,3 +32,6 @@ void readMatrixMarketFromMemory(buMatrix *Aout, const CSR Ain, int partScheme, i
                 int const*const outpart);
 
 void readMatrixMarketFromFile(buMatrix *A, char *fname);
+#ifdef __cplusplus
+}
+#endif

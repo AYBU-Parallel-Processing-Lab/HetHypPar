@@ -3,6 +3,9 @@
 #include "hhp_common.h"
 #include "mpi.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
 Vector vector_init(unsigned int nvals);
 iVector ivector_init(unsigned int nvals);
 Vector vector_init_const(unsigned int nvals, const double val);
@@ -29,3 +32,6 @@ void MPI_vector_gather(Vector loc, Vector big, iVector gind, int root, MPI_Comm 
 void CSR_spmxv_seq(CSR A, Vector X, Vector out);
 void CSR_spmxv_seq_acc(CSR A, Vector X, Vector Y);
 void MPI_SHARD_CSC_mpi_spmxv_seq(SHARD_CSC A, Vector X, Vector Y, MPI_Comm comm, SpMV_Profile *prof);
+#ifdef __cplusplus
+}
+#endif

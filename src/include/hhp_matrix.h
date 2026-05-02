@@ -3,6 +3,9 @@
 
 #include <hhp_common.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
 CSC ReadSparseMatrix(char *fname);
 int *CalcPartVec(int nparts, const CSC *cscmatrix, const CSR *csrmatrix,char * fName, double final_imbal, int seed , char* resultFName);
 
@@ -22,3 +25,7 @@ SHARD_CSC MPI_CSR_split_row(CSR big, iVector partvec);
 void SHARD_CSC_destroy(SHARD_CSC *A);
 
 #endif /* B07E3622_7549_4990_91E6_440BF5799438 */
+
+#ifdef __cplusplus
+}
+#endif

@@ -3,7 +3,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define ABORT(message, args...)                                                 \
+#ifdef __cplusplus
+extern "C" {
+#endif
+#define ABORT(message, args...) \
   {                                                                             \
     fprintf(stderr, "ABORT [%s:%d]: " message "\n",__FILE__, __LINE__, ##args); \
     exit(EXIT_FAILURE);                                                         \
@@ -123,3 +126,7 @@ static inline size_t st_mult(size_t a, size_t b) {
         MPI_Abort(MPI_COMM_WORLD, _mpi_err); \
     } \
 } while(0)
+
+#ifdef __cplusplus
+}
+#endif

@@ -2,6 +2,9 @@
 
 #include "bora_spmxv.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
 /*define message tags*/
 #define SZDATA 1
 #define INPART 2
@@ -34,3 +37,7 @@ void readMatrixPartsV(int *outPart, int gloRowCnt, int *inPart, int gloColCnt,
                       int partScheme);
 
 
+
+#ifdef __cplusplus
+}
+#endif

@@ -2,6 +2,9 @@
 
 #include "mpi.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
 typedef enum {
   STORE_BY_COLUMNS,
   STORE_BY_ROWS,
@@ -98,7 +101,7 @@ typedef struct{
 void mxv(parMatrix *A, buVector *x, buVector *y, MPI_Comm parentComm);
 
 double normv(buVector *v);
-double norm(double *v, int n);
+double bora_norm(double *v, int n);
 
 void scv(buVector *v, double c, buVector *w);
 
@@ -171,3 +174,7 @@ void setup2D(int *rowIndices, int *colIndices, double *val, int indexCnt, /*coor
 	     comm *ins, comm *outs,
 	     MPI_Comm parentComm	     
 	    );
+
+#ifdef __cplusplus
+}
+#endif

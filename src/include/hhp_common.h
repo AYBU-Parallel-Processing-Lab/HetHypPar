@@ -1,9 +1,17 @@
 #pragma once
 
+#ifdef __cplusplus
+#define restrict __restrict__
+#endif
+
+
 #include "stdlib.h"
 #include "hhp_util.h"
 #include <cusparse.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
 typedef struct {
     double * restrict vals;
     unsigned int nvals;
@@ -207,3 +215,7 @@ static inline void freeSparseMatrix(COO *in){
     FREE_AND_NULL_IF(in->val);
 }
 
+
+#ifdef __cplusplus
+}
+#endif
