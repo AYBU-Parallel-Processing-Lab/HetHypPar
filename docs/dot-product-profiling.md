@@ -258,10 +258,23 @@ micromamba run -n octave python tools/python/compare_devptr_hybrid.py --iters 10
 |--------|--------|---------:|----------------:|--------------:|:--------------------:|:------------------------:|
 | cage11 | w2720 | 0.1843 | 0.1879 | **0.1594** | 1.18× | **1.16×** |
 | cage12 | w800  | 0.3770 | 0.3519 | **0.3109** | 1.13× | **1.21×** |
-| rma10  | w400  | 0.3398 | 0.2991 | **0.2639** | 1.13× | **1.29×** |
+| rma10† | w400  | 0.3398 | 0.2991 | **0.2639** | 1.13× | **1.29×** |
 
-Correctness: bit-identical to the baseline hybrid where values stay finite —
-cage11 at 30 iters gives residual `2.631329E-16` for both, `max|dX| = 0.0`.
+† **rma10 does NOT converge** — unpreconditioned BiCGStab is unstable on it; the
+residual grows and pure-GPU goes NaN by ~iter 80. Its numbers are *per-iteration
+throughput only* (the per-iteration GPU work is value-independent), not a solved
+system. `hybrid_dp` stays bit-identical to the baseline hybrid even there
+(`max|dX|=0`), but pure-GPU vs hybrid trajectories diverge because an unstable
+iteration amplifies the legitimate rounding difference between the whole-matrix
+cuSPARSE SpMV and the permuted split SpMV. Treat rma10 as a timing probe, not a
+correctness/speedup result.
+
+Correctness (converging matrices, bit-identical to baseline hybrid AND pure-GPU):
+| Matrix | iters | residual (all three) | max\|dX\| hyb-vs-dp | max\|dX\| gpu-vs-dp |
+|--------|------:|----------------------|--------------------:|--------------------:|
+| cage11 | 40 | 2.63e-16 | 0.0 | 0.0 |
+| cage12 | 40 | 2.38e-16 | 0.0 | 0.0 |
+| cage13 | 40 | 2.59e-16 | 0.0 | 0.0 |
 
 ### Takeaways
 
@@ -274,10 +287,30 @@ cage11 at 30 iters gives residual `2.631329E-16` for both, `max|dX| = 0.0`.
 - Best single-GPU speedup across the suite went from **1.14×** (rma10, baseline
   hybrid) to **1.29×**, and all three matrices now beat pure GPU.
 
+### Weight re-sweep for the dp-hybrid (convergent matrices)
+
+Once the dot tax is removed the iteration is relatively more SpMV-bound, so the
+optimal CPU/GPU split can move toward more CPU. Swept best-of-2, 1000 iters,
+`tools/python/sweep_devptr_hybrid.py`, vs pure-GPU:
+
+| Matrix | pure-GPU | best weight | hybrid-dp | speedup | shift vs host-ptr optimum |
+|--------|---------:|-------------|----------:|:-------:|---------------------------|
+| cage11 | 184.5 ms | w2720 | 160.1 ms | **1.152×** | unchanged (wants max GPU) |
+| cage12 | 376.4 ms | w600  | 312.7 ms | **1.204×** | w800 → w600 (more CPU) |
+| cage13 | 1058.8 ms| w500  | 906.6 ms | **1.168×** | new; optimum at w500 (CPU-heavy) |
+
+- cage12/cage13 shifted toward more CPU as predicted — broad interior optima
+  (w400–w800 within ~1% of best).
+- cage11 did not shift: it is the sparsest, so the CPU can't offload enough to
+  beat the full-vector D→H transfer cost; it wants max GPU (optimum likely past
+  w2720, the edge of the available partitions).
+- Honest headline: **1.15–1.20× over pure-GPU on genuinely-solved systems**
+  (cage11/12/13). The earlier 1.29× leaned on non-converging rma10.
+
 ### Next
 
 - Fuse `T·S`/`T·T` (shared operand `T`) into one batched reduction.
 - Evaluate pipelined / communication-avoiding BiCGStab to cut the reduction
   count further.
-- Re-sweep CPU/GPU weights for the dp-hybrid — the optimum may shift now that the
-  dot tax is largely gone (e.g. cage11 may prefer more CPU than w2720).
+- Generate finer partitions below w400 / above w2720 to bracket the true optima
+  (cage11 high end, cage12/13 low end).
