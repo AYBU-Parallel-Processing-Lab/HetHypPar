@@ -33,6 +33,7 @@ set(C_SOURCE_FILES
   util/hhp_wrap_bora.c
   util/hhp_cpu.c
   util/hhp_cuda.c
+  util/hhp_dp_kernels.cu
 )
 
 include_directories(
@@ -62,6 +63,7 @@ add_library(inner_lib STATIC ${C_SOURCE_FILES})
 add_executable(bicgstab-cpu entry/bicgstab_cpu.c)
 add_executable(bicgstab-mpi entry/bicgstab_mpi.c)
 add_executable(bicgstab-gpu entry/bicgstab_gpu.c)
+add_executable(bicgstab-gpu-dp entry/bicgstab_gpu_dp.c)
 add_executable(bicgstab-mpi-gpu entry/bicgstab_mpi_gpu.c)
 add_executable(bicgstab-mpi-gpu-mt entry/bicgstab_mpi_gpu_mt.c)
 add_executable(bicgstab-hybrid-async entry/bicgstab_hybrid_async.c)
@@ -79,6 +81,7 @@ target_link_libraries(bicgstab-mpi-gpu inner_lib)
 target_link_libraries(bicgstab-mpi-gpu-mt inner_lib)
 target_link_libraries(bicgstab-hybrid-async inner_lib)
 target_link_libraries(bicgstab-gpu inner_lib)
+target_link_libraries(bicgstab-gpu-dp inner_lib)
 target_link_libraries(spmv-cpu inner_lib)
 target_link_libraries(spmv-cpu-mt inner_lib)
 target_link_libraries(spmv-cpu-mkl inner_lib)

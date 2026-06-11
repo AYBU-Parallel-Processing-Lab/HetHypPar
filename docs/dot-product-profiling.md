@@ -49,14 +49,20 @@ The 5 dots/iter are: `R·R₀`, `R₀·V`, `T·S`, `T·T`, `S·S`. The 2 SpMVs/i
 
 ### Best hybrid speedup vs pure-GPU (clean loop time)
 
+Sweep extended down to w400/w600 (more CPU rows). The BiCGStab optimum sits at
+*lower* weight (more CPU) than the original w800–w2720 range suggested:
+
 | Matrix | Best weight | hybrid total | gpu total | **speedup** |
 |--------|-------------|-------------:|----------:|------------:|
-| cage11 | w2720 | 191.1 ms | 184.4 ms | **0.965×** (never wins) |
-| cage12 | w800  | 353.4 ms | 377.5 ms | **1.068×** |
-| rma10  | w800  | 315.4 ms | 339.6 ms | **1.077×** |
+| cage11 | w2720 | 191.3 ms | 184.7 ms | **0.965×** (never wins) |
+| cage12 | w800  | 354.2 ms | 378.0 ms | **1.067×** |
+| rma10  | w400  | 299.6 ms | 339.9 ms | **1.135×** (w100 ≈ 1.140×, flat optimum) |
 
-(Pure-SpMV hybrid speedups are higher — rma10 w800 **1.098×**, cage12 w800
-**1.074×** — because SpMV has no dot/sync tax. See `breakdown.tsv`.)
+Note the BiCGStab optimum differs from the SpMV-only optimum: SpMV-only always
+prefers more CPU (rma10 w400 **1.189×**, cage12 w400 **1.175×**), because the
+extra dot/vec work in BiCGStab runs full-size on the GPU regardless and the CPU
+rows only help the SpMV share. cage11 never wins — it is the sparsest, so its
+SpMV share (the only thing the CPU offloads) is smallest. See `breakdown.tsv`.
 
 ## Takeaways
 
@@ -145,6 +151,29 @@ cublasDaxpy(bh, n, d_neg_alpha, V.vals,1, S.vals,1);     // reads scale from dev
 // ... host syncs only every k iters to read the residual for the stop test
 ```
 
+### Why it's faster: the per-iteration timeline
+
+The CPU drives the GPU by pushing commands into a stream and normally runs ahead
+without waiting. A host-pointer dot breaks that: the scalar result must land in
+CPU memory, so cuBLAS launches the reduction, **waits for the GPU**, and copies
+one number back — the CPU call blocks and the GPU drains. BiCGStab has 5 dots,
+so 5 such stalls per iteration:
+
+```
+baseline (host-pointer, 5 stalls/iter):
+  dot🛑 βcalc  vec  SpMV  dot🛑  vec  SpMV  dot🛑 dot🛑  vec  dot🛑
+     └ CPU frozen, GPU idle on a 1-number round-trip ┘   (×5 every iteration)
+
+prototype (device-pointer, 0 stalls/iter):
+  dot✅ βkern✅ vec✅ SpMV✅ dot✅ αkern✅ vec✅ SpMV✅ dot✅ dot✅ ωkern✅ vec✅ dot✅
+     └──── all queued back-to-back; GPU streams through; CPU syncs ONCE after the loop ────┘
+```
+
+The dot *results* (and the `beta/alpha/omega` derived from them) stay on the GPU;
+the tiny scalar kernels do the arithmetic the CPU used to do, and the following
+`scal`/`axpy` read their scale factors straight from device memory. Same math,
+no round-trips.
+
 ### Scope / risk
 
 - Device storage for ~8 scalars (`rho, rho_prev, alpha, omega, beta, -alpha,
@@ -155,3 +184,61 @@ cublasDaxpy(bh, n, d_neg_alpha, V.vals,1, S.vals,1);     // reads scale from dev
   timing runs.
 - Complementary to fusing `T·S`/`T·T` and to pipelined BiCGStab — do this first
   because the data shows the binding cost is sync latency, which this removes.
+
+## Prototype results: device-pointer-mode dots (pure GPU)
+
+Implemented and measured. The prototype is `bicgstab-gpu-dp`
+(`src/entry/bicgstab_gpu_dp.c`) with on-device scalar kernels in
+`src/util/hhp_dp_kernels.cu`; the baseline is the unchanged `bicgstab-gpu`.
+
+### Reproduce
+
+```bash
+# Build the kernels for the GPU's NATIVE arch (see gotcha below)
+cmake -S src -B build -G Ninja -DCMAKE_CUDA_ARCHITECTURES=86
+cmake --build build --target bicgstab-gpu bicgstab-gpu-dp
+micromamba run -n octave python tools/python/compare_devptr.py --iters 1000 --repeats 4
+```
+
+### Speedup (best-of-4, 1000 iters, RTX 3070)
+
+| Matrix | dot % (baseline) | baseline | devptr | **speedup** |
+|--------|-----------------:|---------:|-------:|------------:|
+| cage11 | 40.6 | 0.184 s | 0.152 s | **1.21×** |
+| cage12 | 29.6 | 0.377 s | 0.331 s | **1.13×** |
+| rma10  | 22.6 | 0.339 s | 0.308 s | **1.10×** |
+
+The speedup tracks the dot fraction exactly as predicted: the matrix that spent
+the most time in dots (cage11, 40.6%) gains the most. Removing the 5 host syncs
+cut 10–17% off the whole BiCGStab loop.
+
+### Correctness
+
+The device-pointer math is **identical** to the baseline — verified bit-for-bit
+where values stay finite:
+- cage11 converges to residual 2.63e-16 by iter 30; baseline and devptr match to
+  the last digit, `max|X_base − X_dp| = 0.0`.
+- bips07_1693 (ill-conditioned, residual grows): identical residual at 50/200
+  iters, `max|dX| = 0.0`.
+
+(The fixed 1000-iteration timing runs deliberately iterate past convergence for
+stable per-iteration averages; cage11/cage12/rma10 then break down to NaN — a
+0/0 in the scalar updates, identical in both binaries and harmless to timing,
+since per-iteration GPU cost is value-independent. Use a stopping criterion for
+production solves.)
+
+### Gotcha: compile kernels for the native arch
+
+The build default was `CMAKE_CUDA_ARCHITECTURES=75` but the RTX 3070 is sm_86.
+With sm_75 kernels the *first* launch JIT-compiles inside the timed loop and
+adds ~0.4 s — which made cage11 (smallest, fastest loop) look 3× *slower* before
+rebuilding with `-DCMAKE_CUDA_ARCHITECTURES=86`. cuBLAS/cuSPARSE ship native
+fat binaries so the baseline never paid this; only the custom kernels did.
+
+### Next
+
+- **Port to the hybrid solver** (`bicgstab-hybrid-async`) — same change, applied
+  on top of the CPU/GPU SpMV overlap. The hybrid currently tops out at 1.14×
+  (rma10 w400); the dots are still full-size GPU work there, so device-pointer
+  mode should stack on top.
+- Then fuse `T·S`/`T·T` and evaluate pipelined BiCGStab.
