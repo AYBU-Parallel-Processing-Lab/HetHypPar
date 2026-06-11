@@ -235,10 +235,49 @@ adds ~0.4 s — which made cage11 (smallest, fastest loop) look 3× *slower* bef
 rebuilding with `-DCMAKE_CUDA_ARCHITECTURES=86`. cuBLAS/cuSPARSE ship native
 fat binaries so the baseline never paid this; only the custom kernels did.
 
+## Prototype results: device-pointer-mode dots in the HYBRID solver
+
+The same change ported onto the CPU+GPU hybrid (`bicgstab-hybrid-async-dp`,
+`src/entry/bicgstab_hybrid_async_dp.c`), reusing the identical scalar kernels.
+The hybrid keeps its 2 unavoidable host syncs/iter inside `hybrid_spmv` (the CPU
+must read each SpMV input) — device-pointer mode only removes the 5 dot syncs —
+so the gain is expected to be smaller than pure-GPU, but it stacks on top of the
+SpMV overlap.
+
+### Reproduce
+
+```bash
+cmake -S src -B build -G Ninja -DCMAKE_CUDA_ARCHITECTURES=86
+cmake --build build --target bicgstab-gpu bicgstab-hybrid-async bicgstab-hybrid-async-dp
+micromamba run -n octave python tools/python/compare_devptr_hybrid.py --iters 1000 --repeats 3
+```
+
+### Results (best-of-3, 1000 iters, RTX 3070, seconds)
+
+| Matrix | weight | pure-GPU | baseline hybrid | **hybrid-dp** | dp / baseline-hybrid | **hybrid-dp / pure-GPU** |
+|--------|--------|---------:|----------------:|--------------:|:--------------------:|:------------------------:|
+| cage11 | w2720 | 0.1843 | 0.1879 | **0.1594** | 1.18× | **1.16×** |
+| cage12 | w800  | 0.3770 | 0.3519 | **0.3109** | 1.13× | **1.21×** |
+| rma10  | w400  | 0.3398 | 0.2991 | **0.2639** | 1.13× | **1.29×** |
+
+Correctness: bit-identical to the baseline hybrid where values stay finite —
+cage11 at 30 iters gives residual `2.631329E-16` for both, `max|dX| = 0.0`.
+
+### Takeaways
+
+- **Device-pointer dots stack on the hybrid**, adding **1.13–1.18×** on top of
+  the SpMV overlap — a touch better than expected given the 2 surviving SpMV
+  syncs.
+- **cage11 flips from a loss to a win.** Baseline hybrid was **0.965×** (slower
+  than pure GPU); with device-pointer dots it is **1.16×**. The most
+  dot-dominated matrix (40% dots) gained the most from removing the dot syncs.
+- Best single-GPU speedup across the suite went from **1.14×** (rma10, baseline
+  hybrid) to **1.29×**, and all three matrices now beat pure GPU.
+
 ### Next
 
-- **Port to the hybrid solver** (`bicgstab-hybrid-async`) — same change, applied
-  on top of the CPU/GPU SpMV overlap. The hybrid currently tops out at 1.14×
-  (rma10 w400); the dots are still full-size GPU work there, so device-pointer
-  mode should stack on top.
-- Then fuse `T·S`/`T·T` and evaluate pipelined BiCGStab.
+- Fuse `T·S`/`T·T` (shared operand `T`) into one batched reduction.
+- Evaluate pipelined / communication-avoiding BiCGStab to cut the reduction
+  count further.
+- Re-sweep CPU/GPU weights for the dp-hybrid — the optimum may shift now that the
+  dot tax is largely gone (e.g. cage11 may prefer more CPU than w2720).
