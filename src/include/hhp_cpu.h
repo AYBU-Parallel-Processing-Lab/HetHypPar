@@ -27,5 +27,7 @@ double MPI_vector_dot(Vector vecA, Vector vecB, MPI_Comm comm);
 void MPI_vector_gather(Vector loc, Vector big, iVector gind, int root, MPI_Comm comm);
 
 void CSR_spmxv_seq(CSR A, Vector X, Vector out);
+void CSR_spmxv_omp(CSR A, Vector X, Vector out);
 void CSR_spmxv_seq_acc(CSR A, Vector X, Vector Y);
 void MPI_SHARD_CSC_mpi_spmxv_seq(SHARD_CSC A, Vector X, Vector Y, MPI_Comm comm, SpMV_Profile *prof);
+void MPI_SHARD_CSC_mpi_spmxv_omp(SHARD_CSC A, CSR loc_csr, Vector X, Vector Y, MPI_Comm comm, SpMV_Profile *prof);

@@ -1437,6 +1437,42 @@ void COMM_destroy(COMM *c){
  * @param csr Input matrix in CSR format
  * @return A new matrix in CSC format, or NULL on failure
  */
+// SHARD-convention CSC (.I = colptr[n+1], .J = rowidx[nnz]) -> CSR.
+CSR SHARD_loc_CSC_to_CSR(CSC in) {
+  CSR out = {.nnz = in.nnz, .m = in.m, .n = in.n};
+  CALLOC_ARRAY(out.I, in.m + 1);
+  ALLOC_ARRAY(out.J, in.nnz > 0 ? in.nnz : 1);
+  ALLOC_ARRAY(out.val, in.nnz > 0 ? in.nnz : 1);
+
+  int *cnt;
+  CALLOC_ARRAY(cnt, in.m);
+
+  // Count nonzeros per row.
+  for (int c = 0; c < in.n; c++)
+    for (int j = in.I[c]; j < in.I[c + 1]; j++)
+      cnt[in.J[j]]++;
+
+  // Prefix-sum into row pointers; reuse cnt as fill cursor.
+  out.I[0] = 0;
+  for (int i = 0; i < in.m; i++) {
+    out.I[i + 1] = out.I[i] + cnt[i];
+    cnt[i] = 0;
+  }
+
+  // Scatter entries into CSR order.
+  for (int c = 0; c < in.n; c++) {
+    for (int j = in.I[c]; j < in.I[c + 1]; j++) {
+      int r = in.J[j];
+      int idx = out.I[r] + cnt[r]++;
+      out.J[idx] = c;
+      out.val[idx] = in.val[j];
+    }
+  }
+
+  FREE_AND_NULL(cnt);
+  return out;
+}
+
  CSC CSR_to_CSC(CSR csr) {
   CSC csc = {.I = NULL,
              .J = NULL,

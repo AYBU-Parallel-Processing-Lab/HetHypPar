@@ -235,6 +235,20 @@ cusparseStatus_t device_csr_spmv(cusparseHandle_t handle, Device_CSR mat, Device
     return CUSPARSE_STATUS_SUCCESS;
 }
 
+// Async variant: enqueues the SpMV and returns immediately WITHOUT syncing,
+// so the host can do other work (e.g. a concurrent CPU SpMV) while the GPU
+// computes. The caller is responsible for cudaDeviceSynchronize().
+cusparseStatus_t device_csr_spmv_async(cusparseHandle_t handle, Device_CSR mat, Device_Vector X, Device_Vector Y, const double alpha, const double beta, Device_Buffer_SpMV buf){
+    CHECK_CUSPARSE(
+        cusparseSpMV(
+            handle, CUSPARSE_OPERATION_NON_TRANSPOSE,
+            &alpha, mat.desc, X.desc, &beta, Y.desc,
+            CUDA_R_64F, CUSPARSE_SPMV_ALG_DEFAULT, buf
+        )
+    )
+    return CUSPARSE_STATUS_SUCCESS;
+}
+
 /*
  * NOTES:
  *  - A is row partitioned,

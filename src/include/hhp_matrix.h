@@ -17,6 +17,11 @@ COO CSR_to_COO(const CSR *in);
 
 CSC CSR_to_CSC(CSR csr);
 
+// Convert a SHARD-convention CSC (.I = column pointers [n+1], .J = row
+// indices [nnz]) to CSR (.I = row pointers [m+1], .J = column indices [nnz]).
+// Allocates; free with freeSparseMatrix. Used to enable row-parallel local SpMV.
+CSR SHARD_loc_CSC_to_CSR(CSC in);
+
 SHARD_CSC MPI_CSR_split_row(CSR big, iVector partvec);
 
 void SHARD_CSC_destroy(SHARD_CSC *A);

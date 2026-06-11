@@ -89,6 +89,17 @@ static char args_doc[] = "";  // We don't take non-option arguments
 // Our argp parser
 static struct argp argp = {options, parse_opt, args_doc, doc};
 
+// --- Per-category profiling (enabled by env HHP_PROFILE=1) ---
+// cuBLAS/cuSPARSE here run on the default stream. When profiling we sync the
+// device at each category boundary and accumulate host wall-clock into
+// dot / spmv / vecops buckets. This perturbs the loop total (take total/speedup
+// from a clean HHP_PROFILE-unset run); bucket ratios stay a faithful breakdown.
+static int    g_prof = 0;
+static double g_t_dot = 0.0, g_t_spmv = 0.0, g_t_vec = 0.0;
+static double g_pt = 0.0;
+#define PROF_BEGIN() do { if (g_prof) { cudaDeviceSynchronize(); g_pt = omp_get_wtime(); } } while (0)
+#define PROF_END(acc) do { if (g_prof) { cudaDeviceSynchronize(); (acc) += omp_get_wtime() - g_pt; } } while (0)
+
 // ====================================================================================
 
 
@@ -357,6 +368,8 @@ if (access(arguments.input_x, F_OK) == -1)
 
 int niters = arguments.n_iters;
 
+g_prof = (getenv("HHP_PROFILE") != NULL);
+
 time_stamps.begin = omp_get_wtime(); // The very Beginning timestamp
 //-------------------------------------------------------------------------------------------------------
 
@@ -472,13 +485,16 @@ time_stamps.begin = omp_get_wtime(); // The very Beginning timestamp
     {
         // calc rho_n+1
         double temp_rho; // = vector_dot_seq(R, R_0);
+        PROF_BEGIN();
         CHECK_CUBLAS(device_vector_dot(cublasHandle, R, R_0, &temp_rho))
+        PROF_END(g_t_dot);
         //==============
         // calc Beta
         double beta = (temp_rho / rho) * (alpha / omega);
         rho = temp_rho; // old rho is never used again after here
         //==============
-        // calc P_n+1
+        // calc P_n+1   (vector ops)
+        PROF_BEGIN();
         // vector_scale_seq(V, omega, V); // Changed V
         CHECK_CUBLAS(device_vector_scale(cublasHandle, omega, V))
         // vector_sub_seq(P, V, P);
@@ -487,36 +503,48 @@ time_stamps.begin = omp_get_wtime(); // The very Beginning timestamp
         CHECK_CUBLAS(device_vector_scale(cublasHandle, beta, P))
         // vector_add_seq(P, R, P);
         CHECK_CUBLAS(device_vector_axpy(cublasHandle, R, mx_alpha, P))
+        PROF_END(g_t_vec);
         //==============
         // calc V_n+1
         // CSR_spmxv_seq(A, P, V); // result in V
+        PROF_BEGIN();
         CHECK_CUSPARSE(device_csr_spmv(cusparseHandle, dA, P, V, mx_alpha, mx_beta, dA_buf))
+        PROF_END(g_t_spmv);
         //==============
         // calc alpha_n+1
         double temp_rv;
+        PROF_BEGIN();
         CHECK_CUBLAS(device_vector_dot(cublasHandle, R_0, V, &temp_rv))
+        PROF_END(g_t_dot);
         alpha = rho/temp_rv; //vector_dot_seq(R_0, V);
         //==============
-        // calc S
+        // calc S   (vector ops)
+        PROF_BEGIN();
         // vector_scale_seq(V, alpha, S);
         CHECK_CUDA(device_vector_GPUtoGPU(R, S))
         // vector_sub_seq(R, S, S);
         CHECK_CUBLAS(device_vector_axpy(cublasHandle, V, -alpha, S))
+        PROF_END(g_t_vec);
         //==============
         // calc T
         // CSR_spmxv_seq(A, S, T);
+        PROF_BEGIN();
         CHECK_CUSPARSE(device_csr_spmv(cusparseHandle, dA, S, T, mx_alpha, mx_beta, dA_buf))
+        PROF_END(g_t_spmv);
         //==============
         // calc omega_n+1
         double temp_ts;
+        PROF_BEGIN();
         CHECK_CUBLAS(device_vector_dot(cublasHandle, T, S, &temp_ts))
         double temp_tt;
         CHECK_CUBLAS(device_vector_dot(cublasHandle, T, T, &temp_tt))
+        PROF_END(g_t_dot);
         // omega = vector_dot_seq(T, S)/vector_dot_seq(T, T);
         omega = temp_ts/temp_tt;
-        
+
         //==============
-        // calc X_n+1
+        // calc X_n+1 and R_n+1   (vector ops)
+        PROF_BEGIN();
         // vector_scale_seq(P, alpha, Y);
         // vector_add_seq(X, Y, X);
         // vector_scale_seq(S, omega, Y);
@@ -529,10 +557,13 @@ time_stamps.begin = omp_get_wtime(); // The very Beginning timestamp
         // vector_sub_seq(S, R, R);
         CHECK_CUDA(device_vector_GPUtoGPU(S, R))
         CHECK_CUBLAS(device_vector_axpy(cublasHandle, T, -omega, R))
+        PROF_END(g_t_vec);
         //==============
         // calc tol
         double tol;// = vector_dot_seq(S, S);
+        PROF_BEGIN();
         CHECK_CUBLAS(device_vector_dot(cublasHandle, S, S, &tol))
+        PROF_END(g_t_dot);
         //==============
     }
     time_stamps.spmxv_end = omp_get_wtime();
@@ -567,6 +598,19 @@ time_stamps.begin = omp_get_wtime(); // The very Beginning timestamp
         );
 
     printf("everything_total : %lf\n",time_stamps.end - time_stamps.begin) ;
+
+    if (g_prof) {
+        double psum = g_t_dot + g_t_spmv + g_t_vec;
+        printf("PROFILE_enabled : 1\n");
+        printf("PROFILE_loop_total : %lf\n", time_stamps.spmxv_end - time_stamps.spmxv_begin);
+        printf("PROFILE_dot : %lf\n", g_t_dot);
+        printf("PROFILE_spmv : %lf\n", g_t_spmv);
+        printf("PROFILE_vec : %lf\n", g_t_vec);
+        printf("PROFILE_sum : %lf\n", psum);
+        printf("PROFILE_dot_pct : %.2f\n",  psum > 0 ? 100.0 * g_t_dot  / psum : 0.0);
+        printf("PROFILE_spmv_pct : %.2f\n", psum > 0 ? 100.0 * g_t_spmv / psum : 0.0);
+        printf("PROFILE_vec_pct : %.2f\n",  psum > 0 ? 100.0 * g_t_vec  / psum : 0.0);
+    }
 
     printf("\n----------------------------------------------------------------------\n");
    

@@ -454,6 +454,19 @@ void CSR_spmxv_seq(CSR A, Vector X, Vector out){
     }
 }
 
+// Multi-threaded CSR SpMV (Y = A*X) using OpenMP. Thread count is controlled
+// by OMP_NUM_THREADS. guided scheduling balances rows of uneven nnz.
+void CSR_spmxv_omp(CSR A, Vector X, Vector out){
+    #pragma omp parallel for schedule(guided)
+    for (size_t i = 0; i < A.m; i++) {
+        double res = 0.0;
+        for (size_t j = A.I[i]; j < A.I[i+1]; j++) {
+            res += A.val[j]*X.vals[A.J[j]];
+        }
+        out.vals[i] = res;
+    }
+}
+
 // TODO: Test this
 void CSR_spmxv_seq_acc(CSR A, Vector X, Vector Y){
     // #pragma omp distribute parallel for simd
@@ -572,6 +585,101 @@ void MPI_SHARD_CSC_mpi_spmxv_seq(SHARD_CSC A, Vector X, Vector Y, MPI_Comm comm,
     }
     t1 = omp_get_wtime();
     // comm_wait and shared_spmv are interleaved in Waitany loop; report combined
+    if (prof) prof->comm_wait += t1 - t0;
+
+    FREE_AND_NULL(recv_reqs);
+
+    // ── Wait for sends ──
+    t0 = omp_get_wtime();
+    MPI_CHECK(MPI_Waitall(A.send.num, send_reqs, MPI_STATUSES_IGNORE));
+    t1 = omp_get_wtime();
+    if (prof) prof->send_wait += t1 - t0;
+
+    FREE_AND_NULL(send_reqs);
+
+    return;
+}
+
+/*
+ * Multi-threaded variant of MPI_SHARD_CSC_mpi_spmxv_seq.
+ * Identical halo-exchange + overlap structure, but the local SpMV runs
+ * row-parallel using a pre-converted CSR copy of A.loc (loc_csr), so the
+ * CPU rank can use all its cores. The shared (halo) part stays single-
+ * threaded -- it touches only the few shared columns.
+ *
+ *  - loc_csr must equal SHARD_loc_CSC_to_CSR(A.loc) (built once at setup)
+ *  - X is of length A.loc.n, Y of length A.loc.m
+ */
+void MPI_SHARD_CSC_mpi_spmxv_omp(SHARD_CSC A, CSR loc_csr, Vector X, Vector Y, MPI_Comm comm, SpMV_Profile *prof) {
+
+    int mpi_rank, mpi_size;
+    MPI_CHECK(MPI_Comm_rank(comm, &mpi_rank));
+    MPI_CHECK(MPI_Comm_size(comm, &mpi_size));
+
+    double t0, t1;
+
+    MPI_Request *recv_reqs;
+    ALLOC_ARRAY(recv_reqs, A.recv.num);
+    MPI_Request *send_reqs;
+    ALLOC_ARRAY(send_reqs, A.send.num);
+
+    // ── Send buffer fill + issue comms ──
+    t0 = omp_get_wtime();
+
+    int nsend = A.send.I[A.send.num];
+    for (size_t i = 0; i < nsend; i++)
+    {
+        int idx = A.send.J[i];
+        A.send.val[i] = X.vals[idx];
+    }
+
+    for (size_t i = 0; i < A.send.num; i++)
+    {
+        int js = A.send.I[i];
+        int je = A.send.I[i+1];
+        int recipient = A.send.ranks[i];
+        int nsend = je - js;
+        MPI_CHECK( MPI_Isend( A.send.val + js, nsend, MPI_DOUBLE, recipient, 0, comm, send_reqs + i) );
+    }
+
+    for (size_t i = 0; i < A.recv.num; i++)
+    {
+        int js = A.recv.I[i];
+        int je = A.recv.I[i+1];
+        int sender = A.recv.ranks[i];
+        int nrecv = je - js;
+        MPI_CHECK(MPI_Irecv(A.recv.val + js, nrecv, MPI_DOUBLE, sender, 0, comm, recv_reqs + i));
+    }
+
+    t1 = omp_get_wtime();
+    if (prof) prof->send_fill += t1 - t0;
+
+    // ── Local SpMxV (row-parallel; assign overwrites all loc.m rows) ──
+    t0 = omp_get_wtime();
+    CSR_spmxv_omp(loc_csr, X, Y);
+    t1 = omp_get_wtime();
+    if (prof) prof->local_spmv += t1 - t0;
+
+    // ── Wait for receives + shared SpMxV (single-threaded) ──
+    t0 = omp_get_wtime();
+    for (size_t received=0; received < A.recv.num; received++)
+    {
+        int recv_idx;
+        MPI_CHECK(MPI_Waitany(A.recv.num, recv_reqs, &recv_idx, MPI_STATUS_IGNORE));
+
+        int is = A.recv.I[recv_idx];
+        int ie = A.recv.I[recv_idx+1];
+        for (size_t i = is; i < ie; i++)
+        {
+            int ii = A.recv.J[i];
+            double ival = A.recv.val[i];
+            for (size_t j = A.shr.I[ii]; j < A.shr.I[ii + 1]; j++)
+            {
+                Y.vals[A.shr.J[j]] += A.shr.val[j]*ival;
+            }
+        }
+    }
+    t1 = omp_get_wtime();
     if (prof) prof->comm_wait += t1 - t0;
 
     FREE_AND_NULL(recv_reqs);

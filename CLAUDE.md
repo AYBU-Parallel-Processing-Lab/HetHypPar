@@ -35,6 +35,8 @@ MPI+GPU variant also accepts: `-g <is_gpu_file>`
 | `bicgstab-gpu` | `src/entry/bicgstab_gpu.c` | Single-process GPU solver (cuSPARSE/cuBLAS) |
 | `bicgstab-mpi` | `src/entry/bicgstab_mpi.c` | MPI-distributed CPU solver |
 | `bicgstab-mpi-gpu` | `src/entry/bicgstab_mpi_gpu.c` | Hybrid MPI+GPU solver |
+| `spmv-cpu` | `src/entry/spmv_cpu.c` | SpMV-only CPU benchmark (no solver) |
+| `spmv-gpu` | `src/entry/spmv_gpu.c` | SpMV-only GPU benchmark (no solver) |
 
 ## Solver Output Format
 
@@ -68,6 +70,7 @@ To run MPI solvers locally (fewer cores than ranks): `mpirun --oversubscribe -bi
 
 - **Shell copy-paste:** When providing terminal commands for the user to run in tmux/terminal, prefer single-line commands over multi-line with `\` continuations — backslashes often get lost when pasting.
 - **Weight file parsing:** Count ranks via `.read_text().split()`, not line count — some weight files lack a trailing newline, so `wc -l` undercounts.
+- **Vector file format:** `vector_read` reads raw whitespace-separated floats with NO header line. Generators must be header-less (`process_matrixi.m`, `prepare_spmv_input.m` use bare `dlmwrite` — correct). Note: `setup_n_block_diag.py` writes a `<rows> 1` header that `vector_read` misreads as data (latent bug; fine for timing-only tests where residual is ignored).
 
 ## Known Issues & Fixes
 
@@ -75,11 +78,30 @@ To run MPI solvers locally (fewer cores than ranks): `mpirun --oversubscribe -bi
 - **"Vector of size 0" from cutsize-0 partitions (fixed):** `internal_setup_communication` called `ivector_init(result->shr.n)` unconditionally — crashes when `shr.n == 0` (no shared columns). Fixed by guarding the allocation. GPU path also needed guards around `device_csc_create`/`device_vector_init`/`device_buffer_spmv_create` for empty shared matrices (`bicgstab_mpi_gpu.c`, `hhp_cuda.c`).
 - **"Vector of size 0" from zero-row partitions (open):** Remaining failures across matrices like `std1_Jac2_db`, `shyy161`, `ex35`. Caused by partitions that assign zero rows to a rank. The solver should either reject these partitions at startup or handle empty ranks gracefully.
 
+## SpMV-Only Benchmarking
+
+`spmv-cpu` / `spmv-gpu` isolate matrix-vector multiply from BiCGStab (no dot products / MPI Allreduce). Args: `-m <matrix> -x <input_x> -o <output_y> -n <repetitions>`. They warm up once, time `n` repeated `Y=A*X`, and report `spmv_per_iter` and `max_abs_err_vs_1ton` (correctness check).
+
+Prepare inputs with `tools/scripts/prepare_spmv_input.m`: solves `A*x=[1..n]` so the SpMV output is trivially `[1,2,...,n]`. Defaults to GMRES+ILU(0) (`'iterative'`); pass `'direct'` for small matrices only — direct `A\b` OOMs above ~400K rows.
+
+```bash
+micromamba run -n octave octave --no-gui --eval "addpath('tools/scripts'); prepare_spmv_input('/matrices/cage14.mtx', 'data/matrices/cage14/in')"
+./build/spmv-gpu -m /matrices/cage14.mtx -x data/matrices/cage14/in/X_spmv.txt -o /tmp/Y.txt -n 500
+```
+
+- Pure-SpMV GPU/CPU speedup scales with matrix nnz: ~5x at 0.5M nnz, ~12x at 27M nnz.
+- `spmv-mpi` (one rank/core) + `data/rankfile/8P_8E.rankfile` (P=cores 0-7, E=8-15) test heterogeneous P/E partitioning via `data/weights/cpu-p-e/w*_16` weights. Pin with `mpirun --rankfile ...` (this OpenMPI wants `--rankfile`, not `--map-by rankfile:file=`).
+- Findings written up in `docs/spmv-bandwidth-analysis.md`: SpMV is memory-bandwidth-bound, best CPU (OpenMP 8T) is ~6.7x slower than GPU, OpenMP≈MKL>MPI on a single node, P/E partitioning tops out ~1.31x vs 1 core.
+
 ## Profiling
 
 `SpMV_Profile` and `Iter_Profile` structs defined in `hhp_common.h`. Both MPI SpMV functions (`hhp_cpu.c`, `hhp_cuda.c`) accept an optional `SpMV_Profile *prof` parameter (NULL skips profiling). GPU path uses `cudaDeviceSynchronize()` before timing boundaries only when `prof != NULL`.
 
 Solver output includes `PROFILE_ITER` (per-rank per-iteration) and `PROFILE_ACCUM` (per-rank totals) lines. `parse_benchmark_results.py` extracts these into per-rank accumulated columns (`r0_spmv`, `r1_comm_wait`, etc.) and a `profile_iterations` JSON column.
+
+- **Iteration 0 is a startup outlier** -- the first iteration's `vecops` can be 100-1000x larger than subsequent iterations due to MPI/CUDA initialization (one rank blocks in `MPI_Allreduce` while the other does first-time CUDA kernel launches). Analysis should exclude iter 0.
+- **The top-level `spmv` column is rank 0's loop time only**, not a max across ranks. For the slower rank's perspective, use per-rank profile fields.
+- `tools/python/plot_profile_boxplots.py` generates per-component box plots normalized to single-GPU per-iteration baseline.
 
 ## Error Checking Macros
 
@@ -204,6 +226,9 @@ There are two independent benchmark pipelines — do not confuse them:
    - **Known issue:** `parse_output` raises `ValueError` on NAN/- residuals, excluding successful runs from TSV. Affects 134 matrices (including cage13, cage14, Hamrle3). Timing data is valid; only residual is unparseable.
 
 `benchmark_summary.tsv` columns: `matrix, solver_type, imbalance, weight, seed, n_iters, spmv, file_read, relative_residual, everything_total, status, error_reason`, plus per-rank profile columns (`r0_spmv`, `r0_vecops`, `r0_send_fill`, `r0_local_spmv`, `r0_comm_wait`, `r0_shared_spmv`, `r0_send_wait`, same for `r1_`), and `profile_iterations` (JSON). File is large; use `awk`/`cut` for analysis, not direct reads.
+
+- File is ~275 MB with profiling enabled -- load with `pd.read_csv(..., sep='\t', low_memory=False)` and `usecols=[...]` for selective columns.
+- Joining with `master_summary_clean.csv` requires explicit `.astype(int)` on `imbalance`/`seed` columns on both sides (TSV stores them as float).
 
 ### Benchmark result backups (`data/`)
 

@@ -38,6 +38,8 @@ The segfault class is completely eliminated. The 1,587 new "unknown error" failu
 
 ## GPU vs CPU (SpMV)
 
+> See also [`spmv-bandwidth-analysis.md`](spmv-bandwidth-analysis.md) for an isolated SpMV study (no solver overhead) showing the GPU is ~6.7x faster than the best CPU config and that the gap is memory-bandwidth-bound.
+
 Single-GPU vs single-CPU performance on the SpMV kernel.
 
 | Metric | Value |
