@@ -337,6 +337,7 @@ int main(int argc, char *argv[]) {
            *d_beta=dscalar(0.0), *d_neg_a=dscalar(0.0), *d_neg_w=dscalar(0.0),
            *d_one=dscalar(1.0), *d_neg_one=dscalar(-1.0),
            *d_g=dscalar(0.0), *d_c=dscalar(0.0),
+           *d_g2=dscalar(0.0), *d_c2=dscalar(0.0),
            *d_rho_new=dscalar(0.0), *d_rv=dscalar(0.0),
            *d_ts=dscalar(0.0), *d_tt=dscalar(0.0), *d_tol=dscalar(0.0);
     // pinned host scalars: partials (distinct slots) + shadows for CPU vecops
@@ -371,8 +372,10 @@ int main(int argc, char *argv[]) {
         CHECK_CUBLAS(cublasDaxpy(bh, ng, d_neg_one, dV, 1, dP, 1))
         CHECK_CUBLAS(cublasDscal(bh, ng, d_beta, dP, 1))
         CHECK_CUBLAS(cublasDaxpy(bh, ng, d_one, dR, 1, dP, 1))
-        host_scal(hs[3], hV, nc); host_axpy(-1.0, hV, hP, nc);
-        host_scal(hs[0], hP, nc); host_axpy(1.0, hR, hP, nc);
+        // fused host vecop: P = (P - omega*V)*beta + R  (one region, one pass)
+        #pragma omp parallel for
+        for (int i = 0; i < nc; i++)
+            hP[i] = (hP[i] - hs[3]*hV[i]) * hs[0] + hR[i];
 
         // V = A*P
         dist_spmv(&ctx, dV_desc, dP, hP, dV, hV);
@@ -386,14 +389,26 @@ int main(int argc, char *argv[]) {
         // S = R - alpha*V
         CHECK_CUBLAS(cublasDcopy(bh, ng, dR, 1, dS, 1))
         CHECK_CUBLAS(cublasDaxpy(bh, ng, d_neg_a, dV, 1, dS, 1))
-        host_copy(hR, hS, nc); host_axpy(hs[2], hV, hS, nc);
+        // fused host vecop: S = R - alpha*V   (hs[2] = -alpha)
+        #pragma omp parallel for
+        for (int i = 0; i < nc; i++)
+            hS[i] = hR[i] + hs[2]*hV[i];
 
         // T = A*S
         dist_spmv(&ctx, dT_desc, dS, hS, dT, hT);
 
         // ts = T.S ; tt = T.T ; omega = ts/tt ; neg_w = -omega
-        dist_dot(bh, &ctx, d_g, d_c, d_ts, &hp[2], dT, dS, hT, hS);
-        dist_dot(bh, &ctx, d_g, d_c, d_tt, &hp[3], dT, dT, hT, hT);
+        // ts = T.S ; tt = T.T : two GPU partials + ONE fused CPU reduction
+        cublasDdot(bh, ng, dT, 1, dS, 1, d_g);
+        cublasDdot(bh, ng, dT, 1, dT, 1, d_g2);
+        { double cts = 0.0, ctt = 0.0;
+          #pragma omp parallel for reduction(+:cts,ctt)
+          for (int i = 0; i < nc; i++) { double tv = hT[i]; cts += tv*hS[i]; ctt += tv*tv; }
+          hp[2] = cts; hp[3] = ctt; }
+        cudaMemcpyAsync(d_c,  &hp[2], sizeof(double), cudaMemcpyHostToDevice, compute_s);
+        cudaMemcpyAsync(d_c2, &hp[3], sizeof(double), cudaMemcpyHostToDevice, compute_s);
+        hhp_dp_add(d_ts, d_g,  d_c,  compute_s);
+        hhp_dp_add(d_tt, d_g2, d_c2, compute_s);
         hhp_dp_update_omega(d_omega, d_neg_w, d_ts, d_tt, compute_s);
         cudaMemcpyAsync(&hs[3], d_omega, sizeof(double), cudaMemcpyDeviceToHost, compute_s);
         cudaMemcpyAsync(&hs[4], d_neg_w, sizeof(double), cudaMemcpyDeviceToHost, compute_s);
@@ -403,8 +418,12 @@ int main(int argc, char *argv[]) {
         CHECK_CUBLAS(cublasDaxpy(bh, ng, d_omega, dS, 1, dX, 1))
         CHECK_CUBLAS(cublasDcopy(bh, ng, dS, 1, dR, 1))
         CHECK_CUBLAS(cublasDaxpy(bh, ng, d_neg_w, dT, 1, dR, 1))
-        host_axpy(hs[1], hP, hX, nc); host_axpy(hs[3], hS, hX, nc);
-        host_copy(hS, hR, nc); host_axpy(hs[4], hT, hR, nc);
+        // fused host vecop: X += alpha*P + omega*S ; R = S - omega*T  (one region)
+        #pragma omp parallel for
+        for (int i = 0; i < nc; i++) {
+            hX[i] += hs[1]*hP[i] + hs[3]*hS[i];
+            hR[i]  = hS[i] + hs[4]*hT[i];
+        }
 
         // tol = S.S (parity; result unused, no rendezvous)
         dist_dot(bh, &ctx, d_g, d_c, d_tol, &hp[4], dS, dS, hS, hS);

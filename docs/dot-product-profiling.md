@@ -318,21 +318,30 @@ partial pushed up via H→D. Built with overlap (concurrent partials, device-sid
 combine so the GPU critical path stays on-device, async copies).
 
 It is correct (cage11 @40 iters converges to 2.64e-16, X matches pure-GPU to
-printed precision) but **substantially slower** (best-of-3, 1000 iters):
+printed precision) but **slower** than keeping the dots on the GPU
+(best-of-2, 1000 iters, tuned OpenMP thread count + fused host loops):
 
-| Matrix | weight | gpu-dp | hybrid-dp | dist-dp | dist / gpu-dp | dist / hybrid-dp |
-|--------|--------|-------:|----------:|--------:|:-------------:|:----------------:|
-| cage11 | w2720 | 0.1527 | 0.1580 | 0.3740 | **0.41×** | 0.42× |
-| cage12 | w600 | 0.3327 | 0.3132 | 0.5789 | **0.58×** | 0.54× |
-| cage13 | w500 | 1.0003 | 0.9080 | 1.3040 | **0.77×** | 0.70× |
+| Matrix | weight | gpu-dp | hybrid-dp | dist-dp | dist / gpu-dp | dist / hybrid-dp | dist / old-GPU |
+|--------|--------|-------:|----------:|--------:|:-------------:|:----------------:|:--------------:|
+| cage11 | w2720 | 0.1525 | 0.1598 | 0.242 | **0.63×** | 0.66× | 0.76× |
+| cage12 | w600 | 0.3313 | 0.3135 | 0.455 | **0.73×** | 0.69× | 0.83× |
+| cage13 | w500 | 1.0029 | 0.9126 | 1.205 | **0.83×** | 0.76× | 0.88× |
 
-**Distributing the dots is a 1.3–2.4× net loss.** Each dot now forces a CPU↔GPU
-scalar rendezvous (the combined scalar gates the next vector op, so it can't be
-hidden) — ~3 round-trips/iter on top of the 2 SpMV syncs. dp mode cannot help: a
-*distributed* reduction is intrinsically synchronizing, which is the exact thing
-dp removes only for a *GPU-only* dot. The loss shrinks as matrices grow (fixed
-sync latency amortized over more work: cage11 0.41× → cage13 0.77×) but never
-reaches the SpMV-only hybrid.
+**Distributing the dots is a net loss (~0.8× of even the old GPU baseline)**, but
+the cause is the unavoidable per-dot CPU↔GPU rendezvous: the combined scalar
+gates the next vector op, so each dot needs ~3 `cudaStreamSynchronize`/iter on
+top of the 2 SpMV syncs and cannot be hidden. dp mode cannot help — a
+*distributed* reduction is intrinsically synchronizing, the exact thing dp
+removes only for a *GPU-only* dot.
+
+**Benchmarking caveat (corrected):** the first measurement of this solver used
+the default 24 OpenMP threads, which is pathological for the tiny CPU slices
+(fork/join over 24 threads on ~1400 elements) and reported a much worse
+0.41–0.77× vs gpu-dp. Tuning the thread count (1–4) gave most of the recovery;
+fusing the host vecops into single loops (`P=(P-ωV)β+R` etc., one region/one pass
+instead of four) added only a further 2–7%. So the dominant cost is the dot
+rendezvous, NOT OpenMP overhead — region count barely matters once threads are
+sane. Always pin OpenMP threads to the CPU slice size for these small-`nc` runs.
 
 This is the single-node microcosm of the multi-node Allreduce wall (see
 HANDOFF.md): distributing a reduction across processors inserts a synchronizing
