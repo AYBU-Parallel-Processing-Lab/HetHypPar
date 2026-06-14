@@ -307,10 +307,42 @@ optimal CPU/GPU split can move toward more CPU. Swept best-of-2, 1000 iters,
 - Honest headline: **1.15–1.20× over pure-GPU on genuinely-solved systems**
   (cage11/12/13). The earlier 1.29× leaned on non-converging rma10.
 
+## Negative result: distributing the dots too (`bicgstab-hybrid-dist-dp`)
+
+To test whether the CPU should also take a share of the dots/vecops (not just
+SpMV), `src/entry/bicgstab_hybrid_dist_dp.c` splits *every* vector device/host:
+the GPU owns rows `[0,ng)`, the CPU owns `[ng,n)`. Vecops run independently on
+each side (no communication); each dot becomes `GPU_partial + CPU_partial`,
+combined on-device (`hhp_dp_add`) with the GPU partial in dp mode and the CPU
+partial pushed up via H→D. Built with overlap (concurrent partials, device-side
+combine so the GPU critical path stays on-device, async copies).
+
+It is correct (cage11 @40 iters converges to 2.64e-16, X matches pure-GPU to
+printed precision) but **substantially slower** (best-of-3, 1000 iters):
+
+| Matrix | weight | gpu-dp | hybrid-dp | dist-dp | dist / gpu-dp | dist / hybrid-dp |
+|--------|--------|-------:|----------:|--------:|:-------------:|:----------------:|
+| cage11 | w2720 | 0.1527 | 0.1580 | 0.3740 | **0.41×** | 0.42× |
+| cage12 | w600 | 0.3327 | 0.3132 | 0.5789 | **0.58×** | 0.54× |
+| cage13 | w500 | 1.0003 | 0.9080 | 1.3040 | **0.77×** | 0.70× |
+
+**Distributing the dots is a 1.3–2.4× net loss.** Each dot now forces a CPU↔GPU
+scalar rendezvous (the combined scalar gates the next vector op, so it can't be
+hidden) — ~3 round-trips/iter on top of the 2 SpMV syncs. dp mode cannot help: a
+*distributed* reduction is intrinsically synchronizing, which is the exact thing
+dp removes only for a *GPU-only* dot. The loss shrinks as matrices grow (fixed
+sync latency amortized over more work: cage11 0.41× → cage13 0.77×) but never
+reaches the SpMV-only hybrid.
+
+This is the single-node microcosm of the multi-node Allreduce wall (see
+HANDOFF.md): distributing a reduction across processors inserts a synchronizing
+rendezvous per dot that swamps the offloaded compute. The lesson points the
+opposite way from "distribute more" — do *fewer* reductions.
+
 ### Next
 
-- Fuse `T·S`/`T·T` (shared operand `T`) into one batched reduction.
+- Fuse `T·S`/`T·T` (shared operand `T`) into one batched reduction — fewer dots.
 - Evaluate pipelined / communication-avoiding BiCGStab to cut the reduction
-  count further.
+  count per iteration (the real lever, single-node and multi-node alike).
 - Generate finer partitions below w400 / above w2720 to bracket the true optima
   (cage11 high end, cage12/13 low end).

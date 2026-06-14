@@ -36,7 +36,17 @@ __global__ static void k_update_omega(double *omega, double *neg_omega,
     *neg_omega = -w;
 }
 
+// total = a + b. Combines a GPU partial dot with a CPU partial dot (already
+// copied to device) for the distributed solver.
+__global__ static void k_add(double *total, const double *a, const double *b) {
+    *total = *a + *b;
+}
+
 extern "C" {
+
+void hhp_dp_add(double *total, const double *a, const double *b, cudaStream_t s) {
+    k_add<<<1, 1, 0, s>>>(total, a, b);
+}
 
 void hhp_dp_update_beta(double *beta, double *rho_old, const double *rho_new,
                         const double *alpha, const double *omega, cudaStream_t s) {

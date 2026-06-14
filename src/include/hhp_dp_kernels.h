@@ -11,6 +11,9 @@
 extern "C" {
 #endif
 
+// total = a + b  (combine a GPU partial dot with a device-resident CPU partial).
+void hhp_dp_add(double *total, const double *a, const double *b, cudaStream_t s);
+
 // beta = (rho_new / rho_old) * (alpha / omega);  rho_old <- rho_new.
 void hhp_dp_update_beta(double *beta, double *rho_old, const double *rho_new,
                         const double *alpha, const double *omega, cudaStream_t s);
