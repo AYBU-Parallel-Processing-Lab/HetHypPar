@@ -17,6 +17,9 @@ void hhp_dp_add(double *total, const double *a, const double *b, cudaStream_t s)
 // Set mapped-host *flag = seq after prior stream work, for a host spin-wait.
 void hhp_dp_set_flag(unsigned long long *flag, unsigned long long seq, cudaStream_t s);
 
+// out[k] = in[idx[k]] for k in [0,nh) -- gather a halo before a D->H transfer.
+void hhp_dp_gather(double *out, const double *in, const int *idx, int nh, cudaStream_t s);
+
 // Fused combine+update (distributed): sum GPU partial g + CPU partial c, update
 // scalar, and publish result(s) to mapped host `hm` + set `flag`=seq (for a host
 // spin-wait that replaces cudaStreamSynchronize). hm/flag are device pointers to

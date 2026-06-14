@@ -126,6 +126,17 @@ void hhp_dp_set_flag(unsigned long long *flag, unsigned long long seq, cudaStrea
     k_set_flag<<<1, 1, 0, s>>>(flag, seq);
 }
 
+// Gather: out[k] = in[idx[k]]. Used to pull only the halo (GPU-owned columns a
+// CPU rank's rows reference) out of a device vector before the D->H transfer.
+__global__ static void k_gather(double *out, const double *in, const int *idx, int nh) {
+    int k = blockIdx.x * blockDim.x + threadIdx.x;
+    if (k < nh) out[k] = in[idx[k]];
+}
+void hhp_dp_gather(double *out, const double *in, const int *idx, int nh, cudaStream_t s) {
+    if (nh <= 0) return;
+    k_gather<<<(nh + 255) / 256, 256, 0, s>>>(out, in, idx, nh);
+}
+
 void hhp_dp_cu_beta(double *beta, double *rho_old, const double *g, const double *c,
                     const double *alpha, const double *omega,
                     double *hm, unsigned long long *flag, unsigned long long seq, cudaStream_t s) {

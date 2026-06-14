@@ -175,6 +175,11 @@ typedef struct {
     unsigned long long *flagd;          // mapped-host flag (device ptr)
     volatile unsigned long long *flagv; // mapped-host flag (host ptr)
     unsigned long long *seq;            // shared monotonic sequence counter
+    int *d_halo_idx;                    // GPU-owned columns the CPU rows touch (device)
+    int *h_halo_idx;                    // same (host, for scatter)
+    double *d_halo;                     // gathered halo values (device)
+    double *h_halo;                     // gathered halo values (pinned host)
+    int nh;                             // halo size
 } DistCtx;
 
 // Distributed SpMV: out = A * in, where in/out are split (device head, host tail).
@@ -193,9 +198,13 @@ static void dist_spmv(DistCtx *c, cusparseDnVecDescr_t out_desc,
     cudaMemcpyAsync(c->d_full, d_in, ng * sizeof(double), cudaMemcpyDeviceToDevice, c->compute_s);
     if (nc > 0)
         cudaMemcpyAsync(c->d_full + ng, h_in, nc * sizeof(double), cudaMemcpyHostToDevice, c->copy_s);
-    // host: h_full[0,ng)=d_in (D2H), h_full[ng,n)=h_in (host copy).
+    // host input: CPU's own slice goes to h_full[ng,n); for h_full[0,ng) the CPU
+    // only needs the halo (GPU columns its rows touch), so gather just those on
+    // the GPU and D->H the compact buffer instead of the whole ng slice.
     if (nc > 0) {
-        cudaMemcpyAsync(c->h_full, d_in, ng * sizeof(double), cudaMemcpyDeviceToHost, c->copy_s);
+        hhp_dp_gather(c->d_halo, d_in, c->d_halo_idx, c->nh, c->copy_s);
+        cudaMemcpyAsync(c->h_halo, c->d_halo, c->nh * sizeof(double),
+                        cudaMemcpyDeviceToHost, c->copy_s);
         memcpy(c->h_full + ng, h_in, nc * sizeof(double));
     }
     // GPU SpMV must wait for the H2D of the CPU slice into d_full.
@@ -210,6 +219,9 @@ static void dist_spmv(DistCtx *c, cusparseDnVecDescr_t out_desc,
     if (nc > 0) {
         hhp_dp_set_flag(c->flagd, ++(*c->seq), c->copy_s);
         while (*c->flagv < *c->seq) {}
+        // scatter halo values into their global positions in h_full
+        #pragma omp parallel for
+        for (int k = 0; k < c->nh; k++) c->h_full[c->h_halo_idx[k]] = c->h_halo[k];
         Vector y = {.vals = h_out, .nvals = nc};
         Vector x = {.vals = c->h_full, .nvals = n};
         CSR_spmxv_omp(c->Acpu, x, y);
@@ -346,9 +358,32 @@ int main(int argc, char *argv[]) {
           dAgpu.desc, in_desc, &b, dY_desc, CUDA_R_64F, CUSPARSE_SPMV_ALG_DEFAULT, &bs))
       CHECK_CUDA(cudaMalloc(&spmv_buf, bs)) }
 
+    // --- Halo: the distinct GPU-owned columns (< ng) that the CPU rows touch.
+    // The CPU only needs these of the GPU slice, not all ng, each SpMV.
+    int nh = 0;
+    int *halo_idx = NULL;
+    {
+        char *seen = calloc(ng > 0 ? ng : 1, 1);
+        for (int k = 0; k < Acpu.nnz; k++) {
+            int col = Acpu.J[k];
+            if (col < ng && !seen[col]) { seen[col] = 1; nh++; }
+        }
+        halo_idx = malloc((nh > 0 ? nh : 1) * sizeof(int));
+        int idx = 0;
+        for (int col = 0; col < ng; col++) if (seen[col]) halo_idx[idx++] = col;
+        free(seen);
+    }
+    printf("halo: nh=%d / ng=%d (%.1f%% of GPU slice)\n",
+           nh, ng, ng > 0 ? 100.0 * nh / ng : 0.0);
+    int *d_halo_idx; CHECK_CUDA(cudaMalloc((void**)&d_halo_idx, (nh > 0 ? nh : 1) * sizeof(int)))
+    if (nh > 0) CHECK_CUDA(cudaMemcpy(d_halo_idx, halo_idx, nh * sizeof(int), cudaMemcpyHostToDevice))
+    double *d_halo = dvec(nh);
+    double *h_halo; CHECK_CUDA(cudaMallocHost((void**)&h_halo, (nh > 0 ? nh : 1) * sizeof(double)))
+
     DistCtx ctx = { .ch=ch, .Agpu=dAgpu.desc, .in_desc=in_desc, .d_full=d_full, .h_full=h_full,
                     .Acpu=Acpu, .buf=spmv_buf, .ng=ng, .nc=nc, .n=n,
-                    .compute_s=compute_s, .copy_s=copy_s, .in_ready=in_ready, .h2d_done=h2d_done };
+                    .compute_s=compute_s, .copy_s=copy_s, .in_ready=in_ready, .h2d_done=h2d_done,
+                    .d_halo_idx=d_halo_idx, .h_halo_idx=halo_idx, .d_halo=d_halo, .h_halo=h_halo, .nh=nh };
 
     // device scalars
     double *d_rho=dscalar(1.0), *d_alpha=dscalar(1.0), *d_omega=dscalar(1.0),
