@@ -6,6 +6,12 @@ computations? Dot products are simpler — just a reduction."*
 This measures how much of each BiCGStab iteration is actually spent in dot
 products, on the newest single-process solvers.
 
+> **Performance update (latest).** The numbers in the per-section tables below
+> are the *original* device-pointer results. Two later changes improved every
+> device-pointer solver — see **"Update: fused kernels + spin-wait"** at the end
+> for the current bests. Headline: gpu-dp **1.34×**, hybrid-dp **1.29–1.32×**,
+> and dist-dp now **beats** old GPU on cage11 (was a loss).
+
 ## Setup / reproducing
 
 ```bash
@@ -355,3 +361,36 @@ opposite way from "distribute more" — do *fewer* reductions.
   count per iteration (the real lever, single-node and multi-node alike).
 - Generate finer partitions below w400 / above w2720 to bracket the true optima
   (cage11 high end, cage12/13 low end).
+
+## Update: fused kernels + spin-wait
+
+Two later changes, applied to all device-pointer solvers (`bicgstab-gpu-dp`,
+`bicgstab-hybrid-async-dp`, `bicgstab-hybrid-dist-dp`):
+
+1. **Fused vector-op kernels** (`hhp_dp_vecop_P/S/XR` in `hhp_dp_kernels.cu`):
+   one custom CUDA kernel / one memory pass replaces each 4+2+4 cuBLAS scal/axpy
+   sequence (e.g. `P = (P − ωV)β + R` was 4 launches and 4 passes → 1 of each).
+   Coefficients read from device scalars (dp mode); per-rank local op.
+2. **Mapped-host spin-wait** (dist-dp only): the combine-update kernels
+   (`hhp_dp_cu_*`) publish the scalar into mapped host memory + bump a flag, and
+   a `hhp_dp_set_flag` kernel does the same after each SpMV-gather D→H. The host
+   spin-waits on the flag instead of `cudaStreamSynchronize` — all 5 syncs/iter,
+   ~15 µs → ~1–2 µs each.
+
+### Current bests (best-of-N, 1000 iters, RTX 3070, vs old GPU `bicgstab-gpu`)
+
+| Solver | cage11 | cage12 | cage13 |
+|--------|:------:|:------:|:------:|
+| gpu-dp (fused) | **1.34×** | 1.22× | 1.19× |
+| hybrid-dp (fused) | 1.33× | **1.29×** | **1.32×** |
+| dist-dp (fused + spin-wait) | **1.04×** (beats old GPU) | 0.91× | 0.94× |
+
+Fusion gain per solver was 1.07–1.16×, biggest on the large/memory-bound matrix
+(fewer vector passes). With both fused, **CPU co-execution finally pays**:
+hybrid-dp beats gpu-dp by 1.06× (cage12) / 1.11× (cage13); cage11 is a wash.
+
+The spin-wait turned dist-dp from a clear loss into a cage11 win by attacking
+sync latency directly. Everything is multi-node-safe: local per-rank kernels and
+single-node CPU↔GPU sync mechanisms only — the distribution structure (and thus
+a future NCCL/MPI multi-node port) is untouched. Correctness unchanged
+(cage11 @40 iters ≈ 2.1e-16, `max|dX| = 0`). Committed in `e4622c6`.
