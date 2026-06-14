@@ -176,11 +176,8 @@ int main(int argc, char *argv[]) {
         CHECK_CUBLAS(cublasDdot(bh, n, R.vals, 1, R_0.vals, 1, d_rho_new))
         hhp_dp_update_beta(d_beta, d_rho, d_rho_new, d_alpha, d_omega, s);
 
-        // P = (P - omega*V)*beta + R   (uses OLD omega)
-        CHECK_CUBLAS(cublasDscal(bh, n, d_omega, V.vals, 1))          // V *= omega
-        CHECK_CUBLAS(cublasDaxpy(bh, n, d_neg_one, V.vals, 1, P.vals, 1)) // P -= V
-        CHECK_CUBLAS(cublasDscal(bh, n, d_beta, P.vals, 1))           // P *= beta
-        CHECK_CUBLAS(cublasDaxpy(bh, n, d_one, R.vals, 1, P.vals, 1)) // P += R
+        // P = (P - omega*V)*beta + R   (uses OLD omega) -- one fused kernel
+        hhp_dp_vecop_P(P.vals, V.vals, R.vals, d_omega, d_beta, n, s);
 
         // V = A*P
         CHECK_CUSPARSE(device_csr_spmv(ch, dA, P, V, h_one, h_zero, dA_buf))
@@ -189,9 +186,8 @@ int main(int argc, char *argv[]) {
         CHECK_CUBLAS(cublasDdot(bh, n, R_0.vals, 1, V.vals, 1, d_rv))
         hhp_dp_update_alpha(d_alpha, d_neg_a, d_rho, d_rv, s);
 
-        // S = R - alpha*V
-        CHECK_CUDA(device_vector_GPUtoGPU(R, S))
-        CHECK_CUBLAS(cublasDaxpy(bh, n, d_neg_a, V.vals, 1, S.vals, 1))
+        // S = R - alpha*V   -- one fused kernel
+        hhp_dp_vecop_S(S.vals, R.vals, V.vals, d_neg_a, n, s);
 
         // T = A*S
         CHECK_CUSPARSE(device_csr_spmv(ch, dA, S, T, h_one, h_zero, dA_buf))
@@ -201,13 +197,8 @@ int main(int argc, char *argv[]) {
         CHECK_CUBLAS(cublasDdot(bh, n, T.vals, 1, T.vals, 1, d_tt))
         hhp_dp_update_omega(d_omega, d_neg_w, d_ts, d_tt, s);
 
-        // X += alpha*P + omega*S
-        CHECK_CUBLAS(cublasDaxpy(bh, n, d_alpha, P.vals, 1, X.vals, 1))
-        CHECK_CUBLAS(cublasDaxpy(bh, n, d_omega, S.vals, 1, X.vals, 1))
-
-        // R = S - omega*T
-        CHECK_CUDA(device_vector_GPUtoGPU(S, R))
-        CHECK_CUBLAS(cublasDaxpy(bh, n, d_neg_w, T.vals, 1, R.vals, 1))
+        // X += alpha*P + omega*S ; R = S - omega*T   -- one fused kernel
+        hhp_dp_vecop_XR(X.vals, R.vals, P.vals, S.vals, T.vals, d_alpha, d_omega, d_neg_w, n, s);
 
         // tol = S.S  (computed for parity with the reference; result unused)
         CHECK_CUBLAS(cublasDdot(bh, n, S.vals, 1, S.vals, 1, d_tol))

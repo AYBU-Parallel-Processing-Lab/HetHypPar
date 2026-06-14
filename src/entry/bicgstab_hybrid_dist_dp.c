@@ -172,6 +172,9 @@ typedef struct {
     int ng, nc, n;
     cudaStream_t compute_s, copy_s;
     cudaEvent_t in_ready, h2d_done;
+    unsigned long long *flagd;          // mapped-host flag (device ptr)
+    volatile unsigned long long *flagv; // mapped-host flag (host ptr)
+    unsigned long long *seq;            // shared monotonic sequence counter
 } DistCtx;
 
 // Distributed SpMV: out = A * in, where in/out are split (device head, host tail).
@@ -202,9 +205,11 @@ static void dist_spmv(DistCtx *c, cusparseDnVecDescr_t out_desc,
     }
     cusparseSpMV(c->ch, CUSPARSE_OPERATION_NON_TRANSPOSE, &one, c->Agpu, c->in_desc,
                  &zero, out_desc, CUDA_R_64F, CUSPARSE_SPMV_ALG_DEFAULT, c->buf);
-    // CPU SpMV: wait for the D2H of the GPU slice, then multiply its rows.
+    // CPU SpMV: wait for the D2H of the GPU slice (spin-wait on a flag the GPU
+    // sets after the copy), then multiply its rows.
     if (nc > 0) {
-        cudaStreamSynchronize(c->copy_s);
+        hhp_dp_set_flag(c->flagd, ++(*c->seq), c->copy_s);
+        while (*c->flagv < *c->seq) {}
         Vector y = {.vals = h_out, .nvals = nc};
         Vector x = {.vals = c->h_full, .nvals = n};
         CSR_spmxv_omp(c->Acpu, x, y);
@@ -221,6 +226,16 @@ static void dist_dot(cublasHandle_t bh, DistCtx *c, double *d_g, double *d_c,
     *h_src = host_dot(h_a, h_b, c->nc);             // CPU partial (omp), overlaps GPU dot
     cudaMemcpyAsync(d_c, h_src, sizeof(double), cudaMemcpyHostToDevice, c->compute_s);
     hhp_dp_add(out_dev, d_g, d_c, c->compute_s);    // combine on device
+}
+
+// Like dist_dot but leaves the partials separate (d_g = GPU partial, d_c = CPU
+// partial on device) for a fused combine+update kernel to consume.
+static void dist_partials(cublasHandle_t bh, DistCtx *c, double *d_g, double *d_c,
+                          double *h_src, const double *d_a, const double *d_b,
+                          const double *h_a, const double *h_b) {
+    cublasDdot(bh, c->ng, d_a, 1, d_b, 1, d_g);
+    *h_src = host_dot(h_a, h_b, c->nc);
+    cudaMemcpyAsync(d_c, h_src, sizeof(double), cudaMemcpyHostToDevice, c->compute_s);
 }
 
 int main(int argc, char *argv[]) {
@@ -282,6 +297,7 @@ int main(int argc, char *argv[]) {
     double t_read1 = omp_get_wtime();
 
     // --- CUDA setup ---
+    CHECK_CUDA(cudaSetDeviceFlags(cudaDeviceMapHost))   // allow GPU writes to mapped host mem
     CHECK_CUDA(cudaSetDevice(0))
     cublasHandle_t bh; CHECK_CUBLAS(cublasCreate(&bh))
     cusparseHandle_t ch; CHECK_CUSPARSE(cusparseCreate(&ch))
@@ -290,9 +306,11 @@ int main(int argc, char *argv[]) {
     CHECK_CUDA(cudaStreamCreate(&copy_s))
     CHECK_CUBLAS(cublasSetStream(bh, compute_s))
     CHECK_CUSPARSE(cusparseSetStream(ch, compute_s))
-    cudaEvent_t in_ready, h2d_done;
+    cudaEvent_t in_ready, h2d_done, e_ready, e_host;
     CHECK_CUDA(cudaEventCreateWithFlags(&in_ready, cudaEventDisableTiming))
     CHECK_CUDA(cudaEventCreateWithFlags(&h2d_done, cudaEventDisableTiming))
+    CHECK_CUDA(cudaEventCreateWithFlags(&e_ready, cudaEventDisableTiming))
+    CHECK_CUDA(cudaEventCreateWithFlags(&e_host, cudaEventDisableTiming))
 
     Device_CSR dAgpu; CHECK_CUSPARSE(device_csr_create(Agpu_h, &dAgpu))
 
@@ -347,6 +365,20 @@ int main(int argc, char *argv[]) {
     hs[3] = 1.0;  // omega starts at 1
     hs[1] = 1.0;  // alpha starts at 1
 
+    // Mapped host memory for low-latency GPU->host scalar publishing: the
+    // combine-update kernel writes the scalar(s) into hm[] and bumps *flagh; the
+    // host spin-waits on flagh instead of cudaStreamSynchronize (~1-2us vs ~15us).
+    double *hm; unsigned long long *flagh;
+    CHECK_CUDA(cudaHostAlloc((void**)&hm, 2*sizeof(double), cudaHostAllocMapped))
+    CHECK_CUDA(cudaHostAlloc((void**)&flagh, sizeof(unsigned long long), cudaHostAllocMapped))
+    *flagh = 0;
+    double *dm; unsigned long long *flagd;
+    CHECK_CUDA(cudaHostGetDevicePointer((void**)&dm, hm, 0))
+    CHECK_CUDA(cudaHostGetDevicePointer((void**)&flagd, flagh, 0))
+    unsigned long long seq = 0;
+    volatile unsigned long long *flagv = flagh;
+    ctx.flagd = flagd; ctx.flagv = flagv; ctx.seq = &seq;
+
     printf("LOG: Setup done\n");
 
     CHECK_CUBLAS(cublasSetPointerMode(bh, CUBLAS_POINTER_MODE_DEVICE))
@@ -363,15 +395,11 @@ int main(int argc, char *argv[]) {
     double t_loop0 = omp_get_wtime();
     for (int it = 0; it < niters; it++) {
         // rho_new = R.R0 ; beta = (rho_new/rho)*(alpha/omega) ; rho = rho_new
-        dist_dot(bh, &ctx, d_g, d_c, d_rho_new, &hp[0], dR, dR0, hR, hR0);
-        hhp_dp_update_beta(d_beta, d_rho, d_rho_new, d_alpha, d_omega, compute_s);
-        cudaMemcpyAsync(&hs[0], d_beta, sizeof(double), cudaMemcpyDeviceToHost, compute_s);
-        cudaStreamSynchronize(compute_s);                    // CPU needs beta (and omega shadow hs[3])
-        // P = (P - omega*V)*beta + R
-        CHECK_CUBLAS(cublasDscal(bh, ng, d_omega, dV, 1))
-        CHECK_CUBLAS(cublasDaxpy(bh, ng, d_neg_one, dV, 1, dP, 1))
-        CHECK_CUBLAS(cublasDscal(bh, ng, d_beta, dP, 1))
-        CHECK_CUBLAS(cublasDaxpy(bh, ng, d_one, dR, 1, dP, 1))
+        dist_partials(bh, &ctx, d_g, d_c, &hp[0], dR, dR0, hR, hR0);
+        hhp_dp_cu_beta(d_beta, d_rho, d_g, d_c, d_alpha, d_omega, dm, flagd, ++seq, compute_s);
+        hhp_dp_vecop_P(dP, dV, dR, d_omega, d_beta, ng, compute_s);  // GPU vecop runs while host spins
+        while (*flagv < seq) {}                              // spin-wait for beta (~1-2us)
+        hs[0] = hm[0];
         // fused host vecop: P = (P - omega*V)*beta + R  (one region, one pass)
         #pragma omp parallel for
         for (int i = 0; i < nc; i++)
@@ -381,14 +409,11 @@ int main(int argc, char *argv[]) {
         dist_spmv(&ctx, dV_desc, dP, hP, dV, hV);
 
         // rv = R0.V ; alpha = rho/rv ; neg_a = -alpha
-        dist_dot(bh, &ctx, d_g, d_c, d_rv, &hp[1], dR0, dV, hR0, hV);
-        hhp_dp_update_alpha(d_alpha, d_neg_a, d_rho, d_rv, compute_s);
-        cudaMemcpyAsync(&hs[1], d_alpha, sizeof(double), cudaMemcpyDeviceToHost, compute_s);
-        cudaMemcpyAsync(&hs[2], d_neg_a, sizeof(double), cudaMemcpyDeviceToHost, compute_s);
-        cudaStreamSynchronize(compute_s);
-        // S = R - alpha*V
-        CHECK_CUBLAS(cublasDcopy(bh, ng, dR, 1, dS, 1))
-        CHECK_CUBLAS(cublasDaxpy(bh, ng, d_neg_a, dV, 1, dS, 1))
+        dist_partials(bh, &ctx, d_g, d_c, &hp[1], dR0, dV, hR0, hV);
+        hhp_dp_cu_alpha(d_alpha, d_neg_a, d_rho, d_g, d_c, dm, flagd, ++seq, compute_s);
+        hhp_dp_vecop_S(dS, dR, dV, d_neg_a, ng, compute_s);
+        while (*flagv < seq) {}                              // spin-wait for alpha,neg_a
+        hs[1] = hm[0]; hs[2] = hm[1];
         // fused host vecop: S = R - alpha*V   (hs[2] = -alpha)
         #pragma omp parallel for
         for (int i = 0; i < nc; i++)
@@ -407,17 +432,10 @@ int main(int argc, char *argv[]) {
           hp[2] = cts; hp[3] = ctt; }
         cudaMemcpyAsync(d_c,  &hp[2], sizeof(double), cudaMemcpyHostToDevice, compute_s);
         cudaMemcpyAsync(d_c2, &hp[3], sizeof(double), cudaMemcpyHostToDevice, compute_s);
-        hhp_dp_add(d_ts, d_g,  d_c,  compute_s);
-        hhp_dp_add(d_tt, d_g2, d_c2, compute_s);
-        hhp_dp_update_omega(d_omega, d_neg_w, d_ts, d_tt, compute_s);
-        cudaMemcpyAsync(&hs[3], d_omega, sizeof(double), cudaMemcpyDeviceToHost, compute_s);
-        cudaMemcpyAsync(&hs[4], d_neg_w, sizeof(double), cudaMemcpyDeviceToHost, compute_s);
-        cudaStreamSynchronize(compute_s);
-        // X += alpha*P + omega*S ; R = S - omega*T
-        CHECK_CUBLAS(cublasDaxpy(bh, ng, d_alpha, dP, 1, dX, 1))
-        CHECK_CUBLAS(cublasDaxpy(bh, ng, d_omega, dS, 1, dX, 1))
-        CHECK_CUBLAS(cublasDcopy(bh, ng, dS, 1, dR, 1))
-        CHECK_CUBLAS(cublasDaxpy(bh, ng, d_neg_w, dT, 1, dR, 1))
+        hhp_dp_cu_omega(d_omega, d_neg_w, d_g, d_c, d_g2, d_c2, dm, flagd, ++seq, compute_s);
+        hhp_dp_vecop_XR(dX, dR, dP, dS, dT, d_alpha, d_omega, d_neg_w, ng, compute_s);
+        while (*flagv < seq) {}                              // spin-wait for omega,neg_w
+        hs[3] = hm[0]; hs[4] = hm[1];
         // fused host vecop: X += alpha*P + omega*S ; R = S - omega*T  (one region)
         #pragma omp parallel for
         for (int i = 0; i < nc; i++) {
