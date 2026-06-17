@@ -11,6 +11,7 @@
 #include "hhp_cpu.h"
 #include "hhp_util.h"
 #include "hhp_dp_kernels.h"
+#include "hhp_dp_helpers.h"
 
 #include <cuda_runtime_api.h>
 #include <cuda_runtime.h>
@@ -78,68 +79,7 @@ static char doc[] = "Hybrid GPU+CPU BiCGStab (no MPI) with device-pointer-mode d
 static char args_doc[] = "";
 static struct argp argp = {options, parse_opt, args_doc, doc};
 
-// --- Small helpers ---
-
-static int read_ints(const char *path, int *out, int max) {
-    FILE *f = fopen(path, "r");
-    if (!f) ABORT("Could not open file: %s", path)
-    int i = 0, v;
-    while (i < max && fscanf(f, "%d", &v) == 1) out[i++] = v;
-    fclose(f);
-    return i;
-}
-
-// Allocate a single device double and set it from a host value.
-static double *dscalar(double init) {
-    double *p;
-    if (cudaMalloc((void **)&p, sizeof(double)) != cudaSuccess)
-        ABORT("cudaMalloc failed for device scalar")
-    if (cudaMemcpy(p, &init, sizeof(double), cudaMemcpyHostToDevice) != cudaSuccess)
-        ABORT("cudaMemcpy failed for device scalar")
-    return p;
-}
-
-// Permute rows of A by perm and renumber columns by perm_inv:
-// Aperm[i,j] = A[perm[i], perm[j]].
-static CSR csr_permute(CSR A, const int *perm, const int *perm_inv) {
-    CSR out = {.m = A.m, .n = A.n, .nnz = A.nnz};
-    CALLOC_ARRAY(out.I, A.m + 1);
-    ALLOC_ARRAY(out.J, A.nnz);
-    ALLOC_ARRAY(out.val, A.nnz);
-    out.I[0] = 0;
-    for (int i = 0; i < A.m; i++) {
-        int old_row = perm[i];
-        out.I[i + 1] = out.I[i] + (A.I[old_row + 1] - A.I[old_row]);
-    }
-    for (int i = 0; i < A.m; i++) {
-        int old_row = perm[i];
-        int old_start = A.I[old_row];
-        int cnt = A.I[old_row + 1] - old_start;
-        int new_start = out.I[i];
-        for (int k = 0; k < cnt; k++) {
-            out.J[new_start + k] = perm_inv[A.J[old_start + k]];
-            out.val[new_start + k] = A.val[old_start + k];
-        }
-    }
-    return out;
-}
-
-// Extract contiguous rows [row_start, row_end) as a CSR slice.
-static CSR csr_row_slice(CSR A, int row_start, int row_end) {
-    int m_new = row_end - row_start;
-    int offset = A.I[row_start];
-    int nnz_new = A.I[row_end] - offset;
-    CSR out = {.m = m_new, .n = A.n, .nnz = nnz_new};
-    CALLOC_ARRAY(out.I, m_new + 1);
-    ALLOC_ARRAY(out.J, nnz_new > 0 ? nnz_new : 1);
-    ALLOC_ARRAY(out.val, nnz_new > 0 ? nnz_new : 1);
-    for (int i = 0; i <= m_new; i++) out.I[i] = A.I[row_start + i] - offset;
-    for (int k = 0; k < nnz_new; k++) {
-        out.J[k] = A.J[offset + k];
-        out.val[k] = A.val[offset + k];
-    }
-    return out;
-}
+// read_ints, dscalar, csr_permute, csr_row_slice live in hhp_dp_helpers.h.
 
 // One overlapped hybrid SpMV. Identical to bicgstab_hybrid_async.c: cuSPARSE
 // runs with host alpha/beta constants, independent of the cuBLAS pointer mode.

@@ -109,6 +109,29 @@ __global__ static void k_cu_omega(double *omega, double *neg_w,
     *flag = seq;
 }
 
+// Host-scalar variants of the fused vector-op kernels: coefficients passed by
+// value (for the MPI solver, where scalars are computed on the host after
+// MPI_Allreduce rather than living on the device). Same fusion / single pass.
+__global__ static void k_vecop_P_hs(double *P, const double *V, const double *R,
+                                    double omega, double beta, int n) {
+    int i = blockIdx.x * blockDim.x + threadIdx.x;
+    if (i < n) P[i] = (P[i] - omega * V[i]) * beta + R[i];
+}
+__global__ static void k_vecop_S_hs(double *S, const double *R, const double *V,
+                                    double neg_alpha, int n) {
+    int i = blockIdx.x * blockDim.x + threadIdx.x;
+    if (i < n) S[i] = R[i] + neg_alpha * V[i];
+}
+__global__ static void k_vecop_XR_hs(double *X, double *R, const double *P,
+                                     const double *S, const double *T,
+                                     double alpha, double omega, double neg_omega, int n) {
+    int i = blockIdx.x * blockDim.x + threadIdx.x;
+    if (i < n) {
+        X[i] += alpha * P[i] + omega * S[i];
+        R[i]  = S[i] + neg_omega * T[i];
+    }
+}
+
 // Set a mapped-host flag after prior stream work (e.g. a D->H copy) so the host
 // can spin-wait on completion instead of cudaStreamSynchronize.
 __global__ static void k_set_flag(unsigned long long *flag, unsigned long long seq) {
@@ -124,6 +147,19 @@ void hhp_dp_add(double *total, const double *a, const double *b, cudaStream_t s)
 
 void hhp_dp_set_flag(unsigned long long *flag, unsigned long long seq, cudaStream_t s) {
     k_set_flag<<<1, 1, 0, s>>>(flag, seq);
+}
+
+void hhp_vecop_P_hs(double *P, const double *V, const double *R,
+                    double omega, double beta, int n, cudaStream_t s) {
+    if (n > 0) k_vecop_P_hs<<<(n + 255) / 256, 256, 0, s>>>(P, V, R, omega, beta, n);
+}
+void hhp_vecop_S_hs(double *S, const double *R, const double *V,
+                    double neg_alpha, int n, cudaStream_t s) {
+    if (n > 0) k_vecop_S_hs<<<(n + 255) / 256, 256, 0, s>>>(S, R, V, neg_alpha, n);
+}
+void hhp_vecop_XR_hs(double *X, double *R, const double *P, const double *S, const double *T,
+                     double alpha, double omega, double neg_omega, int n, cudaStream_t s) {
+    if (n > 0) k_vecop_XR_hs<<<(n + 255) / 256, 256, 0, s>>>(X, R, P, S, T, alpha, omega, neg_omega, n);
 }
 
 // Gather: out[k] = in[idx[k]]. Used to pull only the halo (GPU-owned columns a

@@ -10,6 +10,7 @@
 #include "hhp_cpu.h"
 #include "hhp_util.h"
 #include "hhp_dp_kernels.h"
+#include "hhp_dp_helpers.h"
 
 #include <cuda_runtime_api.h>
 #include <cuda_runtime.h>
@@ -70,16 +71,6 @@ static error_t parse_opt(int key, char *arg, struct argp_state *state) {
 static char doc[] = "Pure-GPU BiCGStab with cuBLAS device-pointer-mode dots";
 static char args_doc[] = "";
 static struct argp argp = {options, parse_opt, args_doc, doc};
-
-// Allocate a single device double and set it from a host value.
-static double *dscalar(double init) {
-    double *p;
-    if (cudaMalloc((void **)&p, sizeof(double)) != cudaSuccess)
-        ABORT("cudaMalloc failed for device scalar")
-    if (cudaMemcpy(p, &init, sizeof(double), cudaMemcpyHostToDevice) != cudaSuccess)
-        ABORT("cudaMemcpy failed for device scalar")
-    return p;
-}
 
 int main(int argc, char *argv[]) {
     struct arguments arguments = {};
