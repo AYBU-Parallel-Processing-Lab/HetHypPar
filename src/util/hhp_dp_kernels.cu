@@ -156,6 +156,26 @@ __global__ static void k_pipe_xbycz(double *out, const double *X, const double *
     if (i < n) out[i] = X[i] + b * Y[i] + c * Z[i];
 }
 
+// Pipelined reduction-2 (Alg. 9): from the four (r0,.) partial dots, compute the
+// next beta and alpha, commit rho_old, and publish beta,alpha to mapped host.
+//   rr=(r0,r) rw=(r0,w) rs=(r0,s) rz=(r0,z)   [each = GPU partial g + CPU partial c]
+//   beta = (alpha/omega)(rr/rho_old);  denom = rw + beta*rs - beta*omega*rz;
+//   alpha = rr/denom;  rho_old <- rr.   Uses the iteration's current alpha & omega.
+__global__ static void k_pipe_betalpha(
+    double *beta, double *alpha, double *rho_old, const double *omega,
+    const double *g_rr, const double *c_rr, const double *g_rw, const double *c_rw,
+    const double *g_rs, const double *c_rs, const double *g_rz, const double *c_rz,
+    double *hm, unsigned long long *flag, unsigned long long seq) {
+    double rr = *g_rr + *c_rr, rw = *g_rw + *c_rw, rs = *g_rs + *c_rs, rz = *g_rz + *c_rz;
+    double a = *alpha, w = *omega, rho = *rho_old;
+    double b = (a / w) * (rr / rho);
+    double an = rr / (rw + b * rs - b * w * rz);
+    *beta = b; *alpha = an; *rho_old = rr;
+    hm[0] = b; hm[1] = an;
+    __threadfence_system();
+    *flag = seq;
+}
+
 // Set a mapped-host flag after prior stream work (e.g. a D->H copy) so the host
 // can spin-wait on completion instead of cudaStreamSynchronize.
 __global__ static void k_set_flag(unsigned long long *flag, unsigned long long seq) {
@@ -171,6 +191,14 @@ void hhp_dp_add(double *total, const double *a, const double *b, cudaStream_t s)
 
 void hhp_dp_set_flag(unsigned long long *flag, unsigned long long seq, cudaStream_t s) {
     k_set_flag<<<1, 1, 0, s>>>(flag, seq);
+}
+
+void hhp_pipe_betalpha(double *beta, double *alpha, double *rho_old, const double *omega,
+                       const double *g_rr, const double *c_rr, const double *g_rw, const double *c_rw,
+                       const double *g_rs, const double *c_rs, const double *g_rz, const double *c_rz,
+                       double *hm, unsigned long long *flag, unsigned long long seq, cudaStream_t s) {
+    k_pipe_betalpha<<<1, 1, 0, s>>>(beta, alpha, rho_old, omega,
+                                    g_rr, c_rr, g_rw, c_rw, g_rs, c_rs, g_rz, c_rz, hm, flag, seq);
 }
 
 void hhp_pipe_axyz(double *out, const double *Y, const double *Z, double a, double c, int n, cudaStream_t s) {

@@ -49,7 +49,7 @@ typedef struct {
     double *d_full, *h_full; CSR Acpu; Device_Buffer_SpMV buf; int ng, nc, n;
     cudaStream_t cs, ps; cudaEvent_t in_ready, h2d;
     int *d_halo, *h_halo, nh; double *d_haloval, *h_haloval;
-    unsigned long long *flagd; volatile unsigned long long *flagv, seq;  // mapped-host spin-wait
+    unsigned long long *flagd; volatile unsigned long long *flagv; unsigned long long *seq;  // mapped-host spin-wait (shared counter)
 } Ctx;
 
 // out = A * in (split). Halo-gathered: CPU only receives the GPU columns its rows touch.
@@ -68,8 +68,8 @@ static void spmv(Ctx *c, cusparseDnVecDescr_t out_desc, const double *d_in, cons
     cusparseSpMV(c->ch, CUSPARSE_OPERATION_NON_TRANSPOSE, &one, c->Agpu, c->in_desc, &zero, out_desc,
                  CUDA_R_64F, CUSPARSE_SPMV_ALG_DEFAULT, c->buf);
     if (nc > 0) {
-        hhp_dp_set_flag(c->flagd, ++c->seq, c->ps);            // spin-wait for the halo D->H
-        while (*c->flagv < c->seq) {}
+        hhp_dp_set_flag(c->flagd, ++(*c->seq), c->ps);         // spin-wait for the halo D->H
+        while (*c->flagv < *c->seq) {}
         #pragma omp parallel for
         for (int k=0;k<c->nh;k++) c->h_full[c->h_halo[k]] = c->h_haloval[k];
         Vector y={.vals=h_out,.nvals=nc}, xx={.vals=c->h_full,.nvals=c->n};
@@ -175,13 +175,25 @@ int main(int argc, char *argv[]) {
     double *d_haloval=dvec(nh), *h_haloval; CHECK_CUDA(cudaMallocHost((void**)&h_haloval,(nh>0?nh:1)*sizeof(double)))
     printf("halo: %d / %d\n", nh, ng);
 
+    unsigned long long seq = 0;
     Ctx ctx = {.ch=ch,.Agpu=dAgpu.desc,.in_desc=in_desc,.d_full=d_full,.h_full=h_full,.Acpu=Acpu,.buf=sbuf,
                .ng=ng,.nc=nc,.n=n,.cs=cs,.ps=ps,.in_ready=e_in,.h2d=e_h2d,
-               .d_halo=d_halo,.h_halo=halo,.nh=nh,.d_haloval=d_haloval,.h_haloval=h_haloval};
+               .d_halo=d_halo,.h_halo=halo,.nh=nh,.d_haloval=d_haloval,.h_haloval=h_haloval,.seq=&seq};
+    // mapped-host: flag (spin-wait) + 2 scalar slots the combine kernels publish to.
     unsigned long long *flagh; CHECK_CUDA(cudaHostAlloc((void**)&flagh,sizeof(unsigned long long),cudaHostAllocMapped))
-    *flagh=0; CHECK_CUDA(cudaHostGetDevicePointer((void**)&ctx.flagd,(void*)flagh,0)) ctx.flagv=flagh; ctx.seq=0;
+    *flagh=0; CHECK_CUDA(cudaHostGetDevicePointer((void**)&ctx.flagd,(void*)flagh,0)) ctx.flagv=flagh;
+    volatile unsigned long long *flagv = flagh;
+    double *hm; CHECK_CUDA(cudaHostAlloc((void**)&hm,2*sizeof(double),cudaHostAllocMapped))
+    double *dm; CHECK_CUDA(cudaHostGetDevicePointer((void**)&dm,hm,0))
+    // device scalars (state) + GPU/CPU partial slots for the two reductions
+    double *d_alpha=dscalar(1.0), *d_omega=dscalar(1.0), *d_neg_w=dscalar(0.0),
+           *d_beta=dscalar(0.0), *d_rho=dscalar(0.0);
+    double *d_g_qy=dscalar(0),*d_c_qy=dscalar(0),*d_g_yy=dscalar(0),*d_c_yy=dscalar(0);
+    double *d_g_rr=dscalar(0),*d_c_rr=dscalar(0),*d_g_rw=dscalar(0),*d_c_rw=dscalar(0),
+           *d_g_rs=dscalar(0),*d_c_rs=dscalar(0),*d_g_rz=dscalar(0),*d_c_rz=dscalar(0);
+    double *hpart; CHECK_CUDA(cudaMallocHost((void**)&hpart,6*sizeof(double)))   // pinned CPU-partial slots
 
-    // --- init: r = b - A x ; R0 = r ; w = A r ; t = A w ; p=s=z=v=0 ---
+    // --- init (host-pointer mode): r = b - A x ; R0 = r ; w = A r ; t = A w ; p=s=z=v=0 ---
     spmv(&ctx, TMd, dX, hX, dTMP, hTMP);                     // TMP = A x
     v_copy(dB,hB,dR,hR); v_axpy(-1.0,dTMP,hTMP,dR,hR);       // r = b - A x
     v_copy(dR,hR,dR0,hR0);                                   // R0 = r
@@ -195,38 +207,89 @@ int main(int argc, char *argv[]) {
     double alpha = rho_old / v_dot(dR0,dW,hR0,hW);
     double beta_prev=0.0, omega_prev=1.0, omega=0.0;
     double bnorm = sqrt(v_dot(dB,dB,hB,hB));
+    // seed device state and switch cuBLAS to device-pointer mode for the loop
+    CHECK_CUDA(cudaMemcpy(d_rho,&rho_old,sizeof(double),cudaMemcpyHostToDevice))
+    CHECK_CUDA(cudaMemcpy(d_alpha,&alpha,sizeof(double),cudaMemcpyHostToDevice))
+    CHECK_CUBLAS(cublasSetPointerMode(bh, CUBLAS_POINTER_MODE_DEVICE))
     printf("LOG: setup done\n");
+
+    // optional section profiling: HHP_PROF=1 syncs stream CS at each boundary and
+    // accumulates wall time per region (perturbs absolute time, faithful breakdown).
+    int prof = (getenv("HHP_PROF") != NULL);
+    double T_rec=0,T_dot1=0,T_spmvV=0,T_upd=0,T_spmvT=0,T_dot2=0; long nprof=0;
+    #define PSYNC() do{ if(prof) cudaStreamSynchronize(cs); }while(0)
+    #define PT() (prof?omp_get_wtime():0.0)
 
     double t_loop0 = omp_get_wtime();
     for (int i=0;i<niters;i++){
         double bw = beta_prev*omega_prev;
+        double ta=PT();
         p_axyz(beta_prev,-bw, dP,hP, dR,hR, dS,hS);   // p = beta*p + r - bw*s
         p_axyz(beta_prev,-bw, dS,hS, dW,hW, dZ,hZ);   // s = beta*s + w - bw*z
         p_axyz(beta_prev,-bw, dZ,hZ, dT,hT, dV,hV);   // z = beta*z + t - bw*v
         p_xcy(-alpha, dQ,hQ, dR,hR, dS,hS);           // q = r - alpha*s
         p_xcy(-alpha, dY,hY, dW,hW, dZ,hZ);           // y = w - alpha*z
-        // reduction 1 (omega) + SpMV v = A z
-        double qy = v_dot(dQ,dY,hQ,hY), yy = v_dot(dY,dY,hY,hY);
-        spmv(&ctx, Vd, dZ, hZ, dV, hV);
-        omega = qy/yy;
+        PSYNC(); double tb=PT(); T_rec += tb-ta;
+        // --- reduction 1: omega = (Q,Y)/(Y,Y) -- device-ptr dots, CPU partial overlaps GPU dot ---
+        cublasDdot(bh, ng, dQ,1, dY,1, d_g_qy);       // GPU partials (async, device-ptr)
+        cublasDdot(bh, ng, dY,1, dY,1, d_g_yy);
+        hpart[0]=host_dot(hQ,hY,nc); hpart[1]=host_dot(hY,hY,nc);   // CPU partials (overlap)
+        cudaMemcpyAsync(d_c_qy,&hpart[0],sizeof(double),cudaMemcpyHostToDevice,cs);
+        cudaMemcpyAsync(d_c_yy,&hpart[1],sizeof(double),cudaMemcpyHostToDevice,cs);
+        hhp_dp_cu_omega(d_omega,d_neg_w, d_g_qy,d_c_qy, d_g_yy,d_c_yy, dm, ctx.flagd, ++seq, cs);
+        while (*flagv < seq) {}                        // spin-wait omega (~1-2us)
+        omega = hm[0];
+        PSYNC(); double tc=PT(); T_dot1 += tc-tb;
+        spmv(&ctx, Vd, dZ, hZ, dV, hV);                // v = A z
+        PSYNC(); double td=PT(); T_spmvV += td-tc;
         p_acc(alpha,omega, dX,hX, dP,hP, dQ,hQ);                  // x += alpha*p + omega*q
         p_xcy(-omega, dR,hR, dQ,hQ, dY,hY);                       // r = q - omega*y
         p_xbycz(-omega, omega*alpha, dW,hW, dY,hY, dT,hT, dV,hV); // w = y - omega*t + omega*alpha*v
+        PSYNC(); double te=PT(); T_upd += te-td;
         if (replace_k>0 && (i+1)%replace_k==0) {                                      // residual replacement
+            CHECK_CUBLAS(cublasSetPointerMode(bh, CUBLAS_POINTER_MODE_HOST))
             spmv(&ctx,TMd,dX,hX,dTMP,hTMP); v_copy(dB,hB,dR,hR); v_axpy(-1.0,dTMP,hTMP,dR,hR);
             spmv(&ctx,Wd,dR,hR,dW,hW); spmv(&ctx,Td,dW,hW,dT,hT);
             spmv(&ctx,Sd,dP,hP,dS,hS); spmv(&ctx,Zd,dS,hS,dZ,hZ); spmv(&ctx,Vd,dZ,hZ,dV,hV);
+            CHECK_CUBLAS(cublasSetPointerMode(bh, CUBLAS_POINTER_MODE_DEVICE))
         }
+        double tf=PT();
         spmv(&ctx, Td, dW, hW, dT, hT);                                              // t = A w (next iter)
-        // reduction 2 (beta, alpha)
-        double rr=v_dot(dR0,dR,hR0,hR), rw=v_dot(dR0,dW,hR0,hW), rs=v_dot(dR0,dS,hR0,hS), rz=v_dot(dR0,dZ,hR0,hZ);
-        double beta = (alpha/omega)*(rr/rho_old);
-        double denom = rw + beta*rs - beta*omega*rz;
-        rho_old=rr; beta_prev=beta; omega_prev=omega; alpha = rr/denom;
+        PSYNC(); double tg=PT(); T_spmvT += tg-tf;
+        // --- reduction 2: rr,rw,rs,rz -> beta, alpha -- 4 device-ptr dots + 1 fused CPU reduction ---
+        cublasDdot(bh,ng,dR0,1,dR,1,d_g_rr); cublasDdot(bh,ng,dR0,1,dW,1,d_g_rw);
+        cublasDdot(bh,ng,dR0,1,dS,1,d_g_rs); cublasDdot(bh,ng,dR0,1,dZ,1,d_g_rz);
+        { double crr=0,crw=0,crs=0,crz=0;
+          #pragma omp parallel for reduction(+:crr,crw,crs,crz)
+          for(int k=0;k<nc;k++){ double r0=hR0[k]; crr+=r0*hR[k]; crw+=r0*hW[k]; crs+=r0*hS[k]; crz+=r0*hZ[k]; }
+          hpart[2]=crr; hpart[3]=crw; hpart[4]=crs; hpart[5]=crz; }
+        cudaMemcpyAsync(d_c_rr,&hpart[2],sizeof(double),cudaMemcpyHostToDevice,cs);
+        cudaMemcpyAsync(d_c_rw,&hpart[3],sizeof(double),cudaMemcpyHostToDevice,cs);
+        cudaMemcpyAsync(d_c_rs,&hpart[4],sizeof(double),cudaMemcpyHostToDevice,cs);
+        cudaMemcpyAsync(d_c_rz,&hpart[5],sizeof(double),cudaMemcpyHostToDevice,cs);
+        hhp_pipe_betalpha(d_beta,d_alpha,d_rho,d_omega,
+            d_g_rr,d_c_rr,d_g_rw,d_c_rw,d_g_rs,d_c_rs,d_g_rz,d_c_rz, dm, ctx.flagd, ++seq, cs);
+        while (*flagv < seq) {}                        // spin-wait beta,alpha
+        beta_prev = hm[0]; alpha = hm[1]; omega_prev = omega;
+        PSYNC(); double th=PT(); T_dot2 += th-tg;
+        nprof++;
+    }
+    if (prof) {
+        double tot=T_rec+T_dot1+T_spmvV+T_upd+T_spmvT+T_dot2; double k=1e6/(nprof>0?nprof:1);
+        fprintf(stderr,"PROF (us/iter, %ld iters):\n", nprof);
+        fprintf(stderr,"  recurrence(5 vecops): %8.2f  (%4.1f%%)\n", T_rec*k, 100*T_rec/tot);
+        fprintf(stderr,"  reduction1 (2 dots) : %8.2f  (%4.1f%%)\n", T_dot1*k,100*T_dot1/tot);
+        fprintf(stderr,"  spmv  v=Az          : %8.2f  (%4.1f%%)\n", T_spmvV*k,100*T_spmvV/tot);
+        fprintf(stderr,"  update(3 vecops)    : %8.2f  (%4.1f%%)\n", T_upd*k, 100*T_upd/tot);
+        fprintf(stderr,"  spmv  t=Aw          : %8.2f  (%4.1f%%)\n", T_spmvT*k,100*T_spmvT/tot);
+        fprintf(stderr,"  reduction2 (4 dots) : %8.2f  (%4.1f%%)\n", T_dot2*k,100*T_dot2/tot);
+        fprintf(stderr,"  --- dots total: %.1f%%  spmv total: %.1f%%  vecops total: %.1f%%\n",
+                100*(T_dot1+T_dot2)/tot, 100*(T_spmvV+T_spmvT)/tot, 100*(T_rec+T_upd)/tot);
     }
     cudaDeviceSynchronize();
     double t_loop1 = omp_get_wtime();
 
+    CHECK_CUBLAS(cublasSetPointerMode(bh, CUBLAS_POINTER_MODE_HOST))   // final residual on host
     spmv(&ctx, TMd, dX, hX, dTMP, hTMP); v_axpy(-1.0,dB,hB,dTMP,hTMP);
     double rel = sqrt(v_dot(dTMP,dTMP,hTMP,hTMP)) / bnorm;
 

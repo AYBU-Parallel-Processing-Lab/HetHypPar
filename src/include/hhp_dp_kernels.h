@@ -26,6 +26,13 @@ void hhp_pipe_xbycz(double *out, const double *X, const double *Y, const double 
 // out[k] = in[idx[k]] for k in [0,nh) -- gather a halo before a D->H transfer.
 void hhp_dp_gather(double *out, const double *in, const int *idx, int nh, cudaStream_t s);
 
+// Pipelined reduction-2: combine the four (r0,.) partial dots into the next
+// beta/alpha, commit rho_old, publish beta(hm[0]) & alpha(hm[1]) to mapped host.
+void hhp_pipe_betalpha(double *beta, double *alpha, double *rho_old, const double *omega,
+                       const double *g_rr, const double *c_rr, const double *g_rw, const double *c_rw,
+                       const double *g_rs, const double *c_rs, const double *g_rz, const double *c_rz,
+                       double *hm, unsigned long long *flag, unsigned long long seq, cudaStream_t s);
+
 // Fused combine+update (distributed): sum GPU partial g + CPU partial c, update
 // scalar, and publish result(s) to mapped host `hm` + set `flag`=seq (for a host
 // spin-wait that replaces cudaStreamSynchronize). hm/flag are device pointers to
