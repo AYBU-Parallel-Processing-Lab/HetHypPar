@@ -132,6 +132,30 @@ __global__ static void k_vecop_XR_hs(double *X, double *R, const double *P,
     }
 }
 
+// --- Fused kernels for the PIPELINED BiCGStab recurrences (host-scalar) ---
+// out = a*out + Y + c*Z   (the p,s,z recurrences: p = beta*p + r - bw*s)
+__global__ static void k_pipe_axyz(double *out, const double *Y, const double *Z,
+                                   double a, double c, int n) {
+    int i = blockIdx.x * blockDim.x + threadIdx.x;
+    if (i < n) out[i] = a * out[i] + Y[i] + c * Z[i];
+}
+// out = X + c*Y           (q = r - alpha*s ; r = q - omega*y)
+__global__ static void k_pipe_xcy(double *out, const double *X, const double *Y, double c, int n) {
+    int i = blockIdx.x * blockDim.x + threadIdx.x;
+    if (i < n) out[i] = X[i] + c * Y[i];
+}
+// out += a*X + b*Y        (x += alpha*p + omega*q)
+__global__ static void k_pipe_acc(double *out, const double *X, const double *Y, double a, double b, int n) {
+    int i = blockIdx.x * blockDim.x + threadIdx.x;
+    if (i < n) out[i] += a * X[i] + b * Y[i];
+}
+// out = X + b*Y + c*Z     (w = y - omega*t + omega*alpha*v)
+__global__ static void k_pipe_xbycz(double *out, const double *X, const double *Y, const double *Z,
+                                    double b, double c, int n) {
+    int i = blockIdx.x * blockDim.x + threadIdx.x;
+    if (i < n) out[i] = X[i] + b * Y[i] + c * Z[i];
+}
+
 // Set a mapped-host flag after prior stream work (e.g. a D->H copy) so the host
 // can spin-wait on completion instead of cudaStreamSynchronize.
 __global__ static void k_set_flag(unsigned long long *flag, unsigned long long seq) {
@@ -147,6 +171,19 @@ void hhp_dp_add(double *total, const double *a, const double *b, cudaStream_t s)
 
 void hhp_dp_set_flag(unsigned long long *flag, unsigned long long seq, cudaStream_t s) {
     k_set_flag<<<1, 1, 0, s>>>(flag, seq);
+}
+
+void hhp_pipe_axyz(double *out, const double *Y, const double *Z, double a, double c, int n, cudaStream_t s) {
+    if (n > 0) k_pipe_axyz<<<(n + 255) / 256, 256, 0, s>>>(out, Y, Z, a, c, n);
+}
+void hhp_pipe_xcy(double *out, const double *X, const double *Y, double c, int n, cudaStream_t s) {
+    if (n > 0) k_pipe_xcy<<<(n + 255) / 256, 256, 0, s>>>(out, X, Y, c, n);
+}
+void hhp_pipe_acc(double *out, const double *X, const double *Y, double a, double b, int n, cudaStream_t s) {
+    if (n > 0) k_pipe_acc<<<(n + 255) / 256, 256, 0, s>>>(out, X, Y, a, b, n);
+}
+void hhp_pipe_xbycz(double *out, const double *X, const double *Y, const double *Z, double b, double c, int n, cudaStream_t s) {
+    if (n > 0) k_pipe_xbycz<<<(n + 255) / 256, 256, 0, s>>>(out, X, Y, Z, b, c, n);
 }
 
 void hhp_vecop_P_hs(double *P, const double *V, const double *R,

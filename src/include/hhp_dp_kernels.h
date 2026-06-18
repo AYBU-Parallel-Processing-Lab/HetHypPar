@@ -17,6 +17,12 @@ void hhp_dp_add(double *total, const double *a, const double *b, cudaStream_t s)
 // Set mapped-host *flag = seq after prior stream work, for a host spin-wait.
 void hhp_dp_set_flag(unsigned long long *flag, unsigned long long seq, cudaStream_t s);
 
+// Fused pipelined-BiCGStab recurrence kernels (host-scalar coefficients).
+void hhp_pipe_axyz(double *out, const double *Y, const double *Z, double a, double c, int n, cudaStream_t s);   // out = a*out + Y + c*Z
+void hhp_pipe_xcy(double *out, const double *X, const double *Y, double c, int n, cudaStream_t s);              // out = X + c*Y
+void hhp_pipe_acc(double *out, const double *X, const double *Y, double a, double b, int n, cudaStream_t s);    // out += a*X + b*Y
+void hhp_pipe_xbycz(double *out, const double *X, const double *Y, const double *Z, double b, double c, int n, cudaStream_t s); // out = X + b*Y + c*Z
+
 // out[k] = in[idx[k]] for k in [0,nh) -- gather a halo before a D->H transfer.
 void hhp_dp_gather(double *out, const double *in, const int *idx, int nh, cudaStream_t s);
 

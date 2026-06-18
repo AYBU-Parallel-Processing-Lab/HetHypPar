@@ -49,6 +49,7 @@ typedef struct {
     double *d_full, *h_full; CSR Acpu; Device_Buffer_SpMV buf; int ng, nc, n;
     cudaStream_t cs, ps; cudaEvent_t in_ready, h2d;
     int *d_halo, *h_halo, nh; double *d_haloval, *h_haloval;
+    unsigned long long *flagd; volatile unsigned long long *flagv, seq;  // mapped-host spin-wait
 } Ctx;
 
 // out = A * in (split). Halo-gathered: CPU only receives the GPU columns its rows touch.
@@ -67,13 +68,14 @@ static void spmv(Ctx *c, cusparseDnVecDescr_t out_desc, const double *d_in, cons
     cusparseSpMV(c->ch, CUSPARSE_OPERATION_NON_TRANSPOSE, &one, c->Agpu, c->in_desc, &zero, out_desc,
                  CUDA_R_64F, CUSPARSE_SPMV_ALG_DEFAULT, c->buf);
     if (nc > 0) {
-        cudaStreamSynchronize(c->ps);
+        hhp_dp_set_flag(c->flagd, ++c->seq, c->ps);            // spin-wait for the halo D->H
+        while (*c->flagv < c->seq) {}
         #pragma omp parallel for
         for (int k=0;k<c->nh;k++) c->h_full[c->h_halo[k]] = c->h_haloval[k];
         Vector y={.vals=h_out,.nvals=nc}, xx={.vals=c->h_full,.nvals=c->n};
         CSR_spmxv_omp(c->Acpu, xx, y);
     }
-    cudaStreamSynchronize(c->cs);
+    // no GPU sync here: callers' subsequent device ops are CS-ordered after this SpMV.
 }
 
 // distributed vector ops: GPU slice (cuBLAS host-ptr, stream CS) + CPU slice (OMP)
@@ -86,6 +88,24 @@ static void v_copy(const double *dx, const double *hx, double *dy, double *hy){
 // global dot = GPU partial (host-ptr cublasDdot; blocks on CS) + CPU partial (OMP)
 static double v_dot(const double *da, const double *db, const double *ha, const double *hb){
     double g=0; cublasDdot(BH, NG, da, 1, db, 1, &g); return g + host_dot(ha, hb, NC); }
+
+// fused distributed recurrence ops: one GPU kernel (stream CS) + one fused OMP loop
+static void p_axyz(double a, double c, double *od, double *oh, const double *Yd, const double *Yh, const double *Zd, const double *Zh){
+    hhp_pipe_axyz(od, Yd, Zd, a, c, NG, CS);
+    #pragma omp parallel for
+    for (int i=0;i<NC;i++) oh[i] = a*oh[i] + Yh[i] + c*Zh[i]; }   // out = a*out + Y + c*Z
+static void p_xcy(double c, double *od, double *oh, const double *Xd, const double *Xh, const double *Yd, const double *Yh){
+    hhp_pipe_xcy(od, Xd, Yd, c, NG, CS);
+    #pragma omp parallel for
+    for (int i=0;i<NC;i++) oh[i] = Xh[i] + c*Yh[i]; }             // out = X + c*Y
+static void p_acc(double a, double b, double *od, double *oh, const double *Xd, const double *Xh, const double *Yd, const double *Yh){
+    hhp_pipe_acc(od, Xd, Yd, a, b, NG, CS);
+    #pragma omp parallel for
+    for (int i=0;i<NC;i++) oh[i] += a*Xh[i] + b*Yh[i]; }          // out += a*X + b*Y
+static void p_xbycz(double b, double c, double *od, double *oh, const double *Xd, const double *Xh, const double *Yd, const double *Yh, const double *Zd, const double *Zh){
+    hhp_pipe_xbycz(od, Xd, Yd, Zd, b, c, NG, CS);
+    #pragma omp parallel for
+    for (int i=0;i<NC;i++) oh[i] = Xh[i] + b*Yh[i] + c*Zh[i]; }   // out = X + b*Y + c*Z
 
 int main(int argc, char *argv[]) {
     struct arguments A = {}; A.n_iters = 1;
@@ -117,6 +137,7 @@ int main(int argc, char *argv[]) {
     CSR Agpu=csr_row_slice(Ap,0,ng), Acpu=csr_row_slice(Ap,ng,ng+nc);
     double t_read1 = omp_get_wtime();
 
+    CHECK_CUDA(cudaSetDeviceFlags(cudaDeviceMapHost))
     CHECK_CUDA(cudaSetDevice(0))
     cublasHandle_t bh; CHECK_CUBLAS(cublasCreate(&bh)) cusparseHandle_t ch; CHECK_CUSPARSE(cusparseCreate(&ch))
     cudaStream_t cs, ps; CHECK_CUDA(cudaStreamCreate(&cs)) CHECK_CUDA(cudaStreamCreate(&ps))
@@ -157,6 +178,8 @@ int main(int argc, char *argv[]) {
     Ctx ctx = {.ch=ch,.Agpu=dAgpu.desc,.in_desc=in_desc,.d_full=d_full,.h_full=h_full,.Acpu=Acpu,.buf=sbuf,
                .ng=ng,.nc=nc,.n=n,.cs=cs,.ps=ps,.in_ready=e_in,.h2d=e_h2d,
                .d_halo=d_halo,.h_halo=halo,.nh=nh,.d_haloval=d_haloval,.h_haloval=h_haloval};
+    unsigned long long *flagh; CHECK_CUDA(cudaHostAlloc((void**)&flagh,sizeof(unsigned long long),cudaHostAllocMapped))
+    *flagh=0; CHECK_CUDA(cudaHostGetDevicePointer((void**)&ctx.flagd,(void*)flagh,0)) ctx.flagv=flagh; ctx.seq=0;
 
     // --- init: r = b - A x ; R0 = r ; w = A r ; t = A w ; p=s=z=v=0 ---
     spmv(&ctx, TMd, dX, hX, dTMP, hTMP);                     // TMP = A x
@@ -177,18 +200,18 @@ int main(int argc, char *argv[]) {
     double t_loop0 = omp_get_wtime();
     for (int i=0;i<niters;i++){
         double bw = beta_prev*omega_prev;
-        v_scal(beta_prev,dP,hP); v_axpy(1.0,dR,hR,dP,hP); v_axpy(-bw,dS,hS,dP,hP);   // p
-        v_scal(beta_prev,dS,hS); v_axpy(1.0,dW,hW,dS,hS); v_axpy(-bw,dZ,hZ,dS,hS);   // s
-        v_scal(beta_prev,dZ,hZ); v_axpy(1.0,dT,hT,dZ,hZ); v_axpy(-bw,dV,hV,dZ,hZ);   // z
-        v_copy(dR,hR,dQ,hQ); v_axpy(-alpha,dS,hS,dQ,hQ);                              // q = r - alpha s
-        v_copy(dW,hW,dY,hY); v_axpy(-alpha,dZ,hZ,dY,hY);                              // y = w - alpha z
+        p_axyz(beta_prev,-bw, dP,hP, dR,hR, dS,hS);   // p = beta*p + r - bw*s
+        p_axyz(beta_prev,-bw, dS,hS, dW,hW, dZ,hZ);   // s = beta*s + w - bw*z
+        p_axyz(beta_prev,-bw, dZ,hZ, dT,hT, dV,hV);   // z = beta*z + t - bw*v
+        p_xcy(-alpha, dQ,hQ, dR,hR, dS,hS);           // q = r - alpha*s
+        p_xcy(-alpha, dY,hY, dW,hW, dZ,hZ);           // y = w - alpha*z
         // reduction 1 (omega) + SpMV v = A z
         double qy = v_dot(dQ,dY,hQ,hY), yy = v_dot(dY,dY,hY,hY);
         spmv(&ctx, Vd, dZ, hZ, dV, hV);
         omega = qy/yy;
-        v_axpy(alpha,dP,hP,dX,hX); v_axpy(omega,dQ,hQ,dX,hX);                         // x += alpha p + omega q
-        v_copy(dQ,hQ,dR,hR); v_axpy(-omega,dY,hY,dR,hR);                              // r = q - omega y
-        v_copy(dY,hY,dW,hW); v_axpy(-omega,dT,hT,dW,hW); v_axpy(omega*alpha,dV,hV,dW,hW); // w = y - omega(t - alpha v)
+        p_acc(alpha,omega, dX,hX, dP,hP, dQ,hQ);                  // x += alpha*p + omega*q
+        p_xcy(-omega, dR,hR, dQ,hQ, dY,hY);                       // r = q - omega*y
+        p_xbycz(-omega, omega*alpha, dW,hW, dY,hY, dT,hT, dV,hV); // w = y - omega*t + omega*alpha*v
         if (replace_k>0 && (i+1)%replace_k==0) {                                      // residual replacement
             spmv(&ctx,TMd,dX,hX,dTMP,hTMP); v_copy(dB,hB,dR,hR); v_axpy(-1.0,dTMP,hTMP,dR,hR);
             spmv(&ctx,Wd,dR,hR,dW,hW); spmv(&ctx,Td,dW,hW,dT,hT);
