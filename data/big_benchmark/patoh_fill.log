@@ -1,0 +1,671 @@
+================ PATOH FILL START Wed Jun 24 16:29:55 +03 2026 ================
+matrices: circuit5M_dc circuit5M cage15 Freescale2
+--- prep: PaToH partitions only (raised stack) ---
+[circuit5M_dc] patpart w100 (2-rank, imbal 1%)...
+file : /matrices/circuit5M_dc.mtx part : 2 
+	****	Matrix File readed	****Reading File : 3.114438
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 9501681 [1] 9692512 
+cut : 1954part vector : 1.963210
+0 : 1744893 1 : 1778424 
+[circuit5M_dc] patpart w400 (2-rank, imbal 1%)...
+file : /matrices/circuit5M_dc.mtx part : 2 
+	****	Matrix File readed	****Reading File : 3.145317
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 15504562 [1] 3689631 
+cut : 884part vector : 1.948808
+0 : 2845367 1 : 677950 
+[circuit5M_dc] patpart w500 (2-rank, imbal 1%)...
+file : /matrices/circuit5M_dc.mtx part : 2 
+	****	Matrix File readed	****Reading File : 3.123937
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 16155099 [1] 3039094 
+cut : 5435part vector : 1.974220
+0 : 2965543 1 : 557774 
+[circuit5M_dc] patpart w600 (2-rank, imbal 1%)...
+file : /matrices/circuit5M_dc.mtx part : 2 
+	****	Matrix File readed	****Reading File : 3.148864
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 16475276 [1] 2718917 
+cut : 627part vector : 2.011413
+0 : 3025516 1 : 497801 
+[circuit5M_dc] patpart w700 (2-rank, imbal 1%)...
+file : /matrices/circuit5M_dc.mtx part : 2 
+	****	Matrix File readed	****Reading File : 3.138388
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 16877936 [1] 2316257 
+cut : 809part vector : 1.952685
+0 : 3098692 1 : 424625 
+[circuit5M_dc] patpart w800 (2-rank, imbal 1%)...
+file : /matrices/circuit5M_dc.mtx part : 2 
+	****	Matrix File readed	****Reading File : 3.109391
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 17232051 [1] 1962142 
+cut : 2589part vector : 1.978109
+0 : 3159912 1 : 363405 
+[circuit5M_dc] patpart w900 (2-rank, imbal 1%)...
+file : /matrices/circuit5M_dc.mtx part : 2 
+	****	Matrix File readed	****Reading File : 3.108178
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 17447513 [1] 1746680 
+cut : 6201part vector : 1.936922
+0 : 3196656 1 : 326661 
+[circuit5M_dc] patpart w1000 (2-rank, imbal 1%)...
+file : /matrices/circuit5M_dc.mtx part : 2 
+	****	Matrix File readed	****Reading File : 3.116307
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 17623757 [1] 1570436 
+cut : 4807part vector : 1.995354
+0 : 3231205 1 : 292112 
+[circuit5M_dc] patpart w1100 (2-rank, imbal 1%)...
+file : /matrices/circuit5M_dc.mtx part : 2 
+	****	Matrix File readed	****Reading File : 3.111183
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 17770623 [1] 1423570 
+cut : 2912part vector : 1.947792
+0 : 3259311 1 : 264006 
+[circuit5M_dc] patpart w1200 (2-rank, imbal 1%)...
+file : /matrices/circuit5M_dc.mtx part : 2 
+	****	Matrix File readed	****Reading File : 3.119020
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 17798604 [1] 1395589 
+cut : 306part vector : 1.935611
+0 : 3265177 1 : 258140 
+[circuit5M_dc] patpart w2000 (2-rank, imbal 1%)...
+file : /matrices/circuit5M_dc.mtx part : 2 
+	****	Matrix File readed	****Reading File : 3.119965
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 18462913 [1] 731280 
+cut : 3104part vector : 2.018827
+0 : 3383843 1 : 139474 
+[circuit5M_dc] patpart w2720 (2-rank, imbal 1%)...
+file : /matrices/circuit5M_dc.mtx part : 2 
+	****	Matrix File readed	****Reading File : 3.105074
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 18696263 [1] 497930 
+cut : 960part vector : 1.927507
+0 : 3427240 1 : 96077 
+[circuit5M_dc] PATOH DONE
+
+[circuit5M] patpart w100 (2-rank, imbal 1%)...
+file : /matrices/circuit5M.mtx part : 2 
+	****	Matrix File readed	****Reading File : 10.054148
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 30037704 [1] 29486587 
+cut : 9624part vector : 5.783980
+0 : 2787553 1 : 2770773 
+[circuit5M] patpart w400 (2-rank, imbal 1%)...
+file : /matrices/circuit5M.mtx part : 2 
+	****	Matrix File readed	****Reading File : 10.064505
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 47500385 [1] 12023906 
+cut : 207329part vector : 17.044685
+0 : 4472127 1 : 1086199 
+[circuit5M] patpart w500 (2-rank, imbal 1%)...
+file : /matrices/circuit5M.mtx part : 2 
+	****	Matrix File readed	****Reading File : 10.043969
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 50099607 [1] 9424684 
+cut : 33729part vector : 5.706382
+0 : 4683294 1 : 875032 
+[circuit5M] patpart w600 (2-rank, imbal 1%)...
+file : /matrices/circuit5M.mtx part : 2 
+	****	Matrix File readed	****Reading File : 10.056483
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 51531027 [1] 7993264 
+cut : 61481part vector : 5.674427
+0 : 4802293 1 : 756033 
+[circuit5M] patpart w700 (2-rank, imbal 1%)...
+file : /matrices/circuit5M.mtx part : 2 
+	****	Matrix File readed	****Reading File : 10.050420
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 52290621 [1] 7233670 
+cut : 16483part vector : 5.693971
+0 : 4876847 1 : 681479 
+[circuit5M] patpart w800 (2-rank, imbal 1%)...
+file : /matrices/circuit5M.mtx part : 2 
+	****	Matrix File readed	****Reading File : 10.047714
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 53439582 [1] 6084709 
+cut : 41754part vector : 5.734770
+0 : 4996342 1 : 561984 
+[circuit5M] patpart w900 (2-rank, imbal 1%)...
+file : /matrices/circuit5M.mtx part : 2 
+	****	Matrix File readed	****Reading File : 10.059283
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 54107524 [1] 5416767 
+cut : 10542part vector : 6.338100
+0 : 5046339 1 : 511987 
+[circuit5M] patpart w1000 (2-rank, imbal 1%)...
+file : /matrices/circuit5M.mtx part : 2 
+	****	Matrix File readed	****Reading File : 10.081581
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 54299929 [1] 5224362 
+cut : 5667part vector : 5.897539
+0 : 5067553 1 : 490773 
+[circuit5M] patpart w1100 (2-rank, imbal 1%)...
+file : /matrices/circuit5M.mtx part : 2 
+	****	Matrix File readed	****Reading File : 10.053284
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 55109569 [1] 4414722 
+cut : 62472part vector : 5.740363
+0 : 5145320 1 : 413006 
+[circuit5M] patpart w1200 (2-rank, imbal 1%)...
+file : /matrices/circuit5M.mtx part : 2 
+	****	Matrix File readed	****Reading File : 10.057768
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 55476838 [1] 4047453 
+cut : 23514part vector : 8.844715
+0 : 5186880 1 : 371446 
+[circuit5M] patpart w2000 (2-rank, imbal 1%)...
+file : /matrices/circuit5M.mtx part : 2 
+	****	Matrix File readed	****Reading File : 10.061167
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 57256699 [1] 2267592 
+cut : 22166part vector : 6.936517
+0 : 5349828 1 : 208498 
+[circuit5M] patpart w2720 (2-rank, imbal 1%)...
+file : /matrices/circuit5M.mtx part : 2 
+	****	Matrix File readed	****Reading File : 10.055567
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 57765965 [1] 1758326 
+cut : 2867part vector : 5.638088
+0 : 5392121 1 : 166205 
+[circuit5M] PATOH DONE
+
+[cage15] patpart w100 (2-rank, imbal 1%)...
+file : /matrices/cage15.mtx part : 2 
+	****	Matrix File readed	****Reading File : 14.215837
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 49289479 [1] 49910072 
+cut : 615124part vector : 41.577205
+0 : 2893163 1 : 2261696 
+[cage15] patpart w400 (2-rank, imbal 1%)...
+file : /matrices/cage15.mtx part : 2 
+	****	Matrix File readed	****Reading File : 14.192525
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 79854820 [1] 19344731 
+cut : 380716part vector : 37.471357
+0 : 3946684 1 : 1208175 
+[cage15] patpart w500 (2-rank, imbal 1%)...
+file : /matrices/cage15.mtx part : 2 
+	****	Matrix File readed	****Reading File : 14.190294
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 83491906 [1] 15707645 
+cut : 334894part vector : 37.324418
+0 : 4151330 1 : 1003529 
+[cage15] patpart w600 (2-rank, imbal 1%)...
+file : /matrices/cage15.mtx part : 2 
+	****	Matrix File readed	****Reading File : 14.225181
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 85878456 [1] 13321095 
+cut : 348942part vector : 36.964767
+0 : 4260601 1 : 894258 
+[cage15] patpart w700 (2-rank, imbal 1%)...
+file : /matrices/cage15.mtx part : 2 
+	****	Matrix File readed	****Reading File : 14.171955
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 87667602 [1] 11531949 
+cut : 272412part vector : 36.793557
+0 : 4411301 1 : 743558 
+[cage15] patpart w800 (2-rank, imbal 1%)...
+file : /matrices/cage15.mtx part : 2 
+	****	Matrix File readed	****Reading File : 14.207930
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 89056726 [1] 10142825 
+cut : 303635part vector : 36.720295
+0 : 4456986 1 : 697873 
+[cage15] patpart w900 (2-rank, imbal 1%)...
+file : /matrices/cage15.mtx part : 2 
+	****	Matrix File readed	****Reading File : 14.195690
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 90172389 [1] 9027162 
+cut : 266087part vector : 36.633968
+0 : 4539604 1 : 615255 
+[cage15] patpart w1000 (2-rank, imbal 1%)...
+file : /matrices/cage15.mtx part : 2 
+	****	Matrix File readed	****Reading File : 14.222418
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 91083057 [1] 8116494 
+cut : 229539part vector : 36.484630
+0 : 4607750 1 : 547109 
+[cage15] patpart w1100 (2-rank, imbal 1%)...
+file : /matrices/cage15.mtx part : 2 
+	****	Matrix File readed	****Reading File : 14.188691
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 91841911 [1] 7357640 
+cut : 238857part vector : 36.227179
+0 : 4629736 1 : 525123 
+[cage15] patpart w1200 (2-rank, imbal 1%)...
+file : /matrices/cage15.mtx part : 2 
+	****	Matrix File readed	****Reading File : 14.249722
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 92463133 [1] 6736418 
+cut : 207497part vector : 36.255927
+0 : 4684869 1 : 469990 
+[cage15] patpart w2000 (2-rank, imbal 1%)...
+file : /matrices/cage15.mtx part : 2 
+	****	Matrix File readed	****Reading File : 14.248448
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 95420506 [1] 3779045 
+cut : 115296part vector : 36.138107
+0 : 4894498 1 : 260361 
+[cage15] patpart w2720 (2-rank, imbal 1%)...
+file : /matrices/cage15.mtx part : 2 
+	****	Matrix File readed	****Reading File : 14.211746
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 96632165 [1] 2567386 
+cut : 120225part vector : 35.870776
+0 : 4944101 1 : 210758 
+[cage15] PATOH DONE
+
+[Freescale2] PATOH DONE
+
+--- targeted sweep: PaToH only, partition-using solvers ---
+
+######## circuit5M_dc ########
+  hybrid-async           patoh  w100   2.7809s
+  hybrid-async           patoh  w400   1.4992s
+  hybrid-async           patoh  w500   1.3770s
+  hybrid-async           patoh  w600   1.3041s
+  hybrid-async           patoh  w700   1.2086s
+  hybrid-async           patoh  w800   1.1574s
+  hybrid-async           patoh  w900   1.1209s
+  hybrid-async           patoh  w1000  1.0984s
+  hybrid-async           patoh  w1100  1.0897s
+  hybrid-async           patoh  w1200  1.0744s
+  hybrid-async           patoh  w2000  1.0163s
+  hybrid-async           patoh  w2720  1.0052s
+  hybrid-async-dp        patoh  w100   2.5827s
+  hybrid-async-dp        patoh  w400   1.3018s
+  hybrid-async-dp        patoh  w500   1.1678s
+  hybrid-async-dp        patoh  w600   1.1024s
+  hybrid-async-dp        patoh  w700   1.0174s
+  hybrid-async-dp        patoh  w800   0.9654s
+  hybrid-async-dp        patoh  w900   0.9279s
+  hybrid-async-dp        patoh  w1000  0.9044s
+  hybrid-async-dp        patoh  w1100  0.8833s
+  hybrid-async-dp        patoh  w1200  0.8756s
+  hybrid-async-dp        patoh  w2000  0.8272s
+  hybrid-async-dp        patoh  w2720  0.8026s
+  hybrid-dist-dp         patoh  w100   3.7671s
+  hybrid-dist-dp         patoh  w400   1.1482s
+  hybrid-dist-dp         patoh  w500   0.9301s
+  hybrid-dist-dp         patoh  w600   0.7761s
+  hybrid-dist-dp         patoh  w700   0.7074s
+  hybrid-dist-dp         patoh  w800   0.7035s
+  hybrid-dist-dp         patoh  w900   0.6928s
+  hybrid-dist-dp         patoh  w1000  0.6878s
+  hybrid-dist-dp         patoh  w1100  0.6909s
+  hybrid-dist-dp         patoh  w1200  0.6918s
+  hybrid-dist-dp         patoh  w2000  0.7165s
+  hybrid-dist-dp         patoh  w2720  0.7245s
+  hybrid-dist-pipelined  patoh  w100   5.2059s
+  hybrid-dist-pipelined  patoh  w400   1.6853s
+  hybrid-dist-pipelined  patoh  w500   1.3622s
+  hybrid-dist-pipelined  patoh  w600   1.1705s
+  hybrid-dist-pipelined  patoh  w700   1.0266s
+  hybrid-dist-pipelined  patoh  w800   1.0098s
+  hybrid-dist-pipelined  patoh  w900   1.0025s
+  hybrid-dist-pipelined  patoh  w1000  0.9992s
+  hybrid-dist-pipelined  patoh  w1100  0.9985s
+  hybrid-dist-pipelined  patoh  w1200  0.9972s
+  hybrid-dist-pipelined  patoh  w2000  1.0304s
+  hybrid-dist-pipelined  patoh  w2720  1.0422s
+  mpi                    patoh  w100   9.5914s
+  mpi                    patoh  w400   11.2743s
+  mpi                    patoh  w500   11.4869s
+  mpi                    patoh  w600   11.5666s
+  mpi                    patoh  w700   11.7169s
+  mpi                    patoh  w800   11.7737s
+  mpi                    patoh  w900   11.7809s
+  mpi                    patoh  w1000  11.8998s
+  mpi                    patoh  w1100  11.9616s
+  mpi                    patoh  w1200  11.9204s
+  mpi                    patoh  w2000  12.0821s
+  mpi                    patoh  w2720  12.1389s
+  mpi-gpu                patoh  w100   6.1929s
+  mpi-gpu                patoh  w400   2.3395s
+  mpi-gpu                patoh  w500   2.0981s
+  mpi-gpu                patoh  w600   2.0432s
+  mpi-gpu                patoh  w700   1.9894s
+  mpi-gpu                patoh  w800   1.8952s
+  mpi-gpu                patoh  w900   1.8331s
+  mpi-gpu                patoh  w1000  1.7768s
+  mpi-gpu                patoh  w1100  1.7516s
+  mpi-gpu                patoh  w1200  1.7321s
+  mpi-gpu                patoh  w2000  1.7480s
+  mpi-gpu                patoh  w2720  1.7620s
+
+######## circuit5M ########
+  hybrid-async           patoh  w100   7.7310s
+  hybrid-async           patoh  w400   4.0247s
+  hybrid-async           patoh  w500   3.3373s
+  hybrid-async           patoh  w600   2.9790s
+  hybrid-async           patoh  w700   2.8456s
+  hybrid-async           patoh  w800   2.5162s
+  hybrid-async           patoh  w900   2.4730s
+  hybrid-async           patoh  w1000  2.4318s
+  hybrid-async           patoh  w1100  2.1880s
+  hybrid-async           patoh  w1200  2.1116s
+  hybrid-async           patoh  w2000  1.7972s
+  hybrid-async           patoh  w2720  1.7933s
+  hybrid-async-dp        patoh  w100   7.4494s
+  hybrid-async-dp        patoh  w400   3.7141s
+  hybrid-async-dp        patoh  w500   3.0110s
+  hybrid-async-dp        patoh  w600   2.6429s
+  hybrid-async-dp        patoh  w700   2.5461s
+  hybrid-async-dp        patoh  w800   2.2044s
+  hybrid-async-dp        patoh  w900   2.1691s
+  hybrid-async-dp        patoh  w1000  2.1234s
+  hybrid-async-dp        patoh  w1100  1.9224s
+  hybrid-async-dp        patoh  w1200  1.8173s
+  hybrid-async-dp        patoh  w2000  1.4924s
+  hybrid-async-dp        patoh  w2720  1.4967s
+  hybrid-dist-dp         patoh  w100   9.8323s
+  hybrid-dist-dp         patoh  w400   3.8249s
+  hybrid-dist-dp         patoh  w500   2.8058s
+  hybrid-dist-dp         patoh  w600   2.2091s
+  hybrid-dist-dp         patoh  w700   2.0289s
+  hybrid-dist-dp         patoh  w800   1.6183s
+  hybrid-dist-dp         patoh  w900   1.5690s
+  hybrid-dist-dp         patoh  w1000  1.5125s
+  hybrid-dist-dp         patoh  w1100  1.4883s
+  hybrid-dist-dp         patoh  w1200  1.4857s
+  hybrid-dist-dp         patoh  w2000  1.5280s
+  hybrid-dist-dp         patoh  w2720  1.5399s
+  hybrid-dist-pipelined  patoh  w100   13.2527s
+  hybrid-dist-pipelined  patoh  w400   4.8065s
+  hybrid-dist-pipelined  patoh  w500   3.5408s
+  hybrid-dist-pipelined  patoh  w600   2.8759s
+  hybrid-dist-pipelined  patoh  w700   2.7202s
+  hybrid-dist-pipelined  patoh  w800   2.2401s
+  hybrid-dist-pipelined  patoh  w900   2.1929s
+  hybrid-dist-pipelined  patoh  w1000  2.1307s
+  hybrid-dist-pipelined  patoh  w1100  2.0309s
+  hybrid-dist-pipelined  patoh  w1200  2.0260s
+  hybrid-dist-pipelined  patoh  w2000  2.0821s
+  hybrid-dist-pipelined  patoh  w2720  2.0977s
+  mpi                    patoh  w100   21.4934s
+  mpi                    patoh  w400   24.6790s
+  mpi                    patoh  w500   25.1707s
+  mpi                    patoh  w600   25.4250s
+  mpi                    patoh  w700   25.4108s
+  mpi                    patoh  w800   25.6746s
+  mpi                    patoh  w900   25.7784s
+  mpi                    patoh  w1000  25.9234s
+  mpi                    patoh  w1100  26.0428s
+  mpi                    patoh  w1200  26.0786s
+  mpi                    patoh  w2000  26.3987s
+  mpi                    patoh  w2720  26.5971s
+  mpi-gpu                patoh  w100   13.2585s
+  mpi-gpu                patoh  w400   8.5200s
+  mpi-gpu                patoh  w500   8.4297s
+  mpi-gpu                patoh  w600   8.3442s
+  mpi-gpu                patoh  w700   8.4965s
+  mpi-gpu                patoh  w800   8.6366s
+  mpi-gpu                patoh  w900   8.3316s
+  mpi-gpu                patoh  w1000  8.1790s
+  mpi-gpu                patoh  w1100  8.4863s
+  mpi-gpu                patoh  w1200  8.1511s
+  mpi-gpu                patoh  w2000  8.2767s
+  mpi-gpu                patoh  w2720  8.2976s
+
+######## cage15 ########
+  hybrid-async           patoh  w100   8.7179s
+  hybrid-async           patoh  w400   4.2258s
+  hybrid-async           patoh  w500   3.7597s
+  hybrid-async           patoh  w600   3.3413s
+  hybrid-async           patoh  w700   3.0646s
+  hybrid-async           patoh  w800   2.8653s
+  hybrid-async           patoh  w900   2.6659s
+  hybrid-async           patoh  w1000  2.4986s
+  hybrid-async           patoh  w1100  2.4334s
+  hybrid-async           patoh  w1200  2.3295s
+  hybrid-async           patoh  w2000  2.2211s
+  hybrid-async           patoh  w2720  2.2443s
+  hybrid-async-dp        patoh  w100   8.4644s
+  hybrid-async-dp        patoh  w400   3.9528s
+  hybrid-async-dp        patoh  w500   3.4946s
+  hybrid-async-dp        patoh  w600   3.0735s
+  hybrid-async-dp        patoh  w700   2.8006s
+  hybrid-async-dp        patoh  w800   2.5837s
+  hybrid-async-dp        patoh  w900   2.3873s
+  hybrid-async-dp        patoh  w1000  2.2236s
+  hybrid-async-dp        patoh  w1100  2.1583s
+  hybrid-async-dp        patoh  w1200  2.0411s
+  hybrid-async-dp        patoh  w2000  1.9512s
+  hybrid-async-dp        patoh  w2720  1.9745s
+  hybrid-dist-dp         patoh  w100   10.0923s
+  hybrid-dist-dp         patoh  w400   4.3003s
+  hybrid-dist-dp         patoh  w500   3.5896s
+  hybrid-dist-dp         patoh  w600   2.8974s
+  hybrid-dist-dp         patoh  w700   2.4665s
+  hybrid-dist-dp         patoh  w800   2.2025s
+  hybrid-dist-dp         patoh  w900   2.0006s
+  hybrid-dist-dp         patoh  w1000  1.9820s
+  hybrid-dist-dp         patoh  w1100  1.9925s
+  hybrid-dist-dp         patoh  w1200  1.9739s
+  hybrid-dist-dp         patoh  w2000  2.0049s
+  hybrid-dist-dp         patoh  w2720  2.0337s
+  hybrid-dist-pipelined  patoh  w100   12.7184s
+  hybrid-dist-pipelined  patoh  w400   5.4821s
+  hybrid-dist-pipelined  patoh  w500   4.5470s
+  hybrid-dist-pipelined  patoh  w600   3.7822s
+  hybrid-dist-pipelined  patoh  w700   3.1828s
+  hybrid-dist-pipelined  patoh  w800   2.9374s
+  hybrid-dist-pipelined  patoh  w900   2.6916s
+  hybrid-dist-pipelined  patoh  w1000  2.5496s
+  hybrid-dist-pipelined  patoh  w1100  2.5625s
+  hybrid-dist-pipelined  patoh  w1200  2.5626s
+  hybrid-dist-pipelined  patoh  w2000  2.5956s
+  hybrid-dist-pipelined  patoh  w2720  2.6285s
+  mpi                    patoh  w100   25.7761s
+  mpi                    patoh  w400   30.9360s
+  mpi                    patoh  w500   31.8433s
+  mpi                    patoh  w600   31.9806s
+  mpi                    patoh  w700   32.3278s
+  mpi                    patoh  w800   32.5870s
+  mpi                    patoh  w900   32.6884s
+  mpi                    patoh  w1000  32.6458s
+  mpi                    patoh  w1100  32.8155s
+  mpi                    patoh  w1200  32.8854s
+  mpi                    patoh  w2000  33.1904s
+  mpi                    patoh  w2720  33.2814s
+  mpi-gpu                patoh  w100   18.1520s
+  mpi-gpu                patoh  w400   7.6900s
+  mpi-gpu                patoh  w500   6.5828s
+  mpi-gpu                patoh  w600   5.6250s
+  mpi-gpu                patoh  w700   4.9543s
+  mpi-gpu                patoh  w800   4.5829s
+  mpi-gpu                patoh  w900   4.1915s
+  mpi-gpu                patoh  w1000  4.0955s
+  mpi-gpu                patoh  w1100  4.0947s
+  mpi-gpu                patoh  w1200  4.0366s
+  mpi-gpu                patoh  w2000  3.9091s
+  mpi-gpu                patoh  w2720  3.7477s
+
+######## Freescale2 ########
+  hybrid-async           patoh  w100   2.7669s
+  hybrid-async           patoh  w400   1.4849s
+  hybrid-async           patoh  w500   1.3393s
+  hybrid-async           patoh  w600   1.2330s
+  hybrid-async           patoh  w700   1.1539s
+  hybrid-async           patoh  w800   1.1252s
+  hybrid-async           patoh  w900   1.0750s
+  hybrid-async           patoh  w1000  1.0507s
+  hybrid-async           patoh  w1100  1.0095s
+  hybrid-async           patoh  w1200  0.9773s
+  hybrid-async           patoh  w2000  0.9324s
+  hybrid-async           patoh  w2720  0.8865s
+  hybrid-async-dp        patoh  w100   2.6116s
+  hybrid-async-dp        patoh  w400   1.3119s
+  hybrid-async-dp        patoh  w500   1.1711s
+  hybrid-async-dp        patoh  w600   1.0660s
+  hybrid-async-dp        patoh  w700   0.9931s
+  hybrid-async-dp        patoh  w800   0.9400s
+  hybrid-async-dp        patoh  w900   0.9078s
+  hybrid-async-dp        patoh  w1000  0.8829s
+  hybrid-async-dp        patoh  w1100  0.8396s
+  hybrid-async-dp        patoh  w1200  0.8219s
+  hybrid-async-dp        patoh  w2000  0.7526s
+  hybrid-async-dp        patoh  w2720  0.7123s
+  hybrid-dist-dp         patoh  w100   3.6172s
+  hybrid-dist-dp         patoh  w400   1.2142s
+  hybrid-dist-dp         patoh  w500   0.9629s
+  hybrid-dist-dp         patoh  w600   0.7789s
+  hybrid-dist-dp         patoh  w700   0.7067s
+  hybrid-dist-dp         patoh  w800   0.6954s
+  hybrid-dist-dp         patoh  w900   0.6942s
+  hybrid-dist-dp         patoh  w1000  0.6851s
+  hybrid-dist-dp         patoh  w1100  0.6839s
+  hybrid-dist-dp         patoh  w1200  0.6756s
+  hybrid-dist-dp         patoh  w2000  0.6845s
+  hybrid-dist-dp         patoh  w2720  0.6910s
+  hybrid-dist-pipelined  patoh  w100   4.8876s
+  hybrid-dist-pipelined  patoh  w400   1.7185s
+  hybrid-dist-pipelined  patoh  w500   1.3758s
+  hybrid-dist-pipelined  patoh  w600   1.1546s
+  hybrid-dist-pipelined  patoh  w700   1.0309s
+  hybrid-dist-pipelined  patoh  w800   0.9677s
+  hybrid-dist-pipelined  patoh  w900   0.9627s
+  hybrid-dist-pipelined  patoh  w1000  0.9534s
+  hybrid-dist-pipelined  patoh  w1100  0.9549s
+  hybrid-dist-pipelined  patoh  w1200  0.9508s
+  hybrid-dist-pipelined  patoh  w2000  0.9555s
+  hybrid-dist-pipelined  patoh  w2720  0.9623s
+  mpi                    patoh  w100   9.6212s
+  mpi                    patoh  w400   12.7866s
+  mpi                    patoh  w500   13.0930s
+  mpi                    patoh  w600   13.2403s
+  mpi                    patoh  w700   13.4386s
+  mpi                    patoh  w800   13.5255s
+  mpi                    patoh  w900   13.6318s
+  mpi                    patoh  w1000  13.7104s
+  mpi                    patoh  w1100  13.7519s
+  mpi                    patoh  w1200  13.8367s
+  mpi                    patoh  w2000  13.9599s
+  mpi                    patoh  w2720  13.9953s
+  mpi-gpu                patoh  w100   7.2622s
+  mpi-gpu                patoh  w400   2.8988s
+  mpi-gpu                patoh  w500   2.3904s
+  mpi-gpu                patoh  w600   2.0516s
+  mpi-gpu                patoh  w700   1.8444s
+  mpi-gpu                patoh  w800   1.8022s
+  mpi-gpu                patoh  w900   1.7807s
+  mpi-gpu                patoh  w1000  1.7750s
+  mpi-gpu                patoh  w1100  1.7424s
+  mpi-gpu                patoh  w1200  1.7037s
+  mpi-gpu                patoh  w2000  1.6328s
+  mpi-gpu                patoh  w2720  1.6393s
+
+Wrote data/big_benchmark_patoh_fill/results.tsv and data/big_benchmark_patoh_fill/summary.md
+# Big benchmark — speedup vs single-GPU `bicgstab-gpu` (iters: 1000 small / 200 for nnz>15M, best-of-2)
+
+## Best speedup per solver (across weights & partition source)
+
+| solver | circuit5M_dc | circuit5M | cage15 | Freescale2 |
+|---|---|---|---|---|
+| `hybrid-async` | — | — | — | — |
+| `hybrid-async-dp` | — | — | — | — |
+| `hybrid-dist-dp` | — | — | — | — |
+| `hybrid-dist-pipelined` | — | — | — | — |
+| `mpi` | — | — | — | — |
+| `mpi-gpu` | — | — | — | — |
+
+## PaToH vs naive (best speedup each) — does cut-minimization help?
+
+| matrix | solver | PaToH | naive | PaToH/naive |
+|---|---|---|---|---|
+
+--- merge into canonical results.tsv ---
+original rows=1860  fill patoh rows=288
+backed up original -> results_pre_patoh_fill.tsv
+merged rows=2148 -> /home/bugra/Workspace/C/HetHypPar_rewrite/data/big_benchmark/results.tsv
+
+=== PaToH vs naive on the recovered matrices ===
+
+circuit5M_dc:
+  hybrid-async           patoh 0.87x  naive 0.86x  ratio 1.01
+  hybrid-async-dp        patoh 1.09x  naive 1.08x  ratio 1.01
+  hybrid-dist-dp         patoh 1.27x  naive 1.23x  ratio 1.04
+  hybrid-dist-pipelined  patoh 0.88x  naive 0.85x  ratio 1.03
+  mpi-gpu                patoh 0.51x  naive 0.48x  ratio 1.05
+
+circuit5M:
+  hybrid-async           patoh 1.00x  naive 1.00x  ratio 1.00
+  hybrid-async-dp        patoh 1.20x  naive 1.20x  ratio 1.00
+  hybrid-dist-dp         patoh 1.20x  naive 1.18x  ratio 1.02
+  hybrid-dist-pipelined  patoh 0.88x  naive 0.87x  ratio 1.02
+  mpi-gpu                patoh 0.22x  naive 0.21x  ratio 1.06
+
+cage15:
+  hybrid-async           patoh 1.03x  naive 1.03x  ratio 1.00
+  hybrid-async-dp        patoh 1.17x  naive 1.18x  ratio 0.99
+  hybrid-dist-dp         patoh 1.16x  naive 1.15x  ratio 1.00
+  hybrid-dist-pipelined  patoh 0.89x  naive 0.89x  ratio 1.01
+  mpi-gpu                patoh 0.61x  naive 0.57x  ratio 1.06
+
+Freescale2:
+  hybrid-async           patoh 0.94x  naive 0.92x  ratio 1.02
+  hybrid-async-dp        patoh 1.16x  naive 1.13x  ratio 1.03
+  hybrid-dist-dp         patoh 1.23x  naive 1.19x  ratio 1.03
+  hybrid-dist-pipelined  patoh 0.87x  naive 0.85x  ratio 1.02
+  mpi-gpu                patoh 0.51x  naive 0.47x  ratio 1.09
+--- regenerate zstd parquet ---
+wrote /home/bugra/Workspace/C/HetHypPar_rewrite/data/big_benchmark/results.parquet
+  rows=2148  cols=15  ok=2072  failed=76
+  size: 132.2 KB TSV -> 49.7 KB parquet(zstd-19)  (2.7x)
+  dtypes:
+    matrix             category
+    rows               Int64
+    cols               Int64
+    nnz                Int64
+    solver             category
+    part_src           category
+    weight             category
+    weight_ratio       Int32
+    threads            Int32
+    spmv_time          float64
+    relative_residual  float64
+    speedup_vs_gpu     float64
+    ok                 bool
+    is_baseline        bool
+    status             category
+================ PATOH FILL DONE Wed Jun 24 21:45:31 +03 2026 ================

@@ -1,0 +1,2714 @@
+================ BIG BENCHMARK START Tue Jun 23 15:11:23 +03 2026 ================
+matrices: RM07R cage14 Hamrle3 rajat30_mc64_5 circuit5M_dc circuit5M cage15 ML_Geer nlpkkt120 vas_stokes_1M nv2 Transport Freescale2 dgreen ss
+
+---------------- PREP (vectors + partitions) Tue Jun 23 15:11:23 +03 2026 ----------------
+[RM07R] vectors present, skipping octave
+[RM07R] patpart w500 (2-rank, imbal 1%)...
+file : /matrices/RM07R.mtx part : 2 
+	****	Matrix File readed	****Reading File : 7.173560
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 31220802 [1] 6244160 
+cut : 13714part vector : 5.619018
+0 : 247131 1 : 134558 
+[RM07R] patpart w700 (2-rank, imbal 1%)...
+file : /matrices/RM07R.mtx part : 2 
+	****	Matrix File readed	****Reading File : 6.666686
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 33107288 [1] 4357674 
+cut : 13288part vector : 5.653424
+0 : 241215 1 : 140474 
+[RM07R] patpart w900 (2-rank, imbal 1%)...
+file : /matrices/RM07R.mtx part : 2 
+	****	Matrix File readed	****Reading File : 6.658891
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 34044958 [1] 3420004 
+cut : 10340part vector : 5.553845
+0 : 248800 1 : 132889 
+[RM07R] patpart w1000 (2-rank, imbal 1%)...
+file : /matrices/RM07R.mtx part : 2 
+	****	Matrix File readed	****Reading File : 6.662306
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 34397411 [1] 3067551 
+cut : 10442part vector : 5.555259
+0 : 250865 1 : 130824 
+[RM07R] patpart w1100 (2-rank, imbal 1%)...
+file : /matrices/RM07R.mtx part : 2 
+	****	Matrix File readed	****Reading File : 6.642630
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 34685659 [1] 2779303 
+cut : 9454part vector : 5.538793
+0 : 252980 1 : 128709 
+[RM07R] naive nnz-balance partitions...
+[RM07R] reading nnz-per-row from /matrices/RM07R.mtx ...
+[RM07R] n=381689 stored_nnz=37464962
+  w100  -> gpu_rows=196330 cpu_rows=185359 cpu_nnz=50.0% (target 50.0%)  w100_2_i1.part
+  w400  -> gpu_rows=305917 cpu_rows=75772 cpu_nnz=20.0% (target 20.0%)  w400_2_i1.part
+  w500  -> gpu_rows=317875 cpu_rows=63814 cpu_nnz=16.7% (target 16.7%)  w500_2_i1.part
+  w600  -> gpu_rows=326545 cpu_rows=55144 cpu_nnz=14.3% (target 14.3%)  w600_2_i1.part
+  w700  -> gpu_rows=333324 cpu_rows=48365 cpu_nnz=12.5% (target 12.5%)  w700_2_i1.part
+  w800  -> gpu_rows=338697 cpu_rows=42992 cpu_nnz=11.1% (target 11.1%)  w800_2_i1.part
+  w900  -> gpu_rows=343001 cpu_rows=38688 cpu_nnz=10.0% (target 10.0%)  w900_2_i1.part
+  w1000 -> gpu_rows=346537 cpu_rows=35152 cpu_nnz=9.1% (target 9.1%)  w1000_2_i1.part
+  w1100 -> gpu_rows=349473 cpu_rows=32216 cpu_nnz=8.3% (target 8.3%)  w1100_2_i1.part
+  w1200 -> gpu_rows=351982 cpu_rows=29707 cpu_nnz=7.7% (target 7.7%)  w1200_2_i1.part
+  w2000 -> gpu_rows=363343 cpu_rows=18346 cpu_nnz=4.8% (target 4.8%)  w2000_2_i1.part
+  w2720 -> gpu_rows=367691 cpu_rows=13998 cpu_nnz=3.5% (target 3.5%)  w2720_2_i1.part
+[RM07R] PREP DONE
+
+[cage14] vectors present, skipping octave
+[cage14] patpart w500 (2-rank, imbal 1%)...
+file : /matrices/cage14.mtx part : 2 
+	****	Matrix File readed	****Reading File : 4.670587
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 22834709 [1] 4295640 
+cut : 126133part vector : 7.977221
+0 : 1204257 1 : 301528 
+[cage14] naive nnz-balance partitions...
+[cage14] reading nnz-per-row from /matrices/cage14.mtx ...
+[cage14] n=1505785 stored_nnz=27130349
+  w100  -> gpu_rows=843326 cpu_rows=662459 cpu_nnz=50.0% (target 50.0%)  w100_2_i1.part
+  w400  -> gpu_rows=1265346 cpu_rows=240439 cpu_nnz=20.0% (target 20.0%)  w400_2_i1.part
+  w500  -> gpu_rows=1310447 cpu_rows=195338 cpu_nnz=16.7% (target 16.7%)  w500_2_i1.part
+  w600  -> gpu_rows=1334862 cpu_rows=170923 cpu_nnz=14.3% (target 14.3%)  w600_2_i1.part
+  w700  -> gpu_rows=1357241 cpu_rows=148544 cpu_nnz=12.5% (target 12.5%)  w700_2_i1.part
+  w800  -> gpu_rows=1374590 cpu_rows=131195 cpu_nnz=11.1% (target 11.1%)  w800_2_i1.part
+  w900  -> gpu_rows=1389625 cpu_rows=116160 cpu_nnz=10.0% (target 10.0%)  w900_2_i1.part
+  w1000 -> gpu_rows=1400836 cpu_rows=104949 cpu_nnz=9.1% (target 9.1%)  w1000_2_i1.part
+  w1100 -> gpu_rows=1410909 cpu_rows=94876 cpu_nnz=8.3% (target 8.3%)  w1100_2_i1.part
+  w1200 -> gpu_rows=1419617 cpu_rows=86168 cpu_nnz=7.7% (target 7.7%)  w1200_2_i1.part
+  w2000 -> gpu_rows=1454567 cpu_rows=51218 cpu_nnz=4.8% (target 4.8%)  w2000_2_i1.part
+  w2720 -> gpu_rows=1465192 cpu_rows=40593 cpu_nnz=3.5% (target 3.5%)  w2720_2_i1.part
+[cage14] PREP DONE
+
+[Hamrle3] vectors present, skipping octave
+[Hamrle3] patpart w500 (2-rank, imbal 1%)...
+file : /matrices/Hamrle3.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.843468
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 4617474 [1] 896768 
+cut : 1280part vector : 0.585028
+0 : 1212608 1 : 234752 
+[Hamrle3] patpart w700 (2-rank, imbal 1%)...
+file : /matrices/Hamrle3.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.799336
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 4872880 [1] 641362 
+cut : 1866part vector : 0.592685
+0 : 1279344 1 : 168016 
+[Hamrle3] patpart w900 (2-rank, imbal 1%)...
+file : /matrices/Hamrle3.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.791897
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 4967458 [1] 546784 
+cut : 1364part vector : 0.525088
+0 : 1304104 1 : 143256 
+[Hamrle3] patpart w1000 (2-rank, imbal 1%)...
+file : /matrices/Hamrle3.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.797225
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 5063005 [1] 451237 
+cut : 1769part vector : 0.580449
+0 : 1328636 1 : 118724 
+[Hamrle3] patpart w1100 (2-rank, imbal 1%)...
+file : /matrices/Hamrle3.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.790404
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 5051382 [1] 462860 
+cut : 1458part vector : 0.529372
+0 : 1326045 1 : 121315 
+[Hamrle3] naive nnz-balance partitions...
+[Hamrle3] reading nnz-per-row from /matrices/Hamrle3.mtx ...
+[Hamrle3] n=1447360 stored_nnz=5514242
+  w100  -> gpu_rows=552064 cpu_rows=895296 cpu_nnz=50.0% (target 50.0%)  w100_2_i1.part
+  w400  -> gpu_rows=895936 cpu_rows=551424 cpu_nnz=20.0% (target 20.0%)  w400_2_i1.part
+  w500  -> gpu_rows=987840 cpu_rows=459520 cpu_nnz=16.7% (target 16.7%)  w500_2_i1.part
+  w600  -> gpu_rows=1053486 cpu_rows=393874 cpu_nnz=14.3% (target 14.3%)  w600_2_i1.part
+  w700  -> gpu_rows=1102720 cpu_rows=344640 cpu_nnz=12.5% (target 12.5%)  w700_2_i1.part
+  w800  -> gpu_rows=1141014 cpu_rows=306346 cpu_nnz=11.1% (target 11.1%)  w800_2_i1.part
+  w900  -> gpu_rows=1171648 cpu_rows=275712 cpu_nnz=10.0% (target 10.0%)  w900_2_i1.part
+  w1000 -> gpu_rows=1196713 cpu_rows=250647 cpu_nnz=9.1% (target 9.1%)  w1000_2_i1.part
+  w1100 -> gpu_rows=1217600 cpu_rows=229760 cpu_nnz=8.3% (target 8.3%)  w1100_2_i1.part
+  w1200 -> gpu_rows=1235274 cpu_rows=212086 cpu_nnz=7.7% (target 7.7%)  w1200_2_i1.part
+  w2000 -> gpu_rows=1316069 cpu_rows=131291 cpu_nnz=4.8% (target 4.8%)  w2000_2_i1.part
+  w2720 -> gpu_rows=1349590 cpu_rows=97770 cpu_nnz=3.5% (target 3.5%)  w2720_2_i1.part
+[Hamrle3] PREP DONE
+
+[rajat30_mc64_5] vectors present, skipping octave
+[rajat30_mc64_5] naive nnz-balance partitions...
+[rajat30_mc64_5] reading nnz-per-row from /matrices/rajat30_mc64_5.mtx ...
+[rajat30_mc64_5] n=643994 stored_nnz=6175244
+  w100  -> gpu_rows=256970 cpu_rows=387024 cpu_nnz=50.0% (target 50.0%)  w100_2_i1.part
+  w400  -> gpu_rows=484411 cpu_rows=159583 cpu_nnz=20.0% (target 20.0%)  w400_2_i1.part
+  w500  -> gpu_rows=509993 cpu_rows=134001 cpu_nnz=16.7% (target 16.7%)  w500_2_i1.part
+  w600  -> gpu_rows=527548 cpu_rows=116446 cpu_nnz=14.3% (target 14.3%)  w600_2_i1.part
+  w700  -> gpu_rows=541849 cpu_rows=102145 cpu_nnz=12.5% (target 12.5%)  w700_2_i1.part
+  w800  -> gpu_rows=543553 cpu_rows=100441 cpu_nnz=11.0% (target 11.1%)  w800_2_i1.part
+  w900  -> gpu_rows=547838 cpu_rows=96156 cpu_nnz=10.0% (target 10.0%)  w900_2_i1.part
+  w1000 -> gpu_rows=554766 cpu_rows=89228 cpu_nnz=9.1% (target 9.1%)  w1000_2_i1.part
+  w1100 -> gpu_rows=560724 cpu_rows=83270 cpu_nnz=8.3% (target 8.3%)  w1100_2_i1.part
+  w1200 -> gpu_rows=565779 cpu_rows=78215 cpu_nnz=7.7% (target 7.7%)  w1200_2_i1.part
+  w2000 -> gpu_rows=588819 cpu_rows=55175 cpu_nnz=4.8% (target 4.8%)  w2000_2_i1.part
+  w2720 -> gpu_rows=599980 cpu_rows=44014 cpu_nnz=3.5% (target 3.5%)  w2720_2_i1.part
+[rajat30_mc64_5] PREP DONE
+
+[circuit5M_dc] generating vectors (octave process_matrixi)...
+octave: X11 DISPLAY environment variable not set
+octave: disabling GUI features
+[circuit5M_dc] patpart w100 (2-rank, imbal 1%)...
+[circuit5M_dc] patpart w100 FAILED: Command '['/home/bugra/.local/bin/patpart', '/matrices/circuit5M_dc.mtx', '2', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/weights/gpu-cpu/w100_2.txt', '1', '1', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/circuit5M_dc/in/part/gpu-cpu/w100_2_i1.part', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/circuit5M_dc/in/part/gpu-cpu/w100_2_i1.log']' died with <Signals.SIGSEGV: 11>.
+[circuit5M_dc] patpart w400 (2-rank, imbal 1%)...
+[circuit5M_dc] patpart w400 FAILED: Command '['/home/bugra/.local/bin/patpart', '/matrices/circuit5M_dc.mtx', '2', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/weights/gpu-cpu/w400_2.txt', '1', '1', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/circuit5M_dc/in/part/gpu-cpu/w400_2_i1.part', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/circuit5M_dc/in/part/gpu-cpu/w400_2_i1.log']' died with <Signals.SIGSEGV: 11>.
+[circuit5M_dc] patpart w500 (2-rank, imbal 1%)...
+[circuit5M_dc] patpart w500 FAILED: Command '['/home/bugra/.local/bin/patpart', '/matrices/circuit5M_dc.mtx', '2', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/weights/gpu-cpu/w500_2.txt', '1', '1', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/circuit5M_dc/in/part/gpu-cpu/w500_2_i1.part', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/circuit5M_dc/in/part/gpu-cpu/w500_2_i1.log']' died with <Signals.SIGSEGV: 11>.
+[circuit5M_dc] patpart w600 (2-rank, imbal 1%)...
+[circuit5M_dc] patpart w600 FAILED: Command '['/home/bugra/.local/bin/patpart', '/matrices/circuit5M_dc.mtx', '2', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/weights/gpu-cpu/w600_2.txt', '1', '1', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/circuit5M_dc/in/part/gpu-cpu/w600_2_i1.part', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/circuit5M_dc/in/part/gpu-cpu/w600_2_i1.log']' died with <Signals.SIGSEGV: 11>.
+[circuit5M_dc] patpart w700 (2-rank, imbal 1%)...
+[circuit5M_dc] patpart w700 FAILED: Command '['/home/bugra/.local/bin/patpart', '/matrices/circuit5M_dc.mtx', '2', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/weights/gpu-cpu/w700_2.txt', '1', '1', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/circuit5M_dc/in/part/gpu-cpu/w700_2_i1.part', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/circuit5M_dc/in/part/gpu-cpu/w700_2_i1.log']' died with <Signals.SIGSEGV: 11>.
+[circuit5M_dc] patpart w800 (2-rank, imbal 1%)...
+[circuit5M_dc] patpart w800 FAILED: Command '['/home/bugra/.local/bin/patpart', '/matrices/circuit5M_dc.mtx', '2', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/weights/gpu-cpu/w800_2.txt', '1', '1', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/circuit5M_dc/in/part/gpu-cpu/w800_2_i1.part', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/circuit5M_dc/in/part/gpu-cpu/w800_2_i1.log']' died with <Signals.SIGSEGV: 11>.
+[circuit5M_dc] patpart w900 (2-rank, imbal 1%)...
+[circuit5M_dc] patpart w900 FAILED: Command '['/home/bugra/.local/bin/patpart', '/matrices/circuit5M_dc.mtx', '2', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/weights/gpu-cpu/w900_2.txt', '1', '1', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/circuit5M_dc/in/part/gpu-cpu/w900_2_i1.part', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/circuit5M_dc/in/part/gpu-cpu/w900_2_i1.log']' died with <Signals.SIGSEGV: 11>.
+[circuit5M_dc] patpart w1000 (2-rank, imbal 1%)...
+[circuit5M_dc] patpart w1000 FAILED: Command '['/home/bugra/.local/bin/patpart', '/matrices/circuit5M_dc.mtx', '2', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/weights/gpu-cpu/w1000_2.txt', '1', '1', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/circuit5M_dc/in/part/gpu-cpu/w1000_2_i1.part', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/circuit5M_dc/in/part/gpu-cpu/w1000_2_i1.log']' died with <Signals.SIGSEGV: 11>.
+[circuit5M_dc] patpart w1100 (2-rank, imbal 1%)...
+[circuit5M_dc] patpart w1100 FAILED: Command '['/home/bugra/.local/bin/patpart', '/matrices/circuit5M_dc.mtx', '2', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/weights/gpu-cpu/w1100_2.txt', '1', '1', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/circuit5M_dc/in/part/gpu-cpu/w1100_2_i1.part', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/circuit5M_dc/in/part/gpu-cpu/w1100_2_i1.log']' died with <Signals.SIGSEGV: 11>.
+[circuit5M_dc] patpart w1200 (2-rank, imbal 1%)...
+[circuit5M_dc] patpart w1200 FAILED: Command '['/home/bugra/.local/bin/patpart', '/matrices/circuit5M_dc.mtx', '2', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/weights/gpu-cpu/w1200_2.txt', '1', '1', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/circuit5M_dc/in/part/gpu-cpu/w1200_2_i1.part', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/circuit5M_dc/in/part/gpu-cpu/w1200_2_i1.log']' died with <Signals.SIGSEGV: 11>.
+[circuit5M_dc] patpart w2000 (2-rank, imbal 1%)...
+[circuit5M_dc] patpart w2000 FAILED: Command '['/home/bugra/.local/bin/patpart', '/matrices/circuit5M_dc.mtx', '2', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/weights/gpu-cpu/w2000_2.txt', '1', '1', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/circuit5M_dc/in/part/gpu-cpu/w2000_2_i1.part', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/circuit5M_dc/in/part/gpu-cpu/w2000_2_i1.log']' died with <Signals.SIGSEGV: 11>.
+[circuit5M_dc] patpart w2720 (2-rank, imbal 1%)...
+[circuit5M_dc] patpart w2720 FAILED: Command '['/home/bugra/.local/bin/patpart', '/matrices/circuit5M_dc.mtx', '2', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/weights/gpu-cpu/w2720_2.txt', '1', '1', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/circuit5M_dc/in/part/gpu-cpu/w2720_2_i1.part', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/circuit5M_dc/in/part/gpu-cpu/w2720_2_i1.log']' died with <Signals.SIGSEGV: 11>.
+[circuit5M_dc] naive nnz-balance partitions...
+[circuit5M_dc] reading nnz-per-row from /matrices/circuit5M_dc.mtx ...
+[circuit5M_dc] n=3523317 stored_nnz=19194193
+  w100  -> gpu_rows=1442705 cpu_rows=2080612 cpu_nnz=50.0% (target 50.0%)  w100_2_i1.part
+  w400  -> gpu_rows=2641366 cpu_rows=881951 cpu_nnz=20.0% (target 20.0%)  w400_2_i1.part
+  w500  -> gpu_rows=2792345 cpu_rows=730972 cpu_nnz=16.7% (target 16.7%)  w500_2_i1.part
+  w600  -> gpu_rows=2897492 cpu_rows=625825 cpu_nnz=14.3% (target 14.3%)  w600_2_i1.part
+  w700  -> gpu_rows=2971472 cpu_rows=551845 cpu_nnz=12.5% (target 12.5%)  w700_2_i1.part
+  w800  -> gpu_rows=3031901 cpu_rows=491416 cpu_nnz=11.1% (target 11.1%)  w800_2_i1.part
+  w900  -> gpu_rows=3081267 cpu_rows=442050 cpu_nnz=10.0% (target 10.0%)  w900_2_i1.part
+  w1000 -> gpu_rows=3121828 cpu_rows=401489 cpu_nnz=9.1% (target 9.1%)  w1000_2_i1.part
+  w1100 -> gpu_rows=3155585 cpu_rows=367732 cpu_nnz=8.3% (target 8.3%)  w1100_2_i1.part
+  w1200 -> gpu_rows=3184358 cpu_rows=338959 cpu_nnz=7.7% (target 7.7%)  w1200_2_i1.part
+  w2000 -> gpu_rows=3315245 cpu_rows=208072 cpu_nnz=4.8% (target 4.8%)  w2000_2_i1.part
+  w2720 -> gpu_rows=3369415 cpu_rows=153902 cpu_nnz=3.5% (target 3.5%)  w2720_2_i1.part
+[circuit5M_dc] PREP DONE
+
+[circuit5M] generating vectors (octave process_matrixi)...
+octave: X11 DISPLAY environment variable not set
+octave: disabling GUI features
+[circuit5M] patpart w100 (2-rank, imbal 1%)...
+[circuit5M] patpart w100 FAILED: Command '['/home/bugra/.local/bin/patpart', '/matrices/circuit5M.mtx', '2', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/weights/gpu-cpu/w100_2.txt', '1', '1', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/circuit5M/in/part/gpu-cpu/w100_2_i1.part', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/circuit5M/in/part/gpu-cpu/w100_2_i1.log']' died with <Signals.SIGSEGV: 11>.
+[circuit5M] patpart w400 (2-rank, imbal 1%)...
+[circuit5M] patpart w400 FAILED: Command '['/home/bugra/.local/bin/patpart', '/matrices/circuit5M.mtx', '2', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/weights/gpu-cpu/w400_2.txt', '1', '1', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/circuit5M/in/part/gpu-cpu/w400_2_i1.part', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/circuit5M/in/part/gpu-cpu/w400_2_i1.log']' died with <Signals.SIGSEGV: 11>.
+[circuit5M] patpart w500 (2-rank, imbal 1%)...
+[circuit5M] patpart w500 FAILED: Command '['/home/bugra/.local/bin/patpart', '/matrices/circuit5M.mtx', '2', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/weights/gpu-cpu/w500_2.txt', '1', '1', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/circuit5M/in/part/gpu-cpu/w500_2_i1.part', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/circuit5M/in/part/gpu-cpu/w500_2_i1.log']' died with <Signals.SIGSEGV: 11>.
+[circuit5M] patpart w600 (2-rank, imbal 1%)...
+[circuit5M] patpart w600 FAILED: Command '['/home/bugra/.local/bin/patpart', '/matrices/circuit5M.mtx', '2', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/weights/gpu-cpu/w600_2.txt', '1', '1', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/circuit5M/in/part/gpu-cpu/w600_2_i1.part', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/circuit5M/in/part/gpu-cpu/w600_2_i1.log']' died with <Signals.SIGSEGV: 11>.
+[circuit5M] patpart w700 (2-rank, imbal 1%)...
+[circuit5M] patpart w700 FAILED: Command '['/home/bugra/.local/bin/patpart', '/matrices/circuit5M.mtx', '2', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/weights/gpu-cpu/w700_2.txt', '1', '1', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/circuit5M/in/part/gpu-cpu/w700_2_i1.part', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/circuit5M/in/part/gpu-cpu/w700_2_i1.log']' died with <Signals.SIGSEGV: 11>.
+[circuit5M] patpart w800 (2-rank, imbal 1%)...
+[circuit5M] patpart w800 FAILED: Command '['/home/bugra/.local/bin/patpart', '/matrices/circuit5M.mtx', '2', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/weights/gpu-cpu/w800_2.txt', '1', '1', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/circuit5M/in/part/gpu-cpu/w800_2_i1.part', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/circuit5M/in/part/gpu-cpu/w800_2_i1.log']' died with <Signals.SIGSEGV: 11>.
+[circuit5M] patpart w900 (2-rank, imbal 1%)...
+[circuit5M] patpart w900 FAILED: Command '['/home/bugra/.local/bin/patpart', '/matrices/circuit5M.mtx', '2', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/weights/gpu-cpu/w900_2.txt', '1', '1', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/circuit5M/in/part/gpu-cpu/w900_2_i1.part', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/circuit5M/in/part/gpu-cpu/w900_2_i1.log']' died with <Signals.SIGSEGV: 11>.
+[circuit5M] patpart w1000 (2-rank, imbal 1%)...
+[circuit5M] patpart w1000 FAILED: Command '['/home/bugra/.local/bin/patpart', '/matrices/circuit5M.mtx', '2', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/weights/gpu-cpu/w1000_2.txt', '1', '1', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/circuit5M/in/part/gpu-cpu/w1000_2_i1.part', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/circuit5M/in/part/gpu-cpu/w1000_2_i1.log']' died with <Signals.SIGSEGV: 11>.
+[circuit5M] patpart w1100 (2-rank, imbal 1%)...
+[circuit5M] patpart w1100 FAILED: Command '['/home/bugra/.local/bin/patpart', '/matrices/circuit5M.mtx', '2', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/weights/gpu-cpu/w1100_2.txt', '1', '1', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/circuit5M/in/part/gpu-cpu/w1100_2_i1.part', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/circuit5M/in/part/gpu-cpu/w1100_2_i1.log']' died with <Signals.SIGSEGV: 11>.
+[circuit5M] patpart w1200 (2-rank, imbal 1%)...
+[circuit5M] patpart w1200 FAILED: Command '['/home/bugra/.local/bin/patpart', '/matrices/circuit5M.mtx', '2', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/weights/gpu-cpu/w1200_2.txt', '1', '1', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/circuit5M/in/part/gpu-cpu/w1200_2_i1.part', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/circuit5M/in/part/gpu-cpu/w1200_2_i1.log']' died with <Signals.SIGSEGV: 11>.
+[circuit5M] patpart w2000 (2-rank, imbal 1%)...
+[circuit5M] patpart w2000 FAILED: Command '['/home/bugra/.local/bin/patpart', '/matrices/circuit5M.mtx', '2', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/weights/gpu-cpu/w2000_2.txt', '1', '1', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/circuit5M/in/part/gpu-cpu/w2000_2_i1.part', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/circuit5M/in/part/gpu-cpu/w2000_2_i1.log']' died with <Signals.SIGSEGV: 11>.
+[circuit5M] patpart w2720 (2-rank, imbal 1%)...
+[circuit5M] patpart w2720 FAILED: Command '['/home/bugra/.local/bin/patpart', '/matrices/circuit5M.mtx', '2', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/weights/gpu-cpu/w2720_2.txt', '1', '1', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/circuit5M/in/part/gpu-cpu/w2720_2_i1.part', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/circuit5M/in/part/gpu-cpu/w2720_2_i1.log']' died with <Signals.SIGSEGV: 11>.
+[circuit5M] naive nnz-balance partitions...
+[circuit5M] reading nnz-per-row from /matrices/circuit5M.mtx ...
+[circuit5M] n=5558326 stored_nnz=59524291
+  w100  -> gpu_rows=369418 cpu_rows=5188908 cpu_nnz=50.0% (target 50.0%)  w100_2_i1.part
+  w400  -> gpu_rows=3177301 cpu_rows=2381025 cpu_nnz=20.0% (target 20.0%)  w400_2_i1.part
+  w500  -> gpu_rows=3574130 cpu_rows=1984196 cpu_nnz=16.7% (target 16.7%)  w500_2_i1.part
+  w600  -> gpu_rows=3857579 cpu_rows=1700747 cpu_nnz=14.3% (target 14.3%)  w600_2_i1.part
+  w700  -> gpu_rows=4070166 cpu_rows=1488160 cpu_nnz=12.5% (target 12.5%)  w700_2_i1.part
+  w800  -> gpu_rows=4235511 cpu_rows=1322815 cpu_nnz=11.1% (target 11.1%)  w800_2_i1.part
+  w900  -> gpu_rows=4367787 cpu_rows=1190539 cpu_nnz=10.0% (target 10.0%)  w900_2_i1.part
+  w1000 -> gpu_rows=4476013 cpu_rows=1082313 cpu_nnz=9.1% (target 9.1%)  w1000_2_i1.part
+  w1100 -> gpu_rows=4566201 cpu_rows=992125 cpu_nnz=8.3% (target 8.3%)  w1100_2_i1.part
+  w1200 -> gpu_rows=4642515 cpu_rows=915811 cpu_nnz=7.7% (target 7.7%)  w1200_2_i1.part
+  w2000 -> gpu_rows=4991375 cpu_rows=566951 cpu_nnz=4.8% (target 4.8%)  w2000_2_i1.part
+  w2720 -> gpu_rows=5136115 cpu_rows=422211 cpu_nnz=3.5% (target 3.5%)  w2720_2_i1.part
+[circuit5M] PREP DONE
+
+[cage15] generating vectors (octave process_matrixi)...
+octave: X11 DISPLAY environment variable not set
+octave: disabling GUI features
+[cage15] patpart w100 (2-rank, imbal 1%)...
+[cage15] patpart w100 FAILED: Command '['/home/bugra/.local/bin/patpart', '/matrices/cage15.mtx', '2', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/weights/gpu-cpu/w100_2.txt', '1', '1', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/cage15/in/part/gpu-cpu/w100_2_i1.part', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/cage15/in/part/gpu-cpu/w100_2_i1.log']' died with <Signals.SIGSEGV: 11>.
+[cage15] patpart w400 (2-rank, imbal 1%)...
+[cage15] patpart w400 FAILED: Command '['/home/bugra/.local/bin/patpart', '/matrices/cage15.mtx', '2', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/weights/gpu-cpu/w400_2.txt', '1', '1', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/cage15/in/part/gpu-cpu/w400_2_i1.part', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/cage15/in/part/gpu-cpu/w400_2_i1.log']' died with <Signals.SIGSEGV: 11>.
+[cage15] patpart w500 (2-rank, imbal 1%)...
+[cage15] patpart w500 FAILED: Command '['/home/bugra/.local/bin/patpart', '/matrices/cage15.mtx', '2', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/weights/gpu-cpu/w500_2.txt', '1', '1', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/cage15/in/part/gpu-cpu/w500_2_i1.part', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/cage15/in/part/gpu-cpu/w500_2_i1.log']' died with <Signals.SIGSEGV: 11>.
+[cage15] patpart w600 (2-rank, imbal 1%)...
+[cage15] patpart w600 FAILED: Command '['/home/bugra/.local/bin/patpart', '/matrices/cage15.mtx', '2', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/weights/gpu-cpu/w600_2.txt', '1', '1', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/cage15/in/part/gpu-cpu/w600_2_i1.part', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/cage15/in/part/gpu-cpu/w600_2_i1.log']' died with <Signals.SIGSEGV: 11>.
+[cage15] patpart w700 (2-rank, imbal 1%)...
+[cage15] patpart w700 FAILED: Command '['/home/bugra/.local/bin/patpart', '/matrices/cage15.mtx', '2', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/weights/gpu-cpu/w700_2.txt', '1', '1', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/cage15/in/part/gpu-cpu/w700_2_i1.part', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/cage15/in/part/gpu-cpu/w700_2_i1.log']' died with <Signals.SIGSEGV: 11>.
+[cage15] patpart w800 (2-rank, imbal 1%)...
+[cage15] patpart w800 FAILED: Command '['/home/bugra/.local/bin/patpart', '/matrices/cage15.mtx', '2', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/weights/gpu-cpu/w800_2.txt', '1', '1', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/cage15/in/part/gpu-cpu/w800_2_i1.part', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/cage15/in/part/gpu-cpu/w800_2_i1.log']' died with <Signals.SIGSEGV: 11>.
+[cage15] patpart w900 (2-rank, imbal 1%)...
+[cage15] patpart w900 FAILED: Command '['/home/bugra/.local/bin/patpart', '/matrices/cage15.mtx', '2', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/weights/gpu-cpu/w900_2.txt', '1', '1', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/cage15/in/part/gpu-cpu/w900_2_i1.part', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/cage15/in/part/gpu-cpu/w900_2_i1.log']' died with <Signals.SIGSEGV: 11>.
+[cage15] patpart w1000 (2-rank, imbal 1%)...
+[cage15] patpart w1000 FAILED: Command '['/home/bugra/.local/bin/patpart', '/matrices/cage15.mtx', '2', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/weights/gpu-cpu/w1000_2.txt', '1', '1', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/cage15/in/part/gpu-cpu/w1000_2_i1.part', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/cage15/in/part/gpu-cpu/w1000_2_i1.log']' died with <Signals.SIGSEGV: 11>.
+[cage15] patpart w1100 (2-rank, imbal 1%)...
+[cage15] patpart w1100 FAILED: Command '['/home/bugra/.local/bin/patpart', '/matrices/cage15.mtx', '2', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/weights/gpu-cpu/w1100_2.txt', '1', '1', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/cage15/in/part/gpu-cpu/w1100_2_i1.part', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/cage15/in/part/gpu-cpu/w1100_2_i1.log']' died with <Signals.SIGSEGV: 11>.
+[cage15] patpart w1200 (2-rank, imbal 1%)...
+[cage15] patpart w1200 FAILED: Command '['/home/bugra/.local/bin/patpart', '/matrices/cage15.mtx', '2', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/weights/gpu-cpu/w1200_2.txt', '1', '1', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/cage15/in/part/gpu-cpu/w1200_2_i1.part', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/cage15/in/part/gpu-cpu/w1200_2_i1.log']' died with <Signals.SIGSEGV: 11>.
+[cage15] patpart w2000 (2-rank, imbal 1%)...
+[cage15] patpart w2000 FAILED: Command '['/home/bugra/.local/bin/patpart', '/matrices/cage15.mtx', '2', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/weights/gpu-cpu/w2000_2.txt', '1', '1', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/cage15/in/part/gpu-cpu/w2000_2_i1.part', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/cage15/in/part/gpu-cpu/w2000_2_i1.log']' died with <Signals.SIGSEGV: 11>.
+[cage15] patpart w2720 (2-rank, imbal 1%)...
+[cage15] patpart w2720 FAILED: Command '['/home/bugra/.local/bin/patpart', '/matrices/cage15.mtx', '2', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/weights/gpu-cpu/w2720_2.txt', '1', '1', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/cage15/in/part/gpu-cpu/w2720_2_i1.part', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/cage15/in/part/gpu-cpu/w2720_2_i1.log']' died with <Signals.SIGSEGV: 11>.
+[cage15] naive nnz-balance partitions...
+[cage15] reading nnz-per-row from /matrices/cage15.mtx ...
+[cage15] n=5154859 stored_nnz=99199551
+  w100  -> gpu_rows=2899701 cpu_rows=2255158 cpu_nnz=50.0% (target 50.0%)  w100_2_i1.part
+  w400  -> gpu_rows=4316546 cpu_rows=838313 cpu_nnz=20.0% (target 20.0%)  w400_2_i1.part
+  w500  -> gpu_rows=4469587 cpu_rows=685272 cpu_nnz=16.7% (target 16.7%)  w500_2_i1.part
+  w600  -> gpu_rows=4582966 cpu_rows=571893 cpu_nnz=14.3% (target 14.3%)  w600_2_i1.part
+  w700  -> gpu_rows=4658351 cpu_rows=496508 cpu_nnz=12.5% (target 12.5%)  w700_2_i1.part
+  w800  -> gpu_rows=4713245 cpu_rows=441614 cpu_nnz=11.1% (target 11.1%)  w800_2_i1.part
+  w900  -> gpu_rows=4761287 cpu_rows=393572 cpu_nnz=10.0% (target 10.0%)  w900_2_i1.part
+  w1000 -> gpu_rows=4795378 cpu_rows=359481 cpu_nnz=9.1% (target 9.1%)  w1000_2_i1.part
+  w1100 -> gpu_rows=4830662 cpu_rows=324197 cpu_nnz=8.3% (target 8.3%)  w1100_2_i1.part
+  w1200 -> gpu_rows=4851758 cpu_rows=303101 cpu_nnz=7.7% (target 7.7%)  w1200_2_i1.part
+  w2000 -> gpu_rows=4959748 cpu_rows=195111 cpu_nnz=4.8% (target 4.8%)  w2000_2_i1.part
+  w2720 -> gpu_rows=5010860 cpu_rows=143999 cpu_nnz=3.5% (target 3.5%)  w2720_2_i1.part
+[cage15] PREP DONE
+
+[ML_Geer] vectors present, skipping octave
+[ML_Geer] patpart w700 (2-rank, imbal 1%)...
+file : /matrices/ML_Geer.mtx part : 2 
+	****	Matrix File readed	****Reading File : 20.095320
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 97973520 [1] 12906452 
+cut : 6524part vector : 10.585551
+0 : 1328734 1 : 175268 
+[ML_Geer] patpart w900 (2-rank, imbal 1%)...
+file : /matrices/ML_Geer.mtx part : 2 
+	****	Matrix File readed	****Reading File : 17.818410
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 100166500 [1] 10713472 
+cut : 5716part vector : 10.552493
+0 : 1358352 1 : 145650 
+[ML_Geer] patpart w1000 (2-rank, imbal 1%)...
+file : /matrices/ML_Geer.mtx part : 2 
+	****	Matrix File readed	****Reading File : 17.857454
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 101009912 [1] 9870060 
+cut : 5520part vector : 10.532566
+0 : 1369838 1 : 134164 
+[ML_Geer] patpart w1100 (2-rank, imbal 1%)...
+file : /matrices/ML_Geer.mtx part : 2 
+	****	Matrix File readed	****Reading File : 17.816423
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 102033176 [1] 8846796 
+cut : 5280part vector : 10.531765
+0 : 1383694 1 : 120308 
+[ML_Geer] naive nnz-balance partitions...
+[ML_Geer] reading nnz-per-row from /matrices/ML_Geer.mtx ...
+[ML_Geer] n=1504002 stored_nnz=110879972
+  w100  -> gpu_rows=751827 cpu_rows=752175 cpu_nnz=50.0% (target 50.0%)  w100_2_i1.part
+  w400  -> gpu_rows=1202668 cpu_rows=301334 cpu_nnz=20.0% (target 20.0%)  w400_2_i1.part
+  w500  -> gpu_rows=1252769 cpu_rows=251233 cpu_nnz=16.7% (target 16.7%)  w500_2_i1.part
+  w600  -> gpu_rows=1288557 cpu_rows=215445 cpu_nnz=14.3% (target 14.3%)  w600_2_i1.part
+  w700  -> gpu_rows=1315398 cpu_rows=188604 cpu_nnz=12.5% (target 12.5%)  w700_2_i1.part
+  w800  -> gpu_rows=1336277 cpu_rows=167725 cpu_nnz=11.1% (target 11.1%)  w800_2_i1.part
+  w900  -> gpu_rows=1352975 cpu_rows=151027 cpu_nnz=10.0% (target 10.0%)  w900_2_i1.part
+  w1000 -> gpu_rows=1366640 cpu_rows=137362 cpu_nnz=9.1% (target 9.1%)  w1000_2_i1.part
+  w1100 -> gpu_rows=1378027 cpu_rows=125975 cpu_nnz=8.3% (target 8.3%)  w1100_2_i1.part
+  w1200 -> gpu_rows=1387661 cpu_rows=116341 cpu_nnz=7.7% (target 7.7%)  w1200_2_i1.part
+  w2000 -> gpu_rows=1431718 cpu_rows=72284 cpu_nnz=4.8% (target 4.8%)  w2000_2_i1.part
+  w2720 -> gpu_rows=1449994 cpu_rows=54008 cpu_nnz=3.5% (target 3.5%)  w2720_2_i1.part
+[ML_Geer] PREP DONE
+
+[nlpkkt120] generating vectors (octave process_matrixi)...
+octave: X11 DISPLAY environment variable not set
+octave: disabling GUI features
+[nlpkkt120] patpart w100 (2-rank, imbal 1%)...
+file : /matrices/nlpkkt120.mtx part : 2 Sorry, this application does not support Market Market type: [matrix coordinate real symmetric]
+[nlpkkt120] patpart w100 FAILED: Command '['/home/bugra/.local/bin/patpart', '/matrices/nlpkkt120.mtx', '2', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/weights/gpu-cpu/w100_2.txt', '1', '1', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/nlpkkt120/in/part/gpu-cpu/w100_2_i1.part', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/nlpkkt120/in/part/gpu-cpu/w100_2_i1.log']' returned non-zero exit status 1.
+[nlpkkt120] patpart w400 (2-rank, imbal 1%)...
+file : /matrices/nlpkkt120.mtx part : 2 Sorry, this application does not support Market Market type: [matrix coordinate real symmetric]
+[nlpkkt120] patpart w400 FAILED: Command '['/home/bugra/.local/bin/patpart', '/matrices/nlpkkt120.mtx', '2', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/weights/gpu-cpu/w400_2.txt', '1', '1', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/nlpkkt120/in/part/gpu-cpu/w400_2_i1.part', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/nlpkkt120/in/part/gpu-cpu/w400_2_i1.log']' returned non-zero exit status 1.
+[nlpkkt120] patpart w500 (2-rank, imbal 1%)...
+file : /matrices/nlpkkt120.mtx part : 2 Sorry, this application does not support Market Market type: [matrix coordinate real symmetric]
+[nlpkkt120] patpart w500 FAILED: Command '['/home/bugra/.local/bin/patpart', '/matrices/nlpkkt120.mtx', '2', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/weights/gpu-cpu/w500_2.txt', '1', '1', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/nlpkkt120/in/part/gpu-cpu/w500_2_i1.part', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/nlpkkt120/in/part/gpu-cpu/w500_2_i1.log']' returned non-zero exit status 1.
+[nlpkkt120] patpart w600 (2-rank, imbal 1%)...
+file : /matrices/nlpkkt120.mtx part : 2 Sorry, this application does not support Market Market type: [matrix coordinate real symmetric]
+[nlpkkt120] patpart w600 FAILED: Command '['/home/bugra/.local/bin/patpart', '/matrices/nlpkkt120.mtx', '2', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/weights/gpu-cpu/w600_2.txt', '1', '1', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/nlpkkt120/in/part/gpu-cpu/w600_2_i1.part', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/nlpkkt120/in/part/gpu-cpu/w600_2_i1.log']' returned non-zero exit status 1.
+[nlpkkt120] patpart w700 (2-rank, imbal 1%)...
+file : /matrices/nlpkkt120.mtx part : 2 Sorry, this application does not support Market Market type: [matrix coordinate real symmetric]
+[nlpkkt120] patpart w700 FAILED: Command '['/home/bugra/.local/bin/patpart', '/matrices/nlpkkt120.mtx', '2', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/weights/gpu-cpu/w700_2.txt', '1', '1', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/nlpkkt120/in/part/gpu-cpu/w700_2_i1.part', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/nlpkkt120/in/part/gpu-cpu/w700_2_i1.log']' returned non-zero exit status 1.
+[nlpkkt120] patpart w800 (2-rank, imbal 1%)...
+file : /matrices/nlpkkt120.mtx part : 2 Sorry, this application does not support Market Market type: [matrix coordinate real symmetric]
+[nlpkkt120] patpart w800 FAILED: Command '['/home/bugra/.local/bin/patpart', '/matrices/nlpkkt120.mtx', '2', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/weights/gpu-cpu/w800_2.txt', '1', '1', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/nlpkkt120/in/part/gpu-cpu/w800_2_i1.part', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/nlpkkt120/in/part/gpu-cpu/w800_2_i1.log']' returned non-zero exit status 1.
+[nlpkkt120] patpart w900 (2-rank, imbal 1%)...
+file : /matrices/nlpkkt120.mtx part : 2 Sorry, this application does not support Market Market type: [matrix coordinate real symmetric]
+[nlpkkt120] patpart w900 FAILED: Command '['/home/bugra/.local/bin/patpart', '/matrices/nlpkkt120.mtx', '2', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/weights/gpu-cpu/w900_2.txt', '1', '1', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/nlpkkt120/in/part/gpu-cpu/w900_2_i1.part', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/nlpkkt120/in/part/gpu-cpu/w900_2_i1.log']' returned non-zero exit status 1.
+[nlpkkt120] patpart w1000 (2-rank, imbal 1%)...
+file : /matrices/nlpkkt120.mtx part : 2 Sorry, this application does not support Market Market type: [matrix coordinate real symmetric]
+[nlpkkt120] patpart w1000 FAILED: Command '['/home/bugra/.local/bin/patpart', '/matrices/nlpkkt120.mtx', '2', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/weights/gpu-cpu/w1000_2.txt', '1', '1', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/nlpkkt120/in/part/gpu-cpu/w1000_2_i1.part', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/nlpkkt120/in/part/gpu-cpu/w1000_2_i1.log']' returned non-zero exit status 1.
+[nlpkkt120] patpart w1100 (2-rank, imbal 1%)...
+file : /matrices/nlpkkt120.mtx part : 2 Sorry, this application does not support Market Market type: [matrix coordinate real symmetric]
+[nlpkkt120] patpart w1100 FAILED: Command '['/home/bugra/.local/bin/patpart', '/matrices/nlpkkt120.mtx', '2', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/weights/gpu-cpu/w1100_2.txt', '1', '1', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/nlpkkt120/in/part/gpu-cpu/w1100_2_i1.part', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/nlpkkt120/in/part/gpu-cpu/w1100_2_i1.log']' returned non-zero exit status 1.
+[nlpkkt120] patpart w1200 (2-rank, imbal 1%)...
+file : /matrices/nlpkkt120.mtx part : 2 Sorry, this application does not support Market Market type: [matrix coordinate real symmetric]
+[nlpkkt120] patpart w1200 FAILED: Command '['/home/bugra/.local/bin/patpart', '/matrices/nlpkkt120.mtx', '2', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/weights/gpu-cpu/w1200_2.txt', '1', '1', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/nlpkkt120/in/part/gpu-cpu/w1200_2_i1.part', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/nlpkkt120/in/part/gpu-cpu/w1200_2_i1.log']' returned non-zero exit status 1.
+[nlpkkt120] patpart w2000 (2-rank, imbal 1%)...
+file : /matrices/nlpkkt120.mtx part : 2 Sorry, this application does not support Market Market type: [matrix coordinate real symmetric]
+[nlpkkt120] patpart w2000 FAILED: Command '['/home/bugra/.local/bin/patpart', '/matrices/nlpkkt120.mtx', '2', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/weights/gpu-cpu/w2000_2.txt', '1', '1', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/nlpkkt120/in/part/gpu-cpu/w2000_2_i1.part', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/nlpkkt120/in/part/gpu-cpu/w2000_2_i1.log']' returned non-zero exit status 1.
+[nlpkkt120] patpart w2720 (2-rank, imbal 1%)...
+file : /matrices/nlpkkt120.mtx part : 2 Sorry, this application does not support Market Market type: [matrix coordinate real symmetric]
+[nlpkkt120] patpart w2720 FAILED: Command '['/home/bugra/.local/bin/patpart', '/matrices/nlpkkt120.mtx', '2', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/weights/gpu-cpu/w2720_2.txt', '1', '1', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/nlpkkt120/in/part/gpu-cpu/w2720_2_i1.part', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/nlpkkt120/in/part/gpu-cpu/w2720_2_i1.log']' returned non-zero exit status 1.
+[nlpkkt120] naive nnz-balance partitions...
+[nlpkkt120] reading nnz-per-row from /matrices/nlpkkt120.mtx ...
+[nlpkkt120] n=3542400 stored_nnz=50194096
+  w100  -> gpu_rows=2645999 cpu_rows=896401 cpu_nnz=50.0% (target 50.0%)  w100_2_i1.part
+  w400  -> gpu_rows=3183810 cpu_rows=358590 cpu_nnz=20.0% (target 20.0%)  w400_2_i1.part
+  w500  -> gpu_rows=3243566 cpu_rows=298834 cpu_nnz=16.7% (target 16.7%)  w500_2_i1.part
+  w600  -> gpu_rows=3286250 cpu_rows=256150 cpu_nnz=14.3% (target 14.3%)  w600_2_i1.part
+  w700  -> gpu_rows=3318262 cpu_rows=224138 cpu_nnz=12.5% (target 12.5%)  w700_2_i1.part
+  w800  -> gpu_rows=3343161 cpu_rows=199239 cpu_nnz=11.1% (target 11.1%)  w800_2_i1.part
+  w900  -> gpu_rows=3363079 cpu_rows=179321 cpu_nnz=10.0% (target 10.0%)  w900_2_i1.part
+  w1000 -> gpu_rows=3379377 cpu_rows=163023 cpu_nnz=9.1% (target 9.1%)  w1000_2_i1.part
+  w1100 -> gpu_rows=3392958 cpu_rows=149442 cpu_nnz=8.3% (target 8.3%)  w1100_2_i1.part
+  w1200 -> gpu_rows=3404449 cpu_rows=137951 cpu_nnz=7.7% (target 7.7%)  w1200_2_i1.part
+  w2000 -> gpu_rows=3456983 cpu_rows=85417 cpu_nnz=4.8% (target 4.8%)  w2000_2_i1.part
+  w2720 -> gpu_rows=3478778 cpu_rows=63622 cpu_nnz=3.5% (target 3.5%)  w2720_2_i1.part
+[nlpkkt120] PREP DONE
+
+[vas_stokes_1M] vectors present, skipping octave
+[vas_stokes_1M] patpart w500 (2-rank, imbal 1%)...
+file : /matrices/vas_stokes_1M.mtx part : 2 
+	****	Matrix File readed	****Reading File : 5.395855
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 28927155 [1] 5840052 
+cut : 12926part vector : 7.579956
+0 : 922409 1 : 168255 
+[vas_stokes_1M] patpart w700 (2-rank, imbal 1%)...
+file : /matrices/vas_stokes_1M.mtx part : 2 
+	****	Matrix File readed	****Reading File : 4.982053
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 30716103 [1] 4051104 
+cut : 13170part vector : 7.552019
+0 : 979046 1 : 111618 
+[vas_stokes_1M] patpart w900 (2-rank, imbal 1%)...
+file : /matrices/vas_stokes_1M.mtx part : 2 
+	****	Matrix File readed	****Reading File : 4.992555
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 31602867 [1] 3164340 
+cut : 12106part vector : 7.539651
+0 : 1006639 1 : 84025 
+[vas_stokes_1M] patpart w1000 (2-rank, imbal 1%)...
+file : /matrices/vas_stokes_1M.mtx part : 2 
+	****	Matrix File readed	****Reading File : 5.001744
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 31915033 [1] 2852174 
+cut : 11092part vector : 7.507966
+0 : 1003864 1 : 86800 
+[vas_stokes_1M] patpart w1100 (2-rank, imbal 1%)...
+file : /matrices/vas_stokes_1M.mtx part : 2 
+	****	Matrix File readed	****Reading File : 5.008968
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 32188297 [1] 2578910 
+cut : 10257part vector : 7.490346
+0 : 1012555 1 : 78109 
+[vas_stokes_1M] naive nnz-balance partitions...
+[vas_stokes_1M] reading nnz-per-row from /matrices/vas_stokes_1M.mtx ...
+[vas_stokes_1M] n=1090664 stored_nnz=34767207
+  w100  -> gpu_rows=835174 cpu_rows=255490 cpu_nnz=50.0% (target 50.0%)  w100_2_i1.part
+  w400  -> gpu_rows=999577 cpu_rows=91087 cpu_nnz=20.0% (target 20.0%)  w400_2_i1.part
+  w500  -> gpu_rows=1012664 cpu_rows=78000 cpu_nnz=16.7% (target 16.7%)  w500_2_i1.part
+  w600  -> gpu_rows=1026718 cpu_rows=63946 cpu_nnz=14.3% (target 14.3%)  w600_2_i1.part
+  w700  -> gpu_rows=1035008 cpu_rows=55656 cpu_nnz=12.5% (target 12.5%)  w700_2_i1.part
+  w800  -> gpu_rows=1040888 cpu_rows=49776 cpu_nnz=11.1% (target 11.1%)  w800_2_i1.part
+  w900  -> gpu_rows=1045650 cpu_rows=45014 cpu_nnz=10.0% (target 10.0%)  w900_2_i1.part
+  w1000 -> gpu_rows=1049518 cpu_rows=41146 cpu_nnz=9.1% (target 9.1%)  w1000_2_i1.part
+  w1100 -> gpu_rows=1052736 cpu_rows=37928 cpu_nnz=8.3% (target 8.3%)  w1100_2_i1.part
+  w1200 -> gpu_rows=1055459 cpu_rows=35205 cpu_nnz=7.7% (target 7.7%)  w1200_2_i1.part
+  w2000 -> gpu_rows=1069029 cpu_rows=21635 cpu_nnz=4.8% (target 4.8%)  w2000_2_i1.part
+  w2720 -> gpu_rows=1074720 cpu_rows=15944 cpu_nnz=3.5% (target 3.5%)  w2720_2_i1.part
+[vas_stokes_1M] PREP DONE
+
+[nv2] vectors present, skipping octave
+[nv2] patpart w500 (2-rank, imbal 1%)...
+file : /matrices/nv2.mtx part : 2 
+	****	Matrix File readed	****Reading File : 8.848531
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 43853550 [1] 8874812 
+cut : 6567part vector : 14.148503
+0 : 1206382 1 : 247526 
+[nv2] patpart w700 (2-rank, imbal 1%)...
+file : /matrices/nv2.mtx part : 2 
+	****	Matrix File readed	****Reading File : 7.602036
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 46598669 [1] 6129693 
+cut : 7809part vector : 13.800082
+0 : 1283193 1 : 170715 
+[nv2] patpart w900 (2-rank, imbal 1%)...
+file : /matrices/nv2.mtx part : 2 
+	****	Matrix File readed	****Reading File : 7.585017
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 47930045 [1] 4798317 
+cut : 6045part vector : 13.850238
+0 : 1319546 1 : 134362 
+[nv2] patpart w1000 (2-rank, imbal 1%)...
+file : /matrices/nv2.mtx part : 2 
+	****	Matrix File readed	****Reading File : 7.563924
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 48414214 [1] 4314148 
+cut : 4764part vector : 13.802760
+0 : 1333172 1 : 120736 
+[nv2] patpart w1100 (2-rank, imbal 1%)...
+file : /matrices/nv2.mtx part : 2 
+	****	Matrix File readed	****Reading File : 7.596236
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 48815711 [1] 3912651 
+cut : 3828part vector : 13.760571
+0 : 1344218 1 : 109690 
+[nv2] naive nnz-balance partitions...
+[nv2] reading nnz-per-row from /matrices/nv2.mtx ...
+[nv2] n=1453908 stored_nnz=52728362
+  w100  -> gpu_rows=621063 cpu_rows=832845 cpu_nnz=50.0% (target 50.0%)  w100_2_i1.part
+  w400  -> gpu_rows=1121996 cpu_rows=331912 cpu_nnz=20.0% (target 20.0%)  w400_2_i1.part
+  w500  -> gpu_rows=1181168 cpu_rows=272740 cpu_nnz=16.7% (target 16.7%)  w500_2_i1.part
+  w600  -> gpu_rows=1218721 cpu_rows=235187 cpu_nnz=14.3% (target 14.3%)  w600_2_i1.part
+  w700  -> gpu_rows=1246949 cpu_rows=206959 cpu_nnz=12.5% (target 12.5%)  w700_2_i1.part
+  w800  -> gpu_rows=1268932 cpu_rows=184976 cpu_nnz=11.1% (target 11.1%)  w800_2_i1.part
+  w900  -> gpu_rows=1286267 cpu_rows=167641 cpu_nnz=10.0% (target 10.0%)  w900_2_i1.part
+  w1000 -> gpu_rows=1300321 cpu_rows=153587 cpu_nnz=9.1% (target 9.1%)  w1000_2_i1.part
+  w1100 -> gpu_rows=1312493 cpu_rows=141415 cpu_nnz=8.3% (target 8.3%)  w1100_2_i1.part
+  w1200 -> gpu_rows=1323388 cpu_rows=130520 cpu_nnz=7.7% (target 7.7%)  w1200_2_i1.part
+  w2000 -> gpu_rows=1376281 cpu_rows=77627 cpu_nnz=4.8% (target 4.8%)  w2000_2_i1.part
+  w2720 -> gpu_rows=1397199 cpu_rows=56709 cpu_nnz=3.5% (target 3.5%)  w2720_2_i1.part
+[nv2] PREP DONE
+
+[Transport] vectors present, skipping octave
+[Transport] patpart w500 (2-rank, imbal 1%)...
+file : /matrices/Transport.mtx part : 2 
+	****	Matrix File readed	****Reading File : 4.418894
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 19583928 [1] 3916803 
+cut : 8348part vector : 2.622756
+0 : 1334422 1 : 267689 
+[Transport] patpart w700 (2-rank, imbal 1%)...
+file : /matrices/Transport.mtx part : 2 
+	****	Matrix File readed	****Reading File : 4.076824
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 20563125 [1] 2937606 
+cut : 7640part vector : 2.669809
+0 : 1401151 1 : 200960 
+[Transport] patpart w900 (2-rank, imbal 1%)...
+file : /matrices/Transport.mtx part : 2 
+	****	Matrix File readed	****Reading File : 4.089974
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 21150643 [1] 2350088 
+cut : 6665part vector : 2.612729
+0 : 1441279 1 : 160832 
+[Transport] patpart w1000 (2-rank, imbal 1%)...
+file : /matrices/Transport.mtx part : 2 
+	****	Matrix File readed	****Reading File : 4.080096
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 21364286 [1] 2136445 
+cut : 6231part vector : 2.599987
+0 : 1455658 1 : 146453 
+[Transport] patpart w1100 (2-rank, imbal 1%)...
+file : /matrices/Transport.mtx part : 2 
+	****	Matrix File readed	****Reading File : 4.096992
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 21545306 [1] 1955425 
+cut : 5797part vector : 2.597714
+0 : 1467938 1 : 134173 
+[Transport] naive nnz-balance partitions...
+[Transport] reading nnz-per-row from /matrices/Transport.mtx ...
+[Transport] n=1602111 stored_nnz=23500731
+  w100  -> gpu_rows=801056 cpu_rows=801055 cpu_nnz=50.0% (target 50.0%)  w100_2_i1.part
+  w400  -> gpu_rows=1273406 cpu_rows=328705 cpu_nnz=20.0% (target 20.0%)  w400_2_i1.part
+  w500  -> gpu_rows=1325889 cpu_rows=276222 cpu_nnz=16.7% (target 16.7%)  w500_2_i1.part
+  w600  -> gpu_rows=1363402 cpu_rows=238709 cpu_nnz=14.3% (target 14.3%)  w600_2_i1.part
+  w700  -> gpu_rows=1391472 cpu_rows=210639 cpu_nnz=12.5% (target 12.5%)  w700_2_i1.part
+  w800  -> gpu_rows=1413390 cpu_rows=188721 cpu_nnz=11.1% (target 11.1%)  w800_2_i1.part
+  w900  -> gpu_rows=1430856 cpu_rows=171255 cpu_nnz=10.0% (target 10.0%)  w900_2_i1.part
+  w1000 -> gpu_rows=1445146 cpu_rows=156965 cpu_nnz=9.1% (target 9.1%)  w1000_2_i1.part
+  w1100 -> gpu_rows=1457140 cpu_rows=144971 cpu_nnz=8.3% (target 8.3%)  w1100_2_i1.part
+  w1200 -> gpu_rows=1467217 cpu_rows=134894 cpu_nnz=7.7% (target 7.7%)  w1200_2_i1.part
+  w2000 -> gpu_rows=1513366 cpu_rows=88745 cpu_nnz=4.8% (target 4.8%)  w2000_2_i1.part
+  w2720 -> gpu_rows=1532478 cpu_rows=69633 cpu_nnz=3.5% (target 3.5%)  w2720_2_i1.part
+[Transport] PREP DONE
+
+[Freescale2] generating vectors (octave process_matrixi)...
+octave: X11 DISPLAY environment variable not set
+octave: disabling GUI features
+[Freescale2] patpart w100 (2-rank, imbal 1%)...
+[Freescale2] patpart w100 FAILED: Command '['/home/bugra/.local/bin/patpart', '/matrices/Freescale2.mtx', '2', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/weights/gpu-cpu/w100_2.txt', '1', '1', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/Freescale2/in/part/gpu-cpu/w100_2_i1.part', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/Freescale2/in/part/gpu-cpu/w100_2_i1.log']' died with <Signals.SIGSEGV: 11>.
+[Freescale2] patpart w400 (2-rank, imbal 1%)...
+[Freescale2] patpart w400 FAILED: Command '['/home/bugra/.local/bin/patpart', '/matrices/Freescale2.mtx', '2', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/weights/gpu-cpu/w400_2.txt', '1', '1', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/Freescale2/in/part/gpu-cpu/w400_2_i1.part', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/Freescale2/in/part/gpu-cpu/w400_2_i1.log']' died with <Signals.SIGSEGV: 11>.
+[Freescale2] patpart w500 (2-rank, imbal 1%)...
+[Freescale2] patpart w500 FAILED: Command '['/home/bugra/.local/bin/patpart', '/matrices/Freescale2.mtx', '2', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/weights/gpu-cpu/w500_2.txt', '1', '1', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/Freescale2/in/part/gpu-cpu/w500_2_i1.part', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/Freescale2/in/part/gpu-cpu/w500_2_i1.log']' died with <Signals.SIGSEGV: 11>.
+[Freescale2] patpart w600 (2-rank, imbal 1%)...
+[Freescale2] patpart w600 FAILED: Command '['/home/bugra/.local/bin/patpart', '/matrices/Freescale2.mtx', '2', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/weights/gpu-cpu/w600_2.txt', '1', '1', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/Freescale2/in/part/gpu-cpu/w600_2_i1.part', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/Freescale2/in/part/gpu-cpu/w600_2_i1.log']' died with <Signals.SIGSEGV: 11>.
+[Freescale2] patpart w700 (2-rank, imbal 1%)...
+[Freescale2] patpart w700 FAILED: Command '['/home/bugra/.local/bin/patpart', '/matrices/Freescale2.mtx', '2', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/weights/gpu-cpu/w700_2.txt', '1', '1', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/Freescale2/in/part/gpu-cpu/w700_2_i1.part', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/Freescale2/in/part/gpu-cpu/w700_2_i1.log']' died with <Signals.SIGSEGV: 11>.
+[Freescale2] patpart w800 (2-rank, imbal 1%)...
+[Freescale2] patpart w800 FAILED: Command '['/home/bugra/.local/bin/patpart', '/matrices/Freescale2.mtx', '2', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/weights/gpu-cpu/w800_2.txt', '1', '1', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/Freescale2/in/part/gpu-cpu/w800_2_i1.part', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/Freescale2/in/part/gpu-cpu/w800_2_i1.log']' died with <Signals.SIGSEGV: 11>.
+[Freescale2] patpart w900 (2-rank, imbal 1%)...
+[Freescale2] patpart w900 FAILED: Command '['/home/bugra/.local/bin/patpart', '/matrices/Freescale2.mtx', '2', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/weights/gpu-cpu/w900_2.txt', '1', '1', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/Freescale2/in/part/gpu-cpu/w900_2_i1.part', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/Freescale2/in/part/gpu-cpu/w900_2_i1.log']' died with <Signals.SIGSEGV: 11>.
+[Freescale2] patpart w1000 (2-rank, imbal 1%)...
+[Freescale2] patpart w1000 FAILED: Command '['/home/bugra/.local/bin/patpart', '/matrices/Freescale2.mtx', '2', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/weights/gpu-cpu/w1000_2.txt', '1', '1', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/Freescale2/in/part/gpu-cpu/w1000_2_i1.part', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/Freescale2/in/part/gpu-cpu/w1000_2_i1.log']' died with <Signals.SIGSEGV: 11>.
+[Freescale2] patpart w1100 (2-rank, imbal 1%)...
+[Freescale2] patpart w1100 FAILED: Command '['/home/bugra/.local/bin/patpart', '/matrices/Freescale2.mtx', '2', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/weights/gpu-cpu/w1100_2.txt', '1', '1', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/Freescale2/in/part/gpu-cpu/w1100_2_i1.part', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/Freescale2/in/part/gpu-cpu/w1100_2_i1.log']' died with <Signals.SIGSEGV: 11>.
+[Freescale2] patpart w1200 (2-rank, imbal 1%)...
+[Freescale2] patpart w1200 FAILED: Command '['/home/bugra/.local/bin/patpart', '/matrices/Freescale2.mtx', '2', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/weights/gpu-cpu/w1200_2.txt', '1', '1', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/Freescale2/in/part/gpu-cpu/w1200_2_i1.part', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/Freescale2/in/part/gpu-cpu/w1200_2_i1.log']' died with <Signals.SIGSEGV: 11>.
+[Freescale2] patpart w2000 (2-rank, imbal 1%)...
+[Freescale2] patpart w2000 FAILED: Command '['/home/bugra/.local/bin/patpart', '/matrices/Freescale2.mtx', '2', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/weights/gpu-cpu/w2000_2.txt', '1', '1', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/Freescale2/in/part/gpu-cpu/w2000_2_i1.part', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/Freescale2/in/part/gpu-cpu/w2000_2_i1.log']' died with <Signals.SIGSEGV: 11>.
+[Freescale2] patpart w2720 (2-rank, imbal 1%)...
+[Freescale2] patpart w2720 FAILED: Command '['/home/bugra/.local/bin/patpart', '/matrices/Freescale2.mtx', '2', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/weights/gpu-cpu/w2720_2.txt', '1', '1', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/Freescale2/in/part/gpu-cpu/w2720_2_i1.part', '/home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/Freescale2/in/part/gpu-cpu/w2720_2_i1.log']' died with <Signals.SIGSEGV: 11>.
+[Freescale2] naive nnz-balance partitions...
+[Freescale2] reading nnz-per-row from /matrices/Freescale2.mtx ...
+[Freescale2] n=2999349 stored_nnz=23042677
+  w100  -> gpu_rows=1353254 cpu_rows=1646095 cpu_nnz=50.0% (target 50.0%)  w100_2_i1.part
+  w400  -> gpu_rows=2309261 cpu_rows=690088 cpu_nnz=20.0% (target 20.0%)  w400_2_i1.part
+  w500  -> gpu_rows=2416665 cpu_rows=582684 cpu_nnz=16.7% (target 16.7%)  w500_2_i1.part
+  w600  -> gpu_rows=2491132 cpu_rows=508217 cpu_nnz=14.3% (target 14.3%)  w600_2_i1.part
+  w700  -> gpu_rows=2548475 cpu_rows=450874 cpu_nnz=12.5% (target 12.5%)  w700_2_i1.part
+  w800  -> gpu_rows=2593072 cpu_rows=406277 cpu_nnz=11.1% (target 11.1%)  w800_2_i1.part
+  w900  -> gpu_rows=2625680 cpu_rows=373669 cpu_nnz=10.0% (target 10.0%)  w900_2_i1.part
+  w1000 -> gpu_rows=2655892 cpu_rows=343457 cpu_nnz=9.1% (target 9.1%)  w1000_2_i1.part
+  w1100 -> gpu_rows=2681133 cpu_rows=318216 cpu_nnz=8.3% (target 8.3%)  w1100_2_i1.part
+  w1200 -> gpu_rows=2702911 cpu_rows=296438 cpu_nnz=7.7% (target 7.7%)  w1200_2_i1.part
+  w2000 -> gpu_rows=2795965 cpu_rows=203384 cpu_nnz=4.8% (target 4.8%)  w2000_2_i1.part
+  w2720 -> gpu_rows=2814937 cpu_rows=184412 cpu_nnz=3.5% (target 3.5%)  w2720_2_i1.part
+[Freescale2] PREP DONE
+
+[dgreen] vectors present, skipping octave
+[dgreen] patpart w500 (2-rank, imbal 1%)...
+file : /matrices/dgreen.mtx part : 2 
+	****	Matrix File readed	****Reading File : 6.115367
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 32202001 [1] 6057876 
+cut : 4704part vector : 7.847212
+0 : 1037187 1 : 163424 
+[dgreen] patpart w700 (2-rank, imbal 1%)...
+file : /matrices/dgreen.mtx part : 2 
+	****	Matrix File readed	****Reading File : 5.342002
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 33429578 [1] 4830299 
+cut : 3672part vector : 7.815909
+0 : 1071118 1 : 129493 
+[dgreen] patpart w900 (2-rank, imbal 1%)...
+file : /matrices/dgreen.mtx part : 2 
+	****	Matrix File readed	****Reading File : 5.332269
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 34776216 [1] 3483661 
+cut : 3993part vector : 7.813163
+0 : 1107637 1 : 92974 
+[dgreen] patpart w1000 (2-rank, imbal 1%)...
+file : /matrices/dgreen.mtx part : 2 
+	****	Matrix File readed	****Reading File : 5.337830
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 35119979 [1] 3139898 
+cut : 4074part vector : 7.798470
+0 : 1116799 1 : 83812 
+[dgreen] patpart w1100 (2-rank, imbal 1%)...
+file : /matrices/dgreen.mtx part : 2 
+	****	Matrix File readed	****Reading File : 5.335384
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 35281784 [1] 2978093 
+cut : 3954part vector : 7.788376
+0 : 1121129 1 : 79482 
+[dgreen] naive nnz-balance partitions...
+[dgreen] reading nnz-per-row from /matrices/dgreen.mtx ...
+[dgreen] n=1200611 stored_nnz=38259877
+  w100  -> gpu_rows=536153 cpu_rows=664458 cpu_nnz=50.0% (target 50.0%)  w100_2_i1.part
+  w400  -> gpu_rows=937461 cpu_rows=263150 cpu_nnz=20.0% (target 20.0%)  w400_2_i1.part
+  w500  -> gpu_rows=981464 cpu_rows=219147 cpu_nnz=16.7% (target 16.7%)  w500_2_i1.part
+  w600  -> gpu_rows=1014263 cpu_rows=186348 cpu_nnz=14.3% (target 14.3%)  w600_2_i1.part
+  w700  -> gpu_rows=1039065 cpu_rows=161546 cpu_nnz=12.5% (target 12.5%)  w700_2_i1.part
+  w800  -> gpu_rows=1058370 cpu_rows=142241 cpu_nnz=11.1% (target 11.1%)  w800_2_i1.part
+  w900  -> gpu_rows=1073758 cpu_rows=126853 cpu_nnz=10.0% (target 10.0%)  w900_2_i1.part
+  w1000 -> gpu_rows=1086457 cpu_rows=114154 cpu_nnz=9.1% (target 9.1%)  w1000_2_i1.part
+  w1100 -> gpu_rows=1096900 cpu_rows=103711 cpu_nnz=8.3% (target 8.3%)  w1100_2_i1.part
+  w1200 -> gpu_rows=1105991 cpu_rows=94620 cpu_nnz=7.7% (target 7.7%)  w1200_2_i1.part
+  w2000 -> gpu_rows=1145146 cpu_rows=55465 cpu_nnz=4.8% (target 4.8%)  w2000_2_i1.part
+  w2720 -> gpu_rows=1159437 cpu_rows=41174 cpu_nnz=3.5% (target 3.5%)  w2720_2_i1.part
+[dgreen] PREP DONE
+
+[ss] vectors present, skipping octave
+[ss] patpart w500 (2-rank, imbal 1%)...
+file : /matrices/ss.mtx part : 2 
+	****	Matrix File readed	****Reading File : 5.474292
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 29248103 [1] 5505474 
+cut : 13530part vector : 4.689002
+0 : 1372392 1 : 280288 
+[ss] patpart w700 (2-rank, imbal 1%)...
+file : /matrices/ss.mtx part : 2 
+	****	Matrix File readed	****Reading File : 4.904149
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 30706301 [1] 4047276 
+cut : 12074part vector : 4.603215
+0 : 1440193 1 : 212487 
+[ss] patpart w900 (2-rank, imbal 1%)...
+file : /matrices/ss.mtx part : 2 
+	****	Matrix File readed	****Reading File : 4.934552
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 31587239 [1] 3166338 
+cut : 10566part vector : 4.589559
+0 : 1481626 1 : 171054 
+[ss] patpart w1000 (2-rank, imbal 1%)...
+file : /matrices/ss.mtx part : 2 
+	****	Matrix File readed	****Reading File : 4.921623
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 31908877 [1] 2844700 
+cut : 9268part vector : 4.604327
+0 : 1496436 1 : 156244 
+[ss] patpart w1100 (2-rank, imbal 1%)...
+file : /matrices/ss.mtx part : 2 
+	****	Matrix File readed	****Reading File : 4.919435
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 32175614 [1] 2577963 
+cut : 9187part vector : 4.583466
+0 : 1508881 1 : 143799 
+[ss] naive nnz-balance partitions...
+[ss] reading nnz-per-row from /matrices/ss.mtx ...
+[ss] n=1652680 stored_nnz=34753577
+  w100  -> gpu_rows=1066969 cpu_rows=585711 cpu_nnz=50.0% (target 50.0%)  w100_2_i1.part
+  w400  -> gpu_rows=1420794 cpu_rows=231886 cpu_nnz=20.0% (target 20.0%)  w400_2_i1.part
+  w500  -> gpu_rows=1452047 cpu_rows=200633 cpu_nnz=16.7% (target 16.7%)  w500_2_i1.part
+  w600  -> gpu_rows=1474403 cpu_rows=178277 cpu_nnz=14.3% (target 14.3%)  w600_2_i1.part
+  w700  -> gpu_rows=1491229 cpu_rows=161451 cpu_nnz=12.5% (target 12.5%)  w700_2_i1.part
+  w800  -> gpu_rows=1504279 cpu_rows=148401 cpu_nnz=11.1% (target 11.1%)  w800_2_i1.part
+  w900  -> gpu_rows=1514745 cpu_rows=137935 cpu_nnz=10.0% (target 10.0%)  w900_2_i1.part
+  w1000 -> gpu_rows=1523369 cpu_rows=129311 cpu_nnz=9.1% (target 9.1%)  w1000_2_i1.part
+  w1100 -> gpu_rows=1530285 cpu_rows=122395 cpu_nnz=8.3% (target 8.3%)  w1100_2_i1.part
+  w1200 -> gpu_rows=1536087 cpu_rows=116593 cpu_nnz=7.7% (target 7.7%)  w1200_2_i1.part
+  w2000 -> gpu_rows=1562201 cpu_rows=90479 cpu_nnz=4.8% (target 4.8%)  w2000_2_i1.part
+  w2720 -> gpu_rows=1572957 cpu_rows=79723 cpu_nnz=3.5% (target 3.5%)  w2720_2_i1.part
+[ss] PREP DONE
+
+
+---------------- SWEEP Tue Jun 23 15:40:32 +03 2026 ----------------
+
+######## RM07R ########
+  cpu                    -      -      7.5754s
+  gpu                    -      -      0.6381s
+  gpu-dp                 -      -      0.6125s
+  gpu-pipelined          -      -      0.7716s
+  hybrid-async           patoh  w100   2.3132s
+  hybrid-async           patoh  w400   0.8975s
+  hybrid-async           patoh  w500   0.7584s
+  hybrid-async           patoh  w600   0.6078s
+  hybrid-async           patoh  w700   0.5736s
+  hybrid-async           patoh  w800   0.5769s
+  hybrid-async           patoh  w900   0.5798s
+  hybrid-async           patoh  w1000  0.5858s
+  hybrid-async           patoh  w1100  0.5884s
+  hybrid-async           patoh  w1200  0.5891s
+  hybrid-async           patoh  w2000  0.6060s
+  hybrid-async           patoh  w2720  0.6148s
+  hybrid-async           naive  w100   2.3116s
+  hybrid-async           naive  w400   0.8960s
+  hybrid-async           naive  w500   0.7281s
+  hybrid-async           naive  w600   0.6012s
+  hybrid-async           naive  w700   0.5695s
+  hybrid-async           naive  w800   0.5737s
+  hybrid-async           naive  w900   0.5793s
+  hybrid-async           naive  w1000  0.5925s
+  hybrid-async           naive  w1100  0.5899s
+  hybrid-async           naive  w1200  0.5960s
+  hybrid-async           naive  w2000  0.6095s
+  hybrid-async           naive  w2720  0.6162s
+  hybrid-async-dp        patoh  w100   2.2688s
+  hybrid-async-dp        patoh  w400   0.8844s
+  hybrid-async-dp        patoh  w500   0.7344s
+  hybrid-async-dp        patoh  w600   0.5822s
+  hybrid-async-dp        patoh  w700   0.5391s
+  hybrid-async-dp        patoh  w800   0.5505s
+  hybrid-async-dp        patoh  w900   0.5558s
+  hybrid-async-dp        patoh  w1000  0.5576s
+  hybrid-async-dp        patoh  w1100  0.5644s
+  hybrid-async-dp        patoh  w1200  0.5642s
+  hybrid-async-dp        patoh  w2000  0.5797s
+  hybrid-async-dp        patoh  w2720  0.5875s
+  hybrid-async-dp        naive  w100   2.2748s
+  hybrid-async-dp        naive  w400   0.8841s
+  hybrid-async-dp        naive  w500   0.7174s
+  hybrid-async-dp        naive  w600   0.5601s
+  hybrid-async-dp        naive  w700   0.5434s
+  hybrid-async-dp        naive  w800   0.5523s
+  hybrid-async-dp        naive  w900   0.5567s
+  hybrid-async-dp        naive  w1000  0.5649s
+  hybrid-async-dp        naive  w1100  0.5673s
+  hybrid-async-dp        naive  w1200  0.5678s
+  hybrid-async-dp        naive  w2000  0.5879s
+  hybrid-async-dp        naive  w2720  0.5906s
+  hybrid-dist-dp         patoh  w100   2.3229s
+  hybrid-dist-dp         patoh  w400   0.8904s
+  hybrid-dist-dp         patoh  w500   0.6951s
+  hybrid-dist-dp         patoh  w600   0.6021s
+  hybrid-dist-dp         patoh  w700   0.6101s
+  hybrid-dist-dp         patoh  w800   0.6208s
+  hybrid-dist-dp         patoh  w900   0.6246s
+  hybrid-dist-dp         patoh  w1000  0.6257s
+  hybrid-dist-dp         patoh  w1100  0.6358s
+  hybrid-dist-dp         patoh  w1200  0.6301s
+  hybrid-dist-dp         patoh  w2000  0.6322s
+  hybrid-dist-dp         patoh  w2720  0.6365s
+  hybrid-dist-dp         naive  w100   2.2070s
+  hybrid-dist-dp         naive  w400   0.8062s
+  hybrid-dist-dp         naive  w500   0.6158s
+  hybrid-dist-dp         naive  w600   0.5621s
+  hybrid-dist-dp         naive  w700   0.5633s
+  hybrid-dist-dp         naive  w800   0.5711s
+  hybrid-dist-dp         naive  w900   0.5739s
+  hybrid-dist-dp         naive  w1000  0.5789s
+  hybrid-dist-dp         naive  w1100  0.5775s
+  hybrid-dist-dp         naive  w1200  0.5852s
+  hybrid-dist-dp         naive  w2000  0.5962s
+  hybrid-dist-dp         naive  w2720  0.6104s
+  hybrid-dist-pipelined  patoh  w100   2.7615s
+  hybrid-dist-pipelined  patoh  w400   1.0486s
+  hybrid-dist-pipelined  patoh  w500   0.8604s
+  hybrid-dist-pipelined  patoh  w600   0.7218s
+  hybrid-dist-pipelined  patoh  w700   0.6927s
+  hybrid-dist-pipelined  patoh  w800   0.7070s
+  hybrid-dist-pipelined  patoh  w900   0.6995s
+  hybrid-dist-pipelined  patoh  w1000  0.7283s
+  hybrid-dist-pipelined  patoh  w1100  0.7148s
+  hybrid-dist-pipelined  patoh  w1200  0.7197s
+  hybrid-dist-pipelined  patoh  w2000  0.7203s
+  hybrid-dist-pipelined  patoh  w2720  0.7256s
+  hybrid-dist-pipelined  naive  w100   2.6856s
+  hybrid-dist-pipelined  naive  w400   0.9602s
+  hybrid-dist-pipelined  naive  w500   0.7625s
+  hybrid-dist-pipelined  naive  w600   0.6601s
+  hybrid-dist-pipelined  naive  w700   0.6635s
+  hybrid-dist-pipelined  naive  w800   0.6771s
+  hybrid-dist-pipelined  naive  w900   0.6832s
+  hybrid-dist-pipelined  naive  w1000  0.6809s
+  hybrid-dist-pipelined  naive  w1100  0.6854s
+  hybrid-dist-pipelined  naive  w1200  0.6960s
+  hybrid-dist-pipelined  naive  w2000  0.7056s
+  hybrid-dist-pipelined  naive  w2720  0.7080s
+  mpi                    patoh  w100   4.9807s
+  mpi                    patoh  w400   6.8721s
+  mpi                    patoh  w500   6.9340s
+  mpi                    patoh  w600   7.0914s
+  mpi                    patoh  w700   7.1971s
+  mpi                    patoh  w800   7.2702s
+  mpi                    patoh  w900   7.3494s
+  mpi                    patoh  w1000  7.3876s
+  mpi                    patoh  w1100  7.4444s
+  mpi                    patoh  w1200  7.4769s
+  mpi                    patoh  w2000  7.6440s
+  mpi                    patoh  w2720  7.7211s
+  mpi                    naive  w100   5.0272s
+  mpi                    naive  w400   6.9137s
+  mpi                    naive  w500   7.0921s
+  mpi                    naive  w600   7.2584s
+  mpi                    naive  w700   7.3490s
+  mpi                    naive  w800   7.4508s
+  mpi                    naive  w900   7.5289s
+  mpi                    naive  w1000  7.5605s
+  mpi                    naive  w1100  7.6300s
+  mpi                    naive  w1200  7.6566s
+  mpi                    naive  w2000  7.8341s
+  mpi                    naive  w2720  7.9127s
+  mpi-gpu                patoh  w100   4.1200s
+  mpi-gpu                patoh  w400   1.7072s
+  mpi-gpu                patoh  w500   1.5088s
+  mpi-gpu                patoh  w600   1.2242s
+  mpi-gpu                patoh  w700   1.0885s
+  mpi-gpu                patoh  w800   1.0001s
+  mpi-gpu                patoh  w900   0.8404s
+  mpi-gpu                patoh  w1000  0.7765s
+  mpi-gpu                patoh  w1100  0.7456s
+  mpi-gpu                patoh  w1200  0.6647s
+  mpi-gpu                patoh  w2000  0.6224s
+  mpi-gpu                patoh  w2720  0.6220s
+  mpi-gpu                naive  w100   4.0493s
+  mpi-gpu                naive  w400   1.6584s
+  mpi-gpu                naive  w500   1.3626s
+  mpi-gpu                naive  w600   1.1814s
+  mpi-gpu                naive  w700   1.0808s
+  mpi-gpu                naive  w800   0.9263s
+  mpi-gpu                naive  w900   0.8290s
+  mpi-gpu                naive  w1000  0.7751s
+  mpi-gpu                naive  w1100  0.6778s
+  mpi-gpu                naive  w1200  0.6197s
+  mpi-gpu                naive  w2000  0.6194s
+  mpi-gpu                naive  w2720  0.6191s
+
+######## cage14 ########
+  cpu                    -      -      8.3824s
+  gpu                    -      -      0.6847s
+  gpu-dp                 -      -      0.5944s
+  gpu-pipelined          -      -      0.9332s
+  hybrid-async           patoh  w100   2.3294s
+  hybrid-async           patoh  w400   1.0503s
+  hybrid-async           patoh  w500   0.9044s
+  hybrid-async           patoh  w600   0.8171s
+  hybrid-async           patoh  w700   0.7335s
+  hybrid-async           patoh  w800   0.6756s
+  hybrid-async           patoh  w900   0.6483s
+  hybrid-async           patoh  w1000  0.6492s
+  hybrid-async           patoh  w1100  0.6546s
+  hybrid-async           patoh  w1200  0.6575s
+  hybrid-async           patoh  w2000  0.6669s
+  hybrid-async           patoh  w2720  0.6721s
+  hybrid-async           naive  w100   2.2383s
+  hybrid-async           naive  w400   1.0442s
+  hybrid-async           naive  w500   0.8871s
+  hybrid-async           naive  w600   0.8066s
+  hybrid-async           naive  w700   0.7329s
+  hybrid-async           naive  w800   0.6658s
+  hybrid-async           naive  w900   0.6453s
+  hybrid-async           naive  w1000  0.6486s
+  hybrid-async           naive  w1100  0.6560s
+  hybrid-async           naive  w1200  0.6538s
+  hybrid-async           naive  w2000  0.6699s
+  hybrid-async           naive  w2720  0.6699s
+  hybrid-async-dp        patoh  w100   2.2195s
+  hybrid-async-dp        patoh  w400   0.9636s
+  hybrid-async-dp        patoh  w500   0.8121s
+  hybrid-async-dp        patoh  w600   0.7158s
+  hybrid-async-dp        patoh  w700   0.6412s
+  hybrid-async-dp        patoh  w800   0.5864s
+  hybrid-async-dp        patoh  w900   0.5548s
+  hybrid-async-dp        patoh  w1000  0.5593s
+  hybrid-async-dp        patoh  w1100  0.5645s
+  hybrid-async-dp        patoh  w1200  0.5714s
+  hybrid-async-dp        patoh  w2000  0.5795s
+  hybrid-async-dp        patoh  w2720  0.5843s
+  hybrid-async-dp        naive  w100   2.1529s
+  hybrid-async-dp        naive  w400   0.9414s
+  hybrid-async-dp        naive  w500   0.8048s
+  hybrid-async-dp        naive  w600   0.7024s
+  hybrid-async-dp        naive  w700   0.6418s
+  hybrid-async-dp        naive  w800   0.5819s
+  hybrid-async-dp        naive  w900   0.5539s
+  hybrid-async-dp        naive  w1000  0.5642s
+  hybrid-async-dp        naive  w1100  0.5674s
+  hybrid-async-dp        naive  w1200  0.5658s
+  hybrid-async-dp        naive  w2000  0.5761s
+  hybrid-async-dp        naive  w2720  0.5776s
+  hybrid-dist-dp         patoh  w100   2.7211s
+  hybrid-dist-dp         patoh  w400   0.8771s
+  hybrid-dist-dp         patoh  w500   0.6915s
+  hybrid-dist-dp         patoh  w600   0.5800s
+  hybrid-dist-dp         patoh  w700   0.5851s
+  hybrid-dist-dp         patoh  w800   0.5812s
+  hybrid-dist-dp         patoh  w900   0.5834s
+  hybrid-dist-dp         patoh  w1000  0.5861s
+  hybrid-dist-dp         patoh  w1100  0.5896s
+  hybrid-dist-dp         patoh  w1200  0.5908s
+  hybrid-dist-dp         patoh  w2000  0.6045s
+  hybrid-dist-dp         patoh  w2720  0.6111s
+  hybrid-dist-dp         naive  w100   2.4696s
+  hybrid-dist-dp         naive  w400   0.7920s
+  hybrid-dist-dp         naive  w500   0.6646s
+  hybrid-dist-dp         naive  w600   0.5972s
+  hybrid-dist-dp         naive  w700   0.5840s
+  hybrid-dist-dp         naive  w800   0.5918s
+  hybrid-dist-dp         naive  w900   0.6027s
+  hybrid-dist-dp         naive  w1000  0.6038s
+  hybrid-dist-dp         naive  w1100  0.6031s
+  hybrid-dist-dp         naive  w1200  0.6049s
+  hybrid-dist-dp         naive  w2000  0.6191s
+  hybrid-dist-dp         naive  w2720  0.6222s
+  hybrid-dist-pipelined  patoh  w100   3.5484s
+  hybrid-dist-pipelined  patoh  w400   1.1751s
+  hybrid-dist-pipelined  patoh  w500   0.9431s
+  hybrid-dist-pipelined  patoh  w600   0.7710s
+  hybrid-dist-pipelined  patoh  w700   0.7493s
+  hybrid-dist-pipelined  patoh  w800   0.7524s
+  hybrid-dist-pipelined  patoh  w900   0.7539s
+  hybrid-dist-pipelined  patoh  w1000  0.7574s
+  hybrid-dist-pipelined  patoh  w1100  0.7569s
+  hybrid-dist-pipelined  patoh  w1200  0.7605s
+  hybrid-dist-pipelined  patoh  w2000  0.7715s
+  hybrid-dist-pipelined  patoh  w2720  0.7844s
+  hybrid-dist-pipelined  naive  w100   3.1597s
+  hybrid-dist-pipelined  naive  w400   1.0498s
+  hybrid-dist-pipelined  naive  w500   0.8875s
+  hybrid-dist-pipelined  naive  w600   0.7810s
+  hybrid-dist-pipelined  naive  w700   0.7597s
+  hybrid-dist-pipelined  naive  w800   0.7663s
+  hybrid-dist-pipelined  naive  w900   0.7675s
+  hybrid-dist-pipelined  naive  w1000  0.7711s
+  hybrid-dist-pipelined  naive  w1100  0.7756s
+  hybrid-dist-pipelined  naive  w1200  0.7794s
+  hybrid-dist-pipelined  naive  w2000  0.7930s
+  hybrid-dist-pipelined  naive  w2720  0.7985s
+  mpi                    patoh  w100   6.3473s
+  mpi                    patoh  w400   8.0271s
+  mpi                    patoh  w500   8.2426s
+  mpi                    patoh  w600   8.4580s
+  mpi                    patoh  w700   8.4568s
+  mpi                    patoh  w800   8.5660s
+  mpi                    patoh  w900   8.5670s
+  mpi                    patoh  w1000  8.5949s
+  mpi                    patoh  w1100  8.6179s
+  mpi                    patoh  w1200  8.6374s
+  mpi                    patoh  w2000  8.7310s
+  mpi                    patoh  w2720  8.7586s
+  mpi                    naive  w100   6.4318s
+  mpi                    naive  w400   8.0014s
+  mpi                    naive  w500   8.2131s
+  mpi                    naive  w600   8.3434s
+  mpi                    naive  w700   8.4436s
+  mpi                    naive  w800   8.6449s
+  mpi                    naive  w900   8.5342s
+  mpi                    naive  w1000  8.6120s
+  mpi                    naive  w1100  8.6402s
+  mpi                    naive  w1200  8.6521s
+  mpi                    naive  w2000  8.7608s
+  mpi                    naive  w2720  8.8199s
+  mpi-gpu                patoh  w100   4.8718s
+  mpi-gpu                patoh  w400   1.9984s
+  mpi-gpu                patoh  w500   1.6570s
+  mpi-gpu                patoh  w600   1.3905s
+  mpi-gpu                patoh  w700   1.2777s
+  mpi-gpu                patoh  w800   1.1279s
+  mpi-gpu                patoh  w900   1.1031s
+  mpi-gpu                patoh  w1000  1.0735s
+  mpi-gpu                patoh  w1100  1.0582s
+  mpi-gpu                patoh  w1200  1.0584s
+  mpi-gpu                patoh  w2000  1.0236s
+  mpi-gpu                patoh  w2720  1.0318s
+  mpi-gpu                naive  w100   4.5350s
+  mpi-gpu                naive  w400   1.8395s
+  mpi-gpu                naive  w500   1.5874s
+  mpi-gpu                naive  w600   1.3733s
+  mpi-gpu                naive  w700   1.2256s
+  mpi-gpu                naive  w800   1.1551s
+  mpi-gpu                naive  w900   1.1421s
+  mpi-gpu                naive  w1000  1.1111s
+  mpi-gpu                naive  w1100  1.1059s
+  mpi-gpu                naive  w1200  1.1090s
+  mpi-gpu                naive  w2000  1.0599s
+  mpi-gpu                naive  w2720  1.0552s
+
+######## Hamrle3 ########
+  cpu                    -      -      19.1250s
+  gpu                    -      -      1.7600s
+  gpu-dp                 -      -      1.3305s
+  gpu-pipelined          -      -      2.7649s
+  hybrid-async           patoh  w100   4.6971s
+  hybrid-async           patoh  w400   2.8629s
+  hybrid-async           patoh  w500   2.7326s
+  hybrid-async           patoh  w600   2.6332s
+  hybrid-async           patoh  w700   2.5817s
+  hybrid-async           patoh  w800   2.5653s
+  hybrid-async           patoh  w900   2.5122s
+  hybrid-async           patoh  w1000  2.4605s
+  hybrid-async           patoh  w1100  2.4673s
+  hybrid-async           patoh  w1200  2.4149s
+  hybrid-async           patoh  w2000  2.2638s
+  hybrid-async           patoh  w2720  2.2221s
+  hybrid-async           naive  w100   5.1824s
+  hybrid-async           naive  w400   3.1886s
+  hybrid-async           naive  w500   2.9667s
+  hybrid-async           naive  w600   2.8278s
+  hybrid-async           naive  w700   2.7247s
+  hybrid-async           naive  w800   2.6501s
+  hybrid-async           naive  w900   2.5928s
+  hybrid-async           naive  w1000  2.5465s
+  hybrid-async           naive  w1100  2.5030s
+  hybrid-async           naive  w1200  2.4674s
+  hybrid-async           naive  w2000  2.3120s
+  hybrid-async           naive  w2720  2.2373s
+  hybrid-async-dp        patoh  w100   4.3061s
+  hybrid-async-dp        patoh  w400   2.4558s
+  hybrid-async-dp        patoh  w500   2.2907s
+  hybrid-async-dp        patoh  w600   2.2031s
+  hybrid-async-dp        patoh  w700   2.1438s
+  hybrid-async-dp        patoh  w800   2.1301s
+  hybrid-async-dp        patoh  w900   2.0793s
+  hybrid-async-dp        patoh  w1000  2.0290s
+  hybrid-async-dp        patoh  w1100  2.0393s
+  hybrid-async-dp        patoh  w1200  1.9893s
+  hybrid-async-dp        patoh  w2000  1.8391s
+  hybrid-async-dp        patoh  w2720  1.7827s
+  hybrid-async-dp        naive  w100   4.6438s
+  hybrid-async-dp        naive  w400   2.7432s
+  hybrid-async-dp        naive  w500   2.5240s
+  hybrid-async-dp        naive  w600   2.3874s
+  hybrid-async-dp        naive  w700   2.2919s
+  hybrid-async-dp        naive  w800   2.2145s
+  hybrid-async-dp        naive  w900   2.1558s
+  hybrid-async-dp        naive  w1000  2.1119s
+  hybrid-async-dp        naive  w1100  2.0649s
+  hybrid-async-dp        naive  w1200  2.0363s
+  hybrid-async-dp        naive  w2000  1.8794s
+  hybrid-async-dp        naive  w2720  1.8082s
+  hybrid-dist-dp         patoh  w100   6.6699s
+  hybrid-dist-dp         patoh  w400   2.3132s
+  hybrid-dist-dp         patoh  w500   1.7460s
+  hybrid-dist-dp         patoh  w600   1.5965s
+  hybrid-dist-dp         patoh  w700   1.5829s
+  hybrid-dist-dp         patoh  w800   1.5782s
+  hybrid-dist-dp         patoh  w900   1.5629s
+  hybrid-dist-dp         patoh  w1000  1.5457s
+  hybrid-dist-dp         patoh  w1100  1.5450s
+  hybrid-dist-dp         patoh  w1200  1.5357s
+  hybrid-dist-dp         patoh  w2000  1.5114s
+  hybrid-dist-dp         patoh  w2720  1.4868s
+  hybrid-dist-dp         naive  w100   8.0653s
+  hybrid-dist-dp         naive  w400   3.9369s
+  hybrid-dist-dp         naive  w500   2.9436s
+  hybrid-dist-dp         naive  w600   2.2130s
+  hybrid-dist-dp         naive  w700   1.6921s
+  hybrid-dist-dp         naive  w800   1.5564s
+  hybrid-dist-dp         naive  w900   1.5335s
+  hybrid-dist-dp         naive  w1000  1.5071s
+  hybrid-dist-dp         naive  w1100  1.5001s
+  hybrid-dist-dp         naive  w1200  1.4913s
+  hybrid-dist-dp         naive  w2000  1.4469s
+  hybrid-dist-dp         naive  w2720  1.4511s
+  hybrid-dist-pipelined  patoh  w100   9.6091s
+  hybrid-dist-pipelined  patoh  w400   3.4109s
+  hybrid-dist-pipelined  patoh  w500   2.6669s
+  hybrid-dist-pipelined  patoh  w600   2.2732s
+  hybrid-dist-pipelined  patoh  w700   2.2558s
+  hybrid-dist-pipelined  patoh  w800   2.2468s
+  hybrid-dist-pipelined  patoh  w900   2.2391s
+  hybrid-dist-pipelined  patoh  w1000  2.2164s
+  hybrid-dist-pipelined  patoh  w1100  2.2175s
+  hybrid-dist-pipelined  patoh  w1200  2.2004s
+  hybrid-dist-pipelined  patoh  w2000  2.1752s
+  hybrid-dist-pipelined  patoh  w2720  2.1525s
+  hybrid-dist-pipelined  naive  w100   11.4733s
+  hybrid-dist-pipelined  naive  w400   6.0109s
+  hybrid-dist-pipelined  naive  w500   4.6135s
+  hybrid-dist-pipelined  naive  w600   3.6406s
+  hybrid-dist-pipelined  naive  w700   2.8303s
+  hybrid-dist-pipelined  naive  w800   2.3256s
+  hybrid-dist-pipelined  naive  w900   2.1651s
+  hybrid-dist-pipelined  naive  w1000  2.1481s
+  hybrid-dist-pipelined  naive  w1100  2.1438s
+  hybrid-dist-pipelined  naive  w1200  2.1295s
+  hybrid-dist-pipelined  naive  w2000  2.1053s
+  hybrid-dist-pipelined  naive  w2720  2.1020s
+  mpi                    patoh  w100   18.9417s
+  mpi                    patoh  w400   20.8776s
+  mpi                    patoh  w500   20.8751s
+  mpi                    patoh  w600   20.7256s
+  mpi                    patoh  w700   20.8638s
+  mpi                    patoh  w800   20.7354s
+  mpi                    patoh  w900   20.8009s
+  mpi                    patoh  w1000  20.7491s
+  mpi                    patoh  w1100  20.5918s
+  mpi                    patoh  w1200  20.7216s
+  mpi                    patoh  w2000  20.4989s
+  mpi                    patoh  w2720  20.5074s
+  mpi                    naive  w100   19.5975s
+  mpi                    naive  w400   20.0893s
+  mpi                    naive  w500   20.3374s
+  mpi                    naive  w600   20.2435s
+  mpi                    naive  w700   20.2429s
+  mpi                    naive  w800   20.2643s
+  mpi                    naive  w900   20.3556s
+  mpi                    naive  w1000  20.2055s
+  mpi                    naive  w1100  20.2663s
+  mpi                    naive  w1200  20.2405s
+  mpi                    naive  w2000  20.0809s
+  mpi                    naive  w2720  20.1666s
+  mpi-gpu                patoh  w100   13.6815s
+  mpi-gpu                patoh  w400   6.5949s
+  mpi-gpu                patoh  w500   5.6080s
+  mpi-gpu                patoh  w600   4.8851s
+  mpi-gpu                patoh  w700   4.5327s
+  mpi-gpu                patoh  w800   4.4003s
+  mpi-gpu                patoh  w900   4.1876s
+  mpi-gpu                patoh  w1000  3.9941s
+  mpi-gpu                patoh  w1100  4.0250s
+  mpi-gpu                patoh  w1200  3.9491s
+  mpi-gpu                patoh  w2000  3.7587s
+  mpi-gpu                patoh  w2720  3.7434s
+  mpi-gpu                naive  w100   15.5538s
+  mpi-gpu                naive  w400   9.3579s
+  mpi-gpu                naive  w500   7.5564s
+  mpi-gpu                naive  w600   6.2586s
+  mpi-gpu                naive  w700   5.5628s
+  mpi-gpu                naive  w800   5.1154s
+  mpi-gpu                naive  w900   4.7261s
+  mpi-gpu                naive  w1000  4.4698s
+  mpi-gpu                naive  w1100  4.2479s
+  mpi-gpu                naive  w1200  4.1042s
+  mpi-gpu                naive  w2000  3.6886s
+  mpi-gpu                naive  w2720  3.6441s
+
+######## rajat30_mc64_5 ########
+  cpu                    -      -      12.2005s
+  gpu                    -      -      1.1360s
+  gpu-dp                 -      -      0.9027s
+  gpu-pipelined          -      -      1.6466s
+  hybrid-async           patoh  w100   2.5921s
+  hybrid-async           patoh  w400   1.5497s
+  hybrid-async           patoh  w500   1.4643s
+  hybrid-async           patoh  w600   1.3943s
+  hybrid-async           patoh  w700   1.3337s
+  hybrid-async           patoh  w800   1.3043s
+  hybrid-async           patoh  w900   1.2659s
+  hybrid-async           patoh  w1000  1.2615s
+  hybrid-async           patoh  w1100  1.2231s
+  hybrid-async           patoh  w1200  1.2103s
+  hybrid-async           patoh  w2000  1.1349s
+  hybrid-async           patoh  w2720  1.1212s
+  hybrid-async           naive  w100   2.6928s
+  hybrid-async           naive  w400   1.5561s
+  hybrid-async           naive  w500   1.4804s
+  hybrid-async           naive  w600   1.4256s
+  hybrid-async           naive  w700   1.3697s
+  hybrid-async           naive  w800   1.3454s
+  hybrid-async           naive  w900   1.3221s
+  hybrid-async           naive  w1000  1.3098s
+  hybrid-async           naive  w1100  1.2708s
+  hybrid-async           naive  w1200  1.2533s
+  hybrid-async           naive  w2000  1.1605s
+  hybrid-async           naive  w2720  1.1341s
+  hybrid-async-dp        patoh  w100   2.2965s
+  hybrid-async-dp        patoh  w400   1.2819s
+  hybrid-async-dp        patoh  w500   1.2040s
+  hybrid-async-dp        patoh  w600   1.1594s
+  hybrid-async-dp        patoh  w700   1.1001s
+  hybrid-async-dp        patoh  w800   1.0671s
+  hybrid-async-dp        patoh  w900   1.0280s
+  hybrid-async-dp        patoh  w1000  1.0238s
+  hybrid-async-dp        patoh  w1100  0.9930s
+  hybrid-async-dp        patoh  w1200  0.9843s
+  hybrid-async-dp        patoh  w2000  0.9070s
+  hybrid-async-dp        patoh  w2720  0.8884s
+  hybrid-async-dp        naive  w100   2.3563s
+  hybrid-async-dp        naive  w400   1.2987s
+  hybrid-async-dp        naive  w500   1.2213s
+  hybrid-async-dp        naive  w600   1.1702s
+  hybrid-async-dp        naive  w700   1.1182s
+  hybrid-async-dp        naive  w800   1.1041s
+  hybrid-async-dp        naive  w900   1.0787s
+  hybrid-async-dp        naive  w1000  1.0607s
+  hybrid-async-dp        naive  w1100  1.0365s
+  hybrid-async-dp        naive  w1200  1.0190s
+  hybrid-async-dp        naive  w2000  0.9340s
+  hybrid-async-dp        naive  w2720  0.9064s
+  hybrid-dist-dp         patoh  w100   3.1003s
+  hybrid-dist-dp         patoh  w400   0.9602s
+  hybrid-dist-dp         patoh  w500   0.9374s
+  hybrid-dist-dp         patoh  w600   0.9450s
+  hybrid-dist-dp         patoh  w700   0.9261s
+  hybrid-dist-dp         patoh  w800   0.9281s
+  hybrid-dist-dp         patoh  w900   0.9190s
+  hybrid-dist-dp         patoh  w1000  0.9317s
+  hybrid-dist-dp         patoh  w1100  0.9370s
+  hybrid-dist-dp         patoh  w1200  0.9283s
+  hybrid-dist-dp         patoh  w2000  0.9410s
+  hybrid-dist-dp         patoh  w2720  0.9596s
+  hybrid-dist-dp         naive  w100   3.1338s
+  hybrid-dist-dp         naive  w400   0.9472s
+  hybrid-dist-dp         naive  w500   0.9357s
+  hybrid-dist-dp         naive  w600   0.9281s
+  hybrid-dist-dp         naive  w700   0.9343s
+  hybrid-dist-dp         naive  w800   0.9369s
+  hybrid-dist-dp         naive  w900   0.9352s
+  hybrid-dist-dp         naive  w1000  0.9372s
+  hybrid-dist-dp         naive  w1100  0.9378s
+  hybrid-dist-dp         naive  w1200  0.9395s
+  hybrid-dist-dp         naive  w2000  0.9466s
+  hybrid-dist-dp         naive  w2720  0.9426s
+  hybrid-dist-pipelined  patoh  w100   4.3757s
+  hybrid-dist-pipelined  patoh  w400   1.2538s
+  hybrid-dist-pipelined  patoh  w500   1.2464s
+  hybrid-dist-pipelined  patoh  w600   1.2581s
+  hybrid-dist-pipelined  patoh  w700   1.2620s
+  hybrid-dist-pipelined  patoh  w800   1.2684s
+  hybrid-dist-pipelined  patoh  w900   1.2729s
+  hybrid-dist-pipelined  patoh  w1000  1.2754s
+  hybrid-dist-pipelined  patoh  w1100  1.2678s
+  hybrid-dist-pipelined  patoh  w1200  1.2719s
+  hybrid-dist-pipelined  patoh  w2000  1.2900s
+  hybrid-dist-pipelined  patoh  w2720  1.2964s
+  hybrid-dist-pipelined  naive  w100   4.5009s
+  hybrid-dist-pipelined  naive  w400   1.2487s
+  hybrid-dist-pipelined  naive  w500   1.2528s
+  hybrid-dist-pipelined  naive  w600   1.2541s
+  hybrid-dist-pipelined  naive  w700   1.2526s
+  hybrid-dist-pipelined  naive  w800   1.2612s
+  hybrid-dist-pipelined  naive  w900   1.2631s
+  hybrid-dist-pipelined  naive  w1000  1.2749s
+  hybrid-dist-pipelined  naive  w1100  1.2784s
+  hybrid-dist-pipelined  naive  w1200  1.2726s
+  hybrid-dist-pipelined  naive  w2000  1.2843s
+  hybrid-dist-pipelined  naive  w2720  1.2917s
+  mpi                    patoh  w100   9.1255s
+  mpi                    patoh  w400   11.2480s
+  mpi                    patoh  w500   11.3954s
+  mpi                    patoh  w600   11.5849s
+  mpi                    patoh  w700   11.7368s
+  mpi                    patoh  w800   11.8498s
+  mpi                    patoh  w900   11.9412s
+  mpi                    patoh  w1000  12.0254s
+  mpi                    patoh  w1100  11.9959s
+  mpi                    patoh  w1200  12.3685s
+  mpi                    patoh  w2000  12.4762s
+  mpi                    patoh  w2720  12.8681s
+  mpi                    naive  w100   9.3187s
+  mpi                    naive  w400   10.9681s
+  mpi                    naive  w500   11.3200s
+  mpi                    naive  w600   11.4817s
+  mpi                    naive  w700   11.6626s
+  mpi                    naive  w800   11.8905s
+  mpi                    naive  w900   12.1412s
+  mpi                    naive  w1000  12.1580s
+  mpi                    naive  w1100  12.1569s
+  mpi                    naive  w1200  12.3027s
+  mpi                    naive  w2000  12.7967s
+  mpi                    naive  w2720  12.8801s
+  mpi-gpu                patoh  w100   7.5044s
+  mpi-gpu                patoh  w400   4.4931s
+  mpi-gpu                patoh  w500   4.2766s
+  mpi-gpu                patoh  w600   4.2961s
+  mpi-gpu                patoh  w700   4.2180s
+  mpi-gpu                patoh  w800   3.5438s
+  mpi-gpu                patoh  w900   4.0725s
+  mpi-gpu                patoh  w1000  4.0670s
+  mpi-gpu                patoh  w1100  4.0932s
+  mpi-gpu                patoh  w1200  4.1257s
+  mpi-gpu                patoh  w2000  4.3517s
+  mpi-gpu                patoh  w2720  4.4894s
+  mpi-gpu                naive  w100   7.6731s
+  mpi-gpu                naive  w400   4.3884s
+  mpi-gpu                naive  w500   4.2602s
+  mpi-gpu                naive  w600   4.2075s
+  mpi-gpu                naive  w700   4.1479s
+  mpi-gpu                naive  w800   4.3762s
+  mpi-gpu                naive  w900   4.3368s
+  mpi-gpu                naive  w1000  4.2840s
+  mpi-gpu                naive  w1100  4.2750s
+  mpi-gpu                naive  w1200  4.2771s
+  mpi-gpu                naive  w2000  4.3134s
+  mpi-gpu                naive  w2720  4.4071s
+
+######## circuit5M_dc ########
+  cpu                    -      -      11.5285s
+  gpu                    -      -      0.8742s
+  gpu-dp                 -      -      0.6829s
+  gpu-pipelined          -      -      1.3574s
+  hybrid-async           naive  w100   2.8508s
+  hybrid-async           naive  w400   1.6008s
+  hybrid-async           naive  w500   1.4421s
+  hybrid-async           naive  w600   1.3455s
+  hybrid-async           naive  w700   1.2662s
+  hybrid-async           naive  w800   1.2245s
+  hybrid-async           naive  w900   1.1733s
+  hybrid-async           naive  w1000  1.1453s
+  hybrid-async           naive  w1100  1.1171s
+  hybrid-async           naive  w1200  1.1035s
+  hybrid-async           naive  w2000  1.0388s
+  hybrid-async           naive  w2720  1.0164s
+  hybrid-async-dp        naive  w100   2.6689s
+  hybrid-async-dp        naive  w400   1.3953s
+  hybrid-async-dp        naive  w500   1.2370s
+  hybrid-async-dp        naive  w600   1.1357s
+  hybrid-async-dp        naive  w700   1.0705s
+  hybrid-async-dp        naive  w800   1.0314s
+  hybrid-async-dp        naive  w900   0.9700s
+  hybrid-async-dp        naive  w1000  0.9610s
+  hybrid-async-dp        naive  w1100  0.9302s
+  hybrid-async-dp        naive  w1200  0.9148s
+  hybrid-async-dp        naive  w2000  0.8430s
+  hybrid-async-dp        naive  w2720  0.8126s
+  hybrid-dist-dp         naive  w100   4.4417s
+  hybrid-dist-dp         naive  w400   1.5090s
+  hybrid-dist-dp         naive  w500   1.1930s
+  hybrid-dist-dp         naive  w600   1.0011s
+  hybrid-dist-dp         naive  w700   0.8509s
+  hybrid-dist-dp         naive  w800   0.7708s
+  hybrid-dist-dp         naive  w900   0.7298s
+  hybrid-dist-dp         naive  w1000  0.7215s
+  hybrid-dist-dp         naive  w1100  0.7145s
+  hybrid-dist-dp         naive  w1200  0.7134s
+  hybrid-dist-dp         naive  w2000  0.7242s
+  hybrid-dist-dp         naive  w2720  0.7303s
+  hybrid-dist-pipelined  naive  w100   6.2420s
+  hybrid-dist-pipelined  naive  w400   2.2468s
+  hybrid-dist-pipelined  naive  w500   1.7983s
+  hybrid-dist-pipelined  naive  w600   1.4904s
+  hybrid-dist-pipelined  naive  w700   1.2920s
+  hybrid-dist-pipelined  naive  w800   1.1649s
+  hybrid-dist-pipelined  naive  w900   1.0834s
+  hybrid-dist-pipelined  naive  w1000  1.0341s
+  hybrid-dist-pipelined  naive  w1100  1.0231s
+  hybrid-dist-pipelined  naive  w1200  1.0220s
+  hybrid-dist-pipelined  naive  w2000  1.0356s
+  hybrid-dist-pipelined  naive  w2720  1.0455s
+  mpi                    naive  w100   11.9022s
+  mpi                    naive  w400   12.2331s
+  mpi                    naive  w500   12.3018s
+  mpi                    naive  w600   12.3110s
+  mpi                    naive  w700   12.3222s
+  mpi                    naive  w800   12.3118s
+  mpi                    naive  w900   12.3040s
+  mpi                    naive  w1000  12.3250s
+  mpi                    naive  w1100  12.2849s
+  mpi                    naive  w1200  12.3053s
+  mpi                    naive  w2000  12.2827s
+  mpi                    naive  w2720  12.2769s
+  mpi-gpu                naive  w100   8.7606s
+  mpi-gpu                naive  w400   3.7719s
+  mpi-gpu                naive  w500   3.1281s
+  mpi-gpu                naive  w600   2.8026s
+  mpi-gpu                naive  w700   2.5896s
+  mpi-gpu                naive  w800   2.4895s
+  mpi-gpu                naive  w900   2.3352s
+  mpi-gpu                naive  w1000  2.1899s
+  mpi-gpu                naive  w1100  2.1094s
+  mpi-gpu                naive  w1200  2.0402s
+  mpi-gpu                naive  w2000  1.8429s
+  mpi-gpu                naive  w2720  1.8249s
+
+######## circuit5M ########
+  cpu                    -      -      24.5980s
+  gpu                    -      -      1.7859s
+  gpu-dp                 -      -      1.4890s
+  gpu-pipelined          -      -      2.6060s
+  hybrid-async           naive  w100   7.1377s
+  hybrid-async           naive  w400   3.6858s
+  hybrid-async           naive  w500   3.2990s
+  hybrid-async           naive  w600   3.0144s
+  hybrid-async           naive  w700   2.8017s
+  hybrid-async           naive  w800   2.6392s
+  hybrid-async           naive  w900   2.5078s
+  hybrid-async           naive  w1000  2.4004s
+  hybrid-async           naive  w1100  2.3213s
+  hybrid-async           naive  w1200  2.2398s
+  hybrid-async           naive  w2000  1.9121s
+  hybrid-async           naive  w2720  1.7910s
+  hybrid-async-dp        naive  w100   6.7951s
+  hybrid-async-dp        naive  w400   3.4021s
+  hybrid-async-dp        naive  w500   2.9993s
+  hybrid-async-dp        naive  w600   2.7118s
+  hybrid-async-dp        naive  w700   2.5029s
+  hybrid-async-dp        naive  w800   2.3396s
+  hybrid-async-dp        naive  w900   2.2038s
+  hybrid-async-dp        naive  w1000  2.1094s
+  hybrid-async-dp        naive  w1100  2.0119s
+  hybrid-async-dp        naive  w1200  1.9341s
+  hybrid-async-dp        naive  w2000  1.5982s
+  hybrid-async-dp        naive  w2720  1.4912s
+  hybrid-dist-dp         naive  w100   11.3767s
+  hybrid-dist-dp         naive  w400   4.7992s
+  hybrid-dist-dp         naive  w500   3.8983s
+  hybrid-dist-dp         naive  w600   3.2634s
+  hybrid-dist-dp         naive  w700   2.7200s
+  hybrid-dist-dp         naive  w800   2.3810s
+  hybrid-dist-dp         naive  w900   2.0745s
+  hybrid-dist-dp         naive  w1000  1.8757s
+  hybrid-dist-dp         naive  w1100  1.7724s
+  hybrid-dist-dp         naive  w1200  1.7071s
+  hybrid-dist-dp         naive  w2000  1.5317s
+  hybrid-dist-dp         naive  w2720  1.5178s
+  hybrid-dist-pipelined  naive  w100   15.9563s
+  hybrid-dist-pipelined  naive  w400   6.7618s
+  hybrid-dist-pipelined  naive  w500   5.5771s
+  hybrid-dist-pipelined  naive  w600   4.6396s
+  hybrid-dist-pipelined  naive  w700   3.9474s
+  hybrid-dist-pipelined  naive  w800   3.4292s
+  hybrid-dist-pipelined  naive  w900   3.0629s
+  hybrid-dist-pipelined  naive  w1000  2.7526s
+  hybrid-dist-pipelined  naive  w1100  2.5684s
+  hybrid-dist-pipelined  naive  w1200  2.3922s
+  hybrid-dist-pipelined  naive  w2000  2.0741s
+  hybrid-dist-pipelined  naive  w2720  2.0589s
+  mpi                    naive  w100   28.3535s
+  mpi                    naive  w400   26.0773s
+  mpi                    naive  w500   26.1155s
+  mpi                    naive  w600   26.1623s
+  mpi                    naive  w700   26.3633s
+  mpi                    naive  w800   26.2203s
+  mpi                    naive  w900   26.2585s
+  mpi                    naive  w1000  26.2244s
+  mpi                    naive  w1100  26.4021s
+  mpi                    naive  w1200  26.3576s
+  mpi                    naive  w2000  26.5487s
+  mpi                    naive  w2720  26.5616s
+  mpi-gpu                naive  w100   25.0146s
+  mpi-gpu                naive  w400   12.2448s
+  mpi-gpu                naive  w500   11.3427s
+  mpi-gpu                naive  w600   11.0613s
+  mpi-gpu                naive  w700   10.7328s
+  mpi-gpu                naive  w800   10.5468s
+  mpi-gpu                naive  w900   10.4518s
+  mpi-gpu                naive  w1000  10.2760s
+  mpi-gpu                naive  w1100  10.0594s
+  mpi-gpu                naive  w1200  9.9333s
+  mpi-gpu                naive  w2000  9.0098s
+  mpi-gpu                naive  w2720  8.6755s
+
+######## cage15 ########
+  cpu                    -      -      30.3897s
+  gpu                    -      -      2.2802s
+  gpu-dp                 -      -      1.9932s
+  gpu-pipelined          -      -      3.1140s
+  hybrid-async           naive  w100   8.6416s
+  hybrid-async           naive  w400   4.1879s
+  hybrid-async           naive  w500   3.6631s
+  hybrid-async           naive  w600   3.2879s
+  hybrid-async           naive  w700   3.0203s
+  hybrid-async           naive  w800   2.8063s
+  hybrid-async           naive  w900   2.6501s
+  hybrid-async           naive  w1000  2.5177s
+  hybrid-async           naive  w1100  2.4140s
+  hybrid-async           naive  w1200  2.3321s
+  hybrid-async           naive  w2000  2.2118s
+  hybrid-async           naive  w2720  2.2343s
+  hybrid-async-dp        naive  w100   8.4242s
+  hybrid-async-dp        naive  w400   3.8873s
+  hybrid-async-dp        naive  w500   3.4031s
+  hybrid-async-dp        naive  w600   3.0336s
+  hybrid-async-dp        naive  w700   2.7486s
+  hybrid-async-dp        naive  w800   2.5415s
+  hybrid-async-dp        naive  w900   2.3701s
+  hybrid-async-dp        naive  w1000  2.2371s
+  hybrid-async-dp        naive  w1100  2.1441s
+  hybrid-async-dp        naive  w1200  2.0517s
+  hybrid-async-dp        naive  w2000  1.9373s
+  hybrid-async-dp        naive  w2720  1.9556s
+  hybrid-dist-dp         naive  w100   10.0833s
+  hybrid-dist-dp         naive  w400   3.8472s
+  hybrid-dist-dp         naive  w500   3.1321s
+  hybrid-dist-dp         naive  w600   2.6342s
+  hybrid-dist-dp         naive  w700   2.2629s
+  hybrid-dist-dp         naive  w800   2.0619s
+  hybrid-dist-dp         naive  w900   1.9761s
+  hybrid-dist-dp         naive  w1000  1.9985s
+  hybrid-dist-dp         naive  w1100  2.0139s
+  hybrid-dist-dp         naive  w1200  2.0260s
+  hybrid-dist-dp         naive  w2000  2.0965s
+  hybrid-dist-dp         naive  w2720  2.1012s
+  hybrid-dist-pipelined  naive  w100   12.6829s
+  hybrid-dist-pipelined  naive  w400   4.7632s
+  hybrid-dist-pipelined  naive  w500   4.0268s
+  hybrid-dist-pipelined  naive  w600   3.3864s
+  hybrid-dist-pipelined  naive  w700   2.9547s
+  hybrid-dist-pipelined  naive  w800   2.7223s
+  hybrid-dist-pipelined  naive  w900   2.6142s
+  hybrid-dist-pipelined  naive  w1000  2.5769s
+  hybrid-dist-pipelined  naive  w1100  2.6007s
+  hybrid-dist-pipelined  naive  w1200  2.6193s
+  hybrid-dist-pipelined  naive  w2000  2.7049s
+  hybrid-dist-pipelined  naive  w2720  2.7151s
+  mpi                    naive  w100   26.2660s
+  mpi                    naive  w400   30.8748s
+  mpi                    naive  w500   31.6099s
+  mpi                    naive  w600   31.6998s
+  mpi                    naive  w700   31.9709s
+  mpi                    naive  w800   32.1032s
+  mpi                    naive  w900   32.3379s
+  mpi                    naive  w1000  32.5923s
+  mpi                    naive  w1100  32.7465s
+  mpi                    naive  w1200  32.8528s
+  mpi                    naive  w2000  33.3354s
+  mpi                    naive  w2720  33.3759s
+  mpi-gpu                naive  w100   17.7304s
+  mpi-gpu                naive  w400   7.3238s
+  mpi-gpu                naive  w500   6.4318s
+  mpi-gpu                naive  w600   5.4262s
+  mpi-gpu                naive  w700   4.8163s
+  mpi-gpu                naive  w800   4.3539s
+  mpi-gpu                naive  w900   4.1879s
+  mpi-gpu                naive  w1000  4.2191s
+  mpi-gpu                naive  w1100  4.2449s
+  mpi-gpu                naive  w1200  4.2610s
+  mpi-gpu                naive  w2000  4.1658s
+  mpi-gpu                naive  w2720  3.9794s
+
+######## ML_Geer ########
+  cpu                    -      -      21.3577s
+  gpu                    -      -      1.8841s
+  gpu-dp                 -      -      1.7910s
+  gpu-pipelined          -      -      2.2902s
+  hybrid-async           patoh  w100   7.1832s
+  hybrid-async           patoh  w400   3.0263s
+  hybrid-async           patoh  w500   2.5460s
+  hybrid-async           patoh  w600   2.2326s
+  hybrid-async           patoh  w700   1.8462s
+  hybrid-async           patoh  w800   1.8094s
+  hybrid-async           patoh  w900   1.7230s
+  hybrid-async           patoh  w1000  1.7365s
+  hybrid-async           patoh  w1100  1.7469s
+  hybrid-async           patoh  w1200  1.7639s
+  hybrid-async           patoh  w2000  1.8087s
+  hybrid-async           patoh  w2720  1.8263s
+  hybrid-async           naive  w100   7.1965s
+  hybrid-async           naive  w400   3.0744s
+  hybrid-async           naive  w500   2.5945s
+  hybrid-async           naive  w600   2.2271s
+  hybrid-async           naive  w700   1.9891s
+  hybrid-async           naive  w800   1.8015s
+  hybrid-async           naive  w900   1.7206s
+  hybrid-async           naive  w1000  1.7373s
+  hybrid-async           naive  w1100  1.7505s
+  hybrid-async           naive  w1200  1.7447s
+  hybrid-async           naive  w2000  1.7896s
+  hybrid-async           naive  w2720  1.8096s
+  hybrid-async-dp        patoh  w100   7.1272s
+  hybrid-async-dp        patoh  w400   2.9555s
+  hybrid-async-dp        patoh  w500   2.4774s
+  hybrid-async-dp        patoh  w600   2.1683s
+  hybrid-async-dp        patoh  w700   1.7949s
+  hybrid-async-dp        patoh  w800   1.7057s
+  hybrid-async-dp        patoh  w900   1.6246s
+  hybrid-async-dp        patoh  w1000  1.6365s
+  hybrid-async-dp        patoh  w1100  1.6555s
+  hybrid-async-dp        patoh  w1200  1.6811s
+  hybrid-async-dp        patoh  w2000  1.7239s
+  hybrid-async-dp        patoh  w2720  1.7381s
+  hybrid-async-dp        naive  w100   7.2353s
+  hybrid-async-dp        naive  w400   2.9428s
+  hybrid-async-dp        naive  w500   2.4816s
+  hybrid-async-dp        naive  w600   2.1416s
+  hybrid-async-dp        naive  w700   1.8984s
+  hybrid-async-dp        naive  w800   1.7181s
+  hybrid-async-dp        naive  w900   1.6321s
+  hybrid-async-dp        naive  w1000  1.6408s
+  hybrid-async-dp        naive  w1100  1.6573s
+  hybrid-async-dp        naive  w1200  1.6753s
+  hybrid-async-dp        naive  w2000  1.7121s
+  hybrid-async-dp        naive  w2720  1.7255s
+  hybrid-dist-dp         patoh  w100   7.7365s
+  hybrid-dist-dp         patoh  w400   2.7573s
+  hybrid-dist-dp         patoh  w500   2.2889s
+  hybrid-dist-dp         patoh  w600   1.9861s
+  hybrid-dist-dp         patoh  w700   1.6499s
+  hybrid-dist-dp         patoh  w800   1.6453s
+  hybrid-dist-dp         patoh  w900   1.6713s
+  hybrid-dist-dp         patoh  w1000  1.6649s
+  hybrid-dist-dp         patoh  w1100  1.6731s
+  hybrid-dist-dp         patoh  w1200  1.6907s
+  hybrid-dist-dp         patoh  w2000  1.7415s
+  hybrid-dist-dp         patoh  w2720  1.7667s
+  hybrid-dist-dp         naive  w100   7.7747s
+  hybrid-dist-dp         naive  w400   2.7595s
+  hybrid-dist-dp         naive  w500   2.2834s
+  hybrid-dist-dp         naive  w600   1.9516s
+  hybrid-dist-dp         naive  w700   1.6968s
+  hybrid-dist-dp         naive  w800   1.6312s
+  hybrid-dist-dp         naive  w900   1.6433s
+  hybrid-dist-dp         naive  w1000  1.6697s
+  hybrid-dist-dp         naive  w1100  1.6707s
+  hybrid-dist-dp         naive  w1200  1.6846s
+  hybrid-dist-dp         naive  w2000  1.7260s
+  hybrid-dist-dp         naive  w2720  1.7513s
+  hybrid-dist-pipelined  patoh  w100   9.1878s
+  hybrid-dist-pipelined  patoh  w400   3.4565s
+  hybrid-dist-pipelined  patoh  w500   2.8546s
+  hybrid-dist-pipelined  patoh  w600   2.3651s
+  hybrid-dist-pipelined  patoh  w700   1.9793s
+  hybrid-dist-pipelined  patoh  w800   1.9628s
+  hybrid-dist-pipelined  patoh  w900   1.9780s
+  hybrid-dist-pipelined  patoh  w1000  1.9923s
+  hybrid-dist-pipelined  patoh  w1100  2.0139s
+  hybrid-dist-pipelined  patoh  w1200  2.0209s
+  hybrid-dist-pipelined  patoh  w2000  2.0852s
+  hybrid-dist-pipelined  patoh  w2720  2.1093s
+  hybrid-dist-pipelined  naive  w100   9.1920s
+  hybrid-dist-pipelined  naive  w400   3.4257s
+  hybrid-dist-pipelined  naive  w500   2.6997s
+  hybrid-dist-pipelined  naive  w600   2.3311s
+  hybrid-dist-pipelined  naive  w700   2.0957s
+  hybrid-dist-pipelined  naive  w800   1.9692s
+  hybrid-dist-pipelined  naive  w900   1.9804s
+  hybrid-dist-pipelined  naive  w1000  1.9973s
+  hybrid-dist-pipelined  naive  w1100  2.0046s
+  hybrid-dist-pipelined  naive  w1200  2.0211s
+  hybrid-dist-pipelined  naive  w2000  2.0682s
+  hybrid-dist-pipelined  naive  w2720  2.0889s
+  mpi                    patoh  w100   15.5262s
+  mpi                    patoh  w400   20.7225s
+  mpi                    patoh  w500   21.3196s
+  mpi                    patoh  w600   21.6567s
+  mpi                    patoh  w700   22.1027s
+  mpi                    patoh  w800   22.2347s
+  mpi                    patoh  w900   22.4960s
+  mpi                    patoh  w1000  22.5889s
+  mpi                    patoh  w1100  22.7071s
+  mpi                    patoh  w1200  22.9031s
+  mpi                    patoh  w2000  23.4665s
+  mpi                    patoh  w2720  23.6370s
+  mpi                    naive  w100   15.7255s
+  mpi                    naive  w400   20.7225s
+  mpi                    naive  w500   21.3782s
+  mpi                    naive  w600   21.7257s
+  mpi                    naive  w700   22.0046s
+  mpi                    naive  w800   22.2172s
+  mpi                    naive  w900   22.4770s
+  mpi                    naive  w1000  22.5433s
+  mpi                    naive  w1100  22.5970s
+  mpi                    naive  w1200  22.7549s
+  mpi                    naive  w2000  23.2439s
+  mpi                    naive  w2720  23.4646s
+  mpi-gpu                patoh  w100   11.9944s
+  mpi-gpu                patoh  w400   4.7986s
+  mpi-gpu                patoh  w500   4.0171s
+  mpi-gpu                patoh  w600   3.5068s
+  mpi-gpu                patoh  w700   2.8558s
+  mpi-gpu                patoh  w800   2.7306s
+  mpi-gpu                patoh  w900   2.3999s
+  mpi-gpu                patoh  w1000  2.3116s
+  mpi-gpu                patoh  w1100  2.0958s
+  mpi-gpu                patoh  w1200  1.9093s
+  mpi-gpu                patoh  w2000  1.9516s
+  mpi-gpu                patoh  w2720  1.9465s
+  mpi-gpu                naive  w100   12.0232s
+  mpi-gpu                naive  w400   4.8116s
+  mpi-gpu                naive  w500   4.0238s
+  mpi-gpu                naive  w600   3.4653s
+  mpi-gpu                naive  w700   3.0637s
+  mpi-gpu                naive  w800   2.7265s
+  mpi-gpu                naive  w900   2.4784s
+  mpi-gpu                naive  w1000  2.4725s
+  mpi-gpu                naive  w1100  2.1758s
+  mpi-gpu                naive  w1200  1.9837s
+  mpi-gpu                naive  w2000  1.9408s
+  mpi-gpu                naive  w2720  1.9599s
+
+######## nlpkkt120 ########
+  cpu                    -      -      FAIL(parsefail(rc=1))
+  gpu                    -      -      FAIL(parsefail(rc=1))
+  gpu-dp                 -      -      FAIL(parsefail(rc=1))
+  gpu-pipelined          -      -      FAIL(parsefail(rc=1))
+  hybrid-async           naive  w100   FAIL(parsefail(rc=1))
+  hybrid-async           naive  w400   FAIL(parsefail(rc=1))
+  hybrid-async           naive  w500   FAIL(parsefail(rc=1))
+  hybrid-async           naive  w600   FAIL(parsefail(rc=1))
+  hybrid-async           naive  w700   FAIL(parsefail(rc=1))
+  hybrid-async           naive  w800   FAIL(parsefail(rc=1))
+  hybrid-async           naive  w900   FAIL(parsefail(rc=1))
+  hybrid-async           naive  w1000  FAIL(parsefail(rc=1))
+  hybrid-async           naive  w1100  FAIL(parsefail(rc=1))
+  hybrid-async           naive  w1200  FAIL(parsefail(rc=1))
+  hybrid-async           naive  w2000  FAIL(parsefail(rc=1))
+  hybrid-async           naive  w2720  FAIL(parsefail(rc=1))
+  hybrid-async-dp        naive  w100   FAIL(parsefail(rc=1))
+  hybrid-async-dp        naive  w400   FAIL(parsefail(rc=1))
+  hybrid-async-dp        naive  w500   FAIL(parsefail(rc=1))
+  hybrid-async-dp        naive  w600   FAIL(parsefail(rc=1))
+  hybrid-async-dp        naive  w700   FAIL(parsefail(rc=1))
+  hybrid-async-dp        naive  w800   FAIL(parsefail(rc=1))
+  hybrid-async-dp        naive  w900   FAIL(parsefail(rc=1))
+  hybrid-async-dp        naive  w1000  FAIL(parsefail(rc=1))
+  hybrid-async-dp        naive  w1100  FAIL(parsefail(rc=1))
+  hybrid-async-dp        naive  w1200  FAIL(parsefail(rc=1))
+  hybrid-async-dp        naive  w2000  FAIL(parsefail(rc=1))
+  hybrid-async-dp        naive  w2720  FAIL(parsefail(rc=1))
+  hybrid-dist-dp         naive  w100   FAIL(parsefail(rc=1))
+  hybrid-dist-dp         naive  w400   FAIL(parsefail(rc=1))
+  hybrid-dist-dp         naive  w500   FAIL(parsefail(rc=1))
+  hybrid-dist-dp         naive  w600   FAIL(parsefail(rc=1))
+  hybrid-dist-dp         naive  w700   FAIL(parsefail(rc=1))
+  hybrid-dist-dp         naive  w800   FAIL(parsefail(rc=1))
+  hybrid-dist-dp         naive  w900   FAIL(parsefail(rc=1))
+  hybrid-dist-dp         naive  w1000  FAIL(parsefail(rc=1))
+  hybrid-dist-dp         naive  w1100  FAIL(parsefail(rc=1))
+  hybrid-dist-dp         naive  w1200  FAIL(parsefail(rc=1))
+  hybrid-dist-dp         naive  w2000  FAIL(parsefail(rc=1))
+  hybrid-dist-dp         naive  w2720  FAIL(parsefail(rc=1))
+  hybrid-dist-pipelined  naive  w100   FAIL(parsefail(rc=1))
+  hybrid-dist-pipelined  naive  w400   FAIL(parsefail(rc=1))
+  hybrid-dist-pipelined  naive  w500   FAIL(parsefail(rc=1))
+  hybrid-dist-pipelined  naive  w600   FAIL(parsefail(rc=1))
+  hybrid-dist-pipelined  naive  w700   FAIL(parsefail(rc=1))
+  hybrid-dist-pipelined  naive  w800   FAIL(parsefail(rc=1))
+  hybrid-dist-pipelined  naive  w900   FAIL(parsefail(rc=1))
+  hybrid-dist-pipelined  naive  w1000  FAIL(parsefail(rc=1))
+  hybrid-dist-pipelined  naive  w1100  FAIL(parsefail(rc=1))
+  hybrid-dist-pipelined  naive  w1200  FAIL(parsefail(rc=1))
+  hybrid-dist-pipelined  naive  w2000  FAIL(parsefail(rc=1))
+  hybrid-dist-pipelined  naive  w2720  FAIL(parsefail(rc=1))
+  mpi                    naive  w100   FAIL(parsefail(rc=1))
+  mpi                    naive  w400   FAIL(parsefail(rc=1))
+  mpi                    naive  w500   FAIL(parsefail(rc=1))
+  mpi                    naive  w600   FAIL(parsefail(rc=1))
+  mpi                    naive  w700   FAIL(parsefail(rc=1))
+  mpi                    naive  w800   FAIL(parsefail(rc=1))
+  mpi                    naive  w900   FAIL(parsefail(rc=1))
+  mpi                    naive  w1000  FAIL(parsefail(rc=1))
+  mpi                    naive  w1100  FAIL(parsefail(rc=1))
+  mpi                    naive  w1200  FAIL(parsefail(rc=1))
+  mpi                    naive  w2000  FAIL(parsefail(rc=1))
+  mpi                    naive  w2720  FAIL(parsefail(rc=1))
+  mpi-gpu                naive  w100   FAIL(parsefail(rc=1))
+  mpi-gpu                naive  w400   FAIL(parsefail(rc=1))
+  mpi-gpu                naive  w500   FAIL(parsefail(rc=1))
+  mpi-gpu                naive  w600   FAIL(parsefail(rc=1))
+  mpi-gpu                naive  w700   FAIL(parsefail(rc=1))
+  mpi-gpu                naive  w800   FAIL(parsefail(rc=1))
+  mpi-gpu                naive  w900   FAIL(parsefail(rc=1))
+  mpi-gpu                naive  w1000  FAIL(parsefail(rc=1))
+  mpi-gpu                naive  w1100  FAIL(parsefail(rc=1))
+  mpi-gpu                naive  w1200  FAIL(parsefail(rc=1))
+  mpi-gpu                naive  w2000  FAIL(parsefail(rc=1))
+  mpi-gpu                naive  w2720  FAIL(parsefail(rc=1))
+
+######## vas_stokes_1M ########
+  cpu                    -      -      8.6096s
+  gpu                    -      -      0.7302s
+  gpu-dp                 -      -      0.6558s
+  gpu-pipelined          -      -      0.9384s
+  hybrid-async           patoh  w100   2.5120s
+  hybrid-async           patoh  w400   1.0754s
+  hybrid-async           patoh  w500   0.9094s
+  hybrid-async           patoh  w600   0.7675s
+  hybrid-async           patoh  w700   0.6728s
+  hybrid-async           patoh  w800   0.6717s
+  hybrid-async           patoh  w900   0.6830s
+  hybrid-async           patoh  w1000  0.6880s
+  hybrid-async           patoh  w1100  0.6855s
+  hybrid-async           patoh  w1200  0.6882s
+  hybrid-async           patoh  w2000  0.7065s
+  hybrid-async           patoh  w2720  0.7080s
+  hybrid-async           naive  w100   2.4786s
+  hybrid-async           naive  w400   1.0573s
+  hybrid-async           naive  w500   0.8945s
+  hybrid-async           naive  w600   0.7852s
+  hybrid-async           naive  w700   0.7032s
+  hybrid-async           naive  w800   0.6751s
+  hybrid-async           naive  w900   0.6822s
+  hybrid-async           naive  w1000  0.6827s
+  hybrid-async           naive  w1100  0.6881s
+  hybrid-async           naive  w1200  0.6875s
+  hybrid-async           naive  w2000  0.7004s
+  hybrid-async           naive  w2720  0.7088s
+  hybrid-async-dp        patoh  w100   2.4251s
+  hybrid-async-dp        patoh  w400   0.9997s
+  hybrid-async-dp        patoh  w500   0.8325s
+  hybrid-async-dp        patoh  w600   0.7127s
+  hybrid-async-dp        patoh  w700   0.6053s
+  hybrid-async-dp        patoh  w800   0.6037s
+  hybrid-async-dp        patoh  w900   0.6066s
+  hybrid-async-dp        patoh  w1000  0.6132s
+  hybrid-async-dp        patoh  w1100  0.6213s
+  hybrid-async-dp        patoh  w1200  0.6206s
+  hybrid-async-dp        patoh  w2000  0.6371s
+  hybrid-async-dp        patoh  w2720  0.6390s
+  hybrid-async-dp        naive  w100   2.3911s
+  hybrid-async-dp        naive  w400   0.9855s
+  hybrid-async-dp        naive  w500   0.8314s
+  hybrid-async-dp        naive  w600   0.7167s
+  hybrid-async-dp        naive  w700   0.6325s
+  hybrid-async-dp        naive  w800   0.6069s
+  hybrid-async-dp        naive  w900   0.6111s
+  hybrid-async-dp        naive  w1000  0.6108s
+  hybrid-async-dp        naive  w1100  0.6251s
+  hybrid-async-dp        naive  w1200  0.6201s
+  hybrid-async-dp        naive  w2000  0.6311s
+  hybrid-async-dp        naive  w2720  0.6361s
+  hybrid-dist-dp         patoh  w100   2.6085s
+  hybrid-dist-dp         patoh  w400   0.8682s
+  hybrid-dist-dp         patoh  w500   0.7017s
+  hybrid-dist-dp         patoh  w600   0.6099s
+  hybrid-dist-dp         patoh  w700   0.6147s
+  hybrid-dist-dp         patoh  w800   0.6233s
+  hybrid-dist-dp         patoh  w900   0.6256s
+  hybrid-dist-dp         patoh  w1000  0.6326s
+  hybrid-dist-dp         patoh  w1100  0.6328s
+  hybrid-dist-dp         patoh  w1200  0.6378s
+  hybrid-dist-dp         patoh  w2000  0.6584s
+  hybrid-dist-dp         patoh  w2720  0.6597s
+  hybrid-dist-dp         naive  w100   2.5025s
+  hybrid-dist-dp         naive  w400   0.9016s
+  hybrid-dist-dp         naive  w500   0.7409s
+  hybrid-dist-dp         naive  w600   0.6414s
+  hybrid-dist-dp         naive  w700   0.6446s
+  hybrid-dist-dp         naive  w800   0.6435s
+  hybrid-dist-dp         naive  w900   0.6527s
+  hybrid-dist-dp         naive  w1000  0.6512s
+  hybrid-dist-dp         naive  w1100  0.6555s
+  hybrid-dist-dp         naive  w1200  0.6543s
+  hybrid-dist-dp         naive  w2000  0.6637s
+  hybrid-dist-dp         naive  w2720  0.6679s
+  hybrid-dist-pipelined  patoh  w100   3.3029s
+  hybrid-dist-pipelined  patoh  w400   1.1142s
+  hybrid-dist-pipelined  patoh  w500   0.9092s
+  hybrid-dist-pipelined  patoh  w600   0.7645s
+  hybrid-dist-pipelined  patoh  w700   0.7748s
+  hybrid-dist-pipelined  patoh  w800   0.7754s
+  hybrid-dist-pipelined  patoh  w900   0.7775s
+  hybrid-dist-pipelined  patoh  w1000  0.7803s
+  hybrid-dist-pipelined  patoh  w1100  0.7860s
+  hybrid-dist-pipelined  patoh  w1200  0.7919s
+  hybrid-dist-pipelined  patoh  w2000  0.8152s
+  hybrid-dist-pipelined  patoh  w2720  0.8242s
+  hybrid-dist-pipelined  naive  w100   2.9634s
+  hybrid-dist-pipelined  naive  w400   1.1393s
+  hybrid-dist-pipelined  naive  w500   0.9381s
+  hybrid-dist-pipelined  naive  w600   0.8042s
+  hybrid-dist-pipelined  naive  w700   0.7954s
+  hybrid-dist-pipelined  naive  w800   0.7982s
+  hybrid-dist-pipelined  naive  w900   0.8054s
+  hybrid-dist-pipelined  naive  w1000  0.8164s
+  hybrid-dist-pipelined  naive  w1100  0.8111s
+  hybrid-dist-pipelined  naive  w1200  0.8206s
+  hybrid-dist-pipelined  naive  w2000  0.8292s
+  hybrid-dist-pipelined  naive  w2720  0.8257s
+  mpi                    patoh  w100   6.1108s
+  mpi                    patoh  w400   8.2675s
+  mpi                    patoh  w500   8.3539s
+  mpi                    patoh  w600   8.5934s
+  mpi                    patoh  w700   8.7861s
+  mpi                    patoh  w800   8.8237s
+  mpi                    patoh  w900   8.9455s
+  mpi                    patoh  w1000  8.9452s
+  mpi                    patoh  w1100  9.0549s
+  mpi                    patoh  w1200  9.0236s
+  mpi                    patoh  w2000  9.2320s
+  mpi                    patoh  w2720  9.2824s
+  mpi                    naive  w100   7.1537s
+  mpi                    naive  w400   8.4794s
+  mpi                    naive  w500   8.6642s
+  mpi                    naive  w600   8.7413s
+  mpi                    naive  w700   8.8742s
+  mpi                    naive  w800   8.9260s
+  mpi                    naive  w900   9.0003s
+  mpi                    naive  w1000  9.0511s
+  mpi                    naive  w1100  9.0594s
+  mpi                    naive  w1200  9.0951s
+  mpi                    naive  w2000  9.2747s
+  mpi                    naive  w2720  9.3674s
+  mpi-gpu                patoh  w100   4.6823s
+  mpi-gpu                patoh  w400   1.8457s
+  mpi-gpu                patoh  w500   1.6302s
+  mpi-gpu                patoh  w600   1.3282s
+  mpi-gpu                patoh  w700   1.1066s
+  mpi-gpu                patoh  w800   1.0126s
+  mpi-gpu                patoh  w900   0.9337s
+  mpi-gpu                patoh  w1000  0.9270s
+  mpi-gpu                patoh  w1100  0.9191s
+  mpi-gpu                patoh  w1200  0.9195s
+  mpi-gpu                patoh  w2000  0.9258s
+  mpi-gpu                patoh  w2720  0.9267s
+  mpi-gpu                naive  w100   4.7783s
+  mpi-gpu                naive  w400   1.9521s
+  mpi-gpu                naive  w500   1.7535s
+  mpi-gpu                naive  w600   1.5383s
+  mpi-gpu                naive  w700   1.3893s
+  mpi-gpu                naive  w800   1.2486s
+  mpi-gpu                naive  w900   1.1865s
+  mpi-gpu                naive  w1000  1.1006s
+  mpi-gpu                naive  w1100  1.0416s
+  mpi-gpu                naive  w1200  1.0000s
+  mpi-gpu                naive  w2000  0.9550s
+  mpi-gpu                naive  w2720  0.9549s
+
+######## nv2 ########
+  cpu                    -      -      18.4353s
+  gpu                    -      -      1.1480s
+  gpu-dp                 -      -      1.0620s
+  gpu-pipelined          -      -      1.4609s
+  hybrid-async           patoh  w100   3.9631s
+  hybrid-async           patoh  w400   1.6227s
+  hybrid-async           patoh  w500   1.4779s
+  hybrid-async           patoh  w600   1.2028s
+  hybrid-async           patoh  w700   1.0821s
+  hybrid-async           patoh  w800   1.0537s
+  hybrid-async           patoh  w900   1.0527s
+  hybrid-async           patoh  w1000  1.0590s
+  hybrid-async           patoh  w1100  1.0643s
+  hybrid-async           patoh  w1200  1.0841s
+  hybrid-async           patoh  w2000  1.1124s
+  hybrid-async           patoh  w2720  1.1253s
+  hybrid-async           naive  w100   4.2000s
+  hybrid-async           naive  w400   1.8930s
+  hybrid-async           naive  w500   1.6549s
+  hybrid-async           naive  w600   1.4258s
+  hybrid-async           naive  w700   1.2766s
+  hybrid-async           naive  w800   1.1771s
+  hybrid-async           naive  w900   1.0857s
+  hybrid-async           naive  w1000  1.0706s
+  hybrid-async           naive  w1100  1.0778s
+  hybrid-async           naive  w1200  1.0809s
+  hybrid-async           naive  w2000  1.1050s
+  hybrid-async           naive  w2720  1.1154s
+  hybrid-async-dp        patoh  w100   3.9590s
+  hybrid-async-dp        patoh  w400   1.5285s
+  hybrid-async-dp        patoh  w500   1.3622s
+  hybrid-async-dp        patoh  w600   1.1324s
+  hybrid-async-dp        patoh  w700   0.9902s
+  hybrid-async-dp        patoh  w800   0.9649s
+  hybrid-async-dp        patoh  w900   0.9634s
+  hybrid-async-dp        patoh  w1000  0.9706s
+  hybrid-async-dp        patoh  w1100  0.9795s
+  hybrid-async-dp        patoh  w1200  0.9989s
+  hybrid-async-dp        patoh  w2000  1.0262s
+  hybrid-async-dp        patoh  w2720  1.0387s
+  hybrid-async-dp        naive  w100   4.1340s
+  hybrid-async-dp        naive  w400   1.8301s
+  hybrid-async-dp        naive  w500   1.5936s
+  hybrid-async-dp        naive  w600   1.3333s
+  hybrid-async-dp        naive  w700   1.1895s
+  hybrid-async-dp        naive  w800   1.0876s
+  hybrid-async-dp        naive  w900   1.0128s
+  hybrid-async-dp        naive  w1000  0.9842s
+  hybrid-async-dp        naive  w1100  0.9867s
+  hybrid-async-dp        naive  w1200  0.9910s
+  hybrid-async-dp        naive  w2000  1.0194s
+  hybrid-async-dp        naive  w2720  1.0310s
+  hybrid-dist-dp         patoh  w100   4.4895s
+  hybrid-dist-dp         patoh  w400   1.4134s
+  hybrid-dist-dp         patoh  w500   1.1862s
+  hybrid-dist-dp         patoh  w600   0.9613s
+  hybrid-dist-dp         patoh  w700   0.9612s
+  hybrid-dist-dp         patoh  w800   0.9809s
+  hybrid-dist-dp         patoh  w900   0.9862s
+  hybrid-dist-dp         patoh  w1000  0.9902s
+  hybrid-dist-dp         patoh  w1100  0.9990s
+  hybrid-dist-dp         patoh  w1200  1.0133s
+  hybrid-dist-dp         patoh  w2000  1.0460s
+  hybrid-dist-dp         patoh  w2720  1.0639s
+  hybrid-dist-dp         naive  w100   4.9556s
+  hybrid-dist-dp         naive  w400   1.8748s
+  hybrid-dist-dp         naive  w500   1.5664s
+  hybrid-dist-dp         naive  w600   1.2806s
+  hybrid-dist-dp         naive  w700   1.0803s
+  hybrid-dist-dp         naive  w800   1.0365s
+  hybrid-dist-dp         naive  w900   1.0385s
+  hybrid-dist-dp         naive  w1000  1.0498s
+  hybrid-dist-dp         naive  w1100  1.0516s
+  hybrid-dist-dp         naive  w1200  1.0601s
+  hybrid-dist-dp         naive  w2000  1.0802s
+  hybrid-dist-dp         naive  w2720  1.0867s
+  hybrid-dist-pipelined  patoh  w100   5.3922s
+  hybrid-dist-pipelined  patoh  w400   1.6988s
+  hybrid-dist-pipelined  patoh  w500   1.4943s
+  hybrid-dist-pipelined  patoh  w600   1.2909s
+  hybrid-dist-pipelined  patoh  w700   1.1907s
+  hybrid-dist-pipelined  patoh  w800   1.2117s
+  hybrid-dist-pipelined  patoh  w900   1.2197s
+  hybrid-dist-pipelined  patoh  w1000  1.2279s
+  hybrid-dist-pipelined  patoh  w1100  1.2399s
+  hybrid-dist-pipelined  patoh  w1200  1.2562s
+  hybrid-dist-pipelined  patoh  w2000  1.2896s
+  hybrid-dist-pipelined  patoh  w2720  1.3096s
+  hybrid-dist-pipelined  naive  w100   5.9919s
+  hybrid-dist-pipelined  naive  w400   2.2908s
+  hybrid-dist-pipelined  naive  w500   1.9438s
+  hybrid-dist-pipelined  naive  w600   1.5794s
+  hybrid-dist-pipelined  naive  w700   1.3729s
+  hybrid-dist-pipelined  naive  w800   1.2763s
+  hybrid-dist-pipelined  naive  w900   1.2825s
+  hybrid-dist-pipelined  naive  w1000  1.2917s
+  hybrid-dist-pipelined  naive  w1100  1.2976s
+  hybrid-dist-pipelined  naive  w1200  1.2979s
+  hybrid-dist-pipelined  naive  w2000  1.3219s
+  hybrid-dist-pipelined  naive  w2720  1.3328s
+  mpi                    patoh  w100   12.5765s
+  mpi                    patoh  w400   18.6713s
+  mpi                    patoh  w500   19.2863s
+  mpi                    patoh  w600   19.8164s
+  mpi                    patoh  w700   20.4680s
+  mpi                    patoh  w800   20.7352s
+  mpi                    patoh  w900   21.1534s
+  mpi                    patoh  w1000  21.3804s
+  mpi                    patoh  w1100  21.6065s
+  mpi                    patoh  w1200  21.5654s
+  mpi                    patoh  w2000  22.3866s
+  mpi                    patoh  w2720  22.5444s
+  mpi                    naive  w100   13.5642s
+  mpi                    naive  w400   19.0329s
+  mpi                    naive  w500   19.8454s
+  mpi                    naive  w600   20.4006s
+  mpi                    naive  w700   20.6122s
+  mpi                    naive  w800   21.2317s
+  mpi                    naive  w900   21.0456s
+  mpi                    naive  w1000  21.1748s
+  mpi                    naive  w1100  21.4106s
+  mpi                    naive  w1200  21.5806s
+  mpi                    naive  w2000  22.2014s
+  mpi                    naive  w2720  23.1481s
+  mpi-gpu                patoh  w100   10.7059s
+  mpi-gpu                patoh  w400   3.5205s
+  mpi-gpu                patoh  w500   3.0637s
+  mpi-gpu                patoh  w600   2.4665s
+  mpi-gpu                patoh  w700   2.1166s
+  mpi-gpu                patoh  w800   1.8660s
+  mpi-gpu                patoh  w900   1.6387s
+  mpi-gpu                patoh  w1000  1.6330s
+  mpi-gpu                patoh  w1100  1.6450s
+  mpi-gpu                patoh  w1200  1.6363s
+  mpi-gpu                patoh  w2000  1.6967s
+  mpi-gpu                patoh  w2720  1.6961s
+  mpi-gpu                naive  w100   12.0432s
+  mpi-gpu                naive  w400   4.9034s
+  mpi-gpu                naive  w500   4.1239s
+  mpi-gpu                naive  w600   3.4301s
+  mpi-gpu                naive  w700   2.8895s
+  mpi-gpu                naive  w800   2.6037s
+  mpi-gpu                naive  w900   2.3992s
+  mpi-gpu                naive  w1000  2.2140s
+  mpi-gpu                naive  w1100  2.0534s
+  mpi-gpu                naive  w1200  1.9585s
+  mpi-gpu                naive  w2000  1.7959s
+  mpi-gpu                naive  w2720  1.7730s
+
+######## Transport ########
+  cpu                    -      -      7.4689s
+  gpu                    -      -      0.6439s
+  gpu-dp                 -      -      0.5456s
+  gpu-pipelined          -      -      0.8937s
+  hybrid-async           patoh  w100   2.0663s
+  hybrid-async           patoh  w400   0.9722s
+  hybrid-async           patoh  w500   0.8425s
+  hybrid-async           patoh  w600   0.7511s
+  hybrid-async           patoh  w700   0.6915s
+  hybrid-async           patoh  w800   0.6321s
+  hybrid-async           patoh  w900   0.6094s
+  hybrid-async           patoh  w1000  0.6222s
+  hybrid-async           patoh  w1100  0.6101s
+  hybrid-async           patoh  w1200  0.6123s
+  hybrid-async           patoh  w2000  0.6238s
+  hybrid-async           patoh  w2720  0.6303s
+  hybrid-async           naive  w100   2.0658s
+  hybrid-async           naive  w400   0.9532s
+  hybrid-async           naive  w500   0.8485s
+  hybrid-async           naive  w600   0.7566s
+  hybrid-async           naive  w700   0.6749s
+  hybrid-async           naive  w800   0.6461s
+  hybrid-async           naive  w900   0.6235s
+  hybrid-async           naive  w1000  0.6128s
+  hybrid-async           naive  w1100  0.6109s
+  hybrid-async           naive  w1200  0.6174s
+  hybrid-async           naive  w2000  0.6254s
+  hybrid-async           naive  w2720  0.6269s
+  hybrid-async-dp        patoh  w100   1.9657s
+  hybrid-async-dp        patoh  w400   0.8857s
+  hybrid-async-dp        patoh  w500   0.7452s
+  hybrid-async-dp        patoh  w600   0.6467s
+  hybrid-async-dp        patoh  w700   0.5876s
+  hybrid-async-dp        patoh  w800   0.5434s
+  hybrid-async-dp        patoh  w900   0.5142s
+  hybrid-async-dp        patoh  w1000  0.5157s
+  hybrid-async-dp        patoh  w1100  0.5193s
+  hybrid-async-dp        patoh  w1200  0.5182s
+  hybrid-async-dp        patoh  w2000  0.5276s
+  hybrid-async-dp        patoh  w2720  0.5364s
+  hybrid-async-dp        naive  w100   1.9429s
+  hybrid-async-dp        naive  w400   0.8584s
+  hybrid-async-dp        naive  w500   0.7384s
+  hybrid-async-dp        naive  w600   0.6425s
+  hybrid-async-dp        naive  w700   0.5846s
+  hybrid-async-dp        naive  w800   0.5171s
+  hybrid-async-dp        naive  w900   0.5148s
+  hybrid-async-dp        naive  w1000  0.5134s
+  hybrid-async-dp        naive  w1100  0.5135s
+  hybrid-async-dp        naive  w1200  0.5185s
+  hybrid-async-dp        naive  w2000  0.5284s
+  hybrid-async-dp        naive  w2720  0.5331s
+  hybrid-dist-dp         patoh  w100   2.3502s
+  hybrid-dist-dp         patoh  w400   0.7244s
+  hybrid-dist-dp         patoh  w500   0.5892s
+  hybrid-dist-dp         patoh  w600   0.5266s
+  hybrid-dist-dp         patoh  w700   0.5261s
+  hybrid-dist-dp         patoh  w800   0.5320s
+  hybrid-dist-dp         patoh  w900   0.5357s
+  hybrid-dist-dp         patoh  w1000  0.5351s
+  hybrid-dist-dp         patoh  w1100  0.5372s
+  hybrid-dist-dp         patoh  w1200  0.5365s
+  hybrid-dist-dp         patoh  w2000  0.5531s
+  hybrid-dist-dp         patoh  w2720  0.5659s
+  hybrid-dist-dp         naive  w100   2.3399s
+  hybrid-dist-dp         naive  w400   0.7163s
+  hybrid-dist-dp         naive  w500   0.5902s
+  hybrid-dist-dp         naive  w600   0.5295s
+  hybrid-dist-dp         naive  w700   0.5338s
+  hybrid-dist-dp         naive  w800   0.5374s
+  hybrid-dist-dp         naive  w900   0.5392s
+  hybrid-dist-dp         naive  w1000  0.5406s
+  hybrid-dist-dp         naive  w1100  0.5415s
+  hybrid-dist-dp         naive  w1200  0.5427s
+  hybrid-dist-dp         naive  w2000  0.5560s
+  hybrid-dist-dp         naive  w2720  0.5641s
+  hybrid-dist-pipelined  patoh  w100   3.0948s
+  hybrid-dist-pipelined  patoh  w400   1.0086s
+  hybrid-dist-pipelined  patoh  w500   0.8245s
+  hybrid-dist-pipelined  patoh  w600   0.7120s
+  hybrid-dist-pipelined  patoh  w700   0.6973s
+  hybrid-dist-pipelined  patoh  w800   0.7003s
+  hybrid-dist-pipelined  patoh  w900   0.7029s
+  hybrid-dist-pipelined  patoh  w1000  0.7014s
+  hybrid-dist-pipelined  patoh  w1100  0.7071s
+  hybrid-dist-pipelined  patoh  w1200  0.7098s
+  hybrid-dist-pipelined  patoh  w2000  0.7213s
+  hybrid-dist-pipelined  patoh  w2720  0.7367s
+  hybrid-dist-pipelined  naive  w100   3.0868s
+  hybrid-dist-pipelined  naive  w400   0.9960s
+  hybrid-dist-pipelined  naive  w500   0.8462s
+  hybrid-dist-pipelined  naive  w600   0.7115s
+  hybrid-dist-pipelined  naive  w700   0.7000s
+  hybrid-dist-pipelined  naive  w800   0.7041s
+  hybrid-dist-pipelined  naive  w900   0.7108s
+  hybrid-dist-pipelined  naive  w1000  0.7118s
+  hybrid-dist-pipelined  naive  w1100  0.7100s
+  hybrid-dist-pipelined  naive  w1200  0.7110s
+  hybrid-dist-pipelined  naive  w2000  0.7292s
+  hybrid-dist-pipelined  naive  w2720  0.7356s
+  mpi                    patoh  w100   5.6214s
+  mpi                    patoh  w400   6.8893s
+  mpi                    patoh  w500   7.1044s
+  mpi                    patoh  w600   7.3268s
+  mpi                    patoh  w700   7.2798s
+  mpi                    patoh  w800   7.3966s
+  mpi                    patoh  w900   7.4419s
+  mpi                    patoh  w1000  7.4260s
+  mpi                    patoh  w1100  7.4713s
+  mpi                    patoh  w1200  7.5417s
+  mpi                    patoh  w2000  7.5366s
+  mpi                    patoh  w2720  7.6967s
+  mpi                    naive  w100   5.6739s
+  mpi                    naive  w400   6.9683s
+  mpi                    naive  w500   7.1655s
+  mpi                    naive  w600   7.2538s
+  mpi                    naive  w700   7.3106s
+  mpi                    naive  w800   7.3797s
+  mpi                    naive  w900   7.3915s
+  mpi                    naive  w1000  7.4437s
+  mpi                    naive  w1100  7.5245s
+  mpi                    naive  w1200  7.5629s
+  mpi                    naive  w2000  7.6216s
+  mpi                    naive  w2720  7.5966s
+  mpi-gpu                patoh  w100   3.8570s
+  mpi-gpu                patoh  w400   1.5920s
+  mpi-gpu                patoh  w500   1.3234s
+  mpi-gpu                patoh  w600   1.1801s
+  mpi-gpu                patoh  w700   1.0360s
+  mpi-gpu                patoh  w800   0.9904s
+  mpi-gpu                patoh  w900   0.9787s
+  mpi-gpu                patoh  w1000  0.9693s
+  mpi-gpu                patoh  w1100  0.9664s
+  mpi-gpu                patoh  w1200  0.9591s
+  mpi-gpu                patoh  w2000  0.9446s
+  mpi-gpu                patoh  w2720  0.9634s
+  mpi-gpu                naive  w100   3.9058s
+  mpi-gpu                naive  w400   1.6068s
+  mpi-gpu                naive  w500   1.4142s
+  mpi-gpu                naive  w600   1.2246s
+  mpi-gpu                naive  w700   1.0846s
+  mpi-gpu                naive  w800   1.0340s
+  mpi-gpu                naive  w900   1.0110s
+  mpi-gpu                naive  w1000  1.0047s
+  mpi-gpu                naive  w1100  1.0018s
+  mpi-gpu                naive  w1200  1.0012s
+  mpi-gpu                naive  w2000  0.9676s
+  mpi-gpu                naive  w2720  0.9753s
+
+######## Freescale2 ########
+  cpu                    -      -      13.3655s
+  gpu                    -      -      0.8289s
+  gpu-dp                 -      -      0.6629s
+  gpu-pipelined          -      -      1.2491s
+  hybrid-async           naive  w100   2.8188s
+  hybrid-async           naive  w400   1.5367s
+  hybrid-async           naive  w500   1.3905s
+  hybrid-async           naive  w600   1.2849s
+  hybrid-async           naive  w700   1.2103s
+  hybrid-async           naive  w800   1.1663s
+  hybrid-async           naive  w900   1.0974s
+  hybrid-async           naive  w1000  1.0914s
+  hybrid-async           naive  w1100  1.0515s
+  hybrid-async           naive  w1200  1.0147s
+  hybrid-async           naive  w2000  0.9441s
+  hybrid-async           naive  w2720  0.9050s
+  hybrid-async-dp        naive  w100   2.6445s
+  hybrid-async-dp        naive  w400   1.3792s
+  hybrid-async-dp        naive  w500   1.2165s
+  hybrid-async-dp        naive  w600   1.1120s
+  hybrid-async-dp        naive  w700   1.0430s
+  hybrid-async-dp        naive  w800   0.9952s
+  hybrid-async-dp        naive  w900   0.9393s
+  hybrid-async-dp        naive  w1000  0.9212s
+  hybrid-async-dp        naive  w1100  0.8607s
+  hybrid-async-dp        naive  w1200  0.8433s
+  hybrid-async-dp        naive  w2000  0.7735s
+  hybrid-async-dp        naive  w2720  0.7327s
+  hybrid-dist-dp         naive  w100   4.0165s
+  hybrid-dist-dp         naive  w400   1.3960s
+  hybrid-dist-dp         naive  w500   1.1332s
+  hybrid-dist-dp         naive  w600   0.9641s
+  hybrid-dist-dp         naive  w700   0.8405s
+  hybrid-dist-dp         naive  w800   0.7503s
+  hybrid-dist-dp         naive  w900   0.7084s
+  hybrid-dist-dp         naive  w1000  0.6966s
+  hybrid-dist-dp         naive  w1100  0.6985s
+  hybrid-dist-dp         naive  w1200  0.6991s
+  hybrid-dist-dp         naive  w2000  0.7119s
+  hybrid-dist-dp         naive  w2720  0.7125s
+  hybrid-dist-pipelined  naive  w100   5.4245s
+  hybrid-dist-pipelined  naive  w400   1.9750s
+  hybrid-dist-pipelined  naive  w500   1.6030s
+  hybrid-dist-pipelined  naive  w600   1.3642s
+  hybrid-dist-pipelined  naive  w700   1.2350s
+  hybrid-dist-pipelined  naive  w800   1.1016s
+  hybrid-dist-pipelined  naive  w900   1.0213s
+  hybrid-dist-pipelined  naive  w1000  0.9859s
+  hybrid-dist-pipelined  naive  w1100  0.9717s
+  hybrid-dist-pipelined  naive  w1200  0.9692s
+  hybrid-dist-pipelined  naive  w2000  0.9843s
+  hybrid-dist-pipelined  naive  w2720  0.9867s
+  mpi                    naive  w100   11.6801s
+  mpi                    naive  w400   13.3517s
+  mpi                    naive  w500   13.6044s
+  mpi                    naive  w600   13.7551s
+  mpi                    naive  w700   13.8516s
+  mpi                    naive  w800   13.9079s
+  mpi                    naive  w900   13.9943s
+  mpi                    naive  w1000  14.1027s
+  mpi                    naive  w1100  14.1233s
+  mpi                    naive  w1200  14.1727s
+  mpi                    naive  w2000  14.3058s
+  mpi                    naive  w2720  14.2743s
+  mpi-gpu                naive  w100   9.3692s
+  mpi-gpu                naive  w400   3.7223s
+  mpi-gpu                naive  w500   3.0521s
+  mpi-gpu                naive  w600   2.6288s
+  mpi-gpu                naive  w700   2.2753s
+  mpi-gpu                naive  w800   2.1375s
+  mpi-gpu                naive  w900   2.1223s
+  mpi-gpu                naive  w1000  2.0480s
+  mpi-gpu                naive  w1100  2.0073s
+  mpi-gpu                naive  w1200  1.9669s
+  mpi-gpu                naive  w2000  1.8070s
+  mpi-gpu                naive  w2720  1.7723s
+
+######## dgreen ########
+  cpu                    -      -      11.6810s
+  gpu                    -      -      0.8171s
+  gpu-dp                 -      -      0.7468s
+  gpu-pipelined          -      -      1.0639s
+  hybrid-async           patoh  w100   2.8490s
+  hybrid-async           patoh  w400   1.1562s
+  hybrid-async           patoh  w500   0.9897s
+  hybrid-async           patoh  w600   0.9041s
+  hybrid-async           patoh  w700   0.8000s
+  hybrid-async           patoh  w800   0.7653s
+  hybrid-async           patoh  w900   0.7685s
+  hybrid-async           patoh  w1000  0.7740s
+  hybrid-async           patoh  w1100  0.7758s
+  hybrid-async           patoh  w1200  0.7786s
+  hybrid-async           patoh  w2000  0.7978s
+  hybrid-async           patoh  w2720  0.8025s
+  hybrid-async           naive  w100   2.9202s
+  hybrid-async           naive  w400   1.2840s
+  hybrid-async           naive  w500   1.0920s
+  hybrid-async           naive  w600   0.9519s
+  hybrid-async           naive  w700   0.8495s
+  hybrid-async           naive  w800   0.7723s
+  hybrid-async           naive  w900   0.7623s
+  hybrid-async           naive  w1000  0.7682s
+  hybrid-async           naive  w1100  0.7806s
+  hybrid-async           naive  w1200  0.7789s
+  hybrid-async           naive  w2000  0.7935s
+  hybrid-async           naive  w2720  0.8054s
+  hybrid-async-dp        patoh  w100   2.7997s
+  hybrid-async-dp        patoh  w400   1.0823s
+  hybrid-async-dp        patoh  w500   0.9008s
+  hybrid-async-dp        patoh  w600   0.8351s
+  hybrid-async-dp        patoh  w700   0.7341s
+  hybrid-async-dp        patoh  w800   0.6849s
+  hybrid-async-dp        patoh  w900   0.6904s
+  hybrid-async-dp        patoh  w1000  0.7038s
+  hybrid-async-dp        patoh  w1100  0.7057s
+  hybrid-async-dp        patoh  w1200  0.7119s
+  hybrid-async-dp        patoh  w2000  0.7241s
+  hybrid-async-dp        patoh  w2720  0.7364s
+  hybrid-async-dp        naive  w100   2.8586s
+  hybrid-async-dp        naive  w400   1.2059s
+  hybrid-async-dp        naive  w500   1.0119s
+  hybrid-async-dp        naive  w600   0.8720s
+  hybrid-async-dp        naive  w700   0.7680s
+  hybrid-async-dp        naive  w800   0.6988s
+  hybrid-async-dp        naive  w900   0.6877s
+  hybrid-async-dp        naive  w1000  0.6952s
+  hybrid-async-dp        naive  w1100  0.7064s
+  hybrid-async-dp        naive  w1200  0.6992s
+  hybrid-async-dp        naive  w2000  0.7280s
+  hybrid-async-dp        naive  w2720  0.7358s
+  hybrid-dist-dp         patoh  w100   3.0178s
+  hybrid-dist-dp         patoh  w400   0.9245s
+  hybrid-dist-dp         patoh  w500   0.7412s
+  hybrid-dist-dp         patoh  w600   0.6962s
+  hybrid-dist-dp         patoh  w700   0.6956s
+  hybrid-dist-dp         patoh  w800   0.6997s
+  hybrid-dist-dp         patoh  w900   0.7109s
+  hybrid-dist-dp         patoh  w1000  0.7144s
+  hybrid-dist-dp         patoh  w1100  0.7208s
+  hybrid-dist-dp         patoh  w1200  0.7242s
+  hybrid-dist-dp         patoh  w2000  0.7470s
+  hybrid-dist-dp         patoh  w2720  0.7531s
+  hybrid-dist-dp         naive  w100   3.3152s
+  hybrid-dist-dp         naive  w400   1.2254s
+  hybrid-dist-dp         naive  w500   0.9791s
+  hybrid-dist-dp         naive  w600   0.8495s
+  hybrid-dist-dp         naive  w700   0.7467s
+  hybrid-dist-dp         naive  w800   0.7402s
+  hybrid-dist-dp         naive  w900   0.7520s
+  hybrid-dist-dp         naive  w1000  0.7469s
+  hybrid-dist-dp         naive  w1100  0.7395s
+  hybrid-dist-dp         naive  w1200  0.7455s
+  hybrid-dist-dp         naive  w2000  0.7525s
+  hybrid-dist-dp         naive  w2720  0.7595s
+  hybrid-dist-pipelined  patoh  w100   3.7760s
+  hybrid-dist-pipelined  patoh  w400   1.1940s
+  hybrid-dist-pipelined  patoh  w500   0.9627s
+  hybrid-dist-pipelined  patoh  w600   0.8844s
+  hybrid-dist-pipelined  patoh  w700   0.8563s
+  hybrid-dist-pipelined  patoh  w800   0.8679s
+  hybrid-dist-pipelined  patoh  w900   0.8850s
+  hybrid-dist-pipelined  patoh  w1000  0.8878s
+  hybrid-dist-pipelined  patoh  w1100  0.8925s
+  hybrid-dist-pipelined  patoh  w1200  0.9020s
+  hybrid-dist-pipelined  patoh  w2000  0.9186s
+  hybrid-dist-pipelined  patoh  w2720  0.9315s
+  hybrid-dist-pipelined  naive  w100   4.0557s
+  hybrid-dist-pipelined  naive  w400   1.5625s
+  hybrid-dist-pipelined  naive  w500   1.2589s
+  hybrid-dist-pipelined  naive  w600   1.0728s
+  hybrid-dist-pipelined  naive  w700   0.9334s
+  hybrid-dist-pipelined  naive  w800   0.9204s
+  hybrid-dist-pipelined  naive  w900   0.9195s
+  hybrid-dist-pipelined  naive  w1000  0.9213s
+  hybrid-dist-pipelined  naive  w1100  0.9202s
+  hybrid-dist-pipelined  naive  w1200  0.9300s
+  hybrid-dist-pipelined  naive  w2000  0.9318s
+  hybrid-dist-pipelined  naive  w2720  0.9358s
+  mpi                    patoh  w100   7.7298s
+  mpi                    patoh  w400   11.5274s
+  mpi                    patoh  w500   11.9705s
+  mpi                    patoh  w600   12.1263s
+  mpi                    patoh  w700   12.3049s
+  mpi                    patoh  w800   12.5532s
+  mpi                    patoh  w900   12.6990s
+  mpi                    patoh  w1000  12.8067s
+  mpi                    patoh  w1100  12.8713s
+  mpi                    patoh  w1200  13.0519s
+  mpi                    patoh  w2000  13.3147s
+  mpi                    patoh  w2720  13.4607s
+  mpi                    naive  w100   9.1644s
+  mpi                    naive  w400   12.1279s
+  mpi                    naive  w500   12.4404s
+  mpi                    naive  w600   12.6419s
+  mpi                    naive  w700   12.8202s
+  mpi                    naive  w800   12.9311s
+  mpi                    naive  w900   13.0436s
+  mpi                    naive  w1000  13.0979s
+  mpi                    naive  w1100  13.0769s
+  mpi                    naive  w1200  13.1867s
+  mpi                    naive  w2000  13.3380s
+  mpi                    naive  w2720  13.4384s
+  mpi-gpu                patoh  w100   6.4378s
+  mpi-gpu                patoh  w400   2.4509s
+  mpi-gpu                patoh  w500   2.0773s
+  mpi-gpu                patoh  w600   1.9286s
+  mpi-gpu                patoh  w700   1.6444s
+  mpi-gpu                patoh  w800   1.3823s
+  mpi-gpu                patoh  w900   1.2171s
+  mpi-gpu                patoh  w1000  1.0724s
+  mpi-gpu                patoh  w1100  1.0476s
+  mpi-gpu                patoh  w1200  1.0463s
+  mpi-gpu                patoh  w2000  1.0451s
+  mpi-gpu                patoh  w2720  1.0490s
+  mpi-gpu                naive  w100   8.0434s
+  mpi-gpu                naive  w400   3.5627s
+  mpi-gpu                naive  w500   2.9246s
+  mpi-gpu                naive  w600   2.5014s
+  mpi-gpu                naive  w700   2.1543s
+  mpi-gpu                naive  w800   1.8974s
+  mpi-gpu                naive  w900   1.6855s
+  mpi-gpu                naive  w1000  1.5474s
+  mpi-gpu                naive  w1100  1.4644s
+  mpi-gpu                naive  w1200  1.3424s
+  mpi-gpu                naive  w2000  1.1008s
+  mpi-gpu                naive  w2720  1.0809s
+
+######## ss ########
+  cpu                    -      -      9.8768s
+  gpu                    -      -      0.8195s
+  gpu-dp                 -      -      0.7267s
+  gpu-pipelined          -      -      1.0943s
+  hybrid-async           patoh  w100   2.8087s
+  hybrid-async           patoh  w400   1.2447s
+  hybrid-async           patoh  w500   1.0677s
+  hybrid-async           patoh  w600   0.9462s
+  hybrid-async           patoh  w700   0.8559s
+  hybrid-async           patoh  w800   0.7952s
+  hybrid-async           patoh  w900   0.7724s
+  hybrid-async           patoh  w1000  0.7773s
+  hybrid-async           patoh  w1100  0.7770s
+  hybrid-async           patoh  w1200  0.7856s
+  hybrid-async           patoh  w2000  0.7965s
+  hybrid-async           patoh  w2720  0.8039s
+  hybrid-async           naive  w100   2.7868s
+  hybrid-async           naive  w400   1.2977s
+  hybrid-async           naive  w500   1.1348s
+  hybrid-async           naive  w600   1.0110s
+  hybrid-async           naive  w700   0.9145s
+  hybrid-async           naive  w800   0.8318s
+  hybrid-async           naive  w900   0.7946s
+  hybrid-async           naive  w1000  0.7768s
+  hybrid-async           naive  w1100  0.7768s
+  hybrid-async           naive  w1200  0.7765s
+  hybrid-async           naive  w2000  0.7904s
+  hybrid-async           naive  w2720  0.7961s
+  hybrid-async-dp        patoh  w100   2.6806s
+  hybrid-async-dp        patoh  w400   1.1376s
+  hybrid-async-dp        patoh  w500   0.9556s
+  hybrid-async-dp        patoh  w600   0.8343s
+  hybrid-async-dp        patoh  w700   0.7510s
+  hybrid-async-dp        patoh  w800   0.6833s
+  hybrid-async-dp        patoh  w900   0.6771s
+  hybrid-async-dp        patoh  w1000  0.6753s
+  hybrid-async-dp        patoh  w1100  0.6836s
+  hybrid-async-dp        patoh  w1200  0.6877s
+  hybrid-async-dp        patoh  w2000  0.6994s
+  hybrid-async-dp        patoh  w2720  0.7029s
+  hybrid-async-dp        naive  w100   2.6854s
+  hybrid-async-dp        naive  w400   1.1997s
+  hybrid-async-dp        naive  w500   1.0624s
+  hybrid-async-dp        naive  w600   0.8984s
+  hybrid-async-dp        naive  w700   0.8126s
+  hybrid-async-dp        naive  w800   0.7477s
+  hybrid-async-dp        naive  w900   0.6945s
+  hybrid-async-dp        naive  w1000  0.6845s
+  hybrid-async-dp        naive  w1100  0.6834s
+  hybrid-async-dp        naive  w1200  0.6771s
+  hybrid-async-dp        naive  w2000  0.6970s
+  hybrid-async-dp        naive  w2720  0.6994s
+  hybrid-dist-dp         patoh  w100   3.1705s
+  hybrid-dist-dp         patoh  w400   0.9994s
+  hybrid-dist-dp         patoh  w500   0.8022s
+  hybrid-dist-dp         patoh  w600   0.6835s
+  hybrid-dist-dp         patoh  w700   0.6864s
+  hybrid-dist-dp         patoh  w800   0.6881s
+  hybrid-dist-dp         patoh  w900   0.6933s
+  hybrid-dist-dp         patoh  w1000  0.6989s
+  hybrid-dist-dp         patoh  w1100  0.7049s
+  hybrid-dist-dp         patoh  w1200  0.7057s
+  hybrid-dist-dp         patoh  w2000  0.7280s
+  hybrid-dist-dp         patoh  w2720  0.7296s
+  hybrid-dist-dp         naive  w100   3.0691s
+  hybrid-dist-dp         naive  w400   1.1586s
+  hybrid-dist-dp         naive  w500   1.0009s
+  hybrid-dist-dp         naive  w600   0.8318s
+  hybrid-dist-dp         naive  w700   0.7370s
+  hybrid-dist-dp         naive  w800   0.7268s
+  hybrid-dist-dp         naive  w900   0.7319s
+  hybrid-dist-dp         naive  w1000  0.7344s
+  hybrid-dist-dp         naive  w1100  0.7359s
+  hybrid-dist-dp         naive  w1200  0.7298s
+  hybrid-dist-dp         naive  w2000  0.7449s
+  hybrid-dist-dp         naive  w2720  0.7428s
+  hybrid-dist-pipelined  patoh  w100   3.9990s
+  hybrid-dist-pipelined  patoh  w400   1.3034s
+  hybrid-dist-pipelined  patoh  w500   1.0619s
+  hybrid-dist-pipelined  patoh  w600   0.9253s
+  hybrid-dist-pipelined  patoh  w700   0.8764s
+  hybrid-dist-pipelined  patoh  w800   0.8877s
+  hybrid-dist-pipelined  patoh  w900   0.8863s
+  hybrid-dist-pipelined  patoh  w1000  0.8943s
+  hybrid-dist-pipelined  patoh  w1100  0.8937s
+  hybrid-dist-pipelined  patoh  w1200  0.9025s
+  hybrid-dist-pipelined  patoh  w2000  0.9211s
+  hybrid-dist-pipelined  patoh  w2720  0.9280s
+  hybrid-dist-pipelined  naive  w100   3.8884s
+  hybrid-dist-pipelined  naive  w400   1.4662s
+  hybrid-dist-pipelined  naive  w500   1.2450s
+  hybrid-dist-pipelined  naive  w600   1.0948s
+  hybrid-dist-pipelined  naive  w700   0.9809s
+  hybrid-dist-pipelined  naive  w800   0.9270s
+  hybrid-dist-pipelined  naive  w900   0.9316s
+  hybrid-dist-pipelined  naive  w1000  0.9346s
+  hybrid-dist-pipelined  naive  w1100  0.9347s
+  hybrid-dist-pipelined  naive  w1200  0.9315s
+  hybrid-dist-pipelined  naive  w2000  0.9385s
+  hybrid-dist-pipelined  naive  w2720  0.9422s
+  mpi                    patoh  w100   7.2205s
+  mpi                    patoh  w400   9.3429s
+  mpi                    patoh  w500   9.6378s
+  mpi                    patoh  w600   9.7574s
+  mpi                    patoh  w700   9.9258s
+  mpi                    patoh  w800   10.0021s
+  mpi                    patoh  w900   10.0921s
+  mpi                    patoh  w1000  10.1278s
+  mpi                    patoh  w1100  10.1832s
+  mpi                    patoh  w1200  10.1955s
+  mpi                    patoh  w2000  10.3219s
+  mpi                    patoh  w2720  10.3852s
+  mpi                    naive  w100   8.4132s
+  mpi                    naive  w400   9.7711s
+  mpi                    naive  w500   9.8943s
+  mpi                    naive  w600   10.0172s
+  mpi                    naive  w700   10.0488s
+  mpi                    naive  w800   10.1047s
+  mpi                    naive  w900   10.1548s
+  mpi                    naive  w1000  10.1671s
+  mpi                    naive  w1100  10.1809s
+  mpi                    naive  w1200  10.2053s
+  mpi                    naive  w2000  10.3682s
+  mpi                    naive  w2720  10.3991s
+  mpi-gpu                patoh  w100   5.2749s
+  mpi-gpu                patoh  w400   2.1091s
+  mpi-gpu                patoh  w500   1.7627s
+  mpi-gpu                patoh  w600   1.5535s
+  mpi-gpu                patoh  w700   1.3362s
+  mpi-gpu                patoh  w800   1.2470s
+  mpi-gpu                patoh  w900   1.1636s
+  mpi-gpu                patoh  w1000  1.1603s
+  mpi-gpu                patoh  w1100  1.1606s
+  mpi-gpu                patoh  w1200  1.1501s
+  mpi-gpu                patoh  w2000  1.1271s
+  mpi-gpu                patoh  w2720  1.1314s
+  mpi-gpu                naive  w100   5.9183s
+  mpi-gpu                naive  w400   2.5822s
+  mpi-gpu                naive  w500   2.1996s
+  mpi-gpu                naive  w600   1.9398s
+  mpi-gpu                naive  w700   1.7517s
+  mpi-gpu                naive  w800   1.6731s
+  mpi-gpu                naive  w900   1.4750s
+  mpi-gpu                naive  w1000  1.4251s
+  mpi-gpu                naive  w1100  1.3654s
+  mpi-gpu                naive  w1200  1.2468s
+  mpi-gpu                naive  w2000  1.2073s
+  mpi-gpu                naive  w2720  1.2020s
+
+Wrote /home/bugra/Workspace/C/HetHypPar_rewrite/data/big_benchmark/results.tsv and /home/bugra/Workspace/C/HetHypPar_rewrite/data/big_benchmark/summary.md
+# Big benchmark — speedup vs single-GPU `bicgstab-gpu` (iters: 1000 small / 200 for nnz>15M, best-of-2)
+
+## Best speedup per solver (across weights & partition source)
+
+| solver | RM07R | cage14 | Hamrle3 | rajat30_mc64_5 | circuit5M_dc | circuit5M | cage15 | ML_Geer | nlpkkt120 | vas_stokes_1M | nv2 | Transport | Freescale2 | dgreen | ss |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| `cpu` | 0.08× | 0.08× | 0.09× | 0.09× | 0.08× | 0.07× | 0.08× | 0.09× | — | 0.08× | 0.06× | 0.09× | 0.06× | 0.07× | 0.08× |
+| `gpu` | 1.00× | 1.00× | 1.00× | 1.00× | 1.00× | 1.00× | 1.00× | 1.00× | — | 1.00× | 1.00× | 1.00× | 1.00× | 1.00× | 1.00× |
+| `gpu-dp` | 1.04× | 1.15× | 1.32× | 1.26× | 1.28× | 1.20× | 1.14× | 1.05× | — | 1.11× | 1.08× | 1.18× | 1.25× | 1.09× | 1.13× |
+| `gpu-pipelined` | 0.83× | 0.73× | 0.64× | 0.69× | 0.64× | 0.69× | 0.73× | 0.82× | — | 0.78× | 0.79× | 0.72× | 0.66× | 0.77× | 0.75× |
+| `hybrid-async` | 1.12× | 1.06× | 0.79× | 1.01× | 0.86× | 1.00× | 1.03× | 1.10× | — | 1.09× | 1.09× | 1.06× | 0.92× | 1.07× | 1.06× |
+| `hybrid-async-dp` | 1.18× | 1.24× | 0.99× | 1.28× | 1.08× | 1.20× | 1.18× | 1.16× | — | 1.21× | 1.19× | 1.25× | 1.13× | 1.19× | 1.21× |
+| `hybrid-dist-dp` | 1.14× | 1.18× | 1.22× | 1.24× | 1.23× | 1.18× | 1.15× | 1.16× | — | 1.20× | 1.19× | 1.22× | 1.19× | 1.17× | 1.20× |
+| `hybrid-dist-pipelined` | 0.97× | 0.91× | 0.84× | 0.91× | 0.86× | 0.87× | 0.88× | 0.96× | — | 0.96× | 0.96× | 0.92× | 0.86× | 0.95× | 0.94× |
+| `mpi` | 0.13× | 0.11× | 0.09× | 0.12× | 0.07× | 0.07× | 0.09× | 0.12× | — | 0.12× | 0.09× | 0.11× | 0.07× | 0.11× | 0.11× |
+| `mpi-gpu` | 1.03× | 0.67× | 0.48× | 0.32× | 0.48× | 0.21× | 0.57× | 0.99× | — | 0.79× | 0.70× | 0.68× | 0.47× | 0.78× | 0.73× |
+
+## PaToH vs naive (best speedup each) — does cut-minimization help?
+
+| matrix | solver | PaToH | naive | PaToH/naive |
+|---|---|---|---|---|
+| RM07R | `hybrid-async` | 1.11× | 1.12× | 0.99× |
+| RM07R | `hybrid-async-dp` | 1.18× | 1.17× | 1.01× |
+| RM07R | `hybrid-dist-dp` | 1.06× | 1.14× | 0.93× |
+| RM07R | `hybrid-dist-pipelined` | 0.92× | 0.97× | 0.95× |
+| RM07R | `mpi` | 0.13× | 0.13× | 1.01× |
+| RM07R | `mpi-gpu` | 1.03× | 1.03× | 1.00× |
+| cage14 | `hybrid-async` | 1.06× | 1.06× | 1.00× |
+| cage14 | `hybrid-async-dp` | 1.23× | 1.24× | 1.00× |
+| cage14 | `hybrid-dist-dp` | 1.18× | 1.17× | 1.01× |
+| cage14 | `hybrid-dist-pipelined` | 0.91× | 0.90× | 1.01× |
+| cage14 | `mpi` | 0.11× | 0.11× | 1.01× |
+| cage14 | `mpi-gpu` | 0.67× | 0.65× | 1.03× |
+| Hamrle3 | `hybrid-async` | 0.79× | 0.79× | 1.01× |
+| Hamrle3 | `hybrid-async-dp` | 0.99× | 0.97× | 1.01× |
+| Hamrle3 | `hybrid-dist-dp` | 1.18× | 1.22× | 0.97× |
+| Hamrle3 | `hybrid-dist-pipelined` | 0.82× | 0.84× | 0.98× |
+| Hamrle3 | `mpi` | 0.09× | 0.09× | 1.03× |
+| Hamrle3 | `mpi-gpu` | 0.47× | 0.48× | 0.97× |
+| rajat30_mc64_5 | `hybrid-async` | 1.01× | 1.00× | 1.01× |
+| rajat30_mc64_5 | `hybrid-async-dp` | 1.28× | 1.25× | 1.02× |
+| rajat30_mc64_5 | `hybrid-dist-dp` | 1.24× | 1.22× | 1.01× |
+| rajat30_mc64_5 | `hybrid-dist-pipelined` | 0.91× | 0.91× | 1.00× |
+| rajat30_mc64_5 | `mpi` | 0.12× | 0.12× | 1.02× |
+| rajat30_mc64_5 | `mpi-gpu` | 0.32× | 0.27× | 1.17× |
+| ML_Geer | `hybrid-async` | 1.09× | 1.10× | 1.00× |
+| ML_Geer | `hybrid-async-dp` | 1.16× | 1.15× | 1.00× |
+| ML_Geer | `hybrid-dist-dp` | 1.15× | 1.16× | 0.99× |
+| ML_Geer | `hybrid-dist-pipelined` | 0.96× | 0.96× | 1.00× |
+| ML_Geer | `mpi` | 0.12× | 0.12× | 1.01× |
+| ML_Geer | `mpi-gpu` | 0.99× | 0.97× | 1.02× |
+| vas_stokes_1M | `hybrid-async` | 1.09× | 1.08× | 1.01× |
+| vas_stokes_1M | `hybrid-async-dp` | 1.21× | 1.20× | 1.01× |
+| vas_stokes_1M | `hybrid-dist-dp` | 1.20× | 1.14× | 1.05× |
+| vas_stokes_1M | `hybrid-dist-pipelined` | 0.96× | 0.92× | 1.04× |
+| vas_stokes_1M | `mpi` | 0.12× | 0.10× | 1.17× |
+| vas_stokes_1M | `mpi-gpu` | 0.79× | 0.76× | 1.04× |
+| nv2 | `hybrid-async` | 1.09× | 1.07× | 1.02× |
+| nv2 | `hybrid-async-dp` | 1.19× | 1.17× | 1.02× |
+| nv2 | `hybrid-dist-dp` | 1.19× | 1.11× | 1.08× |
+| nv2 | `hybrid-dist-pipelined` | 0.96× | 0.90× | 1.07× |
+| nv2 | `mpi` | 0.09× | 0.08× | 1.08× |
+| nv2 | `mpi-gpu` | 0.70× | 0.65× | 1.09× |
+| Transport | `hybrid-async` | 1.06× | 1.05× | 1.00× |
+| Transport | `hybrid-async-dp` | 1.25× | 1.25× | 1.00× |
+| Transport | `hybrid-dist-dp` | 1.22× | 1.22× | 1.01× |
+| Transport | `hybrid-dist-pipelined` | 0.92× | 0.92× | 1.00× |
+| Transport | `mpi` | 0.11× | 0.11× | 1.01× |
+| Transport | `mpi-gpu` | 0.68× | 0.67× | 1.02× |
+| dgreen | `hybrid-async` | 1.07× | 1.07× | 1.00× |
+| dgreen | `hybrid-async-dp` | 1.19× | 1.19× | 1.00× |
+| dgreen | `hybrid-dist-dp` | 1.17× | 1.10× | 1.06× |
+| dgreen | `hybrid-dist-pipelined` | 0.95× | 0.89× | 1.07× |
+| dgreen | `mpi` | 0.11× | 0.09× | 1.19× |
+| dgreen | `mpi-gpu` | 0.78× | 0.76× | 1.03× |
+| ss | `hybrid-async` | 1.06× | 1.06× | 1.01× |
+| ss | `hybrid-async-dp` | 1.21× | 1.21× | 1.00× |
+| ss | `hybrid-dist-dp` | 1.20× | 1.13× | 1.06× |
+| ss | `hybrid-dist-pipelined` | 0.94× | 0.88× | 1.06× |
+| ss | `mpi` | 0.11× | 0.10× | 1.17× |
+| ss | `mpi-gpu` | 0.73× | 0.68× | 1.07× |
+
+
+================ BIG BENCHMARK DONE Wed Jun 24 14:29:06 +03 2026 ================
