@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="600" viewBox="0 0 900 600" font-family="Segoe UI, Helvetica, Arial, sans-serif">
+  <defs>
+    <pattern id="hatch" width="8" height="8" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+      <rect width="8" height="8" fill="#fde3e3"/>
+      <line x1="0" y1="0" x2="0" y2="8" stroke="#e08a8a" stroke-width="2.4"/>
+    </pattern>
+    <marker id="arrow" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#444"/></marker>
+    <marker id="ag" markerWidth="8" markerHeight="8" refX="5.5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#2f7d32"/></marker>
+  </defs>
+
+  <rect width="900" height="600" fill="#ffffff"/>
+  <text x="30" y="34" font-size="20" font-weight="700" fill="#1a1a1a">Where communication is AVOIDED in CA-SGD</text>
+  <text x="30" y="56" font-size="13" fill="#555">One rank's timeline, left to right. Reduce-box width ≈ network latency 2α·logP. COMPUTE = local; COMM = global AllReduce.</text>
+
+  <!-- ============ PANEL 1: VANILLA MINI-BATCH SGD ============ -->
+  <text x="30" y="92" font-size="15" font-weight="700" fill="#b03030">1.  Vanilla mini-batch SGD — s steps, s AllReduces (one sync barrier per step)</text>
+
+  <text x="20" y="126" font-size="12" font-weight="600" fill="#333">COMPUTE</text>
+  <text x="20" y="140" font-size="10" fill="#777">local grad</text>
+  <text x="20" y="190" font-size="12" font-weight="600" fill="#333">COMM</text>
+  <text x="20" y="204" font-size="10" fill="#777">AllReduce</text>
+
+  <line x1="120" y1="100" x2="840" y2="100" stroke="#ddd"/>
+  <line x1="120" y1="208" x2="840" y2="208" stroke="#ddd"/>
+
+  <!-- COMPUTE row y=104 h=44 : grad box then idle during reduce, x4 -->
+  <g font-size="12" text-anchor="middle">
+    <rect x="120" y="104" width="58" height="44" rx="4" fill="#3b75c4"/><text x="149" y="131" fill="#fff">r₀=Yx</text>
+    <rect x="178" y="104" width="92" height="44" rx="4" fill="url(#hatch)"/><text x="224" y="131" fill="#a33" font-style="italic">idle</text>
+    <rect x="270" y="104" width="58" height="44" rx="4" fill="#3b75c4"/><text x="299" y="131" fill="#fff">r₁=Yx</text>
+    <rect x="328" y="104" width="92" height="44" rx="4" fill="url(#hatch)"/><text x="374" y="131" fill="#a33" font-style="italic">idle</text>
+    <rect x="420" y="104" width="58" height="44" rx="4" fill="#3b75c4"/><text x="449" y="131" fill="#fff">r₂=Yx</text>
+    <rect x="478" y="104" width="92" height="44" rx="4" fill="url(#hatch)"/><text x="524" y="131" fill="#a33" font-style="italic">idle</text>
+    <rect x="570" y="104" width="58" height="44" rx="4" fill="#3b75c4"/><text x="599" y="131" fill="#fff">r₃=Yx</text>
+    <rect x="628" y="104" width="92" height="44" rx="4" fill="url(#hatch)"/><text x="674" y="131" fill="#a33" font-style="italic">idle</text>
+  </g>
+  <!-- COMM row y=168 h=44 : one reduce under each idle -->
+  <g font-size="11.5" text-anchor="middle">
+    <rect x="178" y="168" width="92" height="44" rx="4" fill="#e39a2e"/><text x="224" y="195" fill="#fff">AllReduce</text>
+    <rect x="328" y="168" width="92" height="44" rx="4" fill="#e39a2e"/><text x="374" y="195" fill="#fff">AllReduce</text>
+    <rect x="478" y="168" width="92" height="44" rx="4" fill="#e39a2e"/><text x="524" y="195" fill="#fff">AllReduce</text>
+    <rect x="628" y="168" width="92" height="44" rx="4" fill="#e39a2e"/><text x="674" y="195" fill="#fff">AllReduce</text>
+  </g>
+  <g font-size="10" fill="#b03030" text-anchor="middle">
+    <text x="224" y="230">↑ sync</text><text x="374" y="230">↑ sync</text><text x="524" y="230">↑ sync</text><text x="674" y="230">↑ sync</text>
+  </g>
+  <line x1="120" y1="252" x2="720" y2="252" stroke="#444" marker-end="url(#arrow)"/>
+  <line x1="720" y1="100" x2="720" y2="252" stroke="#b03030" stroke-dasharray="4 3"/>
+  <text x="420" y="270" font-size="11.5" font-weight="600" fill="#b03030" text-anchor="middle">s = 4 steps  =  4 AllReduces  =  4 × latency (2α·logP paid four times)</text>
+
+  <!-- ============ PANEL 2: CA-SGD ============ -->
+  <text x="30" y="328" font-size="15" font-weight="700" fill="#2f7d32">2.  CA-SGD — same s = 4 steps of progress, ONE AllReduce (s reductions amortized into 1)</text>
+
+  <text x="20" y="372" font-size="12" font-weight="600" fill="#333">COMPUTE</text>
+  <text x="20" y="386" font-size="10" fill="#777">local GEMM/GEMV</text>
+  <text x="20" y="436" font-size="12" font-weight="600" fill="#333">COMM</text>
+  <text x="20" y="450" font-size="10" fill="#777">AllReduce</text>
+
+  <line x1="120" y1="346" x2="840" y2="346" stroke="#ddd"/>
+  <line x1="120" y1="454" x2="840" y2="454" stroke="#ddd"/>
+
+  <!-- COMPUTE row y=350 h=44 -->
+  <g font-size="11.5" text-anchor="middle">
+    <rect x="120" y="350" width="74" height="44" rx="4" fill="#7fb07a"/><text x="157" y="372" fill="#fff" font-size="10.5">sample</text><text x="157" y="386" fill="#fff" font-size="10.5">gather Y</text>
+    <rect x="194" y="350" width="150" height="44" rx="4" fill="#3b75c4"/><text x="269" y="372" fill="#fff">Gram  G = YYᵀ</text><text x="269" y="387" fill="#cfe0f5" font-size="9.5">+ margin r = Yx  (BF16 TC)</text>
+    <rect x="344" y="350" width="92" height="44" rx="4" fill="url(#hatch)"/><text x="390" y="377" fill="#a33" font-style="italic">idle</text>
+    <!-- inner s-step loop : 4 chained local steps -->
+    <g>
+      <rect x="436" y="350" width="46" height="44" rx="3" fill="#7fb07a"/><text x="459" y="377" fill="#fff" font-size="10">z⁽⁰⁾</text>
+      <rect x="482" y="350" width="46" height="44" rx="3" fill="#7fb07a"/><text x="505" y="377" fill="#fff" font-size="10">z⁽¹⁾</text>
+      <rect x="528" y="350" width="46" height="44" rx="3" fill="#7fb07a"/><text x="551" y="377" fill="#fff" font-size="10">z⁽²⁾</text>
+      <rect x="574" y="350" width="46" height="44" rx="3" fill="#7fb07a"/><text x="597" y="377" fill="#fff" font-size="10">z⁽³⁾</text>
+    </g>
+    <rect x="620" y="350" width="118" height="44" rx="4" fill="#3b75c4"/><text x="679" y="372" fill="#fff" font-size="10.5">grad g = Yᵀδ</text><text x="679" y="387" fill="#cfe0f5" font-size="9.5">x += (η/b)·g</text>
+  </g>
+  <g font-size="9.5" fill="#2f7d32" text-anchor="middle">
+    <text x="528" y="408">serial recurrence z⁽ʲ⁾ ← r + (η/b)·G·δ&lt;ⱼ  (uses the communicated G; no comm)</text>
+  </g>
+
+  <!-- COMM row y=410 h=44 : ONE reduce, under the idle -->
+  <g font-size="11" text-anchor="middle">
+    <rect x="344" y="416" width="92" height="44" rx="4" fill="#e39a2e"/><text x="390" y="438" fill="#fff" font-size="10.5">grouped</text><text x="390" y="452" fill="#fff" font-size="10.5">AllReduce</text>
+  </g>
+  <text x="390" y="476" font-size="9.5" fill="#bb7a30" text-anchor="middle">one payload [ r ; G ]  (sb + (sb)² words)</text>
+
+  <line x1="120" y1="496" x2="738" y2="496" stroke="#444" marker-end="url(#arrow)"/>
+  <line x1="738" y1="346" x2="738" y2="496" stroke="#2f7d32" stroke-dasharray="4 3"/>
+  <line x1="720" y1="346" x2="720" y2="496" stroke="#b03030" stroke-dasharray="2 3" opacity="0.6"/>
+  <text x="430" y="514" font-size="11.5" font-weight="600" fill="#2f7d32" text-anchor="middle">s = 4 steps  =  1 AllReduce  =  1 × latency  (trade: bigger Gram GEMM + s local steps)</text>
+
+  <!-- legend -->
+  <g font-size="11.5" transform="translate(30,548)">
+    <rect x="0" y="0" width="18" height="13" rx="3" fill="#3b75c4"/><text x="23" y="11" fill="#333">heavy compute (GEMM / GEMV)</text>
+    <rect x="230" y="0" width="18" height="13" rx="3" fill="#7fb07a"/><text x="253" y="11" fill="#333">local vector ops / inner steps</text>
+    <rect x="450" y="0" width="18" height="13" rx="3" fill="#e39a2e"/><text x="473" y="11" fill="#333">global AllReduce</text>
+    <rect x="600" y="0" width="18" height="13" rx="3" fill="url(#hatch)"/><text x="623" y="11" fill="#333">idle (waiting on sync)</text>
+  </g>
+  <text x="30" y="578" font-size="11.5" fill="#333"><tspan font-weight="700" fill="#2f7d32">The win is sync FREQUENCY, not hiding</tspan> — a communication/scaling benefit, like our pipelined BiCGStab.</text>
+  <text x="30" y="594" font-size="11.5" fill="#333">On 1 rank it's not faster (more compute); at P ranks the per-reduce latency 2α·logP is paid once, not s times.</text>
+</svg>
