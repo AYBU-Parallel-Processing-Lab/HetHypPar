@@ -15,6 +15,8 @@ All Python scripts must be run via micromamba: `micromamba run -n octave python 
 ```bash
 # Configure (requires MPI, Intel MKL, CUDA Toolkit, OpenMP)
 cmake -S src -B build -G "Ninja"
+# RTX 3070 = sm_86; set native arch or the default JITs inside the timed loop:
+#   cmake -S src -B build -G Ninja -DCMAKE_CUDA_ARCHITECTURES=86
 
 # Build all targets
 cmake --build build
@@ -37,6 +39,14 @@ MPI+GPU variant also accepts: `-g <is_gpu_file>`
 | `bicgstab-mpi-gpu` | `src/entry/bicgstab_mpi_gpu.c` | Hybrid MPI+GPU solver |
 | `spmv-cpu` | `src/entry/spmv_cpu.c` | SpMV-only CPU benchmark (no solver) |
 | `spmv-gpu` | `src/entry/spmv_gpu.c` | SpMV-only GPU benchmark (no solver) |
+
+### Device-pointer / pipelined / hybrid variants (single-process CPU+GPU, no MPI)
+
+Beyond the 4 base solvers, the build has dp (cuBLAS device-pointer-mode dots), pipelined (Cools & Vanroose 2017), and hybrid (CPU+GPU split) families: `bicgstab-gpu-dp`, `bicgstab-gpu-pipelined`, `bicgstab-hybrid-async-dp` (SpMV split, dots stay on GPU), `bicgstab-hybrid-dist-dp` (fully distributed), `bicgstab-hybrid-dist-pipelined`. Hybrid variants take `-p <part>` and `-g <is_gpu>` like the MPI solvers.
+
+- **Key perf finding:** distribute the SpMV but keep dots GPU-resident. `hybrid-async-dp` ≈ 1.3× over `bicgstab-gpu`; distributing the dots too (`dist-dp` ≈ 1.1×) costs more CPU↔GPU sync than it saves; pipelining loses single-node (<1.0×) — it only pays multi-node. See `docs/dot-product-profiling.md`, `docs/ca-sgd-relation.md`.
+- **Env vars** (dp/pipelined solvers): `HHP_REPLACE=k` = residual-replacement period (recompute true residual every k iters; needed for pipelined accuracy), `HHP_PROF=1` = per-section wall-time breakdown to stderr.
+- **Hybrid OMP threads:** tune `OMP_NUM_THREADS` to 1–4 — the default (24) is pathological for the small CPU row-slices.
 
 ## Solver Output Format
 
@@ -71,6 +81,9 @@ To run MPI solvers locally (fewer cores than ranks): `mpirun --oversubscribe -bi
 - **Shell copy-paste:** When providing terminal commands for the user to run in tmux/terminal, prefer single-line commands over multi-line with `\` continuations — backslashes often get lost when pasting.
 - **Weight file parsing:** Count ranks via `.read_text().split()`, not line count — some weight files lack a trailing newline, so `wc -l` undercounts.
 - **Vector file format:** `vector_read` reads raw whitespace-separated floats with NO header line. Generators must be header-less (`process_matrixi.m`, `prepare_spmv_input.m` use bare `dlmwrite` — correct). Note: `setup_n_block_diag.py` writes a `<rows> 1` header that `vector_read` misreads as data (latent bug; fine for timing-only tests where residual is ignored).
+- **Locale / benchmark parsing:** solver stdout prints decimals with the locale separator (e.g. `spmv : 0,947686` with a comma), which breaks `awk` numeric compares and bash `printf`. Always run benchmark loops with `LC_ALL=C` so decimals are dots.
+- **Rendering docs/*.svg:** no system SVG renderer; install one into the octave env (`micromamba run -n octave pip install cairosvg`) then `cairosvg.svg2png(...)` to preview/verify diagram layout.
+- **Commits:** do NOT add any AI/Claude attribution or `Co-Authored-By` trailer to commit messages (project convention).
 
 ## Known Issues & Fixes
 
@@ -102,6 +115,7 @@ Solver output includes `PROFILE_ITER` (per-rank per-iteration) and `PROFILE_ACCU
 - **Iteration 0 is a startup outlier** -- the first iteration's `vecops` can be 100-1000x larger than subsequent iterations due to MPI/CUDA initialization (one rank blocks in `MPI_Allreduce` while the other does first-time CUDA kernel launches). Analysis should exclude iter 0.
 - **The top-level `spmv` column is rank 0's loop time only**, not a max across ranks. For the slower rank's perspective, use per-rank profile fields.
 - `tools/python/plot_profile_boxplots.py` generates per-component box plots normalized to single-GPU per-iteration baseline.
+- **Don't run `nsys` on the spin-wait solvers** (dp/dist/pipelined use a mapped-host `while(*flag<seq){}` busy-loop) — it hangs and piles up stuck processes. Use `HHP_PROF=1` for their section timings instead.
 
 ## Error Checking Macros
 
