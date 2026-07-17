@@ -12,6 +12,7 @@
 #include "hhp_util.h"
 #include "hhp_dp_kernels.h"
 #include "hhp_dp_helpers.h"
+#include "hhp_prof.h"
 
 #include <cuda_runtime_api.h>
 #include <cuda_runtime.h>
@@ -82,6 +83,9 @@ static error_t parse_opt(int key, char *arg, struct argp_state *state) {
     }
     return 0;
 }
+
+// prof_sync callback: sync the compute stream so async work lands in its section.
+static void prof_sync_stream(void *s) { cudaStreamSynchronize((cudaStream_t)s); }
 
 static char doc[] = "Fully-distributed GPU+CPU hybrid BiCGStab (no MPI), device-pointer dots";
 static char args_doc[] = "";
@@ -357,35 +361,50 @@ int main(int argc, char *argv[]) {
     host_copy(hR, hR0, nc);
     cudaStreamSynchronize(compute_s);
 
+    // Optional detailed profiling (env HHP_PROF: 1=stderr summary, 2=+per-iter TSV).
+    // PF_SYNC captures the CPU<->GPU scalar rendezvous (the cost distributing the
+    // dots adds over a GPU-resident dot).
+    Prof P; prof_init(&P, niters, prof_sync_stream, (void *)compute_s);
+    prof_set_preprocess(&P, t_read1 - t_begin);
+
     double t_loop0 = omp_get_wtime();
     for (int it = 0; it < niters; it++) {
+        prof_tick(&P);
         // rho_new = R.R0 ; beta = (rho_new/rho)*(alpha/omega) ; rho = rho_new
         dist_partials(bh, &ctx, d_g, d_c, &hp[0], dR, dR0, hR, hR0);
+        prof_lap(&P, PF_DOT);
         hhp_dp_cu_beta(d_beta, d_rho, d_g, d_c, d_alpha, d_omega, dm, flagd, ++seq, compute_s);
         hhp_dp_vecop_P(dP, dV, dR, d_omega, d_beta, ng, compute_s);  // GPU vecop runs while host spins
         while (*flagv < seq) {}                              // spin-wait for beta (~1-2us)
+        prof_lap(&P, PF_SYNC);
         hs[0] = hm[0];
         // fused host vecop: P = (P - omega*V)*beta + R  (one region, one pass)
         #pragma omp parallel for
         for (int i = 0; i < nc; i++)
             hP[i] = (hP[i] - hs[3]*hV[i]) * hs[0] + hR[i];
+        prof_lap(&P, PF_VECOPS);
 
         // V = A*P
         dist_spmv(&ctx, dV_desc, dP, hP, dV, hV);
+        prof_lap(&P, PF_SPMV);
 
         // rv = R0.V ; alpha = rho/rv ; neg_a = -alpha
         dist_partials(bh, &ctx, d_g, d_c, &hp[1], dR0, dV, hR0, hV);
+        prof_lap(&P, PF_DOT);
         hhp_dp_cu_alpha(d_alpha, d_neg_a, d_rho, d_g, d_c, dm, flagd, ++seq, compute_s);
         hhp_dp_vecop_S(dS, dR, dV, d_neg_a, ng, compute_s);
         while (*flagv < seq) {}                              // spin-wait for alpha,neg_a
+        prof_lap(&P, PF_SYNC);
         hs[1] = hm[0]; hs[2] = hm[1];
         // fused host vecop: S = R - alpha*V   (hs[2] = -alpha)
         #pragma omp parallel for
         for (int i = 0; i < nc; i++)
             hS[i] = hR[i] + hs[2]*hV[i];
+        prof_lap(&P, PF_VECOPS);
 
         // T = A*S
         dist_spmv(&ctx, dT_desc, dS, hS, dT, hT);
+        prof_lap(&P, PF_SPMV);
 
         // ts = T.S ; tt = T.T ; omega = ts/tt ; neg_w = -omega
         // ts = T.S ; tt = T.T : two GPU partials + ONE fused CPU reduction
@@ -397,9 +416,11 @@ int main(int argc, char *argv[]) {
           hp[2] = cts; hp[3] = ctt; }
         cudaMemcpyAsync(d_c,  &hp[2], sizeof(double), cudaMemcpyHostToDevice, compute_s);
         cudaMemcpyAsync(d_c2, &hp[3], sizeof(double), cudaMemcpyHostToDevice, compute_s);
+        prof_lap(&P, PF_DOT);
         hhp_dp_cu_omega(d_omega, d_neg_w, d_g, d_c, d_g2, d_c2, dm, flagd, ++seq, compute_s);
         hhp_dp_vecop_XR(dX, dR, dP, dS, dT, d_alpha, d_omega, d_neg_w, ng, compute_s);
         while (*flagv < seq) {}                              // spin-wait for omega,neg_w
+        prof_lap(&P, PF_SYNC);
         hs[3] = hm[0]; hs[4] = hm[1];
         // fused host vecop: X += alpha*P + omega*S ; R = S - omega*T  (one region)
         #pragma omp parallel for
@@ -407,12 +428,17 @@ int main(int argc, char *argv[]) {
             hX[i] += hs[1]*hP[i] + hs[3]*hS[i];
             hR[i]  = hS[i] + hs[4]*hT[i];
         }
+        prof_lap(&P, PF_VECOPS);
 
         // tol = S.S (parity; result unused, no rendezvous)
         dist_dot(bh, &ctx, d_g, d_c, d_tol, &hp[4], dS, dS, hS, hS);
+        prof_lap(&P, PF_DOT);
+        prof_iter_end(&P);
     }
     cudaDeviceSynchronize();
     double t_loop1 = omp_get_wtime();
+    prof_report(&P, "hybrid-dist-dp", arguments.input_matrix);
+    prof_free(&P);
 
     // --- Final relative residual: ||A*X - B|| / ||B|| ---
     dist_spmv(&ctx, dY_desc, dX, hX, dY, hY);                 // Y = A*X

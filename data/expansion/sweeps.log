@@ -1,0 +1,4199 @@
+================ EXPANSION SWEEPS START Sat Jun 27 23:53:43 +03 2026 ================
+NEW (35) for full-solver; ALL (49) for SpMV
+
+---------------- 1. FULL-SOLVER sweep (NEW matrices) Sat Jun 27 23:53:43 +03 2026 ----------------
+
+######## mac_econ_fwd500 ########
+  cpu                    -      -      2.1293s
+  gpu                    -      -      0.3535s
+  gpu-dp                 -      -      0.2814s
+  gpu-pipelined          -      -      0.4721s
+  hybrid-async           patoh  w400   0.4824s
+  hybrid-async           patoh  w600   0.4472s
+  hybrid-async           patoh  w800   0.4329s
+  hybrid-async           patoh  w1000  0.4311s
+  hybrid-async           patoh  w1200  0.4307s
+  hybrid-async           patoh  w2000  0.4047s
+  hybrid-async           naive  w400   0.4863s
+  hybrid-async           naive  w600   0.4446s
+  hybrid-async           naive  w800   0.4308s
+  hybrid-async           naive  w1000  0.4287s
+  hybrid-async           naive  w1200  0.4202s
+  hybrid-async           naive  w2000  0.4073s
+  hybrid-async-dp        patoh  w400   0.3870s
+  hybrid-async-dp        patoh  w600   0.3671s
+  hybrid-async-dp        patoh  w800   0.3480s
+  hybrid-async-dp        patoh  w1000  0.3339s
+  hybrid-async-dp        patoh  w1200  0.3348s
+  hybrid-async-dp        patoh  w2000  0.3122s
+  hybrid-async-dp        naive  w400   0.3876s
+  hybrid-async-dp        naive  w600   0.3602s
+  hybrid-async-dp        naive  w800   0.3537s
+  hybrid-async-dp        naive  w1000  0.3452s
+  hybrid-async-dp        naive  w1200  0.3336s
+  hybrid-async-dp        naive  w2000  0.3138s
+  hybrid-dist-dp         patoh  w400   0.3361s
+  hybrid-dist-dp         patoh  w600   0.3240s
+  hybrid-dist-dp         patoh  w800   0.3243s
+  hybrid-dist-dp         patoh  w1000  0.3170s
+  hybrid-dist-dp         patoh  w1200  0.3146s
+  hybrid-dist-dp         patoh  w2000  0.3200s
+  hybrid-dist-dp         naive  w400   0.3377s
+  hybrid-dist-dp         naive  w600   0.3283s
+  hybrid-dist-dp         naive  w800   0.3279s
+  hybrid-dist-dp         naive  w1000  0.3178s
+  hybrid-dist-dp         naive  w1200  0.3196s
+  hybrid-dist-dp         naive  w2000  0.3186s
+  hybrid-dist-pipelined  patoh  w400   0.4372s
+  hybrid-dist-pipelined  patoh  w600   0.4432s
+  hybrid-dist-pipelined  patoh  w800   0.4455s
+  hybrid-dist-pipelined  patoh  w1000  0.4505s
+  hybrid-dist-pipelined  patoh  w1200  0.4499s
+  hybrid-dist-pipelined  patoh  w2000  0.4509s
+  hybrid-dist-pipelined  naive  w400   0.4337s
+  hybrid-dist-pipelined  naive  w600   0.4390s
+  hybrid-dist-pipelined  naive  w800   0.4461s
+  hybrid-dist-pipelined  naive  w1000  0.4509s
+  hybrid-dist-pipelined  naive  w1200  0.4496s
+  hybrid-dist-pipelined  naive  w2000  0.4505s
+  mpi                    patoh  w400   1.9064s
+  mpi                    patoh  w600   2.0731s
+  mpi                    patoh  w800   2.1539s
+  mpi                    patoh  w1000  2.2193s
+  mpi                    patoh  w1200  2.2461s
+  mpi                    patoh  w2000  2.3028s
+  mpi                    naive  w400   1.9188s
+  mpi                    naive  w600   2.0653s
+  mpi                    naive  w800   2.1312s
+  mpi                    naive  w1000  2.1862s
+  mpi                    naive  w1200  2.2925s
+  mpi                    naive  w2000  2.2946s
+  mpi-gpu                patoh  w400   0.5990s
+  mpi-gpu                patoh  w600   0.6219s
+  mpi-gpu                patoh  w800   0.6280s
+  mpi-gpu                patoh  w1000  0.6481s
+  mpi-gpu                patoh  w1200  0.6418s
+  mpi-gpu                patoh  w2000  0.6524s
+  mpi-gpu                naive  w400   0.5989s
+  mpi-gpu                naive  w600   0.6082s
+  mpi-gpu                naive  w800   0.6252s
+  mpi-gpu                naive  w1000  0.6326s
+  mpi-gpu                naive  w1200  0.6420s
+  mpi-gpu                naive  w2000  0.6484s
+
+######## FullChip ########
+  cpu                    -      -      13.2321s
+  gpu                    -      -      0.9253s
+  gpu-dp                 -      -      0.7605s
+  gpu-pipelined          -      -      1.3577s
+  hybrid-async           patoh  w400   1.6406s
+  hybrid-async           patoh  w600   1.3398s
+  hybrid-async           patoh  w800   1.1884s
+  hybrid-async           patoh  w1000  1.1013s
+  hybrid-async           patoh  w1200  1.0413s
+  hybrid-async           patoh  w2000  0.9514s
+  hybrid-async           naive  w400   1.6522s
+  hybrid-async           naive  w600   1.3690s
+  hybrid-async           naive  w800   1.2082s
+  hybrid-async           naive  w1000  1.0977s
+  hybrid-async           naive  w1200  1.0475s
+  hybrid-async           naive  w2000  0.9577s
+  hybrid-async-dp        patoh  w400   1.4715s
+  hybrid-async-dp        patoh  w600   1.1690s
+  hybrid-async-dp        patoh  w800   1.0116s
+  hybrid-async-dp        patoh  w1000  0.9128s
+  hybrid-async-dp        patoh  w1200  0.8705s
+  hybrid-async-dp        patoh  w2000  0.7936s
+  hybrid-async-dp        naive  w400   1.4831s
+  hybrid-async-dp        naive  w600   1.1876s
+  hybrid-async-dp        naive  w800   1.0195s
+  hybrid-async-dp        naive  w1000  0.9291s
+  hybrid-async-dp        naive  w1200  0.8680s
+  hybrid-async-dp        naive  w2000  0.7921s
+  hybrid-dist-dp         patoh  w400   1.4137s
+  hybrid-dist-dp         patoh  w600   0.8633s
+  hybrid-dist-dp         patoh  w800   0.7804s
+  hybrid-dist-dp         patoh  w1000  0.7692s
+  hybrid-dist-dp         patoh  w1200  0.7600s
+  hybrid-dist-dp         patoh  w2000  0.7831s
+  hybrid-dist-dp         naive  w400   1.5158s
+  hybrid-dist-dp         naive  w600   0.9833s
+  hybrid-dist-dp         naive  w800   0.7925s
+  hybrid-dist-dp         naive  w1000  0.7773s
+  hybrid-dist-dp         naive  w1200  0.7714s
+  hybrid-dist-dp         naive  w2000  0.7808s
+  hybrid-dist-pipelined  patoh  w400   1.9786s
+  hybrid-dist-pipelined  patoh  w600   1.2645s
+  hybrid-dist-pipelined  patoh  w800   1.0602s
+  hybrid-dist-pipelined  patoh  w1000  1.0551s
+  hybrid-dist-pipelined  patoh  w1200  1.0441s
+  hybrid-dist-pipelined  patoh  w2000  1.0732s
+  hybrid-dist-pipelined  naive  w400   2.1646s
+  hybrid-dist-pipelined  naive  w600   1.4179s
+  hybrid-dist-pipelined  naive  w800   1.1121s
+  hybrid-dist-pipelined  naive  w1000  1.0647s
+  hybrid-dist-pipelined  naive  w1200  1.0561s
+  hybrid-dist-pipelined  naive  w2000  1.0678s
+  mpi                    patoh  w400   13.4149s
+  mpi                    patoh  w600   13.6300s
+  mpi                    patoh  w800   13.7427s
+  mpi                    patoh  w1000  13.9188s
+  mpi                    patoh  w1200  13.9973s
+  mpi                    patoh  w2000  14.0095s
+  mpi                    naive  w400   13.6741s
+  mpi                    naive  w600   13.7582s
+  mpi                    naive  w800   13.8630s
+  mpi                    naive  w1000  13.8859s
+  mpi                    naive  w1200  13.9695s
+  mpi                    naive  w2000  14.0043s
+  mpi-gpu                patoh  w400   5.1229s
+  mpi-gpu                patoh  w600   4.9436s
+  mpi-gpu                patoh  w800   4.6391s
+  mpi-gpu                patoh  w1000  4.6380s
+  mpi-gpu                patoh  w1200  4.3715s
+  mpi-gpu                patoh  w2000  4.4191s
+  mpi-gpu                naive  w400   5.2933s
+  mpi-gpu                naive  w600   4.9564s
+  mpi-gpu                naive  w800   4.9672s
+  mpi-gpu                naive  w1000  4.6723s
+  mpi-gpu                naive  w1200  4.6865s
+  mpi-gpu                naive  w2000  4.3037s
+
+######## Zd_Jac3 ########
+  cpu                    -      -      1.5958s
+  gpu                    -      -      0.2625s
+  gpu-dp                 -      -      0.2150s
+  gpu-pipelined          -      -      0.3287s
+  hybrid-async           patoh  w400   0.2731s
+  hybrid-async           patoh  w600   0.2477s
+  hybrid-async           patoh  w800   0.2525s
+  hybrid-async           patoh  w1000  0.2501s
+  hybrid-async           patoh  w1200  0.2467s
+  hybrid-async           patoh  w2000  0.2892s
+  hybrid-async           naive  w400   0.2640s
+  hybrid-async           naive  w600   0.2512s
+  hybrid-async           naive  w800   0.2444s
+  hybrid-async           naive  w1000  0.2441s
+  hybrid-async           naive  w1200  0.2534s
+  hybrid-async           naive  w2000  0.2505s
+  hybrid-async-dp        patoh  w400   0.2270s
+  hybrid-async-dp        patoh  w600   0.1972s
+  hybrid-async-dp        patoh  w800   0.2033s
+  hybrid-async-dp        patoh  w1000  0.2006s
+  hybrid-async-dp        patoh  w1200  0.1972s
+  hybrid-async-dp        patoh  w2000  0.2242s
+  hybrid-async-dp        naive  w400   0.2047s
+  hybrid-async-dp        naive  w600   0.1923s
+  hybrid-async-dp        naive  w800   0.1921s
+  hybrid-async-dp        naive  w1000  0.1950s
+  hybrid-async-dp        naive  w1200  0.1971s
+  hybrid-async-dp        naive  w2000  0.2007s
+  hybrid-dist-dp         patoh  w400   0.2849s
+  hybrid-dist-dp         patoh  w600   0.2467s
+  hybrid-dist-dp         patoh  w800   0.2523s
+  hybrid-dist-dp         patoh  w1000  0.2508s
+  hybrid-dist-dp         patoh  w1200  0.2495s
+  hybrid-dist-dp         patoh  w2000  0.2790s
+  hybrid-dist-dp         naive  w400   0.2737s
+  hybrid-dist-dp         naive  w600   0.2596s
+  hybrid-dist-dp         naive  w800   0.2704s
+  hybrid-dist-dp         naive  w1000  0.2496s
+  hybrid-dist-dp         naive  w1200  0.2513s
+  hybrid-dist-dp         naive  w2000  0.2535s
+  hybrid-dist-pipelined  patoh  w400   0.3367s
+  hybrid-dist-pipelined  patoh  w600   0.2855s
+  hybrid-dist-pipelined  patoh  w800   0.2927s
+  hybrid-dist-pipelined  patoh  w1000  0.2910s
+  hybrid-dist-pipelined  patoh  w1200  0.2893s
+  hybrid-dist-pipelined  patoh  w2000  0.3399s
+  hybrid-dist-pipelined  naive  w400   0.3150s
+  hybrid-dist-pipelined  naive  w600   0.3194s
+  hybrid-dist-pipelined  naive  w800   0.3163s
+  hybrid-dist-pipelined  naive  w1000  0.2937s
+  hybrid-dist-pipelined  naive  w1200  0.2902s
+  hybrid-dist-pipelined  naive  w2000  0.2916s
+  mpi                    patoh  w400   1.2727s
+  mpi                    patoh  w600   1.6719s
+  mpi                    patoh  w800   1.7469s
+  mpi                    patoh  w1000  1.7122s
+  mpi                    patoh  w1200  1.6762s
+  mpi                    patoh  w2000  1.2688s
+  mpi                    naive  w400   1.4569s
+  mpi                    naive  w600   1.5671s
+  mpi                    naive  w800   1.6058s
+  mpi                    naive  w1000  1.6450s
+  mpi                    naive  w1200  1.6696s
+  mpi                    naive  w2000  1.7235s
+  mpi-gpu                patoh  w400   0.5456s
+  mpi-gpu                patoh  w600   0.3583s
+  mpi-gpu                patoh  w800   0.3596s
+  mpi-gpu                patoh  w1000  0.3596s
+  mpi-gpu                patoh  w1200  0.3423s
+  mpi-gpu                patoh  w2000  0.6203s
+  mpi-gpu                naive  w400   0.4240s
+  mpi-gpu                naive  w600   0.3383s
+  mpi-gpu                naive  w800   0.3296s
+  mpi-gpu                naive  w1000  0.3454s
+  mpi-gpu                naive  w1200  0.3542s
+  mpi-gpu                naive  w2000  0.3686s
+
+######## test1 ########
+  cpu                    -      -      17.5965s
+  gpu                    -      -      1.4186s
+  gpu-dp                 -      -      1.2707s
+  gpu-pipelined          -      -      1.8202s
+  hybrid-async           patoh  w400   1.4046s
+  hybrid-async           patoh  w600   1.2673s
+  hybrid-async           patoh  w800   1.2914s
+  hybrid-async           patoh  w1000  1.3120s
+  hybrid-async           patoh  w1200  1.3294s
+  hybrid-async           patoh  w2000  1.3623s
+  hybrid-async           naive  w400   1.5462s
+  hybrid-async           naive  w600   1.2728s
+  hybrid-async           naive  w800   1.3039s
+  hybrid-async           naive  w1000  1.3202s
+  hybrid-async           naive  w1200  1.3291s
+  hybrid-async           naive  w2000  1.3521s
+  hybrid-async-dp        patoh  w400   1.2552s
+  hybrid-async-dp        patoh  w600   1.1218s
+  hybrid-async-dp        patoh  w800   1.1538s
+  hybrid-async-dp        patoh  w1000  1.1792s
+  hybrid-async-dp        patoh  w1200  1.1993s
+  hybrid-async-dp        patoh  w2000  1.2324s
+  hybrid-async-dp        naive  w400   1.3737s
+  hybrid-async-dp        naive  w600   1.1332s
+  hybrid-async-dp        naive  w800   1.1513s
+  hybrid-async-dp        naive  w1000  1.1751s
+  hybrid-async-dp        naive  w1200  1.1902s
+  hybrid-async-dp        naive  w2000  1.2189s
+  hybrid-dist-dp         patoh  w400   1.2328s
+  hybrid-dist-dp         patoh  w600   1.2372s
+  hybrid-dist-dp         patoh  w800   1.2295s
+  hybrid-dist-dp         patoh  w1000  1.2456s
+  hybrid-dist-dp         patoh  w1200  1.2671s
+  hybrid-dist-dp         patoh  w2000  1.2872s
+  hybrid-dist-dp         naive  w400   1.4519s
+  hybrid-dist-dp         naive  w600   1.3212s
+  hybrid-dist-dp         naive  w800   1.3114s
+  hybrid-dist-dp         naive  w1000  1.3014s
+  hybrid-dist-dp         naive  w1200  1.2965s
+  hybrid-dist-dp         naive  w2000  1.3013s
+  hybrid-dist-pipelined  patoh  w400   1.4741s
+  hybrid-dist-pipelined  patoh  w600   1.5125s
+  hybrid-dist-pipelined  patoh  w800   1.5340s
+  hybrid-dist-pipelined  patoh  w1000  1.5594s
+  hybrid-dist-pipelined  patoh  w1200  1.5760s
+  hybrid-dist-pipelined  patoh  w2000  1.6040s
+  hybrid-dist-pipelined  naive  w400   1.8141s
+  hybrid-dist-pipelined  naive  w600   1.5884s
+  hybrid-dist-pipelined  naive  w800   1.6004s
+  hybrid-dist-pipelined  naive  w1000  1.6013s
+  hybrid-dist-pipelined  naive  w1200  1.6146s
+  hybrid-dist-pipelined  naive  w2000  1.6168s
+  mpi                    patoh  w400   15.6823s
+  mpi                    patoh  w600   16.2096s
+  mpi                    patoh  w800   16.7761s
+  mpi                    patoh  w1000  17.5482s
+  mpi                    patoh  w1200  17.6302s
+  mpi                    patoh  w2000  18.6243s
+  mpi                    naive  w400   16.4984s
+  mpi                    naive  w600   17.3303s
+  mpi                    naive  w800   17.3962s
+  mpi                    naive  w1000  17.7577s
+  mpi                    naive  w1200  17.7074s
+  mpi                    naive  w2000  18.2098s
+  mpi-gpu                patoh  w400   3.5872s
+  mpi-gpu                patoh  w600   2.5105s
+  mpi-gpu                patoh  w800   1.9690s
+  mpi-gpu                patoh  w1000  1.7157s
+  mpi-gpu                patoh  w1200  1.7551s
+  mpi-gpu                patoh  w2000  1.8250s
+  mpi-gpu                naive  w400   5.2547s
+  mpi-gpu                naive  w600   3.5823s
+  mpi-gpu                naive  w800   2.6975s
+  mpi-gpu                naive  w1000  2.2004s
+  mpi-gpu                naive  w1200  1.8795s
+  mpi-gpu                naive  w2000  1.8369s
+
+######## TSOPF_RS_b2383_c1 ########
+  cpu                    -      -      3.3004s
+  gpu                    -      -      0.2319s
+  gpu-dp                 -      -      0.2223s
+  gpu-pipelined          -      -      0.2701s
+  hybrid-async           patoh  w400   0.3870s
+  hybrid-async           patoh  w600   0.2198s
+  hybrid-async           patoh  w800   0.8045s
+  hybrid-async           patoh  w1000  0.2069s
+  hybrid-async           patoh  w1200  0.2108s
+  hybrid-async           patoh  w2000  0.2184s
+  hybrid-async           naive  w400   0.2166s
+  hybrid-async           naive  w600   0.2029s
+  hybrid-async           naive  w800   0.2095s
+  hybrid-async           naive  w1000  0.2129s
+  hybrid-async           naive  w1200  0.2159s
+  hybrid-async           naive  w2000  0.2216s
+  hybrid-async-dp        patoh  w400   0.3677s
+  hybrid-async-dp        patoh  w600   0.2051s
+  hybrid-async-dp        patoh  w800   0.7953s
+  hybrid-async-dp        patoh  w1000  0.1963s
+  hybrid-async-dp        patoh  w1200  0.2003s
+  hybrid-async-dp        patoh  w2000  0.2078s
+  hybrid-async-dp        naive  w400   0.2027s
+  hybrid-async-dp        naive  w600   0.1920s
+  hybrid-async-dp        naive  w800   0.1986s
+  hybrid-async-dp        naive  w1000  0.2026s
+  hybrid-async-dp        naive  w1200  0.2052s
+  hybrid-async-dp        naive  w2000  0.2110s
+  hybrid-dist-dp         patoh  w400   0.3802s
+  hybrid-dist-dp         patoh  w600   0.2222s
+  hybrid-dist-dp         patoh  w800   0.8143s
+  hybrid-dist-dp         patoh  w1000  0.2114s
+  hybrid-dist-dp         patoh  w1200  0.2143s
+  hybrid-dist-dp         patoh  w2000  0.2192s
+  hybrid-dist-dp         naive  w400   0.2291s
+  hybrid-dist-dp         naive  w600   0.2068s
+  hybrid-dist-dp         naive  w800   0.2124s
+  hybrid-dist-dp         naive  w1000  0.2166s
+  hybrid-dist-dp         naive  w1200  0.2194s
+  hybrid-dist-dp         naive  w2000  0.2214s
+  hybrid-dist-pipelined  patoh  w400   0.4441s
+  hybrid-dist-pipelined  patoh  w600   0.2641s
+  hybrid-dist-pipelined  patoh  w800   0.8837s
+  hybrid-dist-pipelined  patoh  w1000  0.2421s
+  hybrid-dist-pipelined  patoh  w1200  0.2457s
+  hybrid-dist-pipelined  patoh  w2000  0.2513s
+  hybrid-dist-pipelined  naive  w400   0.2473s
+  hybrid-dist-pipelined  naive  w600   0.2378s
+  hybrid-dist-pipelined  naive  w800   0.2442s
+  hybrid-dist-pipelined  naive  w1000  0.2487s
+  hybrid-dist-pipelined  naive  w1200  0.2488s
+  hybrid-dist-pipelined  naive  w2000  0.2556s
+  mpi                    patoh  w400   2.5943s
+  mpi                    patoh  w600   2.6570s
+  mpi                    patoh  w800   2.0398s
+  mpi                    patoh  w1000  2.8828s
+  mpi                    patoh  w1200  3.0485s
+  mpi                    patoh  w2000  2.9527s
+  mpi                    naive  w400   2.8937s
+  mpi                    naive  w600   2.9849s
+  mpi                    naive  w800   3.0840s
+  mpi                    naive  w1000  2.9327s
+  mpi                    naive  w1200  3.0214s
+  mpi                    naive  w2000  3.2695s
+  mpi-gpu                patoh  w400   0.8956s
+  mpi-gpu                patoh  w600   0.6063s
+  mpi-gpu                patoh  w800   1.4910s
+  mpi-gpu                patoh  w1000  0.3405s
+  mpi-gpu                patoh  w1200  0.3484s
+  mpi-gpu                patoh  w2000  0.3478s
+  mpi-gpu                naive  w400   0.5606s
+  mpi-gpu                naive  w600   0.3824s
+  mpi-gpu                naive  w800   0.3405s
+  mpi-gpu                naive  w1000  0.3506s
+  mpi-gpu                naive  w1200  0.3569s
+  mpi-gpu                naive  w2000  0.3634s
+
+######## nxp1_mc64_1 ########
+  cpu                    -      -      7.5372s
+  gpu                    -      -      0.6437s
+  gpu-dp                 -      -      0.5125s
+  gpu-pipelined          -      -      0.9689s
+  hybrid-async           patoh  w400   0.9880s
+  hybrid-async           patoh  w600   0.8782s
+  hybrid-async           patoh  w800   0.8372s
+  hybrid-async           patoh  w1000  0.8003s
+  hybrid-async           patoh  w1200  0.7703s
+  hybrid-async           patoh  w2000  0.7265s
+  hybrid-async           naive  w400   0.9972s
+  hybrid-async           naive  w600   0.9198s
+  hybrid-async           naive  w800   0.8671s
+  hybrid-async           naive  w1000  0.8462s
+  hybrid-async           naive  w1200  0.8212s
+  hybrid-async           naive  w2000  0.7907s
+  hybrid-async-dp        patoh  w400   0.8378s
+  hybrid-async-dp        patoh  w600   0.7444s
+  hybrid-async-dp        patoh  w800   0.6947s
+  hybrid-async-dp        patoh  w1000  0.6528s
+  hybrid-async-dp        patoh  w1200  0.6349s
+  hybrid-async-dp        patoh  w2000  0.5836s
+  hybrid-async-dp        naive  w400   0.8458s
+  hybrid-async-dp        naive  w600   0.7867s
+  hybrid-async-dp        naive  w800   0.7364s
+  hybrid-async-dp        naive  w1000  0.7167s
+  hybrid-async-dp        naive  w1200  0.6885s
+  hybrid-async-dp        naive  w2000  0.6356s
+  hybrid-dist-dp         patoh  w400   0.6144s
+  hybrid-dist-dp         patoh  w600   0.5643s
+  hybrid-dist-dp         patoh  w800   0.5568s
+  hybrid-dist-dp         patoh  w1000  0.5487s
+  hybrid-dist-dp         patoh  w1200  0.5485s
+  hybrid-dist-dp         patoh  w2000  0.5540s
+  hybrid-dist-dp         naive  w400   0.6686s
+  hybrid-dist-dp         naive  w600   0.5759s
+  hybrid-dist-dp         naive  w800   0.5866s
+  hybrid-dist-dp         naive  w1000  0.6027s
+  hybrid-dist-dp         naive  w1200  0.6016s
+  hybrid-dist-dp         naive  w2000  0.6018s
+  hybrid-dist-pipelined  patoh  w400   0.8189s
+  hybrid-dist-pipelined  patoh  w600   0.7581s
+  hybrid-dist-pipelined  patoh  w800   0.7614s
+  hybrid-dist-pipelined  patoh  w1000  0.7641s
+  hybrid-dist-pipelined  patoh  w1200  0.7694s
+  hybrid-dist-pipelined  patoh  w2000  0.7790s
+  hybrid-dist-pipelined  naive  w400   0.8830s
+  hybrid-dist-pipelined  naive  w600   0.7993s
+  hybrid-dist-pipelined  naive  w800   0.8098s
+  hybrid-dist-pipelined  naive  w1000  0.8279s
+  hybrid-dist-pipelined  naive  w1200  0.8315s
+  hybrid-dist-pipelined  naive  w2000  0.8333s
+  mpi                    patoh  w400   6.6999s
+  mpi                    patoh  w600   7.1283s
+  mpi                    patoh  w800   7.6451s
+  mpi                    patoh  w1000  7.5886s
+  mpi                    patoh  w1200  7.7416s
+  mpi                    patoh  w2000  7.8838s
+  mpi                    naive  w400   7.3189s
+  mpi                    naive  w600   7.5248s
+  mpi                    naive  w800   7.8110s
+  mpi                    naive  w1000  8.1724s
+  mpi                    naive  w1200  8.2369s
+  mpi                    naive  w2000  8.3435s
+  mpi-gpu                patoh  w400   1.4754s
+  mpi-gpu                patoh  w600   1.2809s
+  mpi-gpu                patoh  w800   1.3258s
+  mpi-gpu                patoh  w1000  1.3824s
+  mpi-gpu                patoh  w1200  1.3687s
+  mpi-gpu                patoh  w2000  1.4291s
+  mpi-gpu                naive  w400   1.5540s
+  mpi-gpu                naive  w600   1.2086s
+  mpi-gpu                naive  w800   1.2871s
+  mpi-gpu                naive  w1000  1.3388s
+  mpi-gpu                naive  w1200  1.4391s
+  mpi-gpu                naive  w2000  1.3847s
+
+######## torso1 ########
+  cpu                    -      -      9.3684s
+  gpu                    -      -      0.7401s
+  gpu-dp                 -      -      0.6625s
+  gpu-pipelined          -      -      0.9000s
+  hybrid-async           patoh  w400   0.6893s
+  hybrid-async           patoh  w600   0.6347s
+  hybrid-async           patoh  w800   0.6698s
+  hybrid-async           patoh  w1000  0.6666s
+  hybrid-async           patoh  w1200  0.6741s
+  hybrid-async           patoh  w2000  0.6903s
+  hybrid-async           naive  w400   0.6381s
+  hybrid-async           naive  w600   0.6569s
+  hybrid-async           naive  w800   0.6755s
+  hybrid-async           naive  w1000  0.6857s
+  hybrid-async           naive  w1200  0.6941s
+  hybrid-async           naive  w2000  0.7037s
+  hybrid-async-dp        patoh  w400   0.6254s
+  hybrid-async-dp        patoh  w600   0.5598s
+  hybrid-async-dp        patoh  w800   0.5820s
+  hybrid-async-dp        patoh  w1000  0.5810s
+  hybrid-async-dp        patoh  w1200  0.5949s
+  hybrid-async-dp        patoh  w2000  0.6069s
+  hybrid-async-dp        naive  w400   0.5694s
+  hybrid-async-dp        naive  w600   0.5802s
+  hybrid-async-dp        naive  w800   0.5899s
+  hybrid-async-dp        naive  w1000  0.6020s
+  hybrid-async-dp        naive  w1200  0.6110s
+  hybrid-async-dp        naive  w2000  0.6194s
+  hybrid-dist-dp         patoh  w400   0.6357s
+  hybrid-dist-dp         patoh  w600   0.6328s
+  hybrid-dist-dp         patoh  w800   0.6573s
+  hybrid-dist-dp         patoh  w1000  0.6502s
+  hybrid-dist-dp         patoh  w1200  0.6529s
+  hybrid-dist-dp         patoh  w2000  0.6409s
+  hybrid-dist-dp         naive  w400   0.6363s
+  hybrid-dist-dp         naive  w600   0.6509s
+  hybrid-dist-dp         naive  w800   0.6597s
+  hybrid-dist-dp         naive  w1000  0.6603s
+  hybrid-dist-dp         naive  w1200  0.6577s
+  hybrid-dist-dp         naive  w2000  0.6658s
+  hybrid-dist-pipelined  patoh  w400   0.7545s
+  hybrid-dist-pipelined  patoh  w600   0.7660s
+  hybrid-dist-pipelined  patoh  w800   0.7932s
+  hybrid-dist-pipelined  patoh  w1000  0.7703s
+  hybrid-dist-pipelined  patoh  w1200  0.7755s
+  hybrid-dist-pipelined  patoh  w2000  0.7758s
+  hybrid-dist-pipelined  naive  w400   0.7637s
+  hybrid-dist-pipelined  naive  w600   0.7862s
+  hybrid-dist-pipelined  naive  w800   0.7937s
+  hybrid-dist-pipelined  naive  w1000  0.7867s
+  hybrid-dist-pipelined  naive  w1200  0.7997s
+  hybrid-dist-pipelined  naive  w2000  0.7922s
+  mpi                    patoh  w400   7.9390s
+  mpi                    patoh  w600   8.3781s
+  mpi                    patoh  w800   8.4130s
+  mpi                    patoh  w1000  8.7742s
+  mpi                    patoh  w1200  8.5315s
+  mpi                    patoh  w2000  8.8799s
+  mpi                    naive  w400   8.1662s
+  mpi                    naive  w600   8.2427s
+  mpi                    naive  w800   8.7625s
+  mpi                    naive  w1000  8.9463s
+  mpi                    naive  w1200  9.1480s
+  mpi                    naive  w2000  9.0017s
+  mpi-gpu                patoh  w400   1.7105s
+  mpi-gpu                patoh  w600   1.3542s
+  mpi-gpu                patoh  w800   1.0258s
+  mpi-gpu                patoh  w1000  1.0880s
+  mpi-gpu                patoh  w1200  1.1107s
+  mpi-gpu                patoh  w2000  1.1216s
+  mpi-gpu                naive  w400   1.4744s
+  mpi-gpu                naive  w600   1.0955s
+  mpi-gpu                naive  w800   1.1039s
+  mpi-gpu                naive  w1000  1.1457s
+  mpi-gpu                naive  w1200  1.0699s
+  mpi-gpu                naive  w2000  1.0571s
+
+######## para-9 ########
+  cpu                    -      -      6.8365s
+  gpu                    -      -      0.6736s
+  gpu-dp                 -      -      0.5849s
+  gpu-pipelined          -      -      0.8342s
+  hybrid-async           patoh  w400   0.6152s
+  hybrid-async           patoh  w600   0.5997s
+  hybrid-async           patoh  w800   0.6144s
+  hybrid-async           patoh  w1000  0.6255s
+  hybrid-async           patoh  w1200  0.6329s
+  hybrid-async           patoh  w2000  0.6438s
+  hybrid-async           naive  w400   0.6279s
+  hybrid-async           naive  w600   0.5959s
+  hybrid-async           naive  w800   0.6132s
+  hybrid-async           naive  w1000  0.6205s
+  hybrid-async           naive  w1200  0.6291s
+  hybrid-async           naive  w2000  0.6394s
+  hybrid-async-dp        patoh  w400   0.5224s
+  hybrid-async-dp        patoh  w600   0.5228s
+  hybrid-async-dp        patoh  w800   0.5332s
+  hybrid-async-dp        patoh  w1000  0.5430s
+  hybrid-async-dp        patoh  w1200  0.5514s
+  hybrid-async-dp        patoh  w2000  0.5609s
+  hybrid-async-dp        naive  w400   0.5420s
+  hybrid-async-dp        naive  w600   0.5168s
+  hybrid-async-dp        naive  w800   0.5298s
+  hybrid-async-dp        naive  w1000  0.5411s
+  hybrid-async-dp        naive  w1200  0.5436s
+  hybrid-async-dp        naive  w2000  0.5576s
+  hybrid-dist-dp         patoh  w400   0.5899s
+  hybrid-dist-dp         patoh  w600   0.5973s
+  hybrid-dist-dp         patoh  w800   0.6054s
+  hybrid-dist-dp         patoh  w1000  0.6042s
+  hybrid-dist-dp         patoh  w1200  0.6044s
+  hybrid-dist-dp         patoh  w2000  0.6135s
+  hybrid-dist-dp         naive  w400   0.6447s
+  hybrid-dist-dp         naive  w600   0.6284s
+  hybrid-dist-dp         naive  w800   0.6377s
+  hybrid-dist-dp         naive  w1000  0.6410s
+  hybrid-dist-dp         naive  w1200  0.6324s
+  hybrid-dist-dp         naive  w2000  0.6276s
+  hybrid-dist-pipelined  patoh  w400   0.7036s
+  hybrid-dist-pipelined  patoh  w600   0.7302s
+  hybrid-dist-pipelined  patoh  w800   0.7410s
+  hybrid-dist-pipelined  patoh  w1000  0.7531s
+  hybrid-dist-pipelined  patoh  w1200  0.7589s
+  hybrid-dist-pipelined  patoh  w2000  0.7576s
+  hybrid-dist-pipelined  naive  w400   0.7691s
+  hybrid-dist-pipelined  naive  w600   0.7881s
+  hybrid-dist-pipelined  naive  w800   0.7788s
+  hybrid-dist-pipelined  naive  w1000  0.7876s
+  hybrid-dist-pipelined  naive  w1200  0.7834s
+  hybrid-dist-pipelined  naive  w2000  0.7706s
+  mpi                    patoh  w400   6.4458s
+  mpi                    patoh  w600   6.9120s
+  mpi                    patoh  w800   7.3725s
+  mpi                    patoh  w1000  7.3386s
+  mpi                    patoh  w1200  7.4626s
+  mpi                    patoh  w2000  7.8266s
+  mpi                    naive  w400   6.8715s
+  mpi                    naive  w600   7.1806s
+  mpi                    naive  w800   7.4235s
+  mpi                    naive  w1000  7.4368s
+  mpi                    naive  w1200  7.5305s
+  mpi                    naive  w2000  7.6600s
+  mpi-gpu                patoh  w400   1.3744s
+  mpi-gpu                patoh  w600   0.9396s
+  mpi-gpu                patoh  w800   0.7892s
+  mpi-gpu                patoh  w1000  0.8071s
+  mpi-gpu                patoh  w1200  0.8111s
+  mpi-gpu                patoh  w2000  0.8225s
+  mpi-gpu                naive  w400   2.1567s
+  mpi-gpu                naive  w600   1.6474s
+  mpi-gpu                naive  w800   1.4014s
+  mpi-gpu                naive  w1000  1.2570s
+  mpi-gpu                naive  w1200  1.1915s
+  mpi-gpu                naive  w2000  0.9914s
+
+######## FEM_3D_thermal2 ########
+  cpu                    -      -      4.0758s
+  gpu                    -      -      0.5138s
+  gpu-dp                 -      -      0.4358s
+  gpu-pipelined          -      -      0.6467s
+  hybrid-async           patoh  w400   0.4839s
+  hybrid-async           patoh  w600   0.4577s
+  hybrid-async           patoh  w800   0.4636s
+  hybrid-async           patoh  w1000  0.4716s
+  hybrid-async           patoh  w1200  0.4766s
+  hybrid-async           patoh  w2000  0.4874s
+  hybrid-async           naive  w400   0.4864s
+  hybrid-async           naive  w600   0.4574s
+  hybrid-async           naive  w800   0.4649s
+  hybrid-async           naive  w1000  0.4714s
+  hybrid-async           naive  w1200  0.4752s
+  hybrid-async           naive  w2000  0.4842s
+  hybrid-async-dp        patoh  w400   0.4193s
+  hybrid-async-dp        patoh  w600   0.3884s
+  hybrid-async-dp        patoh  w800   0.3903s
+  hybrid-async-dp        patoh  w1000  0.3997s
+  hybrid-async-dp        patoh  w1200  0.4052s
+  hybrid-async-dp        patoh  w2000  0.4135s
+  hybrid-async-dp        naive  w400   0.4230s
+  hybrid-async-dp        naive  w600   0.3872s
+  hybrid-async-dp        naive  w800   0.3954s
+  hybrid-async-dp        naive  w1000  0.4000s
+  hybrid-async-dp        naive  w1200  0.4047s
+  hybrid-async-dp        naive  w2000  0.4116s
+  hybrid-dist-dp         patoh  w400   0.4472s
+  hybrid-dist-dp         patoh  w600   0.4548s
+  hybrid-dist-dp         patoh  w800   0.4588s
+  hybrid-dist-dp         patoh  w1000  0.4624s
+  hybrid-dist-dp         patoh  w1200  0.4594s
+  hybrid-dist-dp         patoh  w2000  0.4629s
+  hybrid-dist-dp         naive  w400   0.4505s
+  hybrid-dist-dp         naive  w600   0.4534s
+  hybrid-dist-dp         naive  w800   0.4552s
+  hybrid-dist-dp         naive  w1000  0.4634s
+  hybrid-dist-dp         naive  w1200  0.4598s
+  hybrid-dist-dp         naive  w2000  0.4586s
+  hybrid-dist-pipelined  patoh  w400   0.5471s
+  hybrid-dist-pipelined  patoh  w600   0.5620s
+  hybrid-dist-pipelined  patoh  w800   0.5675s
+  hybrid-dist-pipelined  patoh  w1000  0.5762s
+  hybrid-dist-pipelined  patoh  w1200  0.5858s
+  hybrid-dist-pipelined  patoh  w2000  0.5826s
+  hybrid-dist-pipelined  naive  w400   0.5443s
+  hybrid-dist-pipelined  naive  w600   0.5623s
+  hybrid-dist-pipelined  naive  w800   0.5690s
+  hybrid-dist-pipelined  naive  w1000  0.5783s
+  hybrid-dist-pipelined  naive  w1200  0.5839s
+  hybrid-dist-pipelined  naive  w2000  0.5802s
+  mpi                    patoh  w400   3.8614s
+  mpi                    patoh  w600   4.1842s
+  mpi                    patoh  w800   4.3144s
+  mpi                    patoh  w1000  4.4006s
+  mpi                    patoh  w1200  4.4419s
+  mpi                    patoh  w2000  4.6163s
+  mpi                    naive  w400   3.9029s
+  mpi                    naive  w600   4.1481s
+  mpi                    naive  w800   4.3025s
+  mpi                    naive  w1000  4.3278s
+  mpi                    naive  w1200  4.4047s
+  mpi                    naive  w2000  4.5429s
+  mpi-gpu                patoh  w400   0.7935s
+  mpi-gpu                patoh  w600   0.6256s
+  mpi-gpu                patoh  w800   0.6467s
+  mpi-gpu                patoh  w1000  0.6566s
+  mpi-gpu                patoh  w1200  0.6659s
+  mpi-gpu                patoh  w2000  0.6834s
+  mpi-gpu                naive  w400   0.7656s
+  mpi-gpu                naive  w600   0.6272s
+  mpi-gpu                naive  w800   0.6504s
+  mpi-gpu                naive  w1000  0.6640s
+  mpi-gpu                naive  w1200  0.6662s
+  mpi-gpu                naive  w2000  0.6794s
+
+######## cage13 ########
+  cpu                    -      -      11.1484s
+  gpu                    -      -      1.0588s
+  gpu-dp                 -      -      0.8883s
+  gpu-pipelined          -      -      1.4500s
+  hybrid-async           patoh  w400   1.1565s
+  hybrid-async           patoh  w600   1.0482s
+  hybrid-async           patoh  w800   0.9988s
+  hybrid-async           patoh  w1000  1.0096s
+  hybrid-async           patoh  w1200  1.0172s
+  hybrid-async           patoh  w2000  1.0381s
+  hybrid-async           naive  w400   1.1675s
+  hybrid-async           naive  w600   1.0329s
+  hybrid-async           naive  w800   0.9913s
+  hybrid-async           naive  w1000  1.0025s
+  hybrid-async           naive  w1200  1.0109s
+  hybrid-async           naive  w2000  1.0306s
+  hybrid-async-dp        patoh  w400   0.9972s
+  hybrid-async-dp        patoh  w600   0.8857s
+  hybrid-async-dp        patoh  w800   0.8275s
+  hybrid-async-dp        patoh  w1000  0.8384s
+  hybrid-async-dp        patoh  w1200  0.8402s
+  hybrid-async-dp        patoh  w2000  0.8584s
+  hybrid-async-dp        naive  w400   0.9941s
+  hybrid-async-dp        naive  w600   0.8630s
+  hybrid-async-dp        naive  w800   0.8268s
+  hybrid-async-dp        naive  w1000  0.8327s
+  hybrid-async-dp        naive  w1200  0.8359s
+  hybrid-async-dp        naive  w2000  0.8602s
+  hybrid-dist-dp         patoh  w400   0.9433s
+  hybrid-dist-dp         patoh  w600   0.9361s
+  hybrid-dist-dp         patoh  w800   0.9409s
+  hybrid-dist-dp         patoh  w1000  0.9235s
+  hybrid-dist-dp         patoh  w1200  0.9452s
+  hybrid-dist-dp         patoh  w2000  0.9458s
+  hybrid-dist-dp         naive  w400   0.9422s
+  hybrid-dist-dp         naive  w600   0.9395s
+  hybrid-dist-dp         naive  w800   0.9308s
+  hybrid-dist-dp         naive  w1000  0.9573s
+  hybrid-dist-dp         naive  w1200  0.9572s
+  hybrid-dist-dp         naive  w2000  0.9691s
+  hybrid-dist-pipelined  patoh  w400   1.1579s
+  hybrid-dist-pipelined  patoh  w600   1.1625s
+  hybrid-dist-pipelined  patoh  w800   1.1834s
+  hybrid-dist-pipelined  patoh  w1000  1.1821s
+  hybrid-dist-pipelined  patoh  w1200  1.1894s
+  hybrid-dist-pipelined  patoh  w2000  1.2104s
+  hybrid-dist-pipelined  naive  w400   1.1866s
+  hybrid-dist-pipelined  naive  w600   1.1947s
+  hybrid-dist-pipelined  naive  w800   1.2015s
+  hybrid-dist-pipelined  naive  w1000  1.2251s
+  hybrid-dist-pipelined  naive  w1200  1.2320s
+  hybrid-dist-pipelined  naive  w2000  1.2409s
+  mpi                    patoh  w400   10.6890s
+  mpi                    patoh  w600   11.0678s
+  mpi                    patoh  w800   11.1749s
+  mpi                    patoh  w1000  11.4434s
+  mpi                    patoh  w1200  11.8760s
+  mpi                    patoh  w2000  12.1335s
+  mpi                    naive  w400   10.3799s
+  mpi                    naive  w600   10.7205s
+  mpi                    naive  w800   11.1053s
+  mpi                    naive  w1000  11.8171s
+  mpi                    naive  w1200  12.0522s
+  mpi                    naive  w2000  12.3085s
+  mpi-gpu                patoh  w400   2.2495s
+  mpi-gpu                patoh  w600   1.5881s
+  mpi-gpu                patoh  w800   1.5311s
+  mpi-gpu                patoh  w1000  1.5672s
+  mpi-gpu                patoh  w1200  1.5676s
+  mpi-gpu                patoh  w2000  1.5881s
+  mpi-gpu                naive  w400   2.2528s
+  mpi-gpu                naive  w600   1.5678s
+  mpi-gpu                naive  w800   1.5911s
+  mpi-gpu                naive  w1000  1.6226s
+  mpi-gpu                naive  w1200  1.6409s
+  mpi-gpu                naive  w2000  1.6667s
+
+######## Goodwin_127 ########
+  cpu                    -      -      6.6449s
+  gpu                    -      -      0.7093s
+  gpu-dp                 -      -      0.6228s
+  gpu-pipelined          -      -      0.8821s
+  hybrid-async           patoh  w400   0.6200s
+  hybrid-async           patoh  w600   0.6300s
+  hybrid-async           patoh  w800   0.6514s
+  hybrid-async           patoh  w1000  0.6561s
+  hybrid-async           patoh  w1200  0.6662s
+  hybrid-async           patoh  w2000  0.6828s
+  hybrid-async           naive  w400   0.6278s
+  hybrid-async           naive  w600   0.6294s
+  hybrid-async           naive  w800   0.6456s
+  hybrid-async           naive  w1000  0.6577s
+  hybrid-async           naive  w1200  0.6655s
+  hybrid-async           naive  w2000  0.6784s
+  hybrid-async-dp        patoh  w400   0.5504s
+  hybrid-async-dp        patoh  w600   0.5502s
+  hybrid-async-dp        patoh  w800   0.5671s
+  hybrid-async-dp        patoh  w1000  0.5717s
+  hybrid-async-dp        patoh  w1200  0.5825s
+  hybrid-async-dp        patoh  w2000  0.5947s
+  hybrid-async-dp        naive  w400   0.5569s
+  hybrid-async-dp        naive  w600   0.5577s
+  hybrid-async-dp        naive  w800   0.5674s
+  hybrid-async-dp        naive  w1000  0.5707s
+  hybrid-async-dp        naive  w1200  0.5775s
+  hybrid-async-dp        naive  w2000  0.5923s
+  hybrid-dist-dp         patoh  w400   0.6201s
+  hybrid-dist-dp         patoh  w600   0.6299s
+  hybrid-dist-dp         patoh  w800   0.6365s
+  hybrid-dist-dp         patoh  w1000  0.6423s
+  hybrid-dist-dp         patoh  w1200  0.6389s
+  hybrid-dist-dp         patoh  w2000  0.6432s
+  hybrid-dist-dp         naive  w400   0.6209s
+  hybrid-dist-dp         naive  w600   0.6290s
+  hybrid-dist-dp         naive  w800   0.6345s
+  hybrid-dist-dp         naive  w1000  0.6376s
+  hybrid-dist-dp         naive  w1200  0.6328s
+  hybrid-dist-dp         naive  w2000  0.6532s
+  hybrid-dist-pipelined  patoh  w400   0.7541s
+  hybrid-dist-pipelined  patoh  w600   0.7740s
+  hybrid-dist-pipelined  patoh  w800   0.7879s
+  hybrid-dist-pipelined  patoh  w1000  0.7951s
+  hybrid-dist-pipelined  patoh  w1200  0.8126s
+  hybrid-dist-pipelined  patoh  w2000  0.8045s
+  hybrid-dist-pipelined  naive  w400   0.7491s
+  hybrid-dist-pipelined  naive  w600   0.7803s
+  hybrid-dist-pipelined  naive  w800   0.7891s
+  hybrid-dist-pipelined  naive  w1000  0.8019s
+  hybrid-dist-pipelined  naive  w1200  0.8025s
+  hybrid-dist-pipelined  naive  w2000  0.8204s
+  mpi                    patoh  w400   6.2154s
+  mpi                    patoh  w600   6.5402s
+  mpi                    patoh  w800   6.8556s
+  mpi                    patoh  w1000  6.8582s
+  mpi                    patoh  w1200  7.0883s
+  mpi                    patoh  w2000  7.3308s
+  mpi                    naive  w400   6.1641s
+  mpi                    naive  w600   6.5177s
+  mpi                    naive  w800   6.6890s
+  mpi                    naive  w1000  6.9067s
+  mpi                    naive  w1200  6.9579s
+  mpi                    naive  w2000  7.0839s
+  mpi-gpu                patoh  w400   1.1828s
+  mpi-gpu                patoh  w600   0.8879s
+  mpi-gpu                patoh  w800   0.8156s
+  mpi-gpu                patoh  w1000  0.8238s
+  mpi-gpu                patoh  w1200  0.8420s
+  mpi-gpu                patoh  w2000  0.8601s
+  mpi-gpu                naive  w400   1.1893s
+  mpi-gpu                naive  w600   0.8725s
+  mpi-gpu                naive  w800   0.8106s
+  mpi-gpu                naive  w1000  0.8237s
+  mpi-gpu                naive  w1200  0.8297s
+  mpi-gpu                naive  w2000  0.8525s
+
+######## bauru5727 ########
+  cpu                    -      -      0.3562s
+  gpu                    -      -      0.1452s
+  gpu-dp                 -      -      0.0966s
+  gpu-pipelined          -      -      0.1917s
+  hybrid-async           patoh  w400   0.1923s
+  hybrid-async           patoh  w600   0.1849s
+  hybrid-async           patoh  w800   0.1719s
+  hybrid-async           patoh  w1000  0.1690s
+  hybrid-async           patoh  w1200  0.1666s
+  hybrid-async           patoh  w2000  0.1623s
+  hybrid-async           naive  w400   0.1733s
+  hybrid-async           naive  w600   0.1728s
+  hybrid-async           naive  w800   0.1680s
+  hybrid-async           naive  w1000  0.1658s
+  hybrid-async           naive  w1200  0.1651s
+  hybrid-async           naive  w2000  0.1616s
+  hybrid-async-dp        patoh  w400   0.1337s
+  hybrid-async-dp        patoh  w600   0.1303s
+  hybrid-async-dp        patoh  w800   0.1264s
+  hybrid-async-dp        patoh  w1000  0.1252s
+  hybrid-async-dp        patoh  w1200  0.1228s
+  hybrid-async-dp        patoh  w2000  0.1152s
+  hybrid-async-dp        naive  w400   0.1289s
+  hybrid-async-dp        naive  w600   0.1230s
+  hybrid-async-dp        naive  w800   0.1180s
+  hybrid-async-dp        naive  w1000  0.1171s
+  hybrid-async-dp        naive  w1200  0.1148s
+  hybrid-async-dp        naive  w2000  0.1110s
+  hybrid-dist-dp         patoh  w400   0.1763s
+  hybrid-dist-dp         patoh  w600   0.1570s
+  hybrid-dist-dp         patoh  w800   0.1471s
+  hybrid-dist-dp         patoh  w1000  0.1401s
+  hybrid-dist-dp         patoh  w1200  0.1406s
+  hybrid-dist-dp         patoh  w2000  0.1393s
+  hybrid-dist-dp         naive  w400   0.1576s
+  hybrid-dist-dp         naive  w600   0.1490s
+  hybrid-dist-dp         naive  w800   0.1416s
+  hybrid-dist-dp         naive  w1000  0.1377s
+  hybrid-dist-dp         naive  w1200  0.1372s
+  hybrid-dist-dp         naive  w2000  0.1359s
+  hybrid-dist-pipelined  patoh  w400   0.2031s
+  hybrid-dist-pipelined  patoh  w600   0.1769s
+  hybrid-dist-pipelined  patoh  w800   0.1637s
+  hybrid-dist-pipelined  patoh  w1000  0.1644s
+  hybrid-dist-pipelined  patoh  w1200  0.1726s
+  hybrid-dist-pipelined  patoh  w2000  0.1651s
+  hybrid-dist-pipelined  naive  w400   0.1784s
+  hybrid-dist-pipelined  naive  w600   0.1696s
+  hybrid-dist-pipelined  naive  w800   0.1655s
+  hybrid-dist-pipelined  naive  w1000  0.1716s
+  hybrid-dist-pipelined  naive  w1200  0.1671s
+  hybrid-dist-pipelined  naive  w2000  0.1610s
+  mpi                    patoh  w400   0.3248s
+  mpi                    patoh  w600   0.3480s
+  mpi                    patoh  w800   0.3577s
+  mpi                    patoh  w1000  0.3765s
+  mpi                    patoh  w1200  0.3884s
+  mpi                    patoh  w2000  0.3847s
+  mpi                    naive  w400   0.3578s
+  mpi                    naive  w600   0.4021s
+  mpi                    naive  w800   0.4037s
+  mpi                    naive  w1000  0.4086s
+  mpi                    naive  w1200  0.4355s
+  mpi                    naive  w2000  0.4135s
+  mpi-gpu                patoh  w400   0.2351s
+  mpi-gpu                patoh  w600   0.2366s
+  mpi-gpu                patoh  w800   0.2420s
+  mpi-gpu                patoh  w1000  0.2413s
+  mpi-gpu                patoh  w1200  0.2421s
+  mpi-gpu                patoh  w2000  0.2482s
+  mpi-gpu                naive  w400   0.2553s
+  mpi-gpu                naive  w600   0.2592s
+  mpi-gpu                naive  w800   0.2578s
+  mpi-gpu                naive  w1000  0.2581s
+  mpi-gpu                naive  w1200  0.2583s
+  mpi-gpu                naive  w2000  0.2574s
+
+######## xenon2 ########
+  cpu                    -      -      4.3926s
+  gpu                    -      -      0.5461s
+  gpu-dp                 -      -      0.4727s
+  gpu-pipelined          -      -      0.6901s
+  hybrid-async           patoh  w400   0.5045s
+  hybrid-async           patoh  w600   0.4936s
+  hybrid-async           patoh  w800   0.4992s
+  hybrid-async           patoh  w1000  0.5069s
+  hybrid-async           patoh  w1200  0.5113s
+  hybrid-async           patoh  w2000  0.5196s
+  hybrid-async           naive  w400   0.5117s
+  hybrid-async           naive  w600   0.4918s
+  hybrid-async           naive  w800   0.4963s
+  hybrid-async           naive  w1000  0.5061s
+  hybrid-async           naive  w1200  0.5069s
+  hybrid-async           naive  w2000  0.5150s
+  hybrid-async-dp        patoh  w400   0.4660s
+  hybrid-async-dp        patoh  w600   0.4158s
+  hybrid-async-dp        patoh  w800   0.4235s
+  hybrid-async-dp        patoh  w1000  0.4378s
+  hybrid-async-dp        patoh  w1200  0.4392s
+  hybrid-async-dp        patoh  w2000  0.4445s
+  hybrid-async-dp        naive  w400   0.4757s
+  hybrid-async-dp        naive  w600   0.4211s
+  hybrid-async-dp        naive  w800   0.4264s
+  hybrid-async-dp        naive  w1000  0.4364s
+  hybrid-async-dp        naive  w1200  0.4353s
+  hybrid-async-dp        naive  w2000  0.4446s
+  hybrid-dist-dp         patoh  w400   0.4828s
+  hybrid-dist-dp         patoh  w600   0.4881s
+  hybrid-dist-dp         patoh  w800   0.4932s
+  hybrid-dist-dp         patoh  w1000  0.4883s
+  hybrid-dist-dp         patoh  w1200  0.4907s
+  hybrid-dist-dp         patoh  w2000  0.4924s
+  hybrid-dist-dp         naive  w400   0.4860s
+  hybrid-dist-dp         naive  w600   0.4889s
+  hybrid-dist-dp         naive  w800   0.4909s
+  hybrid-dist-dp         naive  w1000  0.4967s
+  hybrid-dist-dp         naive  w1200  0.4933s
+  hybrid-dist-dp         naive  w2000  0.4933s
+  hybrid-dist-pipelined  patoh  w400   0.5920s
+  hybrid-dist-pipelined  patoh  w600   0.6063s
+  hybrid-dist-pipelined  patoh  w800   0.6133s
+  hybrid-dist-pipelined  patoh  w1000  0.6220s
+  hybrid-dist-pipelined  patoh  w1200  0.6317s
+  hybrid-dist-pipelined  patoh  w2000  0.6274s
+  hybrid-dist-pipelined  naive  w400   0.5880s
+  hybrid-dist-pipelined  naive  w600   0.6040s
+  hybrid-dist-pipelined  naive  w800   0.6119s
+  hybrid-dist-pipelined  naive  w1000  0.6209s
+  hybrid-dist-pipelined  naive  w1200  0.6229s
+  hybrid-dist-pipelined  naive  w2000  0.6227s
+  mpi                    patoh  w400   4.1519s
+  mpi                    patoh  w600   4.3928s
+  mpi                    patoh  w800   4.5424s
+  mpi                    patoh  w1000  4.6372s
+  mpi                    patoh  w1200  4.7199s
+  mpi                    patoh  w2000  4.8246s
+  mpi                    naive  w400   4.1176s
+  mpi                    naive  w600   4.3737s
+  mpi                    naive  w800   4.5338s
+  mpi                    naive  w1000  4.5936s
+  mpi                    naive  w1200  4.6495s
+  mpi                    naive  w2000  4.7774s
+  mpi-gpu                patoh  w400   0.7993s
+  mpi-gpu                patoh  w600   0.6676s
+  mpi-gpu                patoh  w800   0.6946s
+  mpi-gpu                patoh  w1000  0.7008s
+  mpi-gpu                patoh  w1200  0.7066s
+  mpi-gpu                patoh  w2000  0.7221s
+  mpi-gpu                naive  w400   0.8309s
+  mpi-gpu                naive  w600   0.6704s
+  mpi-gpu                naive  w800   0.6905s
+  mpi-gpu                naive  w1000  0.6994s
+  mpi-gpu                naive  w1200  0.7068s
+  mpi-gpu                naive  w2000  0.7198s
+
+######## ML_Laplace ########
+  cpu                    -      -      5.4964s
+  gpu                    -      -      0.5153s
+  gpu-dp                 -      -      0.4947s
+  gpu-pipelined          -      -      0.6280s
+  hybrid-async           patoh  w400   0.5976s
+  hybrid-async           patoh  w600   0.4562s
+  hybrid-async           patoh  w800   0.4726s
+  hybrid-async           patoh  w1000  0.4801s
+  hybrid-async           patoh  w1200  0.4846s
+  hybrid-async           patoh  w2000  0.4987s
+  hybrid-async           naive  w400   0.6210s
+  hybrid-async           naive  w600   0.4578s
+  hybrid-async           naive  w800   0.4691s
+  hybrid-async           naive  w1000  0.4780s
+  hybrid-async           naive  w1200  0.4811s
+  hybrid-async           naive  w2000  0.4932s
+  hybrid-async-dp        patoh  w400   0.5735s
+  hybrid-async-dp        patoh  w600   0.4332s
+  hybrid-async-dp        patoh  w800   0.4509s
+  hybrid-async-dp        patoh  w1000  0.4569s
+  hybrid-async-dp        patoh  w1200  0.4603s
+  hybrid-async-dp        patoh  w2000  0.4788s
+  hybrid-async-dp        naive  w400   0.5925s
+  hybrid-async-dp        naive  w600   0.4281s
+  hybrid-async-dp        naive  w800   0.4459s
+  hybrid-async-dp        naive  w1000  0.4535s
+  hybrid-async-dp        naive  w1200  0.4585s
+  hybrid-async-dp        naive  w2000  0.4682s
+  hybrid-dist-dp         patoh  w400   0.5331s
+  hybrid-dist-dp         patoh  w600   0.4480s
+  hybrid-dist-dp         patoh  w800   0.4630s
+  hybrid-dist-dp         patoh  w1000  0.4736s
+  hybrid-dist-dp         patoh  w1200  0.4757s
+  hybrid-dist-dp         patoh  w2000  0.4886s
+  hybrid-dist-dp         naive  w400   0.5623s
+  hybrid-dist-dp         naive  w600   0.4510s
+  hybrid-dist-dp         naive  w800   0.4649s
+  hybrid-dist-dp         naive  w1000  0.4657s
+  hybrid-dist-dp         naive  w1200  0.4764s
+  hybrid-dist-dp         naive  w2000  0.4874s
+  hybrid-dist-pipelined  patoh  w400   0.6618s
+  hybrid-dist-pipelined  patoh  w600   0.5324s
+  hybrid-dist-pipelined  patoh  w800   0.5483s
+  hybrid-dist-pipelined  patoh  w1000  0.5587s
+  hybrid-dist-pipelined  patoh  w1200  0.5689s
+  hybrid-dist-pipelined  patoh  w2000  0.5810s
+  hybrid-dist-pipelined  naive  w400   0.6705s
+  hybrid-dist-pipelined  naive  w600   0.5359s
+  hybrid-dist-pipelined  naive  w800   0.5477s
+  hybrid-dist-pipelined  naive  w1000  0.5527s
+  hybrid-dist-pipelined  naive  w1200  0.5621s
+  hybrid-dist-pipelined  naive  w2000  0.5773s
+  mpi                    patoh  w400   4.9630s
+  mpi                    patoh  w600   5.1583s
+  mpi                    patoh  w800   5.3357s
+  mpi                    patoh  w1000  5.4725s
+  mpi                    patoh  w1200  5.6783s
+  mpi                    patoh  w2000  5.8192s
+  mpi                    naive  w400   5.1058s
+  mpi                    naive  w600   5.2209s
+  mpi                    naive  w800   5.3818s
+  mpi                    naive  w1000  5.4079s
+  mpi                    naive  w1200  5.4555s
+  mpi                    naive  w2000  5.5662s
+  mpi-gpu                patoh  w400   1.2410s
+  mpi-gpu                patoh  w600   0.8298s
+  mpi-gpu                patoh  w800   0.6126s
+  mpi-gpu                patoh  w1000  0.4824s
+  mpi-gpu                patoh  w1200  0.4849s
+  mpi-gpu                patoh  w2000  0.4958s
+  mpi-gpu                naive  w400   1.2044s
+  mpi-gpu                naive  w600   0.8234s
+  mpi-gpu                naive  w800   0.6659s
+  mpi-gpu                naive  w1000  0.5239s
+  mpi-gpu                naive  w1200  0.4807s
+  mpi-gpu                naive  w2000  0.4910s
+
+######## trans5 ########
+  cpu                    -      -      1.0715s
+  gpu                    -      -      0.2634s
+  gpu-dp                 -      -      0.1960s
+  gpu-pipelined          -      -      0.3578s
+  hybrid-async           patoh  w400   0.3714s
+  hybrid-async           patoh  w600   0.3685s
+  hybrid-async           patoh  w800   0.3637s
+  hybrid-async           patoh  w1000  0.3676s
+  hybrid-async           patoh  w1200  0.3602s
+  hybrid-async           patoh  w2000  0.3396s
+  hybrid-async           naive  w400   0.3310s
+  hybrid-async           naive  w600   0.3159s
+  hybrid-async           naive  w800   0.3134s
+  hybrid-async           naive  w1000  0.3061s
+  hybrid-async           naive  w1200  0.3058s
+  hybrid-async           naive  w2000  0.2955s
+  hybrid-async-dp        patoh  w400   0.3245s
+  hybrid-async-dp        patoh  w600   0.3012s
+  hybrid-async-dp        patoh  w800   0.2875s
+  hybrid-async-dp        patoh  w1000  0.2928s
+  hybrid-async-dp        patoh  w1200  0.2890s
+  hybrid-async-dp        patoh  w2000  0.2750s
+  hybrid-async-dp        naive  w400   0.2598s
+  hybrid-async-dp        naive  w600   0.2480s
+  hybrid-async-dp        naive  w800   0.2422s
+  hybrid-async-dp        naive  w1000  0.2320s
+  hybrid-async-dp        naive  w1200  0.2218s
+  hybrid-async-dp        naive  w2000  0.2186s
+  hybrid-dist-dp         patoh  w400   0.2998s
+  hybrid-dist-dp         patoh  w600   0.2769s
+  hybrid-dist-dp         patoh  w800   0.2920s
+  hybrid-dist-dp         patoh  w1000  0.2784s
+  hybrid-dist-dp         patoh  w1200  0.2751s
+  hybrid-dist-dp         patoh  w2000  0.2809s
+  hybrid-dist-dp         naive  w400   0.2680s
+  hybrid-dist-dp         naive  w600   0.2538s
+  hybrid-dist-dp         naive  w800   0.2492s
+  hybrid-dist-dp         naive  w1000  0.2368s
+  hybrid-dist-dp         naive  w1200  0.2335s
+  hybrid-dist-dp         naive  w2000  0.2279s
+  hybrid-dist-pipelined  patoh  w400   0.3668s
+  hybrid-dist-pipelined  patoh  w600   0.3550s
+  hybrid-dist-pipelined  patoh  w800   0.3501s
+  hybrid-dist-pipelined  patoh  w1000  0.3531s
+  hybrid-dist-pipelined  patoh  w1200  0.3428s
+  hybrid-dist-pipelined  patoh  w2000  0.3475s
+  hybrid-dist-pipelined  naive  w400   0.3210s
+  hybrid-dist-pipelined  naive  w600   0.3165s
+  hybrid-dist-pipelined  naive  w800   0.3029s
+  hybrid-dist-pipelined  naive  w1000  0.3103s
+  hybrid-dist-pipelined  naive  w1200  0.3089s
+  hybrid-dist-pipelined  naive  w2000  0.3044s
+  mpi                    patoh  w400   1.2163s
+  mpi                    patoh  w600   1.2619s
+  mpi                    patoh  w800   1.2942s
+  mpi                    patoh  w1000  1.3052s
+  mpi                    patoh  w1200  1.3661s
+  mpi                    patoh  w2000  1.3995s
+  mpi                    naive  w400   1.1072s
+  mpi                    naive  w600   1.1714s
+  mpi                    naive  w800   1.2216s
+  mpi                    naive  w1000  1.2462s
+  mpi                    naive  w1200  1.2168s
+  mpi                    naive  w2000  1.3786s
+  mpi-gpu                patoh  w400   0.9039s
+  mpi-gpu                patoh  w600   0.9207s
+  mpi-gpu                patoh  w800   0.9220s
+  mpi-gpu                patoh  w1000  0.9294s
+  mpi-gpu                patoh  w1200  0.9170s
+  mpi-gpu                patoh  w2000  0.9201s
+  mpi-gpu                naive  w400   0.9059s
+  mpi-gpu                naive  w600   0.9070s
+  mpi-gpu                naive  w800   0.9067s
+  mpi-gpu                naive  w1000  0.9094s
+  mpi-gpu                naive  w1200  0.9108s
+  mpi-gpu                naive  w2000  0.8966s
+
+######## inlet ########
+  cpu                    -      -      0.2299s
+  gpu                    -      -      0.1561s
+  gpu-dp                 -      -      0.1053s
+  gpu-pipelined          -      -      0.2036s
+  hybrid-async           patoh  w400   0.1562s
+  hybrid-async           patoh  w600   0.1505s
+  hybrid-async           patoh  w800   0.1500s
+  hybrid-async           patoh  w1000  0.1452s
+  hybrid-async           patoh  w1200  0.1456s
+  hybrid-async           patoh  w2000  0.1434s
+  hybrid-async           naive  w400   0.1593s
+  hybrid-async           naive  w600   0.1510s
+  hybrid-async           naive  w800   0.1462s
+  hybrid-async           naive  w1000  0.1468s
+  hybrid-async           naive  w1200  0.1461s
+  hybrid-async           naive  w2000  0.1433s
+  hybrid-async-dp        patoh  w400   0.1078s
+  hybrid-async-dp        patoh  w600   0.0989s
+  hybrid-async-dp        patoh  w800   0.1004s
+  hybrid-async-dp        patoh  w1000  0.1006s
+  hybrid-async-dp        patoh  w1200  0.1001s
+  hybrid-async-dp        patoh  w2000  0.0995s
+  hybrid-async-dp        naive  w400   0.1044s
+  hybrid-async-dp        naive  w600   0.0985s
+  hybrid-async-dp        naive  w800   0.1004s
+  hybrid-async-dp        naive  w1000  0.1003s
+  hybrid-async-dp        naive  w1200  0.1003s
+  hybrid-async-dp        naive  w2000  0.0999s
+  hybrid-dist-dp         patoh  w400   0.1592s
+  hybrid-dist-dp         patoh  w600   0.1496s
+  hybrid-dist-dp         patoh  w800   0.1454s
+  hybrid-dist-dp         patoh  w1000  0.1455s
+  hybrid-dist-dp         patoh  w1200  0.1459s
+  hybrid-dist-dp         patoh  w2000  0.1456s
+  hybrid-dist-dp         naive  w400   0.1605s
+  hybrid-dist-dp         naive  w600   0.1486s
+  hybrid-dist-dp         naive  w800   0.1460s
+  hybrid-dist-dp         naive  w1000  0.1455s
+  hybrid-dist-dp         naive  w1200  0.1462s
+  hybrid-dist-dp         naive  w2000  0.1465s
+  hybrid-dist-pipelined  patoh  w400   0.1827s
+  hybrid-dist-pipelined  patoh  w600   0.1696s
+  hybrid-dist-pipelined  patoh  w800   0.1700s
+  hybrid-dist-pipelined  patoh  w1000  0.1672s
+  hybrid-dist-pipelined  patoh  w1200  0.1662s
+  hybrid-dist-pipelined  patoh  w2000  0.1691s
+  hybrid-dist-pipelined  naive  w400   0.1827s
+  hybrid-dist-pipelined  naive  w600   0.1640s
+  hybrid-dist-pipelined  naive  w800   0.1713s
+  hybrid-dist-pipelined  naive  w1000  0.1662s
+  hybrid-dist-pipelined  naive  w1200  0.1661s
+  hybrid-dist-pipelined  naive  w2000  0.1687s
+  mpi                    patoh  w400   0.2775s
+  mpi                    patoh  w600   0.2715s
+  mpi                    patoh  w800   0.2945s
+  mpi                    patoh  w1000  0.2952s
+  mpi                    patoh  w1200  0.2951s
+  mpi                    patoh  w2000  0.3114s
+  mpi                    naive  w400   0.2526s
+  mpi                    naive  w600   0.2735s
+  mpi                    naive  w800   0.2910s
+  mpi                    naive  w1000  0.2861s
+  mpi                    naive  w1200  0.2928s
+  mpi                    naive  w2000  0.3351s
+  mpi-gpu                patoh  w400   0.2029s
+  mpi-gpu                patoh  w600   0.2066s
+  mpi-gpu                patoh  w800   0.2100s
+  mpi-gpu                patoh  w1000  0.2110s
+  mpi-gpu                patoh  w1200  0.2117s
+  mpi-gpu                patoh  w2000  0.2125s
+  mpi-gpu                naive  w400   0.2044s
+  mpi-gpu                naive  w600   0.2066s
+  mpi-gpu                naive  w800   0.2107s
+  mpi-gpu                naive  w1000  0.2106s
+  mpi-gpu                naive  w1200  0.2106s
+  mpi-gpu                naive  w2000  0.2129s
+
+######## tmt_unsym ########
+  cpu                    -      -      12.1429s
+  gpu                    -      -      1.1871s
+  gpu-dp                 -      -      0.8909s
+  gpu-pipelined          -      -      1.8320s
+  hybrid-async           patoh  w400   1.7133s
+  hybrid-async           patoh  w600   1.6028s
+  hybrid-async           patoh  w800   1.5499s
+  hybrid-async           patoh  w1000  1.5189s
+  hybrid-async           patoh  w1200  1.4878s
+  hybrid-async           patoh  w2000  1.4423s
+  hybrid-async           naive  w400   1.7033s
+  hybrid-async           naive  w600   1.5944s
+  hybrid-async           naive  w800   1.5379s
+  hybrid-async           naive  w1000  1.5032s
+  hybrid-async           naive  w1200  1.4735s
+  hybrid-async           naive  w2000  1.4513s
+  hybrid-async-dp        patoh  w400   1.4152s
+  hybrid-async-dp        patoh  w600   1.2990s
+  hybrid-async-dp        patoh  w800   1.2494s
+  hybrid-async-dp        patoh  w1000  1.2171s
+  hybrid-async-dp        patoh  w1200  1.1885s
+  hybrid-async-dp        patoh  w2000  1.1559s
+  hybrid-async-dp        naive  w400   1.3862s
+  hybrid-async-dp        naive  w600   1.2988s
+  hybrid-async-dp        naive  w800   1.2430s
+  hybrid-async-dp        naive  w1000  1.2069s
+  hybrid-async-dp        naive  w1200  1.1783s
+  hybrid-async-dp        naive  w2000  1.1256s
+  hybrid-dist-dp         patoh  w400   0.9225s
+  hybrid-dist-dp         patoh  w600   0.9341s
+  hybrid-dist-dp         patoh  w800   0.9260s
+  hybrid-dist-dp         patoh  w1000  0.9220s
+  hybrid-dist-dp         patoh  w1200  0.9329s
+  hybrid-dist-dp         patoh  w2000  0.9526s
+  hybrid-dist-dp         naive  w400   0.9238s
+  hybrid-dist-dp         naive  w600   0.9353s
+  hybrid-dist-dp         naive  w800   0.9234s
+  hybrid-dist-dp         naive  w1000  0.9213s
+  hybrid-dist-dp         naive  w1200  0.9290s
+  hybrid-dist-dp         naive  w2000  0.9543s
+  hybrid-dist-pipelined  patoh  w400   1.3166s
+  hybrid-dist-pipelined  patoh  w600   1.3379s
+  hybrid-dist-pipelined  patoh  w800   1.3496s
+  hybrid-dist-pipelined  patoh  w1000  1.3460s
+  hybrid-dist-pipelined  patoh  w1200  1.3544s
+  hybrid-dist-pipelined  patoh  w2000  1.3730s
+  hybrid-dist-pipelined  naive  w400   1.3200s
+  hybrid-dist-pipelined  naive  w600   1.3413s
+  hybrid-dist-pipelined  naive  w800   1.3454s
+  hybrid-dist-pipelined  naive  w1000  1.3453s
+  hybrid-dist-pipelined  naive  w1200  1.3538s
+  hybrid-dist-pipelined  naive  w2000  1.3754s
+  mpi                    patoh  w400   11.5062s
+  mpi                    patoh  w600   12.0425s
+  mpi                    patoh  w800   12.3336s
+  mpi                    patoh  w1000  12.4727s
+  mpi                    patoh  w1200  12.4544s
+  mpi                    patoh  w2000  12.7607s
+  mpi                    naive  w400   11.4858s
+  mpi                    naive  w600   11.9742s
+  mpi                    naive  w800   12.1888s
+  mpi                    naive  w1000  12.3708s
+  mpi                    naive  w1200  12.4387s
+  mpi                    naive  w2000  12.7274s
+  mpi-gpu                patoh  w400   2.3456s
+  mpi-gpu                patoh  w600   2.1629s
+  mpi-gpu                patoh  w800   2.1701s
+  mpi-gpu                patoh  w1000  2.2031s
+  mpi-gpu                patoh  w1200  2.2316s
+  mpi-gpu                patoh  w2000  2.2981s
+  mpi-gpu                naive  w400   2.3498s
+  mpi-gpu                naive  w600   2.1646s
+  mpi-gpu                naive  w800   2.1707s
+  mpi-gpu                naive  w1000  2.2068s
+  mpi-gpu                naive  w1200  2.2320s
+  mpi-gpu                naive  w2000  2.2805s
+
+######## pre2 ########
+  cpu                    -      -      11.1294s
+  gpu                    -      -      1.1007s
+  gpu-dp                 -      -      0.8642s
+  gpu-pipelined          -      -      1.6088s
+  hybrid-async           patoh  w400   1.4100s
+  hybrid-async           patoh  w600   1.2896s
+  hybrid-async           patoh  w800   1.2284s
+  hybrid-async           patoh  w1000  1.1767s
+  hybrid-async           patoh  w1200  1.1557s
+  hybrid-async           patoh  w2000  1.0888s
+  hybrid-async           naive  w400   1.4161s
+  hybrid-async           naive  w600   1.3101s
+  hybrid-async           naive  w800   1.2342s
+  hybrid-async           naive  w1000  1.1954s
+  hybrid-async           naive  w1200  1.1680s
+  hybrid-async           naive  w2000  1.1069s
+  hybrid-async-dp        patoh  w400   1.1885s
+  hybrid-async-dp        patoh  w600   1.0733s
+  hybrid-async-dp        patoh  w800   1.0070s
+  hybrid-async-dp        patoh  w1000  0.9643s
+  hybrid-async-dp        patoh  w1200  0.9321s
+  hybrid-async-dp        patoh  w2000  0.8683s
+  hybrid-async-dp        naive  w400   1.2044s
+  hybrid-async-dp        naive  w600   1.0903s
+  hybrid-async-dp        naive  w800   1.0323s
+  hybrid-async-dp        naive  w1000  0.9863s
+  hybrid-async-dp        naive  w1200  0.9464s
+  hybrid-async-dp        naive  w2000  0.8787s
+  hybrid-dist-dp         patoh  w400   0.9058s
+  hybrid-dist-dp         patoh  w600   0.8859s
+  hybrid-dist-dp         patoh  w800   0.8803s
+  hybrid-dist-dp         patoh  w1000  0.8964s
+  hybrid-dist-dp         patoh  w1200  0.8954s
+  hybrid-dist-dp         patoh  w2000  0.9144s
+  hybrid-dist-dp         naive  w400   0.8976s
+  hybrid-dist-dp         naive  w600   0.8878s
+  hybrid-dist-dp         naive  w800   0.8939s
+  hybrid-dist-dp         naive  w1000  0.8945s
+  hybrid-dist-dp         naive  w1200  0.8952s
+  hybrid-dist-dp         naive  w2000  0.9115s
+  hybrid-dist-pipelined  patoh  w400   1.2033s
+  hybrid-dist-pipelined  patoh  w600   1.2060s
+  hybrid-dist-pipelined  patoh  w800   1.2288s
+  hybrid-dist-pipelined  patoh  w1000  1.2306s
+  hybrid-dist-pipelined  patoh  w1200  1.2405s
+  hybrid-dist-pipelined  patoh  w2000  1.2474s
+  hybrid-dist-pipelined  naive  w400   1.2074s
+  hybrid-dist-pipelined  naive  w600   1.2166s
+  hybrid-dist-pipelined  naive  w800   1.2289s
+  hybrid-dist-pipelined  naive  w1000  1.2337s
+  hybrid-dist-pipelined  naive  w1200  1.2319s
+  hybrid-dist-pipelined  naive  w2000  1.2490s
+  mpi                    patoh  w400   10.5994s
+  mpi                    patoh  w600   11.2292s
+  mpi                    patoh  w800   11.4408s
+  mpi                    patoh  w1000  11.7122s
+  mpi                    patoh  w1200  11.9415s
+  mpi                    patoh  w2000  12.0818s
+  mpi                    naive  w400   10.6309s
+  mpi                    naive  w600   11.1620s
+  mpi                    naive  w800   11.2667s
+  mpi                    naive  w1000  11.5372s
+  mpi                    naive  w1200  11.6986s
+  mpi                    naive  w2000  11.9180s
+  mpi-gpu                patoh  w400   1.9727s
+  mpi-gpu                patoh  w600   1.7672s
+  mpi-gpu                patoh  w800   1.7917s
+  mpi-gpu                patoh  w1000  1.8263s
+  mpi-gpu                patoh  w1200  1.8802s
+  mpi-gpu                patoh  w2000  1.9097s
+  mpi-gpu                naive  w400   2.0368s
+  mpi-gpu                naive  w600   1.7979s
+  mpi-gpu                naive  w800   1.8114s
+  mpi-gpu                naive  w1000  1.8363s
+  mpi-gpu                naive  w1200  1.8715s
+  mpi-gpu                naive  w2000  1.9104s
+
+######## para-5 ########
+  cpu                    -      -      6.8432s
+  gpu                    -      -      0.6758s
+  gpu-dp                 -      -      0.5922s
+  gpu-pipelined          -      -      0.8336s
+  hybrid-async           patoh  w400   0.6065s
+  hybrid-async           patoh  w600   0.5982s
+  hybrid-async           patoh  w800   0.6158s
+  hybrid-async           patoh  w1000  0.6242s
+  hybrid-async           patoh  w1200  0.6279s
+  hybrid-async           patoh  w2000  0.6456s
+  hybrid-async           naive  w400   0.6266s
+  hybrid-async           naive  w600   0.5965s
+  hybrid-async           naive  w800   0.6123s
+  hybrid-async           naive  w1000  0.6190s
+  hybrid-async           naive  w1200  0.6289s
+  hybrid-async           naive  w2000  0.6393s
+  hybrid-async-dp        patoh  w400   0.5234s
+  hybrid-async-dp        patoh  w600   0.5189s
+  hybrid-async-dp        patoh  w800   0.5367s
+  hybrid-async-dp        patoh  w1000  0.5405s
+  hybrid-async-dp        patoh  w1200  0.5504s
+  hybrid-async-dp        patoh  w2000  0.5625s
+  hybrid-async-dp        naive  w400   0.5487s
+  hybrid-async-dp        naive  w600   0.5199s
+  hybrid-async-dp        naive  w800   0.5330s
+  hybrid-async-dp        naive  w1000  0.5400s
+  hybrid-async-dp        naive  w1200  0.5432s
+  hybrid-async-dp        naive  w2000  0.5557s
+  hybrid-dist-dp         patoh  w400   0.5825s
+  hybrid-dist-dp         patoh  w600   0.5988s
+  hybrid-dist-dp         patoh  w800   0.6055s
+  hybrid-dist-dp         patoh  w1000  0.6044s
+  hybrid-dist-dp         patoh  w1200  0.6012s
+  hybrid-dist-dp         patoh  w2000  0.6104s
+  hybrid-dist-dp         naive  w400   0.6437s
+  hybrid-dist-dp         naive  w600   0.6533s
+  hybrid-dist-dp         naive  w800   0.6285s
+  hybrid-dist-dp         naive  w1000  0.6361s
+  hybrid-dist-dp         naive  w1200  0.6268s
+  hybrid-dist-dp         naive  w2000  0.6312s
+  hybrid-dist-pipelined  patoh  w400   0.7023s
+  hybrid-dist-pipelined  patoh  w600   0.7320s
+  hybrid-dist-pipelined  patoh  w800   0.7413s
+  hybrid-dist-pipelined  patoh  w1000  0.7537s
+  hybrid-dist-pipelined  patoh  w1200  0.7560s
+  hybrid-dist-pipelined  patoh  w2000  0.7566s
+  hybrid-dist-pipelined  naive  w400   0.7714s
+  hybrid-dist-pipelined  naive  w600   0.7684s
+  hybrid-dist-pipelined  naive  w800   0.7776s
+  hybrid-dist-pipelined  naive  w1000  0.7877s
+  hybrid-dist-pipelined  naive  w1200  0.7813s
+  hybrid-dist-pipelined  naive  w2000  0.7668s
+  mpi                    patoh  w400   6.4264s
+  mpi                    patoh  w600   6.9155s
+  mpi                    patoh  w800   7.1713s
+  mpi                    patoh  w1000  7.4401s
+  mpi                    patoh  w1200  7.4394s
+  mpi                    patoh  w2000  7.5934s
+  mpi                    naive  w400   6.8450s
+  mpi                    naive  w600   7.1760s
+  mpi                    naive  w800   7.3781s
+  mpi                    naive  w1000  7.7565s
+  mpi                    naive  w1200  7.5052s
+  mpi                    naive  w2000  7.5532s
+  mpi-gpu                patoh  w400   1.3743s
+  mpi-gpu                patoh  w600   0.9414s
+  mpi-gpu                patoh  w800   0.7916s
+  mpi-gpu                patoh  w1000  0.8058s
+  mpi-gpu                patoh  w1200  0.8147s
+  mpi-gpu                patoh  w2000  0.8229s
+  mpi-gpu                naive  w400   2.1533s
+  mpi-gpu                naive  w600   1.6585s
+  mpi-gpu                naive  w800   1.3921s
+  mpi-gpu                naive  w1000  1.2610s
+  mpi-gpu                naive  w1200  1.1870s
+  mpi-gpu                naive  w2000  0.9861s
+
+######## largebasis ########
+  cpu                    -      -      8.4850s
+  gpu                    -      -      0.9099s
+  gpu-dp                 -      -      0.7478s
+  gpu-pipelined          -      -      1.2772s
+  hybrid-async           patoh  w400   0.9773s
+  hybrid-async           patoh  w600   0.9188s
+  hybrid-async           patoh  w800   0.8638s
+  hybrid-async           patoh  w1000  0.8674s
+  hybrid-async           patoh  w1200  0.8751s
+  hybrid-async           patoh  w2000  0.8809s
+  hybrid-async           naive  w400   0.9942s
+  hybrid-async           naive  w600   0.9010s
+  hybrid-async           naive  w800   0.8678s
+  hybrid-async           naive  w1000  0.8699s
+  hybrid-async           naive  w1200  0.8752s
+  hybrid-async           naive  w2000  0.8826s
+  hybrid-async-dp        patoh  w400   0.8290s
+  hybrid-async-dp        patoh  w600   0.7464s
+  hybrid-async-dp        patoh  w800   0.7116s
+  hybrid-async-dp        patoh  w1000  0.7004s
+  hybrid-async-dp        patoh  w1200  0.7123s
+  hybrid-async-dp        patoh  w2000  0.7211s
+  hybrid-async-dp        naive  w400   0.8513s
+  hybrid-async-dp        naive  w600   0.7626s
+  hybrid-async-dp        naive  w800   0.7164s
+  hybrid-async-dp        naive  w1000  0.7079s
+  hybrid-async-dp        naive  w1200  0.7047s
+  hybrid-async-dp        naive  w2000  0.7273s
+  hybrid-dist-dp         patoh  w400   0.7645s
+  hybrid-dist-dp         patoh  w600   0.7753s
+  hybrid-dist-dp         patoh  w800   0.7665s
+  hybrid-dist-dp         patoh  w1000  0.7713s
+  hybrid-dist-dp         patoh  w1200  0.7734s
+  hybrid-dist-dp         patoh  w2000  0.7828s
+  hybrid-dist-dp         naive  w400   0.8521s
+  hybrid-dist-dp         naive  w600   0.8315s
+  hybrid-dist-dp         naive  w800   0.8190s
+  hybrid-dist-dp         naive  w1000  0.8113s
+  hybrid-dist-dp         naive  w1200  0.8085s
+  hybrid-dist-dp         naive  w2000  0.8035s
+  hybrid-dist-pipelined  patoh  w400   0.9915s
+  hybrid-dist-pipelined  patoh  w600   1.0257s
+  hybrid-dist-pipelined  patoh  w800   1.0196s
+  hybrid-dist-pipelined  patoh  w1000  1.0250s
+  hybrid-dist-pipelined  patoh  w1200  1.0345s
+  hybrid-dist-pipelined  patoh  w2000  1.0419s
+  hybrid-dist-pipelined  naive  w400   1.0864s
+  hybrid-dist-pipelined  naive  w600   1.0820s
+  hybrid-dist-pipelined  naive  w800   1.0759s
+  hybrid-dist-pipelined  naive  w1000  1.0696s
+  hybrid-dist-pipelined  naive  w1200  1.0716s
+  hybrid-dist-pipelined  naive  w2000  1.0652s
+  mpi                    patoh  w400   7.7457s
+  mpi                    patoh  w600   7.9842s
+  mpi                    patoh  w800   8.2649s
+  mpi                    patoh  w1000  8.3125s
+  mpi                    patoh  w1200  8.6309s
+  mpi                    patoh  w2000  8.6083s
+  mpi                    naive  w400   8.3344s
+  mpi                    naive  w600   8.6598s
+  mpi                    naive  w800   8.6352s
+  mpi                    naive  w1000  8.8302s
+  mpi                    naive  w1200  8.9429s
+  mpi                    naive  w2000  9.0134s
+  mpi-gpu                patoh  w400   1.3352s
+  mpi-gpu                patoh  w600   1.2547s
+  mpi-gpu                patoh  w800   1.2986s
+  mpi-gpu                patoh  w1000  1.3273s
+  mpi-gpu                patoh  w1200  1.3539s
+  mpi-gpu                patoh  w2000  1.3969s
+  mpi-gpu                naive  w400   2.1633s
+  mpi-gpu                naive  w600   1.6798s
+  mpi-gpu                naive  w800   1.4905s
+  mpi-gpu                naive  w1000  1.4828s
+  mpi-gpu                naive  w1200  1.4902s
+  mpi-gpu                naive  w2000  1.4866s
+
+######## trans4 ########
+  cpu                    -      -      1.0718s
+  gpu                    -      -      0.2639s
+  gpu-dp                 -      -      0.1960s
+  gpu-pipelined          -      -      0.3577s
+  hybrid-async           patoh  w400   0.3885s
+  hybrid-async           patoh  w600   0.3792s
+  hybrid-async           patoh  w800   0.3774s
+  hybrid-async           patoh  w1000  0.3693s
+  hybrid-async           patoh  w1200  0.3585s
+  hybrid-async           patoh  w2000  0.3468s
+  hybrid-async           naive  w400   0.3301s
+  hybrid-async           naive  w600   0.3190s
+  hybrid-async           naive  w800   0.3098s
+  hybrid-async           naive  w1000  0.3080s
+  hybrid-async           naive  w1200  0.3030s
+  hybrid-async           naive  w2000  0.2973s
+  hybrid-async-dp        patoh  w400   0.3078s
+  hybrid-async-dp        patoh  w600   0.2948s
+  hybrid-async-dp        patoh  w800   0.2954s
+  hybrid-async-dp        patoh  w1000  0.2807s
+  hybrid-async-dp        patoh  w1200  0.2854s
+  hybrid-async-dp        patoh  w2000  0.2787s
+  hybrid-async-dp        naive  w400   0.2612s
+  hybrid-async-dp        naive  w600   0.2486s
+  hybrid-async-dp        naive  w800   0.2400s
+  hybrid-async-dp        naive  w1000  0.2298s
+  hybrid-async-dp        naive  w1200  0.2241s
+  hybrid-async-dp        naive  w2000  0.2167s
+  hybrid-dist-dp         patoh  w400   0.2913s
+  hybrid-dist-dp         patoh  w600   0.2861s
+  hybrid-dist-dp         patoh  w800   0.2866s
+  hybrid-dist-dp         patoh  w1000  0.2711s
+  hybrid-dist-dp         patoh  w1200  0.2805s
+  hybrid-dist-dp         patoh  w2000  0.2763s
+  hybrid-dist-dp         naive  w400   0.2664s
+  hybrid-dist-dp         naive  w600   0.2573s
+  hybrid-dist-dp         naive  w800   0.2444s
+  hybrid-dist-dp         naive  w1000  0.2374s
+  hybrid-dist-dp         naive  w1200  0.2313s
+  hybrid-dist-dp         naive  w2000  0.2282s
+  hybrid-dist-pipelined  patoh  w400   0.3646s
+  hybrid-dist-pipelined  patoh  w600   0.3545s
+  hybrid-dist-pipelined  patoh  w800   0.3573s
+  hybrid-dist-pipelined  patoh  w1000  0.3438s
+  hybrid-dist-pipelined  patoh  w1200  0.3388s
+  hybrid-dist-pipelined  patoh  w2000  0.3390s
+  hybrid-dist-pipelined  naive  w400   0.3216s
+  hybrid-dist-pipelined  naive  w600   0.3101s
+  hybrid-dist-pipelined  naive  w800   0.3022s
+  hybrid-dist-pipelined  naive  w1000  0.3115s
+  hybrid-dist-pipelined  naive  w1200  0.3065s
+  hybrid-dist-pipelined  naive  w2000  0.3016s
+  mpi                    patoh  w400   1.1767s
+  mpi                    patoh  w600   1.2508s
+  mpi                    patoh  w800   1.2908s
+  mpi                    patoh  w1000  1.3567s
+  mpi                    patoh  w1200  1.3370s
+  mpi                    patoh  w2000  1.3749s
+  mpi                    naive  w400   1.1704s
+  mpi                    naive  w600   1.1758s
+  mpi                    naive  w800   1.2528s
+  mpi                    naive  w1000  1.2314s
+  mpi                    naive  w1200  1.2609s
+  mpi                    naive  w2000  1.3050s
+  mpi-gpu                patoh  w400   0.9000s
+  mpi-gpu                patoh  w600   0.9172s
+  mpi-gpu                patoh  w800   0.9275s
+  mpi-gpu                patoh  w1000  0.9297s
+  mpi-gpu                patoh  w1200  0.9196s
+  mpi-gpu                patoh  w2000  0.9221s
+  mpi-gpu                naive  w400   0.9033s
+  mpi-gpu                naive  w600   0.9045s
+  mpi-gpu                naive  w800   0.9063s
+  mpi-gpu                naive  w1000  0.9060s
+  mpi-gpu                naive  w1200  0.9085s
+  mpi-gpu                naive  w2000  0.8991s
+
+######## venkat50 ########
+  cpu                    -      -      1.4045s
+  gpu                    -      -      0.2896s
+  gpu-dp                 -      -      0.2522s
+  gpu-pipelined          -      -      0.3691s
+  hybrid-async           patoh  w400   0.2878s
+  hybrid-async           patoh  w600   0.2718s
+  hybrid-async           patoh  w800   0.2749s
+  hybrid-async           patoh  w1000  0.2757s
+  hybrid-async           patoh  w1200  0.2772s
+  hybrid-async           patoh  w2000  0.2815s
+  hybrid-async           naive  w400   0.2967s
+  hybrid-async           naive  w600   0.2769s
+  hybrid-async           naive  w800   0.2741s
+  hybrid-async           naive  w1000  0.2761s
+  hybrid-async           naive  w1200  0.2745s
+  hybrid-async           naive  w2000  0.2819s
+  hybrid-async-dp        patoh  w400   0.2223s
+  hybrid-async-dp        patoh  w600   0.2238s
+  hybrid-async-dp        patoh  w800   0.2297s
+  hybrid-async-dp        patoh  w1000  0.2302s
+  hybrid-async-dp        patoh  w1200  0.2326s
+  hybrid-async-dp        patoh  w2000  0.2383s
+  hybrid-async-dp        naive  w400   0.2273s
+  hybrid-async-dp        naive  w600   0.2237s
+  hybrid-async-dp        naive  w800   0.2298s
+  hybrid-async-dp        naive  w1000  0.2302s
+  hybrid-async-dp        naive  w1200  0.2314s
+  hybrid-async-dp        naive  w2000  0.2385s
+  hybrid-dist-dp         patoh  w400   0.2869s
+  hybrid-dist-dp         patoh  w600   0.2906s
+  hybrid-dist-dp         patoh  w800   0.2911s
+  hybrid-dist-dp         patoh  w1000  0.2828s
+  hybrid-dist-dp         patoh  w1200  0.2803s
+  hybrid-dist-dp         patoh  w2000  0.2867s
+  hybrid-dist-dp         naive  w400   0.2863s
+  hybrid-dist-dp         naive  w600   0.2914s
+  hybrid-dist-dp         naive  w800   0.2944s
+  hybrid-dist-dp         naive  w1000  0.2823s
+  hybrid-dist-dp         naive  w1200  0.2812s
+  hybrid-dist-dp         naive  w2000  0.2876s
+  hybrid-dist-pipelined  patoh  w400   0.3503s
+  hybrid-dist-pipelined  patoh  w600   0.3550s
+  hybrid-dist-pipelined  patoh  w800   0.3344s
+  hybrid-dist-pipelined  patoh  w1000  0.3327s
+  hybrid-dist-pipelined  patoh  w1200  0.3342s
+  hybrid-dist-pipelined  patoh  w2000  0.3435s
+  hybrid-dist-pipelined  naive  w400   0.3532s
+  hybrid-dist-pipelined  naive  w600   0.3519s
+  hybrid-dist-pipelined  naive  w800   0.3458s
+  hybrid-dist-pipelined  naive  w1000  0.3365s
+  hybrid-dist-pipelined  naive  w1200  0.3386s
+  hybrid-dist-pipelined  naive  w2000  0.3501s
+  mpi                    patoh  w400   1.4110s
+  mpi                    patoh  w600   1.5181s
+  mpi                    patoh  w800   1.5759s
+  mpi                    patoh  w1000  1.6129s
+  mpi                    patoh  w1200  1.6492s
+  mpi                    patoh  w2000  1.7077s
+  mpi                    naive  w400   1.4391s
+  mpi                    naive  w600   1.5501s
+  mpi                    naive  w800   1.6449s
+  mpi                    naive  w1000  1.6348s
+  mpi                    naive  w1200  1.6670s
+  mpi                    naive  w2000  1.8034s
+  mpi-gpu                patoh  w400   0.3914s
+  mpi-gpu                patoh  w600   0.3570s
+  mpi-gpu                patoh  w800   0.3646s
+  mpi-gpu                patoh  w1000  0.3660s
+  mpi-gpu                patoh  w1200  0.3698s
+  mpi-gpu                patoh  w2000  0.3730s
+  mpi-gpu                naive  w400   0.3901s
+  mpi-gpu                naive  w600   0.3803s
+  mpi-gpu                naive  w800   0.3872s
+  mpi-gpu                naive  w1000  0.3902s
+  mpi-gpu                naive  w1200  0.3928s
+  mpi-gpu                naive  w2000  0.4021s
+
+######## appu ########
+  cpu                    -      -      1.5955s
+  gpu                    -      -      0.2765s
+  gpu-dp                 -      -      0.2270s
+  gpu-pipelined          -      -      0.3419s
+  hybrid-async           patoh  w400   0.2450s
+  hybrid-async           patoh  w600   0.2492s
+  hybrid-async           patoh  w800   0.2539s
+  hybrid-async           patoh  w1000  0.2550s
+  hybrid-async           patoh  w1200  0.2618s
+  hybrid-async           patoh  w2000  0.2615s
+  hybrid-async           naive  w400   0.2431s
+  hybrid-async           naive  w600   0.2470s
+  hybrid-async           naive  w800   0.2537s
+  hybrid-async           naive  w1000  0.2543s
+  hybrid-async           naive  w1200  0.2603s
+  hybrid-async           naive  w2000  0.2604s
+  hybrid-async-dp        patoh  w400   0.1946s
+  hybrid-async-dp        patoh  w600   0.1994s
+  hybrid-async-dp        patoh  w800   0.2059s
+  hybrid-async-dp        patoh  w1000  0.2064s
+  hybrid-async-dp        patoh  w1200  0.2130s
+  hybrid-async-dp        patoh  w2000  0.2137s
+  hybrid-async-dp        naive  w400   0.1958s
+  hybrid-async-dp        naive  w600   0.1983s
+  hybrid-async-dp        naive  w800   0.2063s
+  hybrid-async-dp        naive  w1000  0.2057s
+  hybrid-async-dp        naive  w1200  0.2122s
+  hybrid-async-dp        naive  w2000  0.2137s
+  hybrid-dist-dp         patoh  w400   0.2587s
+  hybrid-dist-dp         patoh  w600   0.2648s
+  hybrid-dist-dp         patoh  w800   0.2722s
+  hybrid-dist-dp         patoh  w1000  0.2579s
+  hybrid-dist-dp         patoh  w1200  0.2643s
+  hybrid-dist-dp         patoh  w2000  0.2675s
+  hybrid-dist-dp         naive  w400   0.2618s
+  hybrid-dist-dp         naive  w600   0.2698s
+  hybrid-dist-dp         naive  w800   0.2679s
+  hybrid-dist-dp         naive  w1000  0.2621s
+  hybrid-dist-dp         naive  w1200  0.2640s
+  hybrid-dist-dp         naive  w2000  0.2678s
+  hybrid-dist-pipelined  patoh  w400   0.3096s
+  hybrid-dist-pipelined  patoh  w600   0.3167s
+  hybrid-dist-pipelined  patoh  w800   0.3180s
+  hybrid-dist-pipelined  patoh  w1000  0.2992s
+  hybrid-dist-pipelined  patoh  w1200  0.3053s
+  hybrid-dist-pipelined  patoh  w2000  0.3051s
+  hybrid-dist-pipelined  naive  w400   0.3056s
+  hybrid-dist-pipelined  naive  w600   0.3119s
+  hybrid-dist-pipelined  naive  w800   0.3193s
+  hybrid-dist-pipelined  naive  w1000  0.3048s
+  hybrid-dist-pipelined  naive  w1200  0.3047s
+  hybrid-dist-pipelined  naive  w2000  0.3054s
+  mpi                    patoh  w400   1.6060s
+  mpi                    patoh  w600   1.7668s
+  mpi                    patoh  w800   1.8525s
+  mpi                    patoh  w1000  1.9486s
+  mpi                    patoh  w1200  1.9718s
+  mpi                    patoh  w2000  2.2138s
+  mpi                    naive  w400   1.6336s
+  mpi                    naive  w600   1.7596s
+  mpi                    naive  w800   1.8616s
+  mpi                    naive  w1000  1.8850s
+  mpi                    naive  w1200  1.9419s
+  mpi                    naive  w2000  2.0338s
+  mpi-gpu                patoh  w400   0.4913s
+  mpi-gpu                patoh  w600   0.4250s
+  mpi-gpu                patoh  w800   0.3984s
+  mpi-gpu                patoh  w1000  0.3739s
+  mpi-gpu                patoh  w1200  0.3523s
+  mpi-gpu                patoh  w2000  0.3252s
+  mpi-gpu                naive  w400   0.4930s
+  mpi-gpu                naive  w600   0.4315s
+  mpi-gpu                naive  w800   0.4043s
+  mpi-gpu                naive  w1000  0.3899s
+  mpi-gpu                naive  w1200  0.3778s
+  mpi-gpu                naive  w2000  0.3357s
+
+######## k3plates ########
+  cpu                    -      -      0.2797s
+  gpu                    -      -      0.1613s
+  gpu-dp                 -      -      0.1093s
+  gpu-pipelined          -      -      0.2098s
+  hybrid-async           patoh  w400   0.1596s
+  hybrid-async           patoh  w600   0.1542s
+  hybrid-async           patoh  w800   0.1524s
+  hybrid-async           patoh  w1000  0.1493s
+  hybrid-async           patoh  w1200  0.1456s
+  hybrid-async           patoh  w2000  0.1446s
+  hybrid-async           naive  w400   0.1565s
+  hybrid-async           naive  w600   0.1509s
+  hybrid-async           naive  w800   0.1484s
+  hybrid-async           naive  w1000  0.1482s
+  hybrid-async           naive  w1200  0.1493s
+  hybrid-async           naive  w2000  0.1437s
+  hybrid-async-dp        patoh  w400   0.1020s
+  hybrid-async-dp        patoh  w600   0.1012s
+  hybrid-async-dp        patoh  w800   0.1006s
+  hybrid-async-dp        patoh  w1000  0.0993s
+  hybrid-async-dp        patoh  w1200  0.0991s
+  hybrid-async-dp        patoh  w2000  0.0980s
+  hybrid-async-dp        naive  w400   0.1015s
+  hybrid-async-dp        naive  w600   0.1009s
+  hybrid-async-dp        naive  w800   0.1000s
+  hybrid-async-dp        naive  w1000  0.0993s
+  hybrid-async-dp        naive  w1200  0.0987s
+  hybrid-async-dp        naive  w2000  0.0986s
+  hybrid-dist-dp         patoh  w400   0.1639s
+  hybrid-dist-dp         patoh  w600   0.1504s
+  hybrid-dist-dp         patoh  w800   0.1458s
+  hybrid-dist-dp         patoh  w1000  0.1449s
+  hybrid-dist-dp         patoh  w1200  0.1446s
+  hybrid-dist-dp         patoh  w2000  0.1437s
+  hybrid-dist-dp         naive  w400   0.1649s
+  hybrid-dist-dp         naive  w600   0.1520s
+  hybrid-dist-dp         naive  w800   0.1453s
+  hybrid-dist-dp         naive  w1000  0.1452s
+  hybrid-dist-dp         naive  w1200  0.1449s
+  hybrid-dist-dp         naive  w2000  0.1439s
+  hybrid-dist-pipelined  patoh  w400   0.2026s
+  hybrid-dist-pipelined  patoh  w600   0.1804s
+  hybrid-dist-pipelined  patoh  w800   0.1664s
+  hybrid-dist-pipelined  patoh  w1000  0.1706s
+  hybrid-dist-pipelined  patoh  w1200  0.1652s
+  hybrid-dist-pipelined  patoh  w2000  0.1677s
+  hybrid-dist-pipelined  naive  w400   0.2027s
+  hybrid-dist-pipelined  naive  w600   0.1778s
+  hybrid-dist-pipelined  naive  w800   0.1671s
+  hybrid-dist-pipelined  naive  w1000  0.1701s
+  hybrid-dist-pipelined  naive  w1200  0.1664s
+  hybrid-dist-pipelined  naive  w2000  0.1713s
+  mpi                    patoh  w400   0.3202s
+  mpi                    patoh  w600   0.3366s
+  mpi                    patoh  w800   0.3324s
+  mpi                    patoh  w1000  0.3362s
+  mpi                    patoh  w1200  0.3439s
+  mpi                    patoh  w2000  0.3538s
+  mpi                    naive  w400   0.3149s
+  mpi                    naive  w600   0.3289s
+  mpi                    naive  w800   0.3404s
+  mpi                    naive  w1000  0.3692s
+  mpi                    naive  w1200  0.3708s
+  mpi                    naive  w2000  0.3834s
+  mpi-gpu                patoh  w400   0.2087s
+  mpi-gpu                patoh  w600   0.2099s
+  mpi-gpu                patoh  w800   0.2128s
+  mpi-gpu                patoh  w1000  0.2125s
+  mpi-gpu                patoh  w1200  0.2123s
+  mpi-gpu                patoh  w2000  0.2130s
+  mpi-gpu                naive  w400   0.2087s
+  mpi-gpu                naive  w600   0.2094s
+  mpi-gpu                naive  w800   0.2111s
+  mpi-gpu                naive  w1000  0.2127s
+  mpi-gpu                naive  w1200  0.2121s
+  mpi-gpu                naive  w2000  0.2163s
+
+######## marine1 ########
+  cpu                    -      -      9.7023s
+  gpu                    -      -      0.9195s
+  gpu-dp                 -      -      0.7836s
+  gpu-pipelined          -      -      1.2683s
+  hybrid-async           patoh  w400   1.0161s
+  hybrid-async           patoh  w600   0.9078s
+  hybrid-async           patoh  w800   0.8679s
+  hybrid-async           patoh  w1000  0.8724s
+  hybrid-async           patoh  w1200  0.8795s
+  hybrid-async           patoh  w2000  0.8942s
+  hybrid-async           naive  w400   1.0307s
+  hybrid-async           naive  w600   0.9125s
+  hybrid-async           naive  w800   0.8669s
+  hybrid-async           naive  w1000  0.8717s
+  hybrid-async           naive  w1200  0.8785s
+  hybrid-async           naive  w2000  0.8925s
+  hybrid-async-dp        patoh  w400   0.8792s
+  hybrid-async-dp        patoh  w600   0.7646s
+  hybrid-async-dp        patoh  w800   0.7253s
+  hybrid-async-dp        patoh  w1000  0.7203s
+  hybrid-async-dp        patoh  w1200  0.7380s
+  hybrid-async-dp        patoh  w2000  0.7468s
+  hybrid-async-dp        naive  w400   0.8841s
+  hybrid-async-dp        naive  w600   0.7821s
+  hybrid-async-dp        naive  w800   0.7300s
+  hybrid-async-dp        naive  w1000  0.7300s
+  hybrid-async-dp        naive  w1200  0.7277s
+  hybrid-async-dp        naive  w2000  0.7413s
+  hybrid-dist-dp         patoh  w400   0.7856s
+  hybrid-dist-dp         patoh  w600   0.7925s
+  hybrid-dist-dp         patoh  w800   0.7820s
+  hybrid-dist-dp         patoh  w1000  0.8067s
+  hybrid-dist-dp         patoh  w1200  0.8011s
+  hybrid-dist-dp         patoh  w2000  0.8115s
+  hybrid-dist-dp         naive  w400   0.7774s
+  hybrid-dist-dp         naive  w600   0.8031s
+  hybrid-dist-dp         naive  w800   0.7906s
+  hybrid-dist-dp         naive  w1000  0.8191s
+  hybrid-dist-dp         naive  w1200  0.8111s
+  hybrid-dist-dp         naive  w2000  0.8139s
+  hybrid-dist-pipelined  patoh  w400   0.9988s
+  hybrid-dist-pipelined  patoh  w600   1.0280s
+  hybrid-dist-pipelined  patoh  w800   1.0343s
+  hybrid-dist-pipelined  patoh  w1000  1.0441s
+  hybrid-dist-pipelined  patoh  w1200  1.0431s
+  hybrid-dist-pipelined  patoh  w2000  1.0634s
+  hybrid-dist-pipelined  naive  w400   1.0154s
+  hybrid-dist-pipelined  naive  w600   1.0422s
+  hybrid-dist-pipelined  naive  w800   1.0348s
+  hybrid-dist-pipelined  naive  w1000  1.0551s
+  hybrid-dist-pipelined  naive  w1200  1.0616s
+  hybrid-dist-pipelined  naive  w2000  1.0563s
+  mpi                    patoh  w400   8.9355s
+  mpi                    patoh  w600   9.6157s
+  mpi                    patoh  w800   9.9108s
+  mpi                    patoh  w1000  9.9959s
+  mpi                    patoh  w1200  10.4736s
+  mpi                    patoh  w2000  10.7697s
+  mpi                    naive  w400   9.3630s
+  mpi                    naive  w600   9.6535s
+  mpi                    naive  w800   10.2074s
+  mpi                    naive  w1000  10.1204s
+  mpi                    naive  w1200  10.4972s
+  mpi                    naive  w2000  10.6521s
+  mpi-gpu                patoh  w400   1.8612s
+  mpi-gpu                patoh  w600   1.3086s
+  mpi-gpu                patoh  w800   1.2516s
+  mpi-gpu                patoh  w1000  1.2559s
+  mpi-gpu                patoh  w1200  1.2939s
+  mpi-gpu                patoh  w2000  1.3380s
+  mpi-gpu                naive  w400   2.0675s
+  mpi-gpu                naive  w600   1.4594s
+  mpi-gpu                naive  w800   1.3434s
+  mpi-gpu                naive  w1000  1.3580s
+  mpi-gpu                naive  w1200  1.3644s
+  mpi-gpu                naive  w2000  1.3791s
+
+######## shar_te2-b3 ########
+  cpu                    -      -      1.5859s
+  gpu                    -      -      0.3121s
+  gpu-dp                 -      -      0.2409s
+  gpu-pipelined          -      -      0.4255s
+  hybrid-async           patoh  w400   0.5046s
+  hybrid-async           patoh  w600   0.4753s
+  hybrid-async           patoh  w800   0.4730s
+  hybrid-async           patoh  w1000  0.4572s
+  hybrid-async           patoh  w1200  0.4518s
+  hybrid-async           patoh  w2000  0.4339s
+  hybrid-async           naive  w400   0.5048s
+  hybrid-async           naive  w600   0.4708s
+  hybrid-async           naive  w800   0.4623s
+  hybrid-async           naive  w1000  0.4548s
+  hybrid-async           naive  w1200  0.4517s
+  hybrid-async           naive  w2000  0.4237s
+  hybrid-async-dp        patoh  w400   0.4158s
+  hybrid-async-dp        patoh  w600   0.3964s
+  hybrid-async-dp        patoh  w800   0.3795s
+  hybrid-async-dp        patoh  w1000  0.3628s
+  hybrid-async-dp        patoh  w1200  0.3590s
+  hybrid-async-dp        patoh  w2000  0.3393s
+  hybrid-async-dp        naive  w400   0.4135s
+  hybrid-async-dp        naive  w600   0.3948s
+  hybrid-async-dp        naive  w800   0.3794s
+  hybrid-async-dp        naive  w1000  0.3631s
+  hybrid-async-dp        naive  w1200  0.3516s
+  hybrid-async-dp        naive  w2000  0.3311s
+  hybrid-dist-dp         patoh  w400   0.3953s
+  hybrid-dist-dp         patoh  w600   0.3613s
+  hybrid-dist-dp         patoh  w800   0.3188s
+  hybrid-dist-dp         patoh  w1000  0.3179s
+  hybrid-dist-dp         patoh  w1200  0.2953s
+  hybrid-dist-dp         patoh  w2000  0.2893s
+  hybrid-dist-dp         naive  w400   0.3627s
+  hybrid-dist-dp         naive  w600   0.3336s
+  hybrid-dist-dp         naive  w800   0.3137s
+  hybrid-dist-dp         naive  w1000  0.3041s
+  hybrid-dist-dp         naive  w1200  0.2990s
+  hybrid-dist-dp         naive  w2000  0.2912s
+  hybrid-dist-pipelined  patoh  w400   0.4988s
+  hybrid-dist-pipelined  patoh  w600   0.4712s
+  hybrid-dist-pipelined  patoh  w800   0.4429s
+  hybrid-dist-pipelined  patoh  w1000  0.4367s
+  hybrid-dist-pipelined  patoh  w1200  0.4319s
+  hybrid-dist-pipelined  patoh  w2000  0.4099s
+  hybrid-dist-pipelined  naive  w400   0.4629s
+  hybrid-dist-pipelined  naive  w600   0.4376s
+  hybrid-dist-pipelined  naive  w800   0.4243s
+  hybrid-dist-pipelined  naive  w1000  0.4256s
+  hybrid-dist-pipelined  naive  w1200  0.4261s
+  hybrid-dist-pipelined  naive  w2000  0.4174s
+  mpi                    patoh  w400   2.6462s
+  mpi                    patoh  w600   2.5957s
+  mpi                    patoh  w800   2.2791s
+  mpi                    patoh  w1000  2.4299s
+  mpi                    patoh  w1200  2.2050s
+  mpi                    patoh  w2000  2.0487s
+  mpi                    naive  w400   1.8368s
+  mpi                    naive  w600   1.9251s
+  mpi                    naive  w800   1.8982s
+  mpi                    naive  w1000  1.9026s
+  mpi                    naive  w1200  1.9597s
+  mpi                    naive  w2000  1.9416s
+  mpi-gpu                patoh  w400   1.2113s
+  mpi-gpu                patoh  w600   0.9526s
+  mpi-gpu                patoh  w800   0.7993s
+  mpi-gpu                patoh  w1000  0.7742s
+  mpi-gpu                patoh  w1200  0.7527s
+  mpi-gpu                patoh  w2000  0.7190s
+  mpi-gpu                naive  w400   0.7473s
+  mpi-gpu                naive  w600   0.7262s
+  mpi-gpu                naive  w800   0.7226s
+  mpi-gpu                naive  w1000  0.7220s
+  mpi-gpu                naive  w1200  0.7226s
+  mpi-gpu                naive  w2000  0.7121s
+
+######## ss1 ########
+  cpu                    -      -      1.7658s
+  gpu                    -      -      0.3195s
+  gpu-dp                 -      -      0.2495s
+  gpu-pipelined          -      -      0.4327s
+  hybrid-async           patoh  w400   0.5449s
+  hybrid-async           patoh  w600   0.5120s
+  hybrid-async           patoh  w800   0.5028s
+  hybrid-async           patoh  w1000  0.4780s
+  hybrid-async           patoh  w1200  0.4753s
+  hybrid-async           patoh  w2000  0.4415s
+  hybrid-async           naive  w400   0.4756s
+  hybrid-async           naive  w600   0.4479s
+  hybrid-async           naive  w800   0.4432s
+  hybrid-async           naive  w1000  0.4367s
+  hybrid-async           naive  w1200  0.4321s
+  hybrid-async           naive  w2000  0.4225s
+  hybrid-async-dp        patoh  w400   0.4658s
+  hybrid-async-dp        patoh  w600   0.4414s
+  hybrid-async-dp        patoh  w800   0.4295s
+  hybrid-async-dp        patoh  w1000  0.4051s
+  hybrid-async-dp        patoh  w1200  0.3834s
+  hybrid-async-dp        patoh  w2000  0.3443s
+  hybrid-async-dp        naive  w400   0.3899s
+  hybrid-async-dp        naive  w600   0.3690s
+  hybrid-async-dp        naive  w800   0.3589s
+  hybrid-async-dp        naive  w1000  0.3415s
+  hybrid-async-dp        naive  w1200  0.3401s
+  hybrid-async-dp        naive  w2000  0.3309s
+  hybrid-dist-dp         patoh  w400   0.4195s
+  hybrid-dist-dp         patoh  w600   0.3994s
+  hybrid-dist-dp         patoh  w800   0.3786s
+  hybrid-dist-dp         patoh  w1000  0.3635s
+  hybrid-dist-dp         patoh  w1200  0.3470s
+  hybrid-dist-dp         patoh  w2000  0.2999s
+  hybrid-dist-dp         naive  w400   0.3157s
+  hybrid-dist-dp         naive  w600   0.3116s
+  hybrid-dist-dp         naive  w800   0.2945s
+  hybrid-dist-dp         naive  w1000  0.2964s
+  hybrid-dist-dp         naive  w1200  0.2955s
+  hybrid-dist-dp         naive  w2000  0.2872s
+  hybrid-dist-pipelined  patoh  w400   0.5055s
+  hybrid-dist-pipelined  patoh  w600   0.4726s
+  hybrid-dist-pipelined  patoh  w800   0.4449s
+  hybrid-dist-pipelined  patoh  w1000  0.4168s
+  hybrid-dist-pipelined  patoh  w1200  0.4082s
+  hybrid-dist-pipelined  patoh  w2000  0.3979s
+  hybrid-dist-pipelined  naive  w400   0.4105s
+  hybrid-dist-pipelined  naive  w600   0.4163s
+  hybrid-dist-pipelined  naive  w800   0.4123s
+  hybrid-dist-pipelined  naive  w1000  0.4181s
+  hybrid-dist-pipelined  naive  w1200  0.4209s
+  hybrid-dist-pipelined  naive  w2000  0.4095s
+  mpi                    patoh  w400   1.1964s
+  mpi                    patoh  w600   1.2369s
+  mpi                    patoh  w800   1.2742s
+  mpi                    patoh  w1000  1.4104s
+  mpi                    patoh  w1200  1.5174s
+  mpi                    patoh  w2000  1.7003s
+  mpi                    naive  w400   1.6518s
+  mpi                    naive  w600   1.8485s
+  mpi                    naive  w800   1.8477s
+  mpi                    naive  w1000  1.8765s
+  mpi                    naive  w1200  1.9311s
+  mpi                    naive  w2000  1.9594s
+  mpi-gpu                patoh  w400   0.7320s
+  mpi-gpu                patoh  w600   0.6644s
+  mpi-gpu                patoh  w800   0.6183s
+  mpi-gpu                patoh  w1000  0.6031s
+  mpi-gpu                patoh  w1200  0.5834s
+  mpi-gpu                patoh  w2000  0.5634s
+  mpi-gpu                naive  w400   0.6633s
+  mpi-gpu                naive  w600   0.6765s
+  mpi-gpu                naive  w800   0.6915s
+  mpi-gpu                naive  w1000  0.6961s
+  mpi-gpu                naive  w1200  0.6811s
+  mpi-gpu                naive  w2000  0.6837s
+
+######## venkat01 ########
+  cpu                    -      -      1.4201s
+  gpu                    -      -      0.2897s
+  gpu-dp                 -      -      0.2524s
+  gpu-pipelined          -      -      0.3686s
+  hybrid-async           patoh  w400   0.2949s
+  hybrid-async           patoh  w600   0.2713s
+  hybrid-async           patoh  w800   0.2742s
+  hybrid-async           patoh  w1000  0.2754s
+  hybrid-async           patoh  w1200  0.2767s
+  hybrid-async           patoh  w2000  0.2817s
+  hybrid-async           naive  w400   0.2998s
+  hybrid-async           naive  w600   0.2736s
+  hybrid-async           naive  w800   0.2738s
+  hybrid-async           naive  w1000  0.2760s
+  hybrid-async           naive  w1200  0.2770s
+  hybrid-async           naive  w2000  0.2816s
+  hybrid-async-dp        patoh  w400   0.2194s
+  hybrid-async-dp        patoh  w600   0.2228s
+  hybrid-async-dp        patoh  w800   0.2292s
+  hybrid-async-dp        patoh  w1000  0.2311s
+  hybrid-async-dp        patoh  w1200  0.2320s
+  hybrid-async-dp        patoh  w2000  0.2391s
+  hybrid-async-dp        naive  w400   0.2260s
+  hybrid-async-dp        naive  w600   0.2240s
+  hybrid-async-dp        naive  w800   0.2297s
+  hybrid-async-dp        naive  w1000  0.2311s
+  hybrid-async-dp        naive  w1200  0.2324s
+  hybrid-async-dp        naive  w2000  0.2381s
+  hybrid-dist-dp         patoh  w400   0.2889s
+  hybrid-dist-dp         patoh  w600   0.2892s
+  hybrid-dist-dp         patoh  w800   0.2926s
+  hybrid-dist-dp         patoh  w1000  0.2817s
+  hybrid-dist-dp         patoh  w1200  0.2810s
+  hybrid-dist-dp         patoh  w2000  0.2869s
+  hybrid-dist-dp         naive  w400   0.2875s
+  hybrid-dist-dp         naive  w600   0.2924s
+  hybrid-dist-dp         naive  w800   0.2936s
+  hybrid-dist-dp         naive  w1000  0.2846s
+  hybrid-dist-dp         naive  w1200  0.2812s
+  hybrid-dist-dp         naive  w2000  0.2869s
+  hybrid-dist-pipelined  patoh  w400   0.3520s
+  hybrid-dist-pipelined  patoh  w600   0.3535s
+  hybrid-dist-pipelined  patoh  w800   0.3358s
+  hybrid-dist-pipelined  patoh  w1000  0.3329s
+  hybrid-dist-pipelined  patoh  w1200  0.3348s
+  hybrid-dist-pipelined  patoh  w2000  0.3434s
+  hybrid-dist-pipelined  naive  w400   0.3526s
+  hybrid-dist-pipelined  naive  w600   0.3524s
+  hybrid-dist-pipelined  naive  w800   0.3464s
+  hybrid-dist-pipelined  naive  w1000  0.3354s
+  hybrid-dist-pipelined  naive  w1200  0.3392s
+  hybrid-dist-pipelined  naive  w2000  0.3509s
+  mpi                    patoh  w400   1.4112s
+  mpi                    patoh  w600   1.6856s
+  mpi                    patoh  w800   1.5715s
+  mpi                    patoh  w1000  1.6128s
+  mpi                    patoh  w1200  1.6678s
+  mpi                    patoh  w2000  1.7101s
+  mpi                    naive  w400   1.4442s
+  mpi                    naive  w600   1.5478s
+  mpi                    naive  w800   1.6282s
+  mpi                    naive  w1000  1.6397s
+  mpi                    naive  w1200  1.6625s
+  mpi                    naive  w2000  1.7166s
+  mpi-gpu                patoh  w400   0.3935s
+  mpi-gpu                patoh  w600   0.3563s
+  mpi-gpu                patoh  w800   0.3648s
+  mpi-gpu                patoh  w1000  0.3659s
+  mpi-gpu                patoh  w1200  0.3690s
+  mpi-gpu                patoh  w2000  0.3742s
+  mpi-gpu                naive  w400   0.3903s
+  mpi-gpu                naive  w600   0.3797s
+  mpi-gpu                naive  w800   0.3880s
+  mpi-gpu                naive  w1000  0.3927s
+  mpi-gpu                naive  w1200  0.3933s
+  mpi-gpu                naive  w2000  0.4012s
+
+######## webbase-1M ########
+  cpu                    -      -      12.8326s
+  gpu                    -      -      1.1533s
+  gpu-dp                 -      -      0.8336s
+  gpu-pipelined          -      -      1.8349s
+  hybrid-async           patoh  w400   2.0447s
+  hybrid-async           patoh  w600   1.8694s
+  hybrid-async           patoh  w800   1.8134s
+  hybrid-async           patoh  w1000  1.7879s
+  hybrid-async           patoh  w1200  1.7662s
+  hybrid-async           patoh  w2000  1.7404s
+  hybrid-async           naive  w400   1.9425s
+  hybrid-async           naive  w600   1.8069s
+  hybrid-async           naive  w800   1.7297s
+  hybrid-async           naive  w1000  1.6852s
+  hybrid-async           naive  w1200  1.6473s
+  hybrid-async           naive  w2000  1.5779s
+  hybrid-async-dp        patoh  w400   1.7182s
+  hybrid-async-dp        patoh  w600   1.5459s
+  hybrid-async-dp        patoh  w800   1.4862s
+  hybrid-async-dp        patoh  w1000  1.4552s
+  hybrid-async-dp        patoh  w1200  1.4435s
+  hybrid-async-dp        patoh  w2000  1.4304s
+  hybrid-async-dp        naive  w400   1.6154s
+  hybrid-async-dp        naive  w600   1.4820s
+  hybrid-async-dp        naive  w800   1.4134s
+  hybrid-async-dp        naive  w1000  1.3639s
+  hybrid-async-dp        naive  w1200  1.3334s
+  hybrid-async-dp        naive  w2000  1.2615s
+  hybrid-dist-dp         patoh  w400   1.0429s
+  hybrid-dist-dp         patoh  w600   0.8906s
+  hybrid-dist-dp         patoh  w800   0.8891s
+  hybrid-dist-dp         patoh  w1000  0.8922s
+  hybrid-dist-dp         patoh  w1200  0.8895s
+  hybrid-dist-dp         patoh  w2000  0.9127s
+  hybrid-dist-dp         naive  w400   0.9897s
+  hybrid-dist-dp         naive  w600   0.9027s
+  hybrid-dist-dp         naive  w800   0.9003s
+  hybrid-dist-dp         naive  w1000  0.8965s
+  hybrid-dist-dp         naive  w1200  0.8929s
+  hybrid-dist-dp         naive  w2000  0.8972s
+  hybrid-dist-pipelined  patoh  w400   1.5071s
+  hybrid-dist-pipelined  patoh  w600   1.3279s
+  hybrid-dist-pipelined  patoh  w800   1.3409s
+  hybrid-dist-pipelined  patoh  w1000  1.3322s
+  hybrid-dist-pipelined  patoh  w1200  1.3385s
+  hybrid-dist-pipelined  patoh  w2000  1.3566s
+  hybrid-dist-pipelined  naive  w400   1.4801s
+  hybrid-dist-pipelined  naive  w600   1.3183s
+  hybrid-dist-pipelined  naive  w800   1.3252s
+  hybrid-dist-pipelined  naive  w1000  1.3336s
+  hybrid-dist-pipelined  naive  w1200  1.3353s
+  hybrid-dist-pipelined  naive  w2000  1.3428s
+  mpi                    patoh  w400   12.2848s
+  mpi                    patoh  w600   12.5836s
+  mpi                    patoh  w800   12.9191s
+  mpi                    patoh  w1000  13.0089s
+  mpi                    patoh  w1200  13.0915s
+  mpi                    patoh  w2000  13.3939s
+  mpi                    naive  w400   11.6300s
+  mpi                    naive  w600   12.2416s
+  mpi                    naive  w800   12.5099s
+  mpi                    naive  w1000  12.7277s
+  mpi                    naive  w1200  12.8966s
+  mpi                    naive  w2000  13.2481s
+  mpi-gpu                patoh  w400   2.3891s
+  mpi-gpu                patoh  w600   2.3448s
+  mpi-gpu                patoh  w800   2.3533s
+  mpi-gpu                patoh  w1000  2.3522s
+  mpi-gpu                patoh  w1200  2.4057s
+  mpi-gpu                patoh  w2000  2.5009s
+  mpi-gpu                naive  w400   2.7921s
+  mpi-gpu                naive  w600   2.4726s
+  mpi-gpu                naive  w800   2.3703s
+  mpi-gpu                naive  w1000  2.3309s
+  mpi-gpu                naive  w1200  2.3356s
+  mpi-gpu                naive  w2000  2.4029s
+
+######## poli4 ########
+  cpu                    -      -      0.2506s
+  gpu                    -      -      0.1347s
+  gpu-dp                 -      -      0.0858s
+  gpu-pipelined          -      -      0.1746s
+  hybrid-async           patoh  w400   0.1835s
+  hybrid-async           patoh  w600   0.1588s
+  hybrid-async           patoh  w800   0.1572s
+  hybrid-async           patoh  w1000  0.1567s
+  hybrid-async           patoh  w1200  0.1535s
+  hybrid-async           patoh  w2000  0.1493s
+  hybrid-async           naive  w400   0.1871s
+  hybrid-async           naive  w600   0.1839s
+  hybrid-async           naive  w800   0.1817s
+  hybrid-async           naive  w1000  0.1768s
+  hybrid-async           naive  w1200  0.1620s
+  hybrid-async           naive  w2000  0.1532s
+  hybrid-async-dp        patoh  w400   0.1238s
+  hybrid-async-dp        patoh  w600   0.1201s
+  hybrid-async-dp        patoh  w800   0.1136s
+  hybrid-async-dp        patoh  w1000  0.1112s
+  hybrid-async-dp        patoh  w1200  0.1014s
+  hybrid-async-dp        patoh  w2000  0.0971s
+  hybrid-async-dp        naive  w400   0.1247s
+  hybrid-async-dp        naive  w600   0.1207s
+  hybrid-async-dp        naive  w800   0.1196s
+  hybrid-async-dp        naive  w1000  0.1186s
+  hybrid-async-dp        naive  w1200  0.1168s
+  hybrid-async-dp        naive  w2000  0.1089s
+  hybrid-dist-dp         patoh  w400   0.1463s
+  hybrid-dist-dp         patoh  w600   0.1344s
+  hybrid-dist-dp         patoh  w800   0.1307s
+  hybrid-dist-dp         patoh  w1000  0.1290s
+  hybrid-dist-dp         patoh  w1200  0.1027s
+  hybrid-dist-dp         patoh  w2000  0.1251s
+  hybrid-dist-dp         naive  w400   0.1347s
+  hybrid-dist-dp         naive  w600   0.1171s
+  hybrid-dist-dp         naive  w800   0.1145s
+  hybrid-dist-dp         naive  w1000  0.1113s
+  hybrid-dist-dp         naive  w1200  0.1078s
+  hybrid-dist-dp         naive  w2000  0.1045s
+  hybrid-dist-pipelined  patoh  w400   0.3076s
+  hybrid-dist-pipelined  patoh  w600   0.2389s
+  hybrid-dist-pipelined  patoh  w800   0.2311s
+  hybrid-dist-pipelined  patoh  w1000  0.2102s
+  hybrid-dist-pipelined  patoh  w1200  0.1787s
+  hybrid-dist-pipelined  patoh  w2000  0.1758s
+  hybrid-dist-pipelined  naive  w400   0.2762s
+  hybrid-dist-pipelined  naive  w600   0.2459s
+  hybrid-dist-pipelined  naive  w800   0.2230s
+  hybrid-dist-pipelined  naive  w1000  0.2237s
+  hybrid-dist-pipelined  naive  w1200  0.2108s
+  hybrid-dist-pipelined  naive  w2000  0.1792s
+  mpi                    patoh  w400   0.2367s
+  mpi                    patoh  w600   0.2474s
+  mpi                    patoh  w800   0.2529s
+  mpi                    patoh  w1000  0.2647s
+  mpi                    patoh  w1200  0.2729s
+  mpi                    patoh  w2000  0.2781s
+  mpi                    naive  w400   0.2241s
+  mpi                    naive  w600   0.2443s
+  mpi                    naive  w800   0.2585s
+  mpi                    naive  w1000  0.2560s
+  mpi                    naive  w1200  0.2696s
+  mpi                    naive  w2000  0.2714s
+  mpi-gpu                patoh  w400   0.2304s
+  mpi-gpu                patoh  w600   0.2315s
+  mpi-gpu                patoh  w800   0.2327s
+  mpi-gpu                patoh  w1000  0.2301s
+  mpi-gpu                patoh  w1200  0.2335s
+  mpi-gpu                patoh  w2000  0.2340s
+  mpi-gpu                naive  w400   0.2493s
+  mpi-gpu                naive  w600   0.2572s
+  mpi-gpu                naive  w800   0.2451s
+  mpi-gpu                naive  w1000  0.2415s
+  mpi-gpu                naive  w1200  0.2421s
+  mpi-gpu                naive  w2000  0.2416s
+
+######## coupled ########
+  cpu                    -      -      0.2042s
+  gpu                    -      -      0.1309s
+  gpu-dp                 -      -      0.0790s
+  gpu-pipelined          -      -      0.1747s
+  hybrid-async           patoh  w400   0.1430s
+  hybrid-async           patoh  w600   0.1386s
+  hybrid-async           patoh  w800   0.1355s
+  hybrid-async           patoh  w1000  0.1334s
+  hybrid-async           patoh  w1200  0.1316s
+  hybrid-async           patoh  w2000  0.1290s
+  hybrid-async           naive  w400   0.1456s
+  hybrid-async           naive  w600   0.1407s
+  hybrid-async           naive  w800   0.1408s
+  hybrid-async           naive  w1000  0.1390s
+  hybrid-async           naive  w1200  0.1402s
+  hybrid-async           naive  w2000  0.1358s
+  hybrid-async-dp        patoh  w400   0.0845s
+  hybrid-async-dp        patoh  w600   0.0819s
+  hybrid-async-dp        patoh  w800   0.0803s
+  hybrid-async-dp        patoh  w1000  0.0791s
+  hybrid-async-dp        patoh  w1200  0.0753s
+  hybrid-async-dp        patoh  w2000  0.0726s
+  hybrid-async-dp        naive  w400   0.0898s
+  hybrid-async-dp        naive  w600   0.0827s
+  hybrid-async-dp        naive  w800   0.0837s
+  hybrid-async-dp        naive  w1000  0.0833s
+  hybrid-async-dp        naive  w1200  0.0818s
+  hybrid-async-dp        naive  w2000  0.0759s
+  hybrid-dist-dp         patoh  w400   0.1345s
+  hybrid-dist-dp         patoh  w600   0.1236s
+  hybrid-dist-dp         patoh  w800   0.1184s
+  hybrid-dist-dp         patoh  w1000  0.1141s
+  hybrid-dist-dp         patoh  w1200  0.1123s
+  hybrid-dist-dp         patoh  w2000  0.1171s
+  hybrid-dist-dp         naive  w400   0.1405s
+  hybrid-dist-dp         naive  w600   0.1267s
+  hybrid-dist-dp         naive  w800   0.1239s
+  hybrid-dist-dp         naive  w1000  0.1252s
+  hybrid-dist-dp         naive  w1200  0.1181s
+  hybrid-dist-dp         naive  w2000  0.1114s
+  hybrid-dist-pipelined  patoh  w400   0.1445s
+  hybrid-dist-pipelined  patoh  w600   0.1339s
+  hybrid-dist-pipelined  patoh  w800   0.1303s
+  hybrid-dist-pipelined  patoh  w1000  0.1287s
+  hybrid-dist-pipelined  patoh  w1200  0.1275s
+  hybrid-dist-pipelined  patoh  w2000  0.1360s
+  hybrid-dist-pipelined  naive  w400   0.1565s
+  hybrid-dist-pipelined  naive  w600   0.1374s
+  hybrid-dist-pipelined  naive  w800   0.1371s
+  hybrid-dist-pipelined  naive  w1000  0.1324s
+  hybrid-dist-pipelined  naive  w1200  0.1323s
+  hybrid-dist-pipelined  naive  w2000  0.1288s
+  mpi                    patoh  w400   0.1827s
+  mpi                    patoh  w600   0.1922s
+  mpi                    patoh  w800   0.2048s
+  mpi                    patoh  w1000  0.2037s
+  mpi                    patoh  w1200  0.2060s
+  mpi                    patoh  w2000  0.2118s
+  mpi                    naive  w400   0.1999s
+  mpi                    naive  w600   0.2140s
+  mpi                    naive  w800   0.2094s
+  mpi                    naive  w1000  0.2141s
+  mpi                    naive  w1200  0.2168s
+  mpi                    naive  w2000  0.2166s
+  mpi-gpu                patoh  w400   0.1995s
+  mpi-gpu                patoh  w600   0.1988s
+  mpi-gpu                patoh  w800   0.1974s
+  mpi-gpu                patoh  w1000  0.1982s
+  mpi-gpu                patoh  w1200  0.1994s
+  mpi-gpu                patoh  w2000  0.1978s
+  mpi-gpu                naive  w400   0.2044s
+  mpi-gpu                naive  w600   0.2094s
+  mpi-gpu                naive  w800   0.2109s
+  mpi-gpu                naive  w1000  0.2095s
+  mpi-gpu                naive  w1200  0.2102s
+  mpi-gpu                naive  w2000  0.2096s
+
+######## Ill_Stokes ########
+  cpu                    -      -      0.2701s
+  gpu                    -      -      0.1481s
+  gpu-dp                 -      -      0.0997s
+  gpu-pipelined          -      -      0.1960s
+  hybrid-async           patoh  w400   0.1624s
+  hybrid-async           patoh  w600   0.1544s
+  hybrid-async           patoh  w800   0.1575s
+  hybrid-async           patoh  w1000  0.1549s
+  hybrid-async           patoh  w1200  0.1508s
+  hybrid-async           patoh  w2000  0.1446s
+  hybrid-async           naive  w400   0.1630s
+  hybrid-async           naive  w600   0.1600s
+  hybrid-async           naive  w800   0.1560s
+  hybrid-async           naive  w1000  0.1592s
+  hybrid-async           naive  w1200  0.1542s
+  hybrid-async           naive  w2000  0.1532s
+  hybrid-async-dp        patoh  w400   0.1068s
+  hybrid-async-dp        patoh  w600   0.1018s
+  hybrid-async-dp        patoh  w800   0.1012s
+  hybrid-async-dp        patoh  w1000  0.0984s
+  hybrid-async-dp        patoh  w1200  0.0961s
+  hybrid-async-dp        patoh  w2000  0.0893s
+  hybrid-async-dp        naive  w400   0.1057s
+  hybrid-async-dp        naive  w600   0.1033s
+  hybrid-async-dp        naive  w800   0.1016s
+  hybrid-async-dp        naive  w1000  0.0990s
+  hybrid-async-dp        naive  w1200  0.0969s
+  hybrid-async-dp        naive  w2000  0.0955s
+  hybrid-dist-dp         patoh  w400   0.1555s
+  hybrid-dist-dp         patoh  w600   0.1370s
+  hybrid-dist-dp         patoh  w800   0.1338s
+  hybrid-dist-dp         patoh  w1000  0.1334s
+  hybrid-dist-dp         patoh  w1200  0.1335s
+  hybrid-dist-dp         patoh  w2000  0.1321s
+  hybrid-dist-dp         naive  w400   0.1778s
+  hybrid-dist-dp         naive  w600   0.1624s
+  hybrid-dist-dp         naive  w800   0.1522s
+  hybrid-dist-dp         naive  w1000  0.1398s
+  hybrid-dist-dp         naive  w1200  0.1413s
+  hybrid-dist-dp         naive  w2000  0.1318s
+  hybrid-dist-pipelined  patoh  w400   0.1780s
+  hybrid-dist-pipelined  patoh  w600   0.1599s
+  hybrid-dist-pipelined  patoh  w800   0.1544s
+  hybrid-dist-pipelined  patoh  w1000  0.1587s
+  hybrid-dist-pipelined  patoh  w1200  0.1585s
+  hybrid-dist-pipelined  patoh  w2000  0.1530s
+  hybrid-dist-pipelined  naive  w400   0.2003s
+  hybrid-dist-pipelined  naive  w600   0.1824s
+  hybrid-dist-pipelined  naive  w800   0.1882s
+  hybrid-dist-pipelined  naive  w1000  0.1722s
+  hybrid-dist-pipelined  naive  w1200  0.1610s
+  hybrid-dist-pipelined  naive  w2000  0.1551s
+  mpi                    patoh  w400   0.2440s
+  mpi                    patoh  w600   0.2756s
+  mpi                    patoh  w800   0.2814s
+  mpi                    patoh  w1000  0.3082s
+  mpi                    patoh  w1200  0.3141s
+  mpi                    patoh  w2000  0.3083s
+  mpi                    naive  w400   0.3269s
+  mpi                    naive  w600   0.3437s
+  mpi                    naive  w800   0.3597s
+  mpi                    naive  w1000  0.3546s
+  mpi                    naive  w1200  0.3589s
+  mpi                    naive  w2000  0.3539s
+  mpi-gpu                patoh  w400   0.2149s
+  mpi-gpu                patoh  w600   0.2169s
+  mpi-gpu                patoh  w800   0.2222s
+  mpi-gpu                patoh  w1000  0.2196s
+  mpi-gpu                patoh  w1200  0.2186s
+  mpi-gpu                patoh  w2000  0.2200s
+  mpi-gpu                naive  w400   0.2454s
+  mpi-gpu                naive  w600   0.2345s
+  mpi-gpu                naive  w800   0.2353s
+  mpi-gpu                naive  w1000  0.2351s
+  mpi-gpu                naive  w1200  0.2341s
+  mpi-gpu                naive  w2000  0.2328s
+
+######## bayer02 ########
+  cpu                    -      -      0.0939s
+  gpu                    -      -      0.1225s
+  gpu-dp                 -      -      0.0745s
+  gpu-pipelined          -      -      0.1654s
+  hybrid-async           patoh  w400   0.1426s
+  hybrid-async           patoh  w600   0.1377s
+  hybrid-async           patoh  w800   0.1360s
+  hybrid-async           patoh  w1000  0.1349s
+  hybrid-async           patoh  w1200  0.1313s
+  hybrid-async           patoh  w2000  0.1296s
+  hybrid-async           naive  w400   0.1421s
+  hybrid-async           naive  w600   0.1370s
+  hybrid-async           naive  w800   0.1350s
+  hybrid-async           naive  w1000  0.1332s
+  hybrid-async           naive  w1200  0.1318s
+  hybrid-async           naive  w2000  0.1283s
+  hybrid-async-dp        patoh  w400   0.0912s
+  hybrid-async-dp        patoh  w600   0.0884s
+  hybrid-async-dp        patoh  w800   0.0832s
+  hybrid-async-dp        patoh  w1000  0.0826s
+  hybrid-async-dp        patoh  w1200  0.0805s
+  hybrid-async-dp        patoh  w2000  0.0782s
+  hybrid-async-dp        naive  w400   0.0927s
+  hybrid-async-dp        naive  w600   0.0861s
+  hybrid-async-dp        naive  w800   0.0841s
+  hybrid-async-dp        naive  w1000  0.0818s
+  hybrid-async-dp        naive  w1200  0.0809s
+  hybrid-async-dp        naive  w2000  0.0774s
+  hybrid-dist-dp         patoh  w400   0.1223s
+  hybrid-dist-dp         patoh  w600   0.1168s
+  hybrid-dist-dp         patoh  w800   0.1160s
+  hybrid-dist-dp         patoh  w1000  0.1147s
+  hybrid-dist-dp         patoh  w1200  0.1132s
+  hybrid-dist-dp         patoh  w2000  0.1150s
+  hybrid-dist-dp         naive  w400   0.1209s
+  hybrid-dist-dp         naive  w600   0.1171s
+  hybrid-dist-dp         naive  w800   0.1162s
+  hybrid-dist-dp         naive  w1000  0.1148s
+  hybrid-dist-dp         naive  w1200  0.1143s
+  hybrid-dist-dp         naive  w2000  0.1132s
+  hybrid-dist-pipelined  patoh  w400   0.1409s
+  hybrid-dist-pipelined  patoh  w600   0.1378s
+  hybrid-dist-pipelined  patoh  w800   0.1353s
+  hybrid-dist-pipelined  patoh  w1000  0.1378s
+  hybrid-dist-pipelined  patoh  w1200  0.1305s
+  hybrid-dist-pipelined  patoh  w2000  0.1319s
+  hybrid-dist-pipelined  naive  w400   0.1428s
+  hybrid-dist-pipelined  naive  w600   0.1363s
+  hybrid-dist-pipelined  naive  w800   0.1333s
+  hybrid-dist-pipelined  naive  w1000  0.1331s
+  hybrid-dist-pipelined  naive  w1200  0.1313s
+  hybrid-dist-pipelined  naive  w2000  0.1304s
+  mpi                    patoh  w400   0.1044s
+  mpi                    patoh  w600   0.1124s
+  mpi                    patoh  w800   0.1120s
+  mpi                    patoh  w1000  0.1161s
+  mpi                    patoh  w1200  0.1172s
+  mpi                    patoh  w2000  0.1206s
+  mpi                    naive  w400   0.1039s
+  mpi                    naive  w600   0.1099s
+  mpi                    naive  w800   0.1117s
+  mpi                    naive  w1000  0.1114s
+  mpi                    naive  w1200  0.1156s
+  mpi                    naive  w2000  0.1195s
+  mpi-gpu                patoh  w400   0.2050s
+  mpi-gpu                patoh  w600   0.2038s
+  mpi-gpu                patoh  w800   0.2027s
+  mpi-gpu                patoh  w1000  0.2031s
+  mpi-gpu                patoh  w1200  0.2025s
+  mpi-gpu                patoh  w2000  0.2009s
+  mpi-gpu                naive  w400   0.2058s
+  mpi-gpu                naive  w600   0.2025s
+  mpi-gpu                naive  w800   0.2008s
+  mpi-gpu                naive  w1000  0.2013s
+  mpi-gpu                naive  w1200  0.2003s
+  mpi-gpu                naive  w2000  0.1999s
+
+######## wang3 ########
+  cpu                    -      -      0.2196s
+  gpu                    -      -      0.1449s
+  gpu-dp                 -      -      0.0934s
+  gpu-pipelined          -      -      0.1860s
+  hybrid-async           patoh  w400   0.1619s
+  hybrid-async           patoh  w600   0.1608s
+  hybrid-async           patoh  w800   0.1641s
+  hybrid-async           patoh  w1000  0.1597s
+  hybrid-async           patoh  w1200  0.1586s
+  hybrid-async           patoh  w2000  0.1533s
+  hybrid-async           naive  w400   0.1643s
+  hybrid-async           naive  w600   0.1565s
+  hybrid-async           naive  w800   0.1632s
+  hybrid-async           naive  w1000  0.1559s
+  hybrid-async           naive  w1200  0.1557s
+  hybrid-async           naive  w2000  0.1546s
+  hybrid-async-dp        patoh  w400   0.1103s
+  hybrid-async-dp        patoh  w600   0.1037s
+  hybrid-async-dp        patoh  w800   0.1045s
+  hybrid-async-dp        patoh  w1000  0.1011s
+  hybrid-async-dp        patoh  w1200  0.0968s
+  hybrid-async-dp        patoh  w2000  0.0938s
+  hybrid-async-dp        naive  w400   0.1092s
+  hybrid-async-dp        naive  w600   0.1009s
+  hybrid-async-dp        naive  w800   0.1009s
+  hybrid-async-dp        naive  w1000  0.0983s
+  hybrid-async-dp        naive  w1200  0.0975s
+  hybrid-async-dp        naive  w2000  0.0921s
+  hybrid-dist-dp         patoh  w400   0.1411s
+  hybrid-dist-dp         patoh  w600   0.1323s
+  hybrid-dist-dp         patoh  w800   0.1323s
+  hybrid-dist-dp         patoh  w1000  0.1328s
+  hybrid-dist-dp         patoh  w1200  0.1327s
+  hybrid-dist-dp         patoh  w2000  0.1322s
+  hybrid-dist-dp         naive  w400   0.1453s
+  hybrid-dist-dp         naive  w600   0.1347s
+  hybrid-dist-dp         naive  w800   0.1356s
+  hybrid-dist-dp         naive  w1000  0.1353s
+  hybrid-dist-dp         naive  w1200  0.1334s
+  hybrid-dist-dp         naive  w2000  0.1324s
+  hybrid-dist-pipelined  patoh  w400   0.1699s
+  hybrid-dist-pipelined  patoh  w600   0.1581s
+  hybrid-dist-pipelined  patoh  w800   0.1537s
+  hybrid-dist-pipelined  patoh  w1000  0.1574s
+  hybrid-dist-pipelined  patoh  w1200  0.1608s
+  hybrid-dist-pipelined  patoh  w2000  0.1557s
+  hybrid-dist-pipelined  naive  w400   0.1661s
+  hybrid-dist-pipelined  naive  w600   0.1578s
+  hybrid-dist-pipelined  naive  w800   0.1546s
+  hybrid-dist-pipelined  naive  w1000  0.1550s
+  hybrid-dist-pipelined  naive  w1200  0.1612s
+  hybrid-dist-pipelined  naive  w2000  0.1568s
+  mpi                    patoh  w400   0.2164s
+  mpi                    patoh  w600   0.2301s
+  mpi                    patoh  w800   0.2564s
+  mpi                    patoh  w1000  0.2570s
+  mpi                    patoh  w1200  0.2636s
+  mpi                    patoh  w2000  0.2588s
+  mpi                    naive  w400   0.2370s
+  mpi                    naive  w600   0.2311s
+  mpi                    naive  w800   0.2618s
+  mpi                    naive  w1000  0.2603s
+  mpi                    naive  w1200  0.2490s
+  mpi                    naive  w2000  0.2831s
+  mpi-gpu                patoh  w400   0.2195s
+  mpi-gpu                patoh  w600   0.2214s
+  mpi-gpu                patoh  w800   0.2254s
+  mpi-gpu                patoh  w1000  0.2258s
+  mpi-gpu                patoh  w1200  0.2296s
+  mpi-gpu                patoh  w2000  0.2284s
+  mpi-gpu                naive  w400   0.2191s
+  mpi-gpu                naive  w600   0.2216s
+  mpi-gpu                naive  w800   0.2221s
+  mpi-gpu                naive  w1000  0.2263s
+  mpi-gpu                naive  w1200  0.2273s
+  mpi-gpu                naive  w2000  0.2292s
+
+######## powersim ########
+  cpu                    -      -      0.1162s
+  gpu                    -      -      0.1233s
+  gpu-dp                 -      -      0.0741s
+  gpu-pipelined          -      -      0.1661s
+  hybrid-async           patoh  w400   0.1529s
+  hybrid-async           patoh  w600   0.1388s
+  hybrid-async           patoh  w800   0.1344s
+  hybrid-async           patoh  w1000  0.1339s
+  hybrid-async           patoh  w1200  0.1304s
+  hybrid-async           patoh  w2000  0.1291s
+  hybrid-async           naive  w400   0.1399s
+  hybrid-async           naive  w600   0.1374s
+  hybrid-async           naive  w800   0.1354s
+  hybrid-async           naive  w1000  0.1348s
+  hybrid-async           naive  w1200  0.1324s
+  hybrid-async           naive  w2000  0.1304s
+  hybrid-async-dp        patoh  w400   0.0882s
+  hybrid-async-dp        patoh  w600   0.0849s
+  hybrid-async-dp        patoh  w800   0.0848s
+  hybrid-async-dp        patoh  w1000  0.0830s
+  hybrid-async-dp        patoh  w1200  0.0814s
+  hybrid-async-dp        patoh  w2000  0.0782s
+  hybrid-async-dp        naive  w400   0.0901s
+  hybrid-async-dp        naive  w600   0.0869s
+  hybrid-async-dp        naive  w800   0.0866s
+  hybrid-async-dp        naive  w1000  0.0831s
+  hybrid-async-dp        naive  w1200  0.0847s
+  hybrid-async-dp        naive  w2000  0.0802s
+  hybrid-dist-dp         patoh  w400   0.1232s
+  hybrid-dist-dp         patoh  w600   0.1164s
+  hybrid-dist-dp         patoh  w800   0.1157s
+  hybrid-dist-dp         patoh  w1000  0.1159s
+  hybrid-dist-dp         patoh  w1200  0.1146s
+  hybrid-dist-dp         patoh  w2000  0.1137s
+  hybrid-dist-dp         naive  w400   0.1151s
+  hybrid-dist-dp         naive  w600   0.1149s
+  hybrid-dist-dp         naive  w800   0.1141s
+  hybrid-dist-dp         naive  w1000  0.1135s
+  hybrid-dist-dp         naive  w1200  0.1136s
+  hybrid-dist-dp         naive  w2000  0.1135s
+  hybrid-dist-pipelined  patoh  w400   0.1389s
+  hybrid-dist-pipelined  patoh  w600   0.1351s
+  hybrid-dist-pipelined  patoh  w800   0.1369s
+  hybrid-dist-pipelined  patoh  w1000  0.1336s
+  hybrid-dist-pipelined  patoh  w1200  0.1324s
+  hybrid-dist-pipelined  patoh  w2000  0.1330s
+  hybrid-dist-pipelined  naive  w400   0.1364s
+  hybrid-dist-pipelined  naive  w600   0.1347s
+  hybrid-dist-pipelined  naive  w800   0.1322s
+  hybrid-dist-pipelined  naive  w1000  0.1330s
+  hybrid-dist-pipelined  naive  w1200  0.1321s
+  hybrid-dist-pipelined  naive  w2000  0.1336s
+  mpi                    patoh  w400   0.1077s
+  mpi                    patoh  w600   0.1137s
+  mpi                    patoh  w800   0.1232s
+  mpi                    patoh  w1000  0.1258s
+  mpi                    patoh  w1200  0.1212s
+  mpi                    patoh  w2000  0.1297s
+  mpi                    naive  w400   0.1304s
+  mpi                    naive  w600   0.1389s
+  mpi                    naive  w800   0.1406s
+  mpi                    naive  w1000  0.1397s
+  mpi                    naive  w1200  0.1390s
+  mpi                    naive  w2000  0.1381s
+  mpi-gpu                patoh  w400   0.1947s
+  mpi-gpu                patoh  w600   0.1953s
+  mpi-gpu                patoh  w800   0.1968s
+  mpi-gpu                patoh  w1000  0.1918s
+  mpi-gpu                patoh  w1200  0.1919s
+  mpi-gpu                patoh  w2000  0.1927s
+  mpi-gpu                naive  w400   0.2047s
+  mpi-gpu                naive  w600   0.2042s
+  mpi-gpu                naive  w800   0.2047s
+  mpi-gpu                naive  w1000  0.2033s
+  mpi-gpu                naive  w1200  0.2028s
+  mpi-gpu                naive  w2000  0.2038s
+
+Wrote data/expansion_benchmark/results.tsv and data/expansion_benchmark/summary.md
+# Big benchmark — speedup vs single-GPU `bicgstab-gpu` (iters: 1000 small / 200 for nnz>15M, best-of-2)
+
+## Best speedup per solver (across weights & partition source)
+
+| solver | mac_econ_fwd500 | FullChip | Zd_Jac3 | test1 | TSOPF_RS_b2383_c1 | nxp1_mc64_1 | torso1 | para-9 | FEM_3D_thermal2 | cage13 | Goodwin_127 | bauru5727 | xenon2 | ML_Laplace | trans5 | inlet | tmt_unsym | pre2 | para-5 | largebasis | trans4 | venkat50 | appu | k3plates | marine1 | shar_te2-b3 | ss1 | venkat01 | webbase-1M | poli4 | coupled | Ill_Stokes | bayer02 | wang3 | powersim |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| `cpu` | 0.17× | 0.07× | 0.16× | 0.08× | 0.07× | 0.09× | 0.08× | 0.10× | 0.13× | 0.09× | 0.11× | 0.41× | 0.12× | 0.09× | 0.25× | 0.68× | 0.10× | 0.10× | 0.10× | 0.11× | 0.25× | 0.21× | 0.17× | 0.58× | 0.09× | 0.20× | 0.18× | 0.20× | 0.09× | 0.54× | 0.64× | 0.55× | 1.30× | 0.66× | 1.06× |
+| `gpu` | 1.00× | 1.00× | 1.00× | 1.00× | 1.00× | 1.00× | 1.00× | 1.00× | 1.00× | 1.00× | 1.00× | 1.00× | 1.00× | 1.00× | 1.00× | 1.00× | 1.00× | 1.00× | 1.00× | 1.00× | 1.00× | 1.00× | 1.00× | 1.00× | 1.00× | 1.00× | 1.00× | 1.00× | 1.00× | 1.00× | 1.00× | 1.00× | 1.00× | 1.00× | 1.00× |
+| `gpu-dp` | 1.26× | 1.22× | 1.22× | 1.12× | 1.04× | 1.26× | 1.12× | 1.15× | 1.18× | 1.19× | 1.14× | 1.50× | 1.16× | 1.04× | 1.34× | 1.48× | 1.33× | 1.27× | 1.14× | 1.22× | 1.35× | 1.15× | 1.22× | 1.48× | 1.17× | 1.30× | 1.28× | 1.15× | 1.38× | 1.57× | 1.66× | 1.49× | 1.64× | 1.55× | 1.66× |
+| `gpu-pipelined` | 0.75× | 0.68× | 0.80× | 0.78× | 0.86× | 0.66× | 0.82× | 0.81× | 0.79× | 0.73× | 0.80× | 0.76× | 0.79× | 0.82× | 0.74× | 0.77× | 0.65× | 0.68× | 0.81× | 0.71× | 0.74× | 0.78× | 0.81× | 0.77× | 0.72× | 0.73× | 0.74× | 0.79× | 0.63× | 0.77× | 0.75× | 0.76× | 0.74× | 0.78× | 0.74× |
+| `hybrid-async` | 0.87× | 0.97× | 1.08× | 1.12× | 1.14× | 0.89× | 1.17× | 1.13× | 1.12× | 1.07× | 1.14× | 0.90× | 1.11× | 1.13× | 0.89× | 1.09× | 0.82× | 1.01× | 1.13× | 1.05× | 0.89× | 1.07× | 1.14× | 1.12× | 1.06× | 0.74× | 0.76× | 1.07× | 0.73× | 0.90× | 1.01× | 1.02× | 0.95× | 0.95× | 0.96× |
+| `hybrid-async-dp` | 1.13× | 1.17× | 1.37× | 1.26× | 1.21× | 1.10× | 1.32× | 1.30× | 1.33× | 1.28× | 1.29× | 1.31× | 1.31× | 1.20× | 1.21× | 1.58× | 1.05× | 1.27× | 1.30× | 1.30× | 1.22× | 1.30× | 1.42× | 1.65× | 1.28× | 0.94× | 0.97× | 1.32× | 0.91× | 1.39× | 1.80× | 1.66× | 1.58× | 1.57× | 1.58× |
+| `hybrid-dist-dp` | 1.12× | 1.22× | 1.06× | 1.15× | 1.12× | 1.17× | 1.17× | 1.14× | 1.15× | 1.15× | 1.14× | 1.07× | 1.13× | 1.15× | 1.16× | 1.07× | 1.29× | 1.25× | 1.16× | 1.19× | 1.16× | 1.03× | 1.07× | 1.12× | 1.18× | 1.08× | 1.11× | 1.03× | 1.30× | 1.31× | 1.17× | 1.12× | 1.08× | 1.10× | 1.09× |
+| `hybrid-dist-pipelined` | 0.82× | 0.89× | 0.92× | 0.96× | 0.98× | 0.85× | 0.98× | 0.96× | 0.94× | 0.91× | 0.95× | 0.90× | 0.93× | 0.97× | 0.87× | 0.95× | 0.90× | 0.91× | 0.96× | 0.92× | 0.88× | 0.87× | 0.92× | 0.98× | 0.92× | 0.76× | 0.80× | 0.87× | 0.87× | 0.77× | 1.03× | 0.97× | 0.94× | 0.94× | 0.93× |
+| `mpi` | 0.19× | 0.07× | 0.21× | 0.09× | 0.11× | 0.10× | 0.09× | 0.10× | 0.13× | 0.10× | 0.12× | 0.45× | 0.13× | 0.10× | 0.24× | 0.62× | 0.10× | 0.10× | 0.11× | 0.12× | 0.23× | 0.21× | 0.17× | 0.51× | 0.10× | 0.17× | 0.27× | 0.21× | 0.10× | 0.60× | 0.72× | 0.61× | 1.18× | 0.67× | 1.14× |
+| `mpi-gpu` | 0.59× | 0.22× | 0.80× | 0.83× | 0.68× | 0.53× | 0.72× | 0.85× | 0.82× | 0.69× | 0.88× | 0.62× | 0.82× | 1.07× | 0.29× | 0.77× | 0.55× | 0.62× | 0.85× | 0.73× | 0.29× | 0.81× | 0.85× | 0.77× | 0.73× | 0.44× | 0.57× | 0.81× | 0.49× | 0.59× | 0.66× | 0.69× | 0.61× | 0.66× | 0.64× |
+
+## PaToH vs naive (best speedup each) — does cut-minimization help?
+
+| matrix | solver | PaToH | naive | PaToH/naive |
+|---|---|---|---|---|
+| mac_econ_fwd500 | `hybrid-async` | 0.87× | 0.87× | 1.01× |
+| mac_econ_fwd500 | `hybrid-async-dp` | 1.13× | 1.13× | 1.01× |
+| mac_econ_fwd500 | `hybrid-dist-dp` | 1.12× | 1.11× | 1.01× |
+| mac_econ_fwd500 | `hybrid-dist-pipelined` | 0.81× | 0.82× | 0.99× |
+| mac_econ_fwd500 | `mpi` | 0.19× | 0.18× | 1.01× |
+| mac_econ_fwd500 | `mpi-gpu` | 0.59× | 0.59× | 1.00× |
+| FullChip | `hybrid-async` | 0.97× | 0.97× | 1.01× |
+| FullChip | `hybrid-async-dp` | 1.17× | 1.17× | 1.00× |
+| FullChip | `hybrid-dist-dp` | 1.22× | 1.20× | 1.02× |
+| FullChip | `hybrid-dist-pipelined` | 0.89× | 0.88× | 1.01× |
+| FullChip | `mpi` | 0.07× | 0.07× | 1.02× |
+| FullChip | `mpi-gpu` | 0.21× | 0.22× | 0.98× |
+| Zd_Jac3 | `hybrid-async` | 1.06× | 1.08× | 0.99× |
+| Zd_Jac3 | `hybrid-async-dp` | 1.33× | 1.37× | 0.97× |
+| Zd_Jac3 | `hybrid-dist-dp` | 1.06× | 1.05× | 1.01× |
+| Zd_Jac3 | `hybrid-dist-pipelined` | 0.92× | 0.90× | 1.02× |
+| Zd_Jac3 | `mpi` | 0.21× | 0.18× | 1.15× |
+| Zd_Jac3 | `mpi-gpu` | 0.77× | 0.80× | 0.96× |
+| test1 | `hybrid-async` | 1.12× | 1.11× | 1.00× |
+| test1 | `hybrid-async-dp` | 1.26× | 1.25× | 1.01× |
+| test1 | `hybrid-dist-dp` | 1.15× | 1.09× | 1.05× |
+| test1 | `hybrid-dist-pipelined` | 0.96× | 0.89× | 1.08× |
+| test1 | `mpi` | 0.09× | 0.09× | 1.05× |
+| test1 | `mpi-gpu` | 0.83× | 0.77× | 1.07× |
+| TSOPF_RS_b2383_c1 | `hybrid-async` | 1.12× | 1.14× | 0.98× |
+| TSOPF_RS_b2383_c1 | `hybrid-async-dp` | 1.18× | 1.21× | 0.98× |
+| TSOPF_RS_b2383_c1 | `hybrid-dist-dp` | 1.10× | 1.12× | 0.98× |
+| TSOPF_RS_b2383_c1 | `hybrid-dist-pipelined` | 0.96× | 0.98× | 0.98× |
+| TSOPF_RS_b2383_c1 | `mpi` | 0.11× | 0.08× | 1.42× |
+| TSOPF_RS_b2383_c1 | `mpi-gpu` | 0.68× | 0.68× | 1.00× |
+| nxp1_mc64_1 | `hybrid-async` | 0.89× | 0.81× | 1.09× |
+| nxp1_mc64_1 | `hybrid-async-dp` | 1.10× | 1.01× | 1.09× |
+| nxp1_mc64_1 | `hybrid-dist-dp` | 1.17× | 1.12× | 1.05× |
+| nxp1_mc64_1 | `hybrid-dist-pipelined` | 0.85× | 0.81× | 1.05× |
+| nxp1_mc64_1 | `mpi` | 0.10× | 0.09× | 1.09× |
+| nxp1_mc64_1 | `mpi-gpu` | 0.50× | 0.53× | 0.94× |
+| torso1 | `hybrid-async` | 1.17× | 1.16× | 1.01× |
+| torso1 | `hybrid-async-dp` | 1.32× | 1.30× | 1.02× |
+| torso1 | `hybrid-dist-dp` | 1.17× | 1.16× | 1.01× |
+| torso1 | `hybrid-dist-pipelined` | 0.98× | 0.97× | 1.01× |
+| torso1 | `mpi` | 0.09× | 0.09× | 1.03× |
+| torso1 | `mpi-gpu` | 0.72× | 0.70× | 1.03× |
+| para-9 | `hybrid-async` | 1.12× | 1.13× | 0.99× |
+| para-9 | `hybrid-async-dp` | 1.29× | 1.30× | 0.99× |
+| para-9 | `hybrid-dist-dp` | 1.14× | 1.07× | 1.06× |
+| para-9 | `hybrid-dist-pipelined` | 0.96× | 0.88× | 1.09× |
+| para-9 | `mpi` | 0.10× | 0.10× | 1.07× |
+| para-9 | `mpi-gpu` | 0.85× | 0.68× | 1.26× |
+| FEM_3D_thermal2 | `hybrid-async` | 1.12× | 1.12× | 1.00× |
+| FEM_3D_thermal2 | `hybrid-async-dp` | 1.32× | 1.33× | 1.00× |
+| FEM_3D_thermal2 | `hybrid-dist-dp` | 1.15× | 1.14× | 1.01× |
+| FEM_3D_thermal2 | `hybrid-dist-pipelined` | 0.94× | 0.94× | 0.99× |
+| FEM_3D_thermal2 | `mpi` | 0.13× | 0.13× | 1.01× |
+| FEM_3D_thermal2 | `mpi-gpu` | 0.82× | 0.82× | 1.00× |
+| cage13 | `hybrid-async` | 1.06× | 1.07× | 0.99× |
+| cage13 | `hybrid-async-dp` | 1.28× | 1.28× | 1.00× |
+| cage13 | `hybrid-dist-dp` | 1.15× | 1.14× | 1.01× |
+| cage13 | `hybrid-dist-pipelined` | 0.91× | 0.89× | 1.02× |
+| cage13 | `mpi` | 0.10× | 0.10× | 0.97× |
+| cage13 | `mpi-gpu` | 0.69× | 0.68× | 1.02× |
+| Goodwin_127 | `hybrid-async` | 1.14× | 1.13× | 1.01× |
+| Goodwin_127 | `hybrid-async-dp` | 1.29× | 1.27× | 1.01× |
+| Goodwin_127 | `hybrid-dist-dp` | 1.14× | 1.14× | 1.00× |
+| Goodwin_127 | `hybrid-dist-pipelined` | 0.94× | 0.95× | 0.99× |
+| Goodwin_127 | `mpi` | 0.11× | 0.12× | 0.99× |
+| Goodwin_127 | `mpi-gpu` | 0.87× | 0.88× | 0.99× |
+| bauru5727 | `hybrid-async` | 0.89× | 0.90× | 1.00× |
+| bauru5727 | `hybrid-async-dp` | 1.26× | 1.31× | 0.96× |
+| bauru5727 | `hybrid-dist-dp` | 1.04× | 1.07× | 0.98× |
+| bauru5727 | `hybrid-dist-pipelined` | 0.89× | 0.90× | 0.98× |
+| bauru5727 | `mpi` | 0.45× | 0.41× | 1.10× |
+| bauru5727 | `mpi-gpu` | 0.62× | 0.57× | 1.09× |
+| xenon2 | `hybrid-async` | 1.11× | 1.11× | 1.00× |
+| xenon2 | `hybrid-async-dp` | 1.31× | 1.30× | 1.01× |
+| xenon2 | `hybrid-dist-dp` | 1.13× | 1.12× | 1.01× |
+| xenon2 | `hybrid-dist-pipelined` | 0.92× | 0.93× | 0.99× |
+| xenon2 | `mpi` | 0.13× | 0.13× | 0.99× |
+| xenon2 | `mpi-gpu` | 0.82× | 0.81× | 1.00× |
+| ML_Laplace | `hybrid-async` | 1.13× | 1.13× | 1.00× |
+| ML_Laplace | `hybrid-async-dp` | 1.19× | 1.20× | 0.99× |
+| ML_Laplace | `hybrid-dist-dp` | 1.15× | 1.14× | 1.01× |
+| ML_Laplace | `hybrid-dist-pipelined` | 0.97× | 0.96× | 1.01× |
+| ML_Laplace | `mpi` | 0.10× | 0.10× | 1.03× |
+| ML_Laplace | `mpi-gpu` | 1.07× | 1.07× | 1.00× |
+| trans5 | `hybrid-async` | 0.78× | 0.89× | 0.87× |
+| trans5 | `hybrid-async-dp` | 0.96× | 1.21× | 0.79× |
+| trans5 | `hybrid-dist-dp` | 0.96× | 1.16× | 0.83× |
+| trans5 | `hybrid-dist-pipelined` | 0.77× | 0.87× | 0.88× |
+| trans5 | `mpi` | 0.22× | 0.24× | 0.91× |
+| trans5 | `mpi-gpu` | 0.29× | 0.29× | 0.99× |
+| inlet | `hybrid-async` | 1.09× | 1.09× | 1.00× |
+| inlet | `hybrid-async-dp` | 1.58× | 1.58× | 1.00× |
+| inlet | `hybrid-dist-dp` | 1.07× | 1.07× | 1.00× |
+| inlet | `hybrid-dist-pipelined` | 0.94× | 0.95× | 0.99× |
+| inlet | `mpi` | 0.57× | 0.62× | 0.93× |
+| inlet | `mpi-gpu` | 0.77× | 0.76× | 1.01× |
+| tmt_unsym | `hybrid-async` | 0.82× | 0.82× | 1.01× |
+| tmt_unsym | `hybrid-async-dp` | 1.03× | 1.05× | 0.97× |
+| tmt_unsym | `hybrid-dist-dp` | 1.29× | 1.29× | 1.00× |
+| tmt_unsym | `hybrid-dist-pipelined` | 0.90× | 0.90× | 1.00× |
+| tmt_unsym | `mpi` | 0.10× | 0.10× | 1.00× |
+| tmt_unsym | `mpi-gpu` | 0.55× | 0.55× | 1.00× |
+| pre2 | `hybrid-async` | 1.01× | 0.99× | 1.02× |
+| pre2 | `hybrid-async-dp` | 1.27× | 1.25× | 1.01× |
+| pre2 | `hybrid-dist-dp` | 1.25× | 1.24× | 1.01× |
+| pre2 | `hybrid-dist-pipelined` | 0.91× | 0.91× | 1.00× |
+| pre2 | `mpi` | 0.10× | 0.10× | 1.00× |
+| pre2 | `mpi-gpu` | 0.62× | 0.61× | 1.02× |
+| para-5 | `hybrid-async` | 1.13× | 1.13× | 1.00× |
+| para-5 | `hybrid-async-dp` | 1.30× | 1.30× | 1.00× |
+| para-5 | `hybrid-dist-dp` | 1.16× | 1.08× | 1.08× |
+| para-5 | `hybrid-dist-pipelined` | 0.96× | 0.88× | 1.09× |
+| para-5 | `mpi` | 0.11× | 0.10× | 1.07× |
+| para-5 | `mpi-gpu` | 0.85× | 0.69× | 1.25× |
+| largebasis | `hybrid-async` | 1.05× | 1.05× | 1.00× |
+| largebasis | `hybrid-async-dp` | 1.30× | 1.29× | 1.01× |
+| largebasis | `hybrid-dist-dp` | 1.19× | 1.13× | 1.05× |
+| largebasis | `hybrid-dist-pipelined` | 0.92× | 0.85× | 1.07× |
+| largebasis | `mpi` | 0.12× | 0.11× | 1.08× |
+| largebasis | `mpi-gpu` | 0.73× | 0.61× | 1.18× |
+| trans4 | `hybrid-async` | 0.76× | 0.89× | 0.86× |
+| trans4 | `hybrid-async-dp` | 0.95× | 1.22× | 0.78× |
+| trans4 | `hybrid-dist-dp` | 0.97× | 1.16× | 0.84× |
+| trans4 | `hybrid-dist-pipelined` | 0.78× | 0.88× | 0.89× |
+| trans4 | `mpi` | 0.22× | 0.23× | 0.99× |
+| trans4 | `mpi-gpu` | 0.29× | 0.29× | 1.00× |
+| venkat50 | `hybrid-async` | 1.07× | 1.06× | 1.01× |
+| venkat50 | `hybrid-async-dp` | 1.30× | 1.29× | 1.01× |
+| venkat50 | `hybrid-dist-dp` | 1.03× | 1.03× | 1.00× |
+| venkat50 | `hybrid-dist-pipelined` | 0.87× | 0.86× | 1.01× |
+| venkat50 | `mpi` | 0.21× | 0.20× | 1.02× |
+| venkat50 | `mpi-gpu` | 0.81× | 0.76× | 1.07× |
+| appu | `hybrid-async` | 1.13× | 1.14× | 0.99× |
+| appu | `hybrid-async-dp` | 1.42× | 1.41× | 1.01× |
+| appu | `hybrid-dist-dp` | 1.07× | 1.06× | 1.02× |
+| appu | `hybrid-dist-pipelined` | 0.92× | 0.91× | 1.02× |
+| appu | `mpi` | 0.17× | 0.17× | 1.02× |
+| appu | `mpi-gpu` | 0.85× | 0.82× | 1.03× |
+| k3plates | `hybrid-async` | 1.12× | 1.12× | 0.99× |
+| k3plates | `hybrid-async-dp` | 1.65× | 1.64× | 1.01× |
+| k3plates | `hybrid-dist-dp` | 1.12× | 1.12× | 1.00× |
+| k3plates | `hybrid-dist-pipelined` | 0.98× | 0.97× | 1.01× |
+| k3plates | `mpi` | 0.50× | 0.51× | 0.98× |
+| k3plates | `mpi-gpu` | 0.77× | 0.77× | 1.00× |
+| marine1 | `hybrid-async` | 1.06× | 1.06× | 1.00× |
+| marine1 | `hybrid-async-dp` | 1.28× | 1.26× | 1.01× |
+| marine1 | `hybrid-dist-dp` | 1.18× | 1.18× | 0.99× |
+| marine1 | `hybrid-dist-pipelined` | 0.92× | 0.91× | 1.02× |
+| marine1 | `mpi` | 0.10× | 0.10× | 1.05× |
+| marine1 | `mpi-gpu` | 0.73× | 0.68× | 1.07× |
+| shar_te2-b3 | `hybrid-async` | 0.72× | 0.74× | 0.98× |
+| shar_te2-b3 | `hybrid-async-dp` | 0.92× | 0.94× | 0.98× |
+| shar_te2-b3 | `hybrid-dist-dp` | 1.08× | 1.07× | 1.01× |
+| shar_te2-b3 | `hybrid-dist-pipelined` | 0.76× | 0.75× | 1.02× |
+| shar_te2-b3 | `mpi` | 0.15× | 0.17× | 0.90× |
+| shar_te2-b3 | `mpi-gpu` | 0.43× | 0.44× | 0.99× |
+| ss1 | `hybrid-async` | 0.72× | 0.76× | 0.96× |
+| ss1 | `hybrid-async-dp` | 0.93× | 0.97× | 0.96× |
+| ss1 | `hybrid-dist-dp` | 1.07× | 1.11× | 0.96× |
+| ss1 | `hybrid-dist-pipelined` | 0.80× | 0.78× | 1.03× |
+| ss1 | `mpi` | 0.27× | 0.19× | 1.38× |
+| ss1 | `mpi-gpu` | 0.57× | 0.48× | 1.18× |
+| venkat01 | `hybrid-async` | 1.07× | 1.06× | 1.01× |
+| venkat01 | `hybrid-async-dp` | 1.32× | 1.29× | 1.02× |
+| venkat01 | `hybrid-dist-dp` | 1.03× | 1.03× | 1.00× |
+| venkat01 | `hybrid-dist-pipelined` | 0.87× | 0.86× | 1.01× |
+| venkat01 | `mpi` | 0.21× | 0.20× | 1.02× |
+| venkat01 | `mpi-gpu` | 0.81× | 0.76× | 1.07× |
+| webbase-1M | `hybrid-async` | 0.66× | 0.73× | 0.91× |
+| webbase-1M | `hybrid-async-dp` | 0.81× | 0.91× | 0.88× |
+| webbase-1M | `hybrid-dist-dp` | 1.30× | 1.29× | 1.00× |
+| webbase-1M | `hybrid-dist-pipelined` | 0.87× | 0.87× | 0.99× |
+| webbase-1M | `mpi` | 0.09× | 0.10× | 0.95× |
+| webbase-1M | `mpi-gpu` | 0.49× | 0.49× | 0.99× |
+| poli4 | `hybrid-async` | 0.90× | 0.88× | 1.03× |
+| poli4 | `hybrid-async-dp` | 1.39× | 1.24× | 1.12× |
+| poli4 | `hybrid-dist-dp` | 1.31× | 1.29× | 1.02× |
+| poli4 | `hybrid-dist-pipelined` | 0.77× | 0.75× | 1.02× |
+| poli4 | `mpi` | 0.57× | 0.60× | 0.95× |
+| poli4 | `mpi-gpu` | 0.59× | 0.56× | 1.05× |
+| coupled | `hybrid-async` | 1.01× | 0.96× | 1.05× |
+| coupled | `hybrid-async-dp` | 1.80× | 1.72× | 1.04× |
+| coupled | `hybrid-dist-dp` | 1.16× | 1.17× | 0.99× |
+| coupled | `hybrid-dist-pipelined` | 1.03× | 1.02× | 1.01× |
+| coupled | `mpi` | 0.72× | 0.65× | 1.09× |
+| coupled | `mpi-gpu` | 0.66× | 0.64× | 1.04× |
+| Ill_Stokes | `hybrid-async` | 1.02× | 0.97× | 1.06× |
+| Ill_Stokes | `hybrid-async-dp` | 1.66× | 1.55× | 1.07× |
+| Ill_Stokes | `hybrid-dist-dp` | 1.12× | 1.12× | 1.00× |
+| Ill_Stokes | `hybrid-dist-pipelined` | 0.97× | 0.95× | 1.01× |
+| Ill_Stokes | `mpi` | 0.61× | 0.45× | 1.34× |
+| Ill_Stokes | `mpi-gpu` | 0.69× | 0.64× | 1.08× |
+| bayer02 | `hybrid-async` | 0.95× | 0.95× | 0.99× |
+| bayer02 | `hybrid-async-dp` | 1.57× | 1.58× | 0.99× |
+| bayer02 | `hybrid-dist-dp` | 1.08× | 1.08× | 1.00× |
+| bayer02 | `hybrid-dist-pipelined` | 0.94× | 0.94× | 1.00× |
+| bayer02 | `mpi` | 1.17× | 1.18× | 0.99× |
+| bayer02 | `mpi-gpu` | 0.61× | 0.61× | 1.00× |
+| wang3 | `hybrid-async` | 0.95× | 0.94× | 1.01× |
+| wang3 | `hybrid-async-dp` | 1.55× | 1.57× | 0.98× |
+| wang3 | `hybrid-dist-dp` | 1.10× | 1.09× | 1.00× |
+| wang3 | `hybrid-dist-pipelined` | 0.94× | 0.94× | 1.01× |
+| wang3 | `mpi` | 0.67× | 0.63× | 1.07× |
+| wang3 | `mpi-gpu` | 0.66× | 0.66× | 1.00× |
+| powersim | `hybrid-async` | 0.96× | 0.95× | 1.01× |
+| powersim | `hybrid-async-dp` | 1.58× | 1.54× | 1.02× |
+| powersim | `hybrid-dist-dp` | 1.08× | 1.09× | 1.00× |
+| powersim | `hybrid-dist-pipelined` | 0.93× | 0.93× | 1.00× |
+| powersim | `mpi` | 1.14× | 0.95× | 1.21× |
+| powersim | `mpi-gpu` | 0.64× | 0.61× | 1.06× |
+
+
+---------------- 2. SpMV-only sweep (ALL 49) Sun Jun 28 06:59:01 +03 2026 ----------------
+### RM07R
+  patoh  w100   hybrid=0.00499838
+  patoh  w400   hybrid=0.001842763
+  patoh  w500   hybrid=0.001438239
+  patoh  w600   hybrid=0.0012545
+  patoh  w700   hybrid=0.001201307
+  patoh  w800   hybrid=0.001241357
+  patoh  w900   hybrid=0.001279387
+  patoh  w1000  hybrid=0.001251607
+  patoh  w1100  hybrid=0.001257103
+  patoh  w1200  hybrid=0.001284077
+  patoh  w2000  hybrid=0.00131464
+  patoh  w2720  hybrid=0.00131294
+  naive  w100   hybrid=0.005190773
+  naive  w400   hybrid=0.001743077
+  naive  w500   hybrid=0.001362054
+  naive  w600   hybrid=0.0012535
+  naive  w700   hybrid=0.001203197
+  naive  w800   hybrid=0.00127316
+  naive  w900   hybrid=0.001249983
+  naive  w1000  hybrid=0.00125424
+  naive  w1100  hybrid=0.001267627
+  naive  w1200  hybrid=0.001261577
+  naive  w2000  hybrid=0.001304317
+  naive  w2720  hybrid=0.001322637
+### cage14
+  patoh  w100   hybrid=0.004111457
+  patoh  w400   hybrid=0.00135294
+  patoh  w500   hybrid=0.00113576
+  patoh  w600   hybrid=0.001004543
+  patoh  w700   hybrid=0.001022813
+  patoh  w800   hybrid=0.001031436
+  patoh  w900   hybrid=0.001044427
+  patoh  w1000  hybrid=0.001064664
+  patoh  w1100  hybrid=0.001062887
+  patoh  w1200  hybrid=0.001075794
+  patoh  w2000  hybrid=0.00110018
+  patoh  w2720  hybrid=0.001117317
+  naive  w100   hybrid=0.003990041
+  naive  w400   hybrid=0.001278074
+  naive  w500   hybrid=0.0009854905
+  naive  w600   hybrid=0.0009960437
+  naive  w700   hybrid=0.001013986
+  naive  w800   hybrid=0.001027
+  naive  w900   hybrid=0.001041811
+  naive  w1000  hybrid=0.001050007
+  naive  w1100  hybrid=0.001053973
+  naive  w1200  hybrid=0.001064607
+  naive  w2000  hybrid=0.001094113
+  naive  w2720  hybrid=0.001102474
+### Hamrle3
+  patoh  w100   hybrid=0.0008499734
+  patoh  w400   hybrid=0.0002803198
+  patoh  w500   hybrid=0.0002921232
+  patoh  w600   hybrid=0.0003015272
+  patoh  w700   hybrid=0.0003064235
+  patoh  w800   hybrid=0.0003084064
+  patoh  w900   hybrid=0.0003126335
+  patoh  w1000  hybrid=0.0003185733
+  patoh  w1100  hybrid=0.0003178835
+  patoh  w1200  hybrid=0.0003224405
+  patoh  w2000  hybrid=0.0003331534
+  patoh  w2720  hybrid=0.0003394834
+  naive  w100   hybrid=0.0009052499
+  naive  w400   hybrid=0.0002673634
+  naive  w500   hybrid=0.0002764535
+  naive  w600   hybrid=0.0002851502
+  naive  w700   hybrid=0.0002932135
+  naive  w800   hybrid=0.00029881
+  naive  w900   hybrid=0.0003034663
+  naive  w1000  hybrid=0.0003067962
+  naive  w1100  hybrid=0.0003097065
+  naive  w1200  hybrid=0.0003133631
+  naive  w2000  hybrid=0.0003258538
+  naive  w2720  hybrid=0.0003306135
+### rajat30_mc64_5
+  patoh  w100   hybrid=0.0006235131
+  patoh  w400   hybrid=0.0002526871
+  patoh  w500   hybrid=0.0002618766
+  patoh  w600   hybrid=0.0002692668
+  patoh  w700   hybrid=0.0002739668
+  patoh  w800   hybrid=0.0002780406
+  patoh  w900   hybrid=0.0002811066
+  patoh  w1000  hybrid=0.0002820007
+  patoh  w1100  hybrid=0.0002848864
+  patoh  w1200  hybrid=0.0002851097
+  patoh  w2000  hybrid=0.0002939304
+  patoh  w2720  hybrid=0.0002976934
+  naive  w100   hybrid=0.0005993533
+  naive  w400   hybrid=0.0002514036
+  naive  w500   hybrid=0.0002601902
+  naive  w600   hybrid=0.0002665567
+  naive  w700   hybrid=0.0002713394
+  naive  w800   hybrid=0.0002736203
+  naive  w900   hybrid=0.0002776496
+  naive  w1000  hybrid=0.0002799773
+  naive  w1100  hybrid=0.0002834868
+  naive  w1200  hybrid=0.0002843698
+  naive  w2000  hybrid=0.0002920167
+  naive  w2720  hybrid=0.0002952298
+### circuit5M_dc
+  patoh  w100   hybrid=0.003633056
+  patoh  w400   hybrid=0.000978903
+  patoh  w500   hybrid=0.0008168562
+  patoh  w600   hybrid=0.0008257699
+  patoh  w700   hybrid=0.000840017
+  patoh  w800   hybrid=0.0008578602
+  patoh  w900   hybrid=0.000868094
+  patoh  w1000  hybrid=0.0008771229
+  patoh  w1100  hybrid=0.0008836269
+  patoh  w1200  hybrid=0.0008855732
+  patoh  w2000  hybrid=0.0009171534
+  patoh  w2720  hybrid=0.0009282502
+  naive  w100   hybrid=0.00380013
+  naive  w400   hybrid=0.00117327
+  naive  w500   hybrid=0.0008537928
+  naive  w600   hybrid=0.0008247399
+  naive  w700   hybrid=0.0008417098
+  naive  w800   hybrid=0.0008520269
+  naive  w900   hybrid=0.000862143
+  naive  w1000  hybrid=0.000869987
+  naive  w1100  hybrid=0.0008782299
+  naive  w1200  hybrid=0.0008831604
+  naive  w2000  hybrid=0.0009088763
+  naive  w2720  hybrid=0.0009200939
+### circuit5M
+  patoh  w100   hybrid=0.01481677
+  patoh  w400   hybrid=0.00549822
+  patoh  w500   hybrid=0.003773907
+  patoh  w600   hybrid=0.003031503
+  patoh  w700   hybrid=0.002822517
+  patoh  w800   hybrid=0.00230442
+  patoh  w900   hybrid=0.002345757
+  patoh  w1000  hybrid=0.00234067
+  patoh  w1100  hybrid=0.00235953
+  patoh  w1200  hybrid=0.002375723
+  patoh  w2000  hybrid=0.002447383
+  patoh  w2720  hybrid=0.002467137
+  naive  w100   hybrid=0.01191467
+  naive  w400   hybrid=0.004438066
+  naive  w500   hybrid=0.003590867
+  naive  w600   hybrid=0.002962163
+  naive  w700   hybrid=0.00252432
+  naive  w800   hybrid=0.002258399
+  naive  w900   hybrid=0.002280403
+  naive  w1000  hybrid=0.00230486
+  naive  w1100  hybrid=0.00232462
+  naive  w1200  hybrid=0.00234774
+  naive  w2000  hybrid=0.002418707
+  naive  w2720  hybrid=0.002451663
+### cage15
+  patoh  w100   hybrid=0.01773961
+  patoh  w400   hybrid=0.007283107
+  patoh  w500   hybrid=0.006381241
+  patoh  w600   hybrid=0.004862243
+  patoh  w700   hybrid=0.004347037
+  patoh  w800   hybrid=0.003944543
+  patoh  w900   hybrid=0.003672934
+  patoh  w1000  hybrid=0.003635774
+  patoh  w1100  hybrid=0.003648086
+  patoh  w1200  hybrid=0.003700477
+  patoh  w2000  hybrid=0.003782636
+  patoh  w2720  hybrid=0.00382264
+  naive  w100   hybrid=0.01655354
+  naive  w400   hybrid=0.006013289
+  naive  w500   hybrid=0.005078967
+  naive  w600   hybrid=0.004117637
+  naive  w700   hybrid=0.003731523
+  naive  w800   hybrid=0.003522233
+  naive  w900   hybrid=0.003580437
+  naive  w1000  hybrid=0.003570827
+  naive  w1100  hybrid=0.003600727
+  naive  w1200  hybrid=0.003627754
+  naive  w2000  hybrid=0.003748504
+  naive  w2720  hybrid=0.00377913
+### ML_Geer
+  patoh  w100   hybrid=0.01592811
+  patoh  w400   hybrid=0.006046366
+  patoh  w500   hybrid=0.005080907
+  patoh  w600   hybrid=0.004237537
+  patoh  w700   hybrid=0.003690543
+  patoh  w800   hybrid=0.003716017
+  patoh  w900   hybrid=0.0037177
+  patoh  w1000  hybrid=0.003771797
+  patoh  w1100  hybrid=0.003841387
+  patoh  w1200  hybrid=0.003856686
+  patoh  w2000  hybrid=0.003977703
+  patoh  w2720  hybrid=0.004041613
+  naive  w100   hybrid=0.01586944
+  naive  w400   hybrid=0.006159087
+  naive  w500   hybrid=0.005004644
+  naive  w600   hybrid=0.004316756
+  naive  w700   hybrid=0.0037186
+  naive  w800   hybrid=0.003753627
+  naive  w900   hybrid=0.003739537
+  naive  w1000  hybrid=0.003794443
+  naive  w1100  hybrid=0.00378369
+  naive  w1200  hybrid=0.003801099
+  naive  w2000  hybrid=0.003927871
+  naive  w2720  hybrid=0.003966044
+### vas_stokes_1M
+  patoh  w100   hybrid=0.005036743
+  patoh  w400   hybrid=0.001759327
+  patoh  w500   hybrid=0.0014258
+  patoh  w600   hybrid=0.001186253
+  patoh  w700   hybrid=0.00119982
+  patoh  w800   hybrid=0.001263483
+  patoh  w900   hybrid=0.00122685
+  patoh  w1000  hybrid=0.001250331
+  patoh  w1100  hybrid=0.001263533
+  patoh  w1200  hybrid=0.001257783
+  patoh  w2000  hybrid=0.00129265
+  patoh  w2720  hybrid=0.001300147
+  naive  w100   hybrid=0.00499729
+  naive  w400   hybrid=0.001733803
+  naive  w500   hybrid=0.00134498
+  naive  w600   hybrid=0.001225167
+  naive  w700   hybrid=0.001210343
+  naive  w800   hybrid=0.001215793
+  naive  w900   hybrid=0.001225876
+  naive  w1000  hybrid=0.001228113
+  naive  w1100  hybrid=0.001241973
+  naive  w1200  hybrid=0.001251703
+  naive  w2000  hybrid=0.001287533
+  naive  w2720  hybrid=0.001296514
+### nv2
+  patoh  w100   hybrid=0.008947771
+  patoh  w400   hybrid=0.002995044
+  patoh  w500   hybrid=0.002699393
+  patoh  w600   hybrid=0.002290006
+  patoh  w700   hybrid=0.002135123
+  patoh  w800   hybrid=0.002084266
+  patoh  w900   hybrid=0.00209073
+  patoh  w1000  hybrid=0.002122304
+  patoh  w1100  hybrid=0.00212904
+  patoh  w1200  hybrid=0.002167767
+  patoh  w2000  hybrid=0.002233167
+  patoh  w2720  hybrid=0.002257754
+  naive  w100   hybrid=0.009401253
+  naive  w400   hybrid=0.003516331
+  naive  w500   hybrid=0.002794159
+  naive  w600   hybrid=0.002426036
+  naive  w700   hybrid=0.002141326
+  naive  w800   hybrid=0.002068006
+  naive  w900   hybrid=0.00208363
+  naive  w1000  hybrid=0.002103343
+  naive  w1100  hybrid=0.002120603
+  naive  w1200  hybrid=0.002136714
+  naive  w2000  hybrid=0.002200567
+  naive  w2720  hybrid=0.002227137
+### Transport
+  patoh  w100   hybrid=0.003501907
+  patoh  w400   hybrid=0.0010856
+  patoh  w500   hybrid=0.0008494671
+  patoh  w600   hybrid=0.0008952832
+  patoh  w700   hybrid=0.0008902136
+  patoh  w800   hybrid=0.0008971103
+  patoh  w900   hybrid=0.0009103727
+  patoh  w1000  hybrid=0.0009156632
+  patoh  w1100  hybrid=0.0009270334
+  patoh  w1200  hybrid=0.0009274904
+  patoh  w2000  hybrid=0.0009555769
+  patoh  w2720  hybrid=0.0009718704
+  naive  w100   hybrid=0.003469554
+  naive  w400   hybrid=0.00106632
+  naive  w500   hybrid=0.0008431029
+  naive  w600   hybrid=0.0008653434
+  naive  w700   hybrid=0.0008855303
+  naive  w800   hybrid=0.0008971167
+  naive  w900   hybrid=0.0009043598
+  naive  w1000  hybrid=0.0009143933
+  naive  w1100  hybrid=0.0009217739
+  naive  w1200  hybrid=0.0009297736
+  naive  w2000  hybrid=0.0009554331
+  naive  w2720  hybrid=0.0009667897
+### Freescale2
+  patoh  w100   hybrid=0.004075443
+  patoh  w400   hybrid=0.001288896
+  patoh  w500   hybrid=0.001013323
+  patoh  w600   hybrid=0.0008955669
+  patoh  w700   hybrid=0.0009231432
+  patoh  w800   hybrid=0.0009169404
+  patoh  w900   hybrid=0.0009229032
+  patoh  w1000  hybrid=0.0009414204
+  patoh  w1100  hybrid=0.0009446065
+  patoh  w1200  hybrid=0.0009486198
+  patoh  w2000  hybrid=0.0009770036
+  patoh  w2720  hybrid=0.0009880765
+  naive  w100   hybrid=0.004325183
+  naive  w400   hybrid=0.001484114
+  naive  w500   hybrid=0.001131287
+  naive  w600   hybrid=0.0009093134
+  naive  w700   hybrid=0.0009098331
+  naive  w800   hybrid=0.000933733
+  naive  w900   hybrid=0.0009112302
+  naive  w1000  hybrid=0.0009212534
+  naive  w1100  hybrid=0.0009323136
+  naive  w1200  hybrid=0.000935897
+  naive  w2000  hybrid=0.0009664432
+  naive  w2720  hybrid=0.0009720167
+### dgreen
+  patoh  w100   hybrid=0.005939806
+  patoh  w400   hybrid=0.001987734
+  patoh  w500   hybrid=0.00145156
+  patoh  w600   hybrid=0.00141633
+  patoh  w700   hybrid=0.00139299
+  patoh  w800   hybrid=0.001392537
+  patoh  w900   hybrid=0.001424224
+  patoh  w1000  hybrid=0.001443206
+  patoh  w1100  hybrid=0.001433677
+  patoh  w1200  hybrid=0.00144802
+  patoh  w2000  hybrid=0.00148996
+  patoh  w2720  hybrid=0.00151159
+  naive  w100   hybrid=0.005784713
+  naive  w400   hybrid=0.00207215
+  naive  w500   hybrid=0.00163058
+  naive  w600   hybrid=0.001393907
+  naive  w700   hybrid=0.001373596
+  naive  w800   hybrid=0.001406821
+  naive  w900   hybrid=0.001412313
+  naive  w1000  hybrid=0.001434813
+  naive  w1100  hybrid=0.00142328
+  naive  w1200  hybrid=0.00143568
+  naive  w2000  hybrid=0.001478767
+  naive  w2720  hybrid=0.001500543
+### ss
+  patoh  w100   hybrid=0.005241814
+  patoh  w400   hybrid=0.001737347
+  patoh  w500   hybrid=0.00131456
+  patoh  w600   hybrid=0.00127268
+  patoh  w700   hybrid=0.00129905
+  patoh  w800   hybrid=0.00126101
+  patoh  w900   hybrid=0.001281026
+  patoh  w1000  hybrid=0.001288197
+  patoh  w1100  hybrid=0.001305076
+  patoh  w1200  hybrid=0.001304143
+  patoh  w2000  hybrid=0.001347563
+  patoh  w2720  hybrid=0.001362903
+  naive  w100   hybrid=0.005372263
+  naive  w400   hybrid=0.001862417
+  naive  w500   hybrid=0.00148747
+  naive  w600   hybrid=0.00135185
+  naive  w700   hybrid=0.001287143
+  naive  w800   hybrid=0.001311883
+  naive  w900   hybrid=0.00126567
+  naive  w1000  hybrid=0.001291347
+  naive  w1100  hybrid=0.001305614
+  naive  w1200  hybrid=0.00133566
+  naive  w2000  hybrid=0.001375087
+  naive  w2720  hybrid=0.001349436
+### mac_econ_fwd500
+  patoh  w100   hybrid=9.281e-05
+  patoh  w400   hybrid=6.462018e-05
+  patoh  w500   hybrid=6.868998e-05
+  patoh  w600   hybrid=7.060289e-05
+  patoh  w700   hybrid=7.020315e-05
+  patoh  w800   hybrid=7.294337e-05
+  patoh  w900   hybrid=7.306973e-05
+  patoh  w1000  hybrid=7.397016e-05
+  patoh  w1100  hybrid=7.362684e-05
+  patoh  w1200  hybrid=7.342974e-05
+  patoh  w2000  hybrid=7.491668e-05
+  patoh  w2720  hybrid=7.766008e-05
+  naive  w100   hybrid=9.380341e-05
+  naive  w400   hybrid=6.51439e-05
+  naive  w500   hybrid=6.761312e-05
+  naive  w600   hybrid=6.882668e-05
+  naive  w700   hybrid=6.988287e-05
+  naive  w800   hybrid=7.160981e-05
+  naive  w900   hybrid=7.322311e-05
+  naive  w1000  hybrid=7.328033e-05
+  naive  w1100  hybrid=7.368724e-05
+  naive  w1200  hybrid=7.412672e-05
+  naive  w2000  hybrid=7.486343e-05
+  naive  w2720  hybrid=7.725e-05
+### FullChip
+  patoh  w100   hybrid=0.004928583
+  patoh  w400   hybrid=0.00152174
+  patoh  w500   hybrid=0.001165526
+  patoh  w600   hybrid=0.001128933
+  patoh  w700   hybrid=0.001126847
+  patoh  w800   hybrid=0.001141253
+  patoh  w900   hybrid=0.00114607
+  patoh  w1000  hybrid=0.001155897
+  patoh  w1100  hybrid=0.001168501
+  patoh  w1200  hybrid=0.001180956
+  patoh  w2000  hybrid=0.00121102
+  patoh  w2720  hybrid=0.001215153
+  naive  w100   hybrid=0.00481325
+  naive  w400   hybrid=0.001598667
+  naive  w500   hybrid=0.00119452
+  naive  w600   hybrid=0.001104317
+  naive  w700   hybrid=0.001119954
+  naive  w800   hybrid=0.001137327
+  naive  w900   hybrid=0.001149877
+  naive  w1000  hybrid=0.001163363
+  naive  w1100  hybrid=0.001156727
+  naive  w1200  hybrid=0.00117746
+  naive  w2000  hybrid=0.00119165
+  naive  w2720  hybrid=0.001218286
+### Zd_Jac3
+  patoh  w100   hybrid=8.936961e-05
+  patoh  w400   hybrid=6.937663e-05
+  patoh  w500   hybrid=7.88633e-05
+  patoh  w600   hybrid=7.934332e-05
+  patoh  w700   hybrid=7.953008e-05
+  patoh  w800   hybrid=8.14867e-05
+  patoh  w900   hybrid=7.714351e-05
+  patoh  w1000  hybrid=8.043687e-05
+  patoh  w1100  hybrid=8.138657e-05
+  patoh  w1200  hybrid=7.872979e-05
+  patoh  w2000  hybrid=7.602294e-05
+  patoh  w2720  hybrid=8.347034e-05
+  naive  w100   hybrid=0.0001239602
+  naive  w400   hybrid=7.633607e-05
+  naive  w500   hybrid=8.286715e-05
+  naive  w600   hybrid=7.595698e-05
+  naive  w700   hybrid=7.964691e-05
+  naive  w800   hybrid=7.591009e-05
+  naive  w900   hybrid=7.723649e-05
+  naive  w1000  hybrid=7.769664e-05
+  naive  w1100  hybrid=7.802645e-05
+  naive  w1200  hybrid=7.904291e-05
+  naive  w2000  hybrid=8.054733e-05
+  naive  w2720  hybrid=8.122603e-05
+### test1
+  patoh  w100   hybrid=0.001511749
+  patoh  w400   hybrid=0.0004684901
+  patoh  w500   hybrid=0.0004868134
+  patoh  w600   hybrid=0.000495007
+  patoh  w700   hybrid=0.0005112036
+  patoh  w800   hybrid=0.0005118998
+  patoh  w900   hybrid=0.0005173302
+  patoh  w1000  hybrid=0.0005236594
+  patoh  w1100  hybrid=0.0005313333
+  patoh  w1200  hybrid=0.0005355668
+  patoh  w2000  hybrid=0.0005502502
+  patoh  w2720  hybrid=0.00055691
+  naive  w100   hybrid=0.001611173
+  naive  w400   hybrid=0.0004681595
+  naive  w500   hybrid=0.0004827269
+  naive  w600   hybrid=0.0004970471
+  naive  w700   hybrid=0.0005046503
+  naive  w800   hybrid=0.0005114635
+  naive  w900   hybrid=0.0005178761
+  naive  w1000  hybrid=0.0005237699
+  naive  w1100  hybrid=0.0005290802
+  naive  w1200  hybrid=0.0005307269
+  naive  w2000  hybrid=0.0005459499
+  naive  w2720  hybrid=0.0005521433
+### TSOPF_RS_b2383_c1
+  patoh  w100   hybrid=0.003116877
+  patoh  w400   hybrid=0.000836033
+  patoh  w500   hybrid=0.0007130504
+  patoh  w600   hybrid=0.0004644895
+  patoh  w700   hybrid=0.0004395032
+  patoh  w800   hybrid=0.001939374
+  patoh  w900   hybrid=0.002175413
+  patoh  w1000  hybrid=0.0004630764
+  patoh  w1100  hybrid=0.001529606
+  patoh  w1200  hybrid=0.0004734071
+  patoh  w2000  hybrid=0.00049251
+  patoh  w2720  hybrid=0.0005085135
+  naive  w100   hybrid=0.001874227
+  naive  w400   hybrid=0.0004814839
+  naive  w500   hybrid=0.000444897
+  naive  w600   hybrid=0.0004535166
+  naive  w700   hybrid=0.0004641501
+  naive  w800   hybrid=0.0004708497
+  naive  w900   hybrid=0.0004747971
+  naive  w1000  hybrid=0.0004807202
+  naive  w1100  hybrid=0.000482796
+  naive  w1200  hybrid=0.0004873864
+  naive  w2000  hybrid=0.0005009429
+  naive  w2720  hybrid=0.000505507
+### nxp1_mc64_1
+  patoh  w100   hybrid=0.0003205236
+  patoh  w400   hybrid=0.000136447
+  patoh  w500   hybrid=0.0001407639
+  patoh  w600   hybrid=0.0001291935
+  patoh  w700   hybrid=0.0001311135
+  patoh  w800   hybrid=0.0001324566
+  patoh  w900   hybrid=0.0001339499
+  patoh  w1000  hybrid=0.0001341701
+  patoh  w1100  hybrid=0.0001358366
+  patoh  w1200  hybrid=0.0001366266
+  patoh  w2000  hybrid=0.0001401838
+  patoh  w2720  hybrid=0.0001424201
+  naive  w100   hybrid=0.0003194666
+  naive  w400   hybrid=0.0001426498
+  naive  w500   hybrid=0.0001376462
+  naive  w600   hybrid=0.0001296973
+  naive  w700   hybrid=0.0001323771
+  naive  w800   hybrid=0.0001319329
+  naive  w900   hybrid=0.0001338665
+  naive  w1000  hybrid=0.0001346366
+  naive  w1100  hybrid=0.0001356371
+  naive  w1200  hybrid=0.0001355433
+  naive  w2000  hybrid=0.0001400868
+  naive  w2720  hybrid=0.000141023
+### torso1
+  patoh  w100   hybrid=0.000819517
+  patoh  w400   hybrid=0.0002334968
+  patoh  w500   hybrid=0.000240473
+  patoh  w600   hybrid=0.0002441732
+  patoh  w700   hybrid=0.0002489066
+  patoh  w800   hybrid=0.00025992
+  patoh  w900   hybrid=0.0002576868
+  patoh  w1000  hybrid=0.0002586166
+  patoh  w1100  hybrid=0.0002591634
+  patoh  w1200  hybrid=0.0002647463
+  patoh  w2000  hybrid=0.00027131
+  patoh  w2720  hybrid=0.0002738698
+  naive  w100   hybrid=0.0008012827
+  naive  w400   hybrid=0.0002495694
+  naive  w500   hybrid=0.0002490067
+  naive  w600   hybrid=0.0002595202
+  naive  w700   hybrid=0.0002596068
+  naive  w800   hybrid=0.0002628334
+  naive  w900   hybrid=0.0002657596
+  naive  w1000  hybrid=0.0002688869
+  naive  w1100  hybrid=0.0002702936
+  naive  w1200  hybrid=0.0002726928
+  naive  w2000  hybrid=0.0002791595
+  naive  w2720  hybrid=0.0002831833
+### para-9
+  patoh  w100   hybrid=0.0004197232
+  patoh  w400   hybrid=0.0002017697
+  patoh  w500   hybrid=0.0002117968
+  patoh  w600   hybrid=0.0002165969
+  patoh  w700   hybrid=0.0002207836
+  patoh  w800   hybrid=0.0002239267
+  patoh  w900   hybrid=0.0002271032
+  patoh  w1000  hybrid=0.0002286331
+  patoh  w1100  hybrid=0.0002310967
+  patoh  w1200  hybrid=0.0002318835
+  patoh  w2000  hybrid=0.0002389169
+  patoh  w2720  hybrid=0.0002412868
+  naive  w100   hybrid=0.0004152934
+  naive  w400   hybrid=0.0002021035
+  naive  w500   hybrid=0.0002097034
+  naive  w600   hybrid=0.0002149733
+  naive  w700   hybrid=0.0002194929
+  naive  w800   hybrid=0.0002227736
+  naive  w900   hybrid=0.00022458
+  naive  w1000  hybrid=0.0002272574
+  naive  w1100  hybrid=0.0002285234
+  naive  w1200  hybrid=0.0002304872
+  naive  w2000  hybrid=0.0002367298
+  naive  w2720  hybrid=0.0002396234
+### FEM_3D_thermal2
+  patoh  w100   hybrid=0.0002162631
+  patoh  w400   hybrid=0.0001373569
+  patoh  w500   hybrid=0.0001417565
+  patoh  w600   hybrid=0.000145754
+  patoh  w700   hybrid=0.0001480198
+  patoh  w800   hybrid=0.000149823
+  patoh  w900   hybrid=0.0001523066
+  patoh  w1000  hybrid=0.00015275
+  patoh  w1100  hybrid=0.0001537903
+  patoh  w1200  hybrid=0.000155317
+  patoh  w2000  hybrid=0.0001604335
+  patoh  w2720  hybrid=0.0001627572
+  naive  w100   hybrid=0.0002616398
+  naive  w400   hybrid=0.0001375866
+  naive  w500   hybrid=0.0001418002
+  naive  w600   hybrid=0.0001453137
+  naive  w700   hybrid=0.0001480627
+  naive  w800   hybrid=0.0001495798
+  naive  w900   hybrid=0.0001517399
+  naive  w1000  hybrid=0.0001528804
+  naive  w1100  hybrid=0.0001536171
+  naive  w1200  hybrid=0.0001552963
+  naive  w2000  hybrid=0.0001593971
+  naive  w2720  hybrid=0.00016071
+### cage13
+  patoh  w100   hybrid=0.000764304
+  patoh  w400   hybrid=0.0002842697
+  patoh  w500   hybrid=0.0002940869
+  patoh  w600   hybrid=0.0003020628
+  patoh  w700   hybrid=0.0003087568
+  patoh  w800   hybrid=0.0003130237
+  patoh  w900   hybrid=0.0003162567
+  patoh  w1000  hybrid=0.0003199967
+  patoh  w1100  hybrid=0.0003230929
+  patoh  w1200  hybrid=0.0003240768
+  patoh  w2000  hybrid=0.0003336096
+  patoh  w2720  hybrid=0.00033909
+  naive  w100   hybrid=0.0007207362
+  naive  w400   hybrid=0.0002830966
+  naive  w500   hybrid=0.0002933566
+  naive  w600   hybrid=0.0003015073
+  naive  w700   hybrid=0.0003065165
+  naive  w800   hybrid=0.0003113031
+  naive  w900   hybrid=0.0003148627
+  naive  w1000  hybrid=0.0003177834
+  naive  w1100  hybrid=0.0003195333
+  naive  w1200  hybrid=0.0003224397
+  naive  w2000  hybrid=0.0003319097
+  naive  w2720  hybrid=0.0003356306
+### Goodwin_127
+  patoh  w100   hybrid=0.0004397535
+  patoh  w400   hybrid=0.0002154533
+  patoh  w500   hybrid=0.0002236668
+  patoh  w600   hybrid=0.0002281602
+  patoh  w700   hybrid=0.0002336868
+  patoh  w800   hybrid=0.0002371295
+  patoh  w900   hybrid=0.000238723
+  patoh  w1000  hybrid=0.0002406271
+  patoh  w1100  hybrid=0.0002428699
+  patoh  w1200  hybrid=0.0002466599
+  patoh  w2000  hybrid=0.0002537362
+  patoh  w2720  hybrid=0.000256664
+  naive  w100   hybrid=0.0004509934
+  naive  w400   hybrid=0.0002147396
+  naive  w500   hybrid=0.0002228069
+  naive  w600   hybrid=0.0002279997
+  naive  w700   hybrid=0.0002322729
+  naive  w800   hybrid=0.0002356633
+  naive  w900   hybrid=0.0002386562
+  naive  w1000  hybrid=0.0002403037
+  naive  w1100  hybrid=0.0002427634
+  naive  w1200  hybrid=0.0002443671
+  naive  w2000  hybrid=0.0002513099
+  naive  w2720  hybrid=0.0002544769
+### bauru5727
+  patoh  w100   hybrid=2.887646e-05
+  patoh  w400   hybrid=2.049685e-05
+  patoh  w500   hybrid=2.065976e-05
+  patoh  w600   hybrid=2.082984e-05
+  patoh  w700   hybrid=2.052704e-05
+  patoh  w800   hybrid=2.07901e-05
+  patoh  w900   hybrid=2.086719e-05
+  patoh  w1000  hybrid=1.976331e-05
+  patoh  w1100  hybrid=2.023061e-05
+  patoh  w1200  hybrid=2.010028e-05
+  patoh  w2000  hybrid=2.053022e-05
+  patoh  w2720  hybrid=2.04436e-05
+  naive  w100   hybrid=2.687613e-05
+  naive  w400   hybrid=2.047698e-05
+  naive  w500   hybrid=2.193292e-05
+  naive  w600   hybrid=2.100309e-05
+  naive  w700   hybrid=2.048651e-05
+  naive  w800   hybrid=1.995961e-05
+  naive  w900   hybrid=2.05938e-05
+  naive  w1000  hybrid=2.198299e-05
+  naive  w1100  hybrid=2.028704e-05
+  naive  w1200  hybrid=2.019644e-05
+  naive  w2000  hybrid=2.107382e-05
+  naive  w2720  hybrid=2.007961e-05
+### xenon2
+  patoh  w100   hybrid=0.0002617574
+  patoh  w400   hybrid=0.0001525307
+  patoh  w500   hybrid=0.0001566736
+  patoh  w600   hybrid=0.0001610772
+  patoh  w700   hybrid=0.0001639295
+  patoh  w800   hybrid=0.0001654204
+  patoh  w900   hybrid=0.0001681797
+  patoh  w1000  hybrid=0.0001691031
+  patoh  w1100  hybrid=0.0001703636
+  patoh  w1200  hybrid=0.000171814
+  patoh  w2000  hybrid=0.0001763233
+  patoh  w2720  hybrid=0.0001778134
+  naive  w100   hybrid=0.0002655832
+  naive  w400   hybrid=0.0001501767
+  naive  w500   hybrid=0.0001563032
+  naive  w600   hybrid=0.0001601028
+  naive  w700   hybrid=0.0001616804
+  naive  w800   hybrid=0.0001644293
+  naive  w900   hybrid=0.000166227
+  naive  w1000  hybrid=0.0001679428
+  naive  w1100  hybrid=0.0001691095
+  naive  w1200  hybrid=0.000169607
+  naive  w2000  hybrid=0.0001753799
+  naive  w2720  hybrid=0.0001767937
+### ML_Laplace
+  patoh  w100   hybrid=0.003755364
+  patoh  w400   hybrid=0.00118412
+  patoh  w500   hybrid=0.0009401766
+  patoh  w600   hybrid=0.0009598867
+  patoh  w700   hybrid=0.0009721001
+  patoh  w800   hybrid=0.00099962
+  patoh  w900   hybrid=0.001004993
+  patoh  w1000  hybrid=0.001018813
+  patoh  w1100  hybrid=0.001023063
+  patoh  w1200  hybrid=0.00103433
+  patoh  w2000  hybrid=0.00106792
+  patoh  w2720  hybrid=0.001080163
+  naive  w100   hybrid=0.003756789
+  naive  w400   hybrid=0.001134536
+  naive  w500   hybrid=0.0009464169
+  naive  w600   hybrid=0.0009543792
+  naive  w700   hybrid=0.0009735068
+  naive  w800   hybrid=0.0009918133
+  naive  w900   hybrid=0.0010028
+  naive  w1000  hybrid=0.001010884
+  naive  w1100  hybrid=0.00101628
+  naive  w1200  hybrid=0.001022623
+  naive  w2000  hybrid=0.001059007
+  naive  w2720  hybrid=0.001066453
+### trans5
+  patoh  w100   hybrid=8.104324e-05
+  patoh  w400   hybrid=4.649003e-05
+  patoh  w500   hybrid=4.364014e-05
+  patoh  w600   hybrid=4.668315e-05
+  patoh  w700   hybrid=4.614274e-05
+  patoh  w800   hybrid=4.673004e-05
+  patoh  w900   hybrid=4.687071e-05
+  patoh  w1000  hybrid=4.708687e-05
+  patoh  w1100  hybrid=4.766305e-05
+  patoh  w1200  hybrid=4.942656e-05
+  patoh  w2000  hybrid=4.748027e-05
+  patoh  w2720  hybrid=4.752e-05
+  naive  w100   hybrid=7.062674e-05
+  naive  w400   hybrid=4.552285e-05
+  naive  w500   hybrid=4.520019e-05
+  naive  w600   hybrid=4.73237e-05
+  naive  w700   hybrid=4.71131e-05
+  naive  w800   hybrid=4.692396e-05
+  naive  w900   hybrid=4.782995e-05
+  naive  w1000  hybrid=4.718701e-05
+  naive  w1100  hybrid=4.738331e-05
+  naive  w1200  hybrid=4.718304e-05
+  naive  w2000  hybrid=4.786015e-05
+  naive  w2720  hybrid=4.817963e-05
+### inlet
+  patoh  w100   hybrid=2.924681e-05
+  patoh  w400   hybrid=2.728621e-05
+  patoh  w500   hybrid=2.743642e-05
+  patoh  w600   hybrid=2.769311e-05
+  patoh  w700   hybrid=3.11629e-05
+  patoh  w800   hybrid=3.22032e-05
+  patoh  w900   hybrid=3.228664e-05
+  patoh  w1000  hybrid=3.154039e-05
+  patoh  w1100  hybrid=3.19767e-05
+  patoh  w1200  hybrid=3.208637e-05
+  patoh  w2000  hybrid=3.166676e-05
+  patoh  w2720  hybrid=3.180981e-05
+  naive  w100   hybrid=3.285011e-05
+  naive  w400   hybrid=2.909978e-05
+  naive  w500   hybrid=2.748648e-05
+  naive  w600   hybrid=2.731323e-05
+  naive  w700   hybrid=3.155629e-05
+  naive  w800   hybrid=3.167947e-05
+  naive  w900   hybrid=3.200293e-05
+  naive  w1000  hybrid=3.202677e-05
+  naive  w1100  hybrid=3.198624e-05
+  naive  w1200  hybrid=3.207684e-05
+  naive  w2000  hybrid=3.206333e-05
+  naive  w2720  hybrid=3.220002e-05
+### tmt_unsym
+  patoh  w100   hybrid=0.000359327
+  patoh  w400   hybrid=0.0001973335
+  patoh  w500   hybrid=0.0002045266
+  patoh  w600   hybrid=0.0002087665
+  patoh  w700   hybrid=0.0002133568
+  patoh  w800   hybrid=0.0002165071
+  patoh  w900   hybrid=0.0002187061
+  patoh  w1000  hybrid=0.0002208201
+  patoh  w1100  hybrid=0.0002222268
+  patoh  w1200  hybrid=0.0002230636
+  patoh  w2000  hybrid=0.0002292895
+  patoh  w2720  hybrid=0.0002341739
+  naive  w100   hybrid=0.00036683
+  naive  w400   hybrid=0.0001977499
+  naive  w500   hybrid=0.0002042572
+  naive  w600   hybrid=0.0002092203
+  naive  w700   hybrid=0.0002136993
+  naive  w800   hybrid=0.0002167972
+  naive  w900   hybrid=0.00021861
+  naive  w1000  hybrid=0.0002213136
+  naive  w1100  hybrid=0.0002218628
+  naive  w1200  hybrid=0.0002232567
+  naive  w2000  hybrid=0.0002296464
+  naive  w2720  hybrid=0.0002320202
+### pre2
+  patoh  w100   hybrid=0.0005238668
+  patoh  w400   hybrid=0.0002348431
+  patoh  w500   hybrid=0.0002434961
+  patoh  w600   hybrid=0.0002499437
+  patoh  w700   hybrid=0.0002528127
+  patoh  w800   hybrid=0.0002580571
+  patoh  w900   hybrid=0.0002589869
+  patoh  w1000  hybrid=0.0002629765
+  patoh  w1100  hybrid=0.0002630035
+  patoh  w1200  hybrid=0.0002670169
+  patoh  w2000  hybrid=0.0002747234
+  patoh  w2720  hybrid=0.0002779063
+  naive  w100   hybrid=0.0005366627
+  naive  w400   hybrid=0.0002330534
+  naive  w500   hybrid=0.0002419567
+  naive  w600   hybrid=0.0002477002
+  naive  w700   hybrid=0.0002524233
+  naive  w800   hybrid=0.0002560401
+  naive  w900   hybrid=0.0002587032
+  naive  w1000  hybrid=0.0002610334
+  naive  w1100  hybrid=0.0002632602
+  naive  w1200  hybrid=0.0002649967
+  naive  w2000  hybrid=0.0002728168
+  naive  w2720  hybrid=0.0002754633
+### para-5
+  patoh  w100   hybrid=0.0004164704
+  patoh  w400   hybrid=0.0002013834
+  patoh  w500   hybrid=0.0002116672
+  patoh  w600   hybrid=0.0002164968
+  patoh  w700   hybrid=0.0002209004
+  patoh  w800   hybrid=0.0002239164
+  patoh  w900   hybrid=0.0002272765
+  patoh  w1000  hybrid=0.0002286998
+  patoh  w1100  hybrid=0.0002310999
+  patoh  w1200  hybrid=0.0002320433
+  patoh  w2000  hybrid=0.0002390838
+  patoh  w2720  hybrid=0.0002416333
+  naive  w100   hybrid=0.0004318873
+  naive  w400   hybrid=0.0002022401
+  naive  w500   hybrid=0.0002094603
+  naive  w600   hybrid=0.0002151465
+  naive  w700   hybrid=0.0002191965
+  naive  w800   hybrid=0.0002224604
+  naive  w900   hybrid=0.0002249368
+  naive  w1000  hybrid=0.0002271795
+  naive  w1100  hybrid=0.0002286164
+  naive  w1200  hybrid=0.0002303831
+  naive  w2000  hybrid=0.0002366002
+  naive  w2720  hybrid=0.0002394231
+### largebasis
+  patoh  w100   hybrid=0.0004507669
+  patoh  w400   hybrid=0.0002212199
+  patoh  w500   hybrid=0.00022976
+  patoh  w600   hybrid=0.0002343098
+  patoh  w700   hybrid=0.0002388668
+  patoh  w800   hybrid=0.0002424932
+  patoh  w900   hybrid=0.000244813
+  patoh  w1000  hybrid=0.000247213
+  patoh  w1100  hybrid=0.0002488899
+  patoh  w1200  hybrid=0.0002507965
+  patoh  w2000  hybrid=0.0002580039
+  patoh  w2720  hybrid=0.00026021
+  naive  w100   hybrid=0.0004491798
+  naive  w400   hybrid=0.0002218135
+  naive  w500   hybrid=0.0002298768
+  naive  w600   hybrid=0.0002350195
+  naive  w700   hybrid=0.0002391903
+  naive  w800   hybrid=0.0002428071
+  naive  w900   hybrid=0.0002454797
+  naive  w1000  hybrid=0.000247097
+  naive  w1100  hybrid=0.0002493564
+  naive  w1200  hybrid=0.0002509602
+  naive  w2000  hybrid=0.0002578799
+  naive  w2720  hybrid=0.0002603134
+### trans4
+  patoh  w100   hybrid=8.064032e-05
+  patoh  w400   hybrid=4.412651e-05
+  patoh  w500   hybrid=4.358371e-05
+  patoh  w600   hybrid=4.521052e-05
+  patoh  w700   hybrid=4.694303e-05
+  patoh  w800   hybrid=4.738967e-05
+  patoh  w900   hybrid=4.63899e-05
+  patoh  w1000  hybrid=4.647334e-05
+  patoh  w1100  hybrid=4.692952e-05
+  patoh  w1200  hybrid=4.75804e-05
+  patoh  w2000  hybrid=4.785697e-05
+  patoh  w2720  hybrid=4.768372e-05
+  naive  w100   hybrid=6.049315e-05
+  naive  w400   hybrid=4.504045e-05
+  naive  w500   hybrid=4.395962e-05
+  naive  w600   hybrid=4.608949e-05
+  naive  w700   hybrid=4.740318e-05
+  naive  w800   hybrid=4.721006e-05
+  naive  w900   hybrid=4.719337e-05
+  naive  w1000  hybrid=4.743973e-05
+  naive  w1100  hybrid=4.761616e-05
+  naive  w1200  hybrid=4.745007e-05
+  naive  w2000  hybrid=4.777273e-05
+  naive  w2720  hybrid=4.825989e-05
+### venkat50
+  patoh  w100   hybrid=0.0001005101
+  patoh  w400   hybrid=7.710934e-05
+  patoh  w500   hybrid=7.983287e-05
+  patoh  w600   hybrid=8.105357e-05
+  patoh  w700   hybrid=8.344332e-05
+  patoh  w800   hybrid=8.38534e-05
+  patoh  w900   hybrid=8.431991e-05
+  patoh  w1000  hybrid=8.471012e-05
+  patoh  w1100  hybrid=8.469661e-05
+  patoh  w1200  hybrid=8.504311e-05
+  patoh  w2000  hybrid=8.800666e-05
+  patoh  w2720  hybrid=8.845329e-05
+  naive  w100   hybrid=0.0001017896
+  naive  w400   hybrid=7.819653e-05
+  naive  w500   hybrid=7.995605e-05
+  naive  w600   hybrid=8.145014e-05
+  naive  w700   hybrid=8.09439e-05
+  naive  w800   hybrid=8.352677e-05
+  naive  w900   hybrid=8.394718e-05
+  naive  w1000  hybrid=8.412997e-05
+  naive  w1100  hybrid=8.450667e-05
+  naive  w1200  hybrid=8.469343e-05
+  naive  w2000  hybrid=8.785645e-05
+  naive  w2720  hybrid=8.828719e-05
+### appu
+  patoh  w100   hybrid=0.0001200302
+  patoh  w400   hybrid=7.784367e-05
+  patoh  w500   hybrid=8.061965e-05
+  patoh  w600   hybrid=8.120298e-05
+  patoh  w700   hybrid=8.410692e-05
+  patoh  w800   hybrid=8.428017e-05
+  patoh  w900   hybrid=8.45631e-05
+  patoh  w1000  hybrid=8.473635e-05
+  patoh  w1100  hybrid=8.793354e-05
+  patoh  w1200  hybrid=8.80901e-05
+  patoh  w2000  hybrid=8.830309e-05
+  patoh  w2720  hybrid=9.143988e-05
+  naive  w100   hybrid=0.0001117102
+  naive  w400   hybrid=7.792314e-05
+  naive  w500   hybrid=8.065303e-05
+  naive  w600   hybrid=8.162657e-05
+  naive  w700   hybrid=8.443673e-05
+  naive  w800   hybrid=8.43366e-05
+  naive  w900   hybrid=8.454323e-05
+  naive  w1000  hybrid=8.44868e-05
+  naive  w1100  hybrid=8.6116e-05
+  naive  w1200  hybrid=8.773009e-05
+  naive  w2000  hybrid=8.813063e-05
+  naive  w2720  hybrid=8.822362e-05
+### k3plates
+  patoh  w100   hybrid=3.397942e-05
+  patoh  w400   hybrid=3.204346e-05
+  patoh  w500   hybrid=3.185987e-05
+  patoh  w600   hybrid=3.204664e-05
+  patoh  w700   hybrid=3.189325e-05
+  patoh  w800   hybrid=3.233989e-05
+  patoh  w900   hybrid=3.230015e-05
+  patoh  w1000  hybrid=3.213962e-05
+  patoh  w1100  hybrid=3.176689e-05
+  patoh  w1200  hybrid=3.22636e-05
+  patoh  w2000  hybrid=3.236691e-05
+  patoh  w2720  hybrid=3.178676e-05
+  naive  w100   hybrid=4.096667e-05
+  naive  w400   hybrid=3.281673e-05
+  naive  w500   hybrid=3.259341e-05
+  naive  w600   hybrid=3.189643e-05
+  naive  w700   hybrid=3.20673e-05
+  naive  w800   hybrid=3.220956e-05
+  naive  w900   hybrid=3.213644e-05
+  naive  w1000  hybrid=3.23836e-05
+  naive  w1100  hybrid=3.232002e-05
+  naive  w1200  hybrid=3.22636e-05
+  naive  w2000  hybrid=3.203313e-05
+  naive  w2720  hybrid=3.223975e-05
+### marine1
+  patoh  w100   hybrid=0.0005222837
+  patoh  w400   hybrid=0.0002418701
+  patoh  w500   hybrid=0.0002479966
+  patoh  w600   hybrid=0.000256803
+  patoh  w700   hybrid=0.0002622072
+  patoh  w800   hybrid=0.00026546
+  patoh  w900   hybrid=0.0002679467
+  patoh  w1000  hybrid=0.0002684538
+  patoh  w1100  hybrid=0.0002731371
+  patoh  w1200  hybrid=0.0002739898
+  patoh  w2000  hybrid=0.00028217
+  patoh  w2720  hybrid=0.0002832063
+  naive  w100   hybrid=0.0005498902
+  naive  w400   hybrid=0.000239807
+  naive  w500   hybrid=0.0002483233
+  naive  w600   hybrid=0.0002542098
+  naive  w700   hybrid=0.0002588002
+  naive  w800   hybrid=0.0002627738
+  naive  w900   hybrid=0.0002660934
+  naive  w1000  hybrid=0.00026841
+  naive  w1100  hybrid=0.0002702769
+  naive  w1200  hybrid=0.0002717765
+  naive  w2000  hybrid=0.0002792907
+  naive  w2720  hybrid=0.0002829067
+### shar_te2-b3
+  patoh  w100   hybrid=8.280277e-05
+  patoh  w400   hybrid=5.112966e-05
+  patoh  w500   hybrid=5.401691e-05
+  patoh  w600   hybrid=5.517324e-05
+  patoh  w700   hybrid=5.568266e-05
+  patoh  w800   hybrid=5.565325e-05
+  patoh  w900   hybrid=5.568027e-05
+  patoh  w1000  hybrid=5.597671e-05
+  patoh  w1100  hybrid=5.58869e-05
+  patoh  w1200  hybrid=5.616983e-05
+  patoh  w2000  hybrid=5.935669e-05
+  patoh  w2720  hybrid=5.980651e-05
+  naive  w100   hybrid=6.40734e-05
+  naive  w400   hybrid=4.969597e-05
+  naive  w500   hybrid=5.437692e-05
+  naive  w600   hybrid=5.361001e-05
+  naive  w700   hybrid=5.39271e-05
+  naive  w800   hybrid=5.394061e-05
+  naive  w900   hybrid=5.469958e-05
+  naive  w1000  hybrid=5.477031e-05
+  naive  w1100  hybrid=5.536e-05
+  naive  w1200  hybrid=5.532662e-05
+  naive  w2000  hybrid=5.873283e-05
+  naive  w2720  hybrid=5.92804e-05
+### ss1
+  patoh  w100   hybrid=6.256978e-05
+  patoh  w400   hybrid=5.135695e-05
+  patoh  w500   hybrid=5.023003e-05
+  patoh  w600   hybrid=5.091667e-05
+  patoh  w700   hybrid=5.231301e-05
+  patoh  w800   hybrid=5.151669e-05
+  patoh  w900   hybrid=5.439361e-05
+  patoh  w1000  hybrid=5.523364e-05
+  patoh  w1100  hybrid=5.473614e-05
+  patoh  w1200  hybrid=5.57367e-05
+  patoh  w2000  hybrid=5.745649e-05
+  patoh  w2720  hybrid=5.8887e-05
+  naive  w100   hybrid=5.775372e-05
+  naive  w400   hybrid=5.327384e-05
+  naive  w500   hybrid=5.38373e-05
+  naive  w600   hybrid=5.366643e-05
+  naive  w700   hybrid=5.444368e-05
+  naive  w800   hybrid=5.512396e-05
+  naive  w900   hybrid=5.800009e-05
+  naive  w1000  hybrid=5.82703e-05
+  naive  w1100  hybrid=5.863667e-05
+  naive  w1200  hybrid=5.986691e-05
+  naive  w2000  hybrid=6.061316e-05
+  naive  w2720  hybrid=6.105979e-05
+### venkat01
+  patoh  w100   hybrid=9.488344e-05
+  patoh  w400   hybrid=7.687012e-05
+  patoh  w500   hybrid=8.050362e-05
+  patoh  w600   hybrid=8.116325e-05
+  patoh  w700   hybrid=8.348703e-05
+  patoh  w800   hybrid=8.388678e-05
+  patoh  w900   hybrid=8.42603e-05
+  patoh  w1000  hybrid=8.425951e-05
+  patoh  w1100  hybrid=8.447647e-05
+  patoh  w1200  hybrid=8.509954e-05
+  patoh  w2000  hybrid=8.81664e-05
+  patoh  w2720  hybrid=8.855343e-05
+  naive  w100   hybrid=0.0001083565
+  naive  w400   hybrid=7.754962e-05
+  naive  w500   hybrid=7.983049e-05
+  naive  w600   hybrid=8.0537e-05
+  naive  w700   hybrid=8.135637e-05
+  naive  w800   hybrid=8.354346e-05
+  naive  w900   hybrid=8.384387e-05
+  naive  w1000  hybrid=8.443991e-05
+  naive  w1100  hybrid=8.464336e-05
+  naive  w1200  hybrid=8.514325e-05
+  naive  w2000  hybrid=8.763313e-05
+  naive  w2720  hybrid=8.827686e-05
+### webbase-1M
+  patoh  w100   hybrid=0.0003727667
+  patoh  w400   hybrid=0.0002051632
+  patoh  w500   hybrid=0.0001598167
+  patoh  w600   hybrid=0.0001629337
+  patoh  w700   hybrid=0.0001675495
+  patoh  w800   hybrid=0.0001684705
+  patoh  w900   hybrid=0.00016946
+  patoh  w1000  hybrid=0.0001697763
+  patoh  w1100  hybrid=0.0001737134
+  patoh  w1200  hybrid=0.0001726063
+  patoh  w2000  hybrid=0.0001769328
+  patoh  w2720  hybrid=0.0001782966
+  naive  w100   hybrid=0.0003112928
+  naive  w400   hybrid=0.0001528772
+  naive  w500   hybrid=0.0001568667
+  naive  w600   hybrid=0.0001606234
+  naive  w700   hybrid=0.0001634034
+  naive  w800   hybrid=0.0001665131
+  naive  w900   hybrid=0.0001688766
+  naive  w1000  hybrid=0.0001702102
+  naive  w1100  hybrid=0.0001718068
+  naive  w1200  hybrid=0.0001730831
+  naive  w2000  hybrid=0.0001783498
+  naive  w2720  hybrid=0.0001802333
+### poli4
+  patoh  w100   hybrid=2.305667e-05
+  patoh  w400   hybrid=2.286673e-05
+  patoh  w500   hybrid=1.722336e-05
+  patoh  w600   hybrid=1.681725e-05
+  patoh  w700   hybrid=1.686335e-05
+  patoh  w800   hybrid=1.604319e-05
+  patoh  w900   hybrid=1.66138e-05
+  patoh  w1000  hybrid=1.669327e-05
+  patoh  w1100  hybrid=1.658281e-05
+  patoh  w1200  hybrid=1.658996e-05
+  patoh  w2000  hybrid=1.668056e-05
+  patoh  w2720  hybrid=1.662652e-05
+  naive  w100   hybrid=2.046665e-05
+  naive  w400   hybrid=1.775662e-05
+  naive  w500   hybrid=1.710335e-05
+  naive  w600   hybrid=1.658996e-05
+  naive  w700   hybrid=1.681964e-05
+  naive  w800   hybrid=1.662731e-05
+  naive  w900   hybrid=1.648347e-05
+  naive  w1000  hybrid=1.653353e-05
+  naive  w1100  hybrid=1.6644e-05
+  naive  w1200  hybrid=1.656373e-05
+  naive  w2000  hybrid=1.639684e-05
+  naive  w2720  hybrid=1.657645e-05
+### coupled
+  patoh  w100   hybrid=2.431313e-05
+  patoh  w400   hybrid=1.629988e-05
+  patoh  w500   hybrid=1.545986e-05
+  patoh  w600   hybrid=1.598676e-05
+  patoh  w700   hybrid=1.573324e-05
+  patoh  w800   hybrid=1.596053e-05
+  patoh  w900   hybrid=1.58e-05
+  patoh  w1000  hybrid=1.591365e-05
+  patoh  w1100  hybrid=1.571337e-05
+  patoh  w1200  hybrid=1.590649e-05
+  patoh  w2000  hybrid=1.814047e-05
+  patoh  w2720  hybrid=1.936038e-05
+  naive  w100   hybrid=2.307336e-05
+  naive  w400   hybrid=1.682997e-05
+  naive  w500   hybrid=1.604954e-05
+  naive  w600   hybrid=1.575708e-05
+  naive  w700   hybrid=1.616319e-05
+  naive  w800   hybrid=1.625379e-05
+  naive  w900   hybrid=1.561324e-05
+  naive  w1000  hybrid=1.598676e-05
+  naive  w1100  hybrid=1.58e-05
+  naive  w1200  hybrid=1.60567e-05
+  naive  w2000  hybrid=1.566013e-05
+  naive  w2720  hybrid=1.852671e-05
+### Ill_Stokes
+  patoh  w100   hybrid=3.491004e-05
+  patoh  w400   hybrid=2.137661e-05
+  patoh  w500   hybrid=2.109051e-05
+  patoh  w600   hybrid=2.226988e-05
+  patoh  w700   hybrid=2.15133e-05
+  patoh  w800   hybrid=2.227704e-05
+  patoh  w900   hybrid=2.116362e-05
+  patoh  w1000  hybrid=2.166351e-05
+  patoh  w1100  hybrid=2.268314e-05
+  patoh  w1200  hybrid=2.198935e-05
+  patoh  w2000  hybrid=2.277613e-05
+  patoh  w2720  hybrid=2.242963e-05
+  naive  w100   hybrid=2.659718e-05
+  naive  w400   hybrid=2.133608e-05
+  naive  w500   hybrid=2.13472e-05
+  naive  w600   hybrid=2.066692e-05
+  naive  w700   hybrid=2.112309e-05
+  naive  w800   hybrid=2.157688e-05
+  naive  w900   hybrid=2.117634e-05
+  naive  w1000  hybrid=2.169689e-05
+  naive  w1100  hybrid=2.191623e-05
+  naive  w1200  hybrid=2.192656e-05
+  naive  w2000  hybrid=2.237956e-05
+  naive  w2720  hybrid=2.2223e-05
+### bayer02
+  patoh  w100   hybrid=1.498302e-05
+  patoh  w400   hybrid=1.576026e-05
+  patoh  w500   hybrid=1.572688e-05
+  patoh  w600   hybrid=1.601617e-05
+  patoh  w700   hybrid=1.562039e-05
+  patoh  w800   hybrid=1.564344e-05
+  patoh  w900   hybrid=1.549959e-05
+  patoh  w1000  hybrid=1.582702e-05
+  patoh  w1100  hybrid=1.586676e-05
+  patoh  w1200  hybrid=1.595338e-05
+  patoh  w2000  hybrid=1.565695e-05
+  patoh  w2720  hybrid=1.568953e-05
+  naive  w100   hybrid=1.59661e-05
+  naive  w400   hybrid=1.562357e-05
+  naive  w500   hybrid=1.559337e-05
+  naive  w600   hybrid=1.557271e-05
+  naive  w700   hybrid=1.564344e-05
+  naive  w800   hybrid=1.548052e-05
+  naive  w900   hybrid=1.535018e-05
+  naive  w1000  hybrid=1.584371e-05
+  naive  w1100  hybrid=1.555045e-05
+  naive  w1200  hybrid=1.563311e-05
+  naive  w2000  hybrid=1.548608e-05
+  naive  w2720  hybrid=1.590331e-05
+### wang3
+  patoh  w100   hybrid=2.496004e-05
+  patoh  w400   hybrid=1.982053e-05
+  patoh  w500   hybrid=1.974662e-05
+  patoh  w600   hybrid=1.978318e-05
+  patoh  w700   hybrid=2.019008e-05
+  patoh  w800   hybrid=2.050002e-05
+  patoh  w900   hybrid=2.00661e-05
+  patoh  w1000  hybrid=2.030293e-05
+  patoh  w1100  hybrid=2.026637e-05
+  patoh  w1200  hybrid=2.079646e-05
+  patoh  w2000  hybrid=2.070347e-05
+  patoh  w2720  hybrid=2.085606e-05
+  naive  w100   hybrid=2.490679e-05
+  naive  w400   hybrid=2.054373e-05
+  naive  w500   hybrid=1.927694e-05
+  naive  w600   hybrid=2.007643e-05
+  naive  w700   hybrid=2.06701e-05
+  naive  w800   hybrid=2.03371e-05
+  naive  w900   hybrid=2.043962e-05
+  naive  w1000  hybrid=2.04738e-05
+  naive  w1100  hybrid=2.032995e-05
+  naive  w1200  hybrid=2.090375e-05
+  naive  w2000  hybrid=2.056996e-05
+  naive  w2720  hybrid=2.032995e-05
+### powersim
+  patoh  w100   hybrid=1.825651e-05
+  patoh  w400   hybrid=1.601617e-05
+  patoh  w500   hybrid=1.561006e-05
+  patoh  w600   hybrid=1.571655e-05
+  patoh  w700   hybrid=1.598358e-05
+  patoh  w800   hybrid=1.605988e-05
+  patoh  w900   hybrid=1.614014e-05
+  patoh  w1000  hybrid=1.607736e-05
+  patoh  w1100  hybrid=1.604954e-05
+  patoh  w1200  hybrid=1.558701e-05
+  patoh  w2000  hybrid=1.624346e-05
+  patoh  w2720  hybrid=1.582702e-05
+  naive  w100   hybrid=2.078374e-05
+  naive  w400   hybrid=1.597722e-05
+  naive  w500   hybrid=1.550674e-05
+  naive  w600   hybrid=1.58604e-05
+  naive  w700   hybrid=1.617988e-05
+  naive  w800   hybrid=1.566013e-05
+  naive  w900   hybrid=1.60567e-05
+  naive  w1000  hybrid=1.589298e-05
+  naive  w1100  hybrid=1.550277e-05
+  naive  w1200  hybrid=1.605988e-05
+  naive  w2000  hybrid=1.570384e-05
+  naive  w2720  hybrid=1.58302e-05
+wrote /home/bugra/Workspace/C/HetHypPar_rewrite/data/spmv_patoh/results.tsv
+wrote /home/bugra/Workspace/C/HetHypPar_rewrite/docs/perf-profile-patoh-naive-spmv.png/.svg  (588 cases)
+
+================ EXPANSION SWEEPS DONE Sun Jun 28 14:05:30 +03 2026 ================

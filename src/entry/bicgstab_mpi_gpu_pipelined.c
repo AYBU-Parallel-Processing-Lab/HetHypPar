@@ -10,6 +10,7 @@
 #include "hhp_cuda.h"
 #include "hhp_cpu.h"
 #include "hhp_util.h"
+#include "hhp_prof.h"
 
 #include <mpi.h>
 #include <cuda_runtime_api.h>
@@ -43,6 +44,9 @@ static error_t parse_opt(int key, char *arg, struct argp_state *state) {
     }
     return 0;
 }
+// prof_sync callback (default stream): sync the whole device at each boundary.
+static void prof_sync_dev(void *unused) { (void)unused; cudaDeviceSynchronize(); }
+
 static char doc[] = "MPI all-GPU pipelined BiCGStab (Alg. 9, Iallreduce-overlapped)";
 static struct argp argp = {options, parse_opt, "", doc};
 
@@ -128,8 +132,15 @@ int main(int argc, char *argv[]) {
     double bnorm = sqrt(gdot(bh, dB, dB));
     if (rank == 0) printf("LOG: setup done (nloc rank0=%d, shr=%d)\n", nloc, has_shr);
 
+    // Unified profiling (env HHP_PROF: 1=stderr summary, 2=+per-iter TSV). This
+    // pipelined variant has an explicit MPI_Iallreduce, so PF_ALLREDUCE is a
+    // genuine bucket (each reduction region, including the SpMV overlapped inside).
+    Prof g_P; prof_init(&g_P, niters, prof_sync_dev, NULL);
+    prof_set_preprocess(&g_P, t_read1 - t_begin);
+
     double t_loop0 = omp_get_wtime();
     for (int i = 0; i < niters; i++) {
+        prof_tick(&g_P);
         double bw = beta_prev * omega_prev;
         // p = beta*p + r - beta*omega*s ; s = beta*s + w - beta*omega*z ; z = beta*z + t - beta*omega*v
         CHECK_CUBLAS(device_vector_scale(bh, beta_prev, P)) CHECK_CUBLAS(device_vector_axpy(bh, R, one, P)) CHECK_CUBLAS(device_vector_axpy(bh, S, -bw, P))
@@ -138,19 +149,23 @@ int main(int argc, char *argv[]) {
         // q = r - alpha s ; y = w - alpha z
         CHECK_CUDA(device_vector_GPUtoGPU(R, Q)) CHECK_CUBLAS(device_vector_axpy(bh, S, -alpha, Q))
         CHECK_CUDA(device_vector_GPUtoGPU(W, Y)) CHECK_CUBLAS(device_vector_axpy(bh, Z, -alpha, Y))
+        prof_lap(&g_P, PF_VECOPS);
 
         // ---- reduction 1 (omega): local dots, Iallreduce, OVERLAP with v = A z ----
         double l1[2], g1[2];
         CHECK_CUBLAS(device_vector_dot(bh, Q, Y, &l1[0])) CHECK_CUBLAS(device_vector_dot(bh, Y, Y, &l1[1]))
+        prof_lap(&g_P, PF_DOT);
         MPI_Request req1; MPI_Iallreduce(l1, g1, 2, MPI_DOUBLE, MPI_SUM, MPI_COMM_WORLD, &req1);
         SPMV(Z, V);                                            // overlap
         MPI_Wait(&req1, MPI_STATUS_IGNORE);
         omega = g1[0] / g1[1];
+        prof_lap(&g_P, PF_ALLREDUCE);
 
         // x += alpha p + omega q ; r = q - omega y ; w = y - omega(t - alpha v)
         CHECK_CUBLAS(device_vector_axpy(bh, P, alpha, dX)) CHECK_CUBLAS(device_vector_axpy(bh, Q, omega, dX))
         CHECK_CUDA(device_vector_GPUtoGPU(Q, R)) CHECK_CUBLAS(device_vector_axpy(bh, Y, -omega, R))
         CHECK_CUDA(device_vector_GPUtoGPU(Y, W)) CHECK_CUBLAS(device_vector_axpy(bh, T, -omega, W)) CHECK_CUBLAS(device_vector_axpy(bh, V, omega*alpha, W))
+        prof_lap(&g_P, PF_VECOPS);
 
         int replace = (replace_k > 0 && (i + 1) % replace_k == 0);
         if (replace) {
@@ -160,11 +175,13 @@ int main(int argc, char *argv[]) {
         } else {
             SPMV(W, T);                                       // t = A w (normal path overlaps reduction 2 below)
         }
+        prof_lap(&g_P, PF_SPMV);
 
         // ---- reduction 2 (beta, alpha): dots on (r,w,s,z) ----
         double l2[4], g2[4];
         CHECK_CUBLAS(device_vector_dot(bh, R0, R, &l2[0])) CHECK_CUBLAS(device_vector_dot(bh, R0, W, &l2[1]))
         CHECK_CUBLAS(device_vector_dot(bh, R0, S, &l2[2])) CHECK_CUBLAS(device_vector_dot(bh, R0, Z, &l2[3]))
+        prof_lap(&g_P, PF_DOT);
         if (replace) {
             MPI_Allreduce(l2, g2, 4, MPI_DOUBLE, MPI_SUM, MPI_COMM_WORLD);   // t already computed in RR
         } else {
@@ -172,13 +189,21 @@ int main(int argc, char *argv[]) {
             SPMV(W, T);                                       // overlap: t = A w (for next iter's z recurrence)
             MPI_Wait(&req2, MPI_STATUS_IGNORE);
         }
+        prof_lap(&g_P, PF_ALLREDUCE);
         double rho_new = g2[0];
         double beta = (alpha / omega) * (rho_new / rho_old);
         double denom = g2[1] + beta * g2[2] - beta * omega * g2[3];
         rho_old = rho_new; beta_prev = beta; omega_prev = omega; alpha = rho_new / denom;
+        prof_iter_end(&g_P);
     }
     cudaDeviceSynchronize();
     double t_loop1 = omp_get_wtime();
+    {
+        char solver_label[40];
+        snprintf(solver_label, sizeof(solver_label), "mpi-gpu-pipelined-r%d", rank);
+        prof_report(&g_P, solver_label, arguments.input_matrix);
+        prof_free(&g_P);
+    }
 
     // --- final true residual ||A x - B|| / ||B|| ---
     SPMV(dX, TMP); CHECK_CUBLAS(device_vector_axpy(bh, dB, m_one, TMP))

@@ -13,6 +13,7 @@
 #include "hhp_cuda.h"
 #include "hhp_cpu.h"
 #include "hhp_util.h"
+#include "hhp_prof.h"
 
 #include <cuda_runtime_api.h>    // cudaMalloc, cudaMemcpy, etc.
 #include <cusparse.h> 
@@ -99,6 +100,10 @@ static char args_doc[] = "";  // We don't take non-option arguments
 
 // Our argp parser
 static struct argp argp = {options, parse_opt, args_doc, doc};
+
+// prof_sync callback for GPU ranks (default stream): sync the whole device so
+// async work lands in the right section. CPU ranks pass NULL.
+static void prof_sync_dev(void *unused) { (void)unused; cudaDeviceSynchronize(); }
 
 // ====================================================================================
 
@@ -230,6 +235,12 @@ int main(int argc, char* argv[]) {  // matrix file ve part vector
     double relative_residual;
     Iter_Profile *iprof = calloc(niters, sizeof(Iter_Profile));
 
+    // Unified profiling (env HHP_PROF: 1=stderr summary, 2=+per-iter TSV), running
+    // alongside the untouched PROFILE_ITER/PROFILE_ACCUM lines. Initialized inside
+    // each branch with the branch-appropriate sync callback (device for GPU ranks,
+    // NULL for CPU ranks). PF_DOT includes each distributed dot's MPI_Allreduce.
+    Prof g_P;
+
     if (isgpu){ // GPU PROCESS
         //-------------------------------------------------------------------------------------------------------
         CHECK_CUDA(cudaSetDevice(0))
@@ -320,56 +331,69 @@ int main(int argc, char* argv[]) {  // matrix file ve part vector
 
         //-------------------------------------------------------------------------------------------------------
 
+        prof_init(&g_P, niters, prof_sync_dev, NULL);
+        prof_set_preprocess(&g_P, omp_get_wtime() - time_stamps.begin);
         time_stamps.spmxv_begin = omp_get_wtime();
 
         for (size_t i = 0; i < niters; i++)
         {
             SpMV_Profile sp = {0};
             double t_vec0 = omp_get_wtime();
+            prof_tick(&g_P);
 
             double temp_rho;
             CHECK_CUBLAS(MPI_device_vector_dot(cublasHandle, R, R_0, &temp_rho, MPI_COMM_WORLD))
             double beta = (temp_rho / rho) * (alpha / omega);
             rho = temp_rho;
+            prof_lap(&g_P, PF_DOT);
             CHECK_CUBLAS(device_vector_scale(cublasHandle, omega, V))
             CHECK_CUBLAS(device_vector_axpy(cublasHandle, V, mx_neg, P))
             CHECK_CUBLAS(device_vector_scale(cublasHandle, beta, P))
             CHECK_CUBLAS(device_vector_axpy(cublasHandle, R, mx_alpha, P))
+            prof_lap(&g_P, PF_VECOPS);
 
             cudaDeviceSynchronize();
             double t_spmv0 = omp_get_wtime();
             CHECK_CUSPARSE(MPI_device_SHARD_CSC_mpi_spmxv(dA, X, P, dX_shr, V, MPI_COMM_WORLD, cusparseHandle, mx_alpha, mx_beta, dA_loc_buf, dA_shr_buf, &sp))
             double t_spmv1 = omp_get_wtime();
+            prof_lap(&g_P, PF_SPMV);
 
             double temp_rv;
             CHECK_CUBLAS(MPI_device_vector_dot(cublasHandle, R_0, V, &temp_rv, MPI_COMM_WORLD))
             alpha = rho/temp_rv;
+            prof_lap(&g_P, PF_DOT);
             CHECK_CUDA(device_vector_GPUtoGPU(R, S))
             CHECK_CUBLAS(device_vector_axpy(cublasHandle, V, -alpha, S))
+            prof_lap(&g_P, PF_VECOPS);
 
             cudaDeviceSynchronize();
             double t_spmv2 = omp_get_wtime();
             CHECK_CUSPARSE(MPI_device_SHARD_CSC_mpi_spmxv(dA, X, S, dX_shr, T, MPI_COMM_WORLD, cusparseHandle, mx_alpha, mx_beta, dA_loc_buf, dA_shr_buf, &sp))
             double t_spmv3 = omp_get_wtime();
+            prof_lap(&g_P, PF_SPMV);
 
             double temp_ts;
             CHECK_CUBLAS(MPI_device_vector_dot(cublasHandle, T, S, &temp_ts, MPI_COMM_WORLD))
             double temp_tt;
             CHECK_CUBLAS(MPI_device_vector_dot(cublasHandle, T, T, &temp_tt, MPI_COMM_WORLD))
             omega = temp_ts/temp_tt;
+            prof_lap(&g_P, PF_DOT);
 
             CHECK_CUBLAS(device_vector_axpy(cublasHandle, P, alpha, dX))
             CHECK_CUBLAS(device_vector_axpy(cublasHandle, S, omega, dX))
             CHECK_CUDA(device_vector_GPUtoGPU(S, R))
             CHECK_CUBLAS(device_vector_axpy(cublasHandle, T, -omega, R))
+            prof_lap(&g_P, PF_VECOPS);
             double tol;
             CHECK_CUBLAS(MPI_device_vector_dot(cublasHandle, S, S, &tol, MPI_COMM_WORLD))
+            prof_lap(&g_P, PF_DOT);
 
             double t_vec1 = omp_get_wtime();
             double spmv_total = (t_spmv1 - t_spmv0) + (t_spmv3 - t_spmv2);
             iprof[i].spmv = spmv_total;
             iprof[i].vector_ops = (t_vec1 - t_vec0) - spmv_total;
             iprof[i].spmv_detail = sp;
+            prof_iter_end(&g_P);
         }
 
         time_stamps.spmxv_end = omp_get_wtime();
@@ -417,54 +441,67 @@ int main(int argc, char* argv[]) {  // matrix file ve part vector
             printf("LOG: Finished Creating Vectors\n");
 
     //-------------------------------------------------------------------------------------------------------
+        prof_init(&g_P, niters, NULL, NULL);
+        prof_set_preprocess(&g_P, omp_get_wtime() - time_stamps.begin);
         time_stamps.spmxv_begin = omp_get_wtime();
 
         for (size_t i = 0; i < niters; i++)
         {
             SpMV_Profile sp = {0};
             double t_vec0 = omp_get_wtime();
+            prof_tick(&g_P);
 
             double temp_rho = MPI_vector_dot(R, R_0, MPI_COMM_WORLD);
             double beta = (temp_rho / rho) * (alpha / omega);
             rho = temp_rho;
+            prof_lap(&g_P, PF_DOT);
             vector_scale_seq(V, omega, V);
             vector_sub_seq(P, V, P);
             vector_scale_seq(P, beta, P);
             vector_add_seq(P, R, P);
+            prof_lap(&g_P, PF_VECOPS);
 
             double t_spmv0 = omp_get_wtime();
             MPI_SHARD_CSC_mpi_spmxv_seq(A, P, V, MPI_COMM_WORLD, &sp);
             double t_spmv1 = omp_get_wtime();
+            prof_lap(&g_P, PF_SPMV);
 
             alpha = rho/MPI_vector_dot(R_0, V, MPI_COMM_WORLD);
+            prof_lap(&g_P, PF_DOT);
             vector_scale_seq(V, alpha, S);
             vector_sub_seq(R, S, S);
+            prof_lap(&g_P, PF_VECOPS);
 
             double t_spmv2 = omp_get_wtime();
             MPI_SHARD_CSC_mpi_spmxv_seq(A, S, T, MPI_COMM_WORLD, &sp);
             double t_spmv3 = omp_get_wtime();
+            prof_lap(&g_P, PF_SPMV);
 
             omega = MPI_vector_dot(T, S,MPI_COMM_WORLD)/MPI_vector_dot(T, T,MPI_COMM_WORLD);
+            prof_lap(&g_P, PF_DOT);
             vector_scale_seq(P, alpha, Y);
             vector_add_seq(X, Y, X);
             vector_scale_seq(S, omega, Y);
             vector_add_seq(X, Y, X);
             vector_scale_seq(T, omega, R);
             vector_sub_seq(S, R, R);
+            prof_lap(&g_P, PF_VECOPS);
             double tol = MPI_vector_dot(S, S,MPI_COMM_WORLD);
+            prof_lap(&g_P, PF_DOT);
 
             double t_vec1 = omp_get_wtime();
             double spmv_total = (t_spmv1 - t_spmv0) + (t_spmv3 - t_spmv2);
             iprof[i].spmv = spmv_total;
             iprof[i].vector_ops = (t_vec1 - t_vec0) - spmv_total;
             iprof[i].spmv_detail = sp;
+            prof_iter_end(&g_P);
         }
 
         time_stamps.spmxv_end = omp_get_wtime();
         time_stamps.end = time_stamps.spmxv_end;
-        
+
         //-------------------------------------------------------------------------------------------------------
-        
+
         vector_destroy(&Y);
         vector_destroy(&V);
         vector_destroy(&P);
@@ -531,6 +568,14 @@ int main(int argc, char* argv[]) {  // matrix file ve part vector
             acc.send_fill, acc.local_spmv, acc.comm_wait, acc.shared_spmv, acc.send_wait);
     }
     free(iprof);
+
+    // Unified hhp_prof report (per-rank label so per-iteration TSVs don't collide).
+    {
+        char solver_label[32];
+        snprintf(solver_label, sizeof(solver_label), "mpi-gpu-r%d", mpi_rank);
+        prof_report(&g_P, solver_label, arguments.input_matrix);
+        prof_free(&g_P);
+    }
 
 //-------------------------------------------------------------------------------------------------------
 

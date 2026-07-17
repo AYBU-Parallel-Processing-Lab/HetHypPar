@@ -1,0 +1,30 @@
+# i7-13700F P/E core rankfile: 16 ranks, one per physical core.
+# Ranks 0-7  -> P-cores (physical cores 0-7, up to 5.2 GHz, 2 HW threads each)
+# Ranks 8-15 -> E-cores (physical cores 8-15, 4.1 GHz, 1 HW thread each)
+#
+# slot=socket:core binds to a physical core (per lscpu CORE column), which
+# distinguishes P (0-7) from E (8-15) unambiguously.
+#
+# USAGE (verify P/E binding first):
+#   mpirun --map-by rankfile:file=data/rankfile/8P_8E.rankfile --report-bindings -np 16 hostname
+#   mpirun --map-by rankfile:file=data/rankfile/8P_8E.rankfile -np 16 ./build/spmv-mpi ...
+#
+# Give P-core ranks more rows than E-core ranks via a weighted partition
+# (weights for ranks 0-7 higher than 8-15).
+
+rank 0=localhost slot=0:0
+rank 1=localhost slot=0:1
+rank 2=localhost slot=0:2
+rank 3=localhost slot=0:3
+rank 4=localhost slot=0:4
+rank 5=localhost slot=0:5
+rank 6=localhost slot=0:6
+rank 7=localhost slot=0:7
+rank 8=localhost slot=0:8
+rank 9=localhost slot=0:9
+rank 10=localhost slot=0:10
+rank 11=localhost slot=0:11
+rank 12=localhost slot=0:12
+rank 13=localhost slot=0:13
+rank 14=localhost slot=0:14
+rank 15=localhost slot=0:15

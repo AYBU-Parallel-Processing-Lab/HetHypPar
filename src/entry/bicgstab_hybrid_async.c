@@ -10,6 +10,7 @@
 #include "hhp_cuda.h"
 #include "hhp_cpu.h"
 #include "hhp_util.h"
+#include "hhp_prof.h"
 
 #include <cuda_runtime_api.h>
 #include <cuda_runtime.h>
@@ -83,17 +84,16 @@ static char doc[] = "Single-process GPU+CPU hybrid BiCGStab (no MPI), overlapped
 static char args_doc[] = "";
 static struct argp argp = {options, parse_opt, args_doc, doc};
 
-// --- Per-category profiling (enabled by env HHP_PROFILE=1) ---
-// When on, we drain compute_s at every category boundary and accumulate
-// host wall-clock into dot / spmv / vecops buckets. This PERTURBS the async
-// overlap (the loop total grows), so the unperturbed total/speedup must be
-// taken from a separate clean run with HHP_PROFILE unset. The bucket *ratios*
-// remain a faithful breakdown of where time goes.
-static int    g_prof = 0;
-static double g_t_dot = 0.0, g_t_spmv = 0.0, g_t_vec = 0.0;
-static double g_pt = 0.0;
-#define PROF_BEGIN(s) do { if (g_prof) { cudaStreamSynchronize(s); g_pt = omp_get_wtime(); } } while (0)
-#define PROF_END(s, acc) do { if (g_prof) { cudaStreamSynchronize(s); (acc) += omp_get_wtime() - g_pt; } } while (0)
+// --- Per-category profiling (unified hhp_prof, enabled by env HHP_PROF) ---
+// When on, the sync callback drains compute_s at every category boundary. This
+// PERTURBS the async overlap (the loop total grows), so the unperturbed
+// total/speedup must be taken from a separate clean run with HHP_PROF unset. The
+// bucket *ratios* remain a faithful breakdown. HHP_PROF=1 prints a stderr summary
+// and the legacy PROFILE_* stdout lines; HHP_PROF=2 also dumps a per-iter TSV.
+static Prof g_P;
+static void prof_sync_stream(void *s) { cudaStreamSynchronize((cudaStream_t)s); }
+#define PROF_BEGIN(s) prof_tick(&g_P)
+#define PROF_END(s, sec) prof_lap(&g_P, sec)
 
 // --- Small helpers ---
 
@@ -241,8 +241,6 @@ int main(int argc, char *argv[]) {
     int niters = arguments.n_iters;
     if (niters < 1) niters = 1;
 
-    g_prof = (getenv("HHP_PROFILE") != NULL);
-
     double t_begin = omp_get_wtime();
 
     // --- Read inputs ---
@@ -367,6 +365,11 @@ int main(int argc, char *argv[]) {
                                cudaMemcpyDeviceToDevice, compute_s))
 
     double rho = 1.0, alpha_s = 1.0, omega = 1.0;
+
+    // Optional detailed profiling (env HHP_PROF: 1=stderr summary, 2=+per-iter TSV).
+    prof_init(&g_P, niters, prof_sync_stream, (void *)compute_s);
+    prof_set_preprocess(&g_P, t_read1 - t_begin);
+
     double t_loop0 = omp_get_wtime();
 
     for (int it = 0; it < niters; it++) {
@@ -374,7 +377,7 @@ int main(int argc, char *argv[]) {
         double tmp_rho;
         PROF_BEGIN(compute_s);
         CHECK_CUBLAS(device_vector_dot(bh, R, R_0, &tmp_rho))
-        PROF_END(compute_s, g_t_dot);
+        PROF_END(compute_s, PF_DOT);
         double beta = (tmp_rho / rho) * (alpha_s / omega);
         rho = tmp_rho;
 
@@ -385,7 +388,7 @@ int main(int argc, char *argv[]) {
         CHECK_CUBLAS(device_vector_axpy(bh, V, m_one, P))          // P = P - V
         CHECK_CUBLAS(device_vector_scale(bh, beta, P))             // P *= beta
         CHECK_CUBLAS(cublasDaxpy(bh, n, &one, R.vals, 1, P.vals, 1)) // P = P + R
-        PROF_END(compute_s, g_t_vec);
+        PROF_END(compute_s, PF_VECOPS);
 
         // V = A * P  (overlapped)
         PROF_BEGIN(compute_s);
@@ -393,12 +396,12 @@ int main(int argc, char *argv[]) {
                                    P, pin_input, V, pin_cpu_out,
                                    n_gpu, n_cpu, n, compute_s, copy_s,
                                    in_ready_event, scatter_done_event, spmv_buf))
-        PROF_END(compute_s, g_t_spmv);
+        PROF_END(compute_s, PF_SPMV);
 
         double tmp_rv;
         PROF_BEGIN(compute_s);
         CHECK_CUBLAS(device_vector_dot(bh, R_0, V, &tmp_rv))
-        PROF_END(compute_s, g_t_dot);
+        PROF_END(compute_s, PF_DOT);
         alpha_s = rho / tmp_rv;
 
         // S = R; S -= alpha*V   (vector ops)
@@ -407,7 +410,7 @@ int main(int argc, char *argv[]) {
         CHECK_CUDA(cudaMemcpyAsync(S.vals, R.vals, n * sizeof(double),
                                    cudaMemcpyDeviceToDevice, compute_s))
         CHECK_CUBLAS(cublasDaxpy(bh, n, &m_alpha, V.vals, 1, S.vals, 1))
-        PROF_END(compute_s, g_t_vec);
+        PROF_END(compute_s, PF_VECOPS);
 
         // T = A * S  (overlapped)
         PROF_BEGIN(compute_s);
@@ -415,13 +418,13 @@ int main(int argc, char *argv[]) {
                                    S, pin_input, T, pin_cpu_out,
                                    n_gpu, n_cpu, n, compute_s, copy_s,
                                    in_ready_event, scatter_done_event, spmv_buf))
-        PROF_END(compute_s, g_t_spmv);
+        PROF_END(compute_s, PF_SPMV);
 
         double tmp_ts, tmp_tt;
         PROF_BEGIN(compute_s);
         CHECK_CUBLAS(device_vector_dot(bh, T, S, &tmp_ts))
         CHECK_CUBLAS(device_vector_dot(bh, T, T, &tmp_tt))
-        PROF_END(compute_s, g_t_dot);
+        PROF_END(compute_s, PF_DOT);
         omega = tmp_ts / tmp_tt;
 
         // X += alpha*P + omega*S ; R = S - omega*T   (vector ops)
@@ -432,13 +435,14 @@ int main(int argc, char *argv[]) {
         CHECK_CUDA(cudaMemcpyAsync(R.vals, S.vals, n * sizeof(double),
                                    cudaMemcpyDeviceToDevice, compute_s))
         CHECK_CUBLAS(cublasDaxpy(bh, n, &m_omega, T.vals, 1, R.vals, 1))
-        PROF_END(compute_s, g_t_vec);
+        PROF_END(compute_s, PF_VECOPS);
 
         double tol;
         PROF_BEGIN(compute_s);
         CHECK_CUBLAS(device_vector_dot(bh, S, S, &tol))
-        PROF_END(compute_s, g_t_dot);
+        PROF_END(compute_s, PF_DOT);
         (void)tol;
+        prof_iter_end(&g_P);
     }
     cudaDeviceSynchronize();
     double t_loop1 = omp_get_wtime();
@@ -459,7 +463,8 @@ int main(int argc, char *argv[]) {
     printf("file_read : %lf \n", t_read1 - t_read0);
     printf("relative_residual : %E\n", relative_residual);
     printf("everything_total : %lf\n", omp_get_wtime() - t_begin);
-    if (g_prof) {
+    if (g_P.level) {
+        double g_t_dot = g_P.sec[PF_DOT], g_t_spmv = g_P.sec[PF_SPMV], g_t_vec = g_P.sec[PF_VECOPS];
         double psum = g_t_dot + g_t_spmv + g_t_vec;
         printf("PROFILE_enabled : 1\n");
         printf("PROFILE_loop_total : %lf\n", t_loop1 - t_loop0);
@@ -471,6 +476,8 @@ int main(int argc, char *argv[]) {
         printf("PROFILE_spmv_pct : %.2f\n", psum > 0 ? 100.0 * g_t_spmv / psum : 0.0);
         printf("PROFILE_vec_pct : %.2f\n",  psum > 0 ? 100.0 * g_t_vec  / psum : 0.0);
     }
+    prof_report(&g_P, "hybrid-async", arguments.input_matrix);
+    prof_free(&g_P);
     printf("\n----------------------------------------------------------------------\n");
 
     // --- Copy X back and unpermute to original ordering before writing ---

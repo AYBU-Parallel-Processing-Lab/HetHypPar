@@ -10,6 +10,7 @@
 #include "hhp_cuda.h"
 #include "hhp_cpu.h"
 #include "hhp_util.h"
+#include "hhp_prof.h"
 
 #include <cuda_runtime_api.h>
 #include <cuda_runtime.h>
@@ -67,6 +68,9 @@ static error_t parse_opt(int key, char *arg, struct argp_state *state) {
     }
     return 0;
 }
+// prof_sync callback: default-stream solver, so sync the whole device.
+static void prof_sync_dev(void *unused) { (void)unused; cudaDeviceSynchronize(); }
+
 static char doc[] = "Single-process GPU pipelined BiCGStab (Alg. 9, unpreconditioned)";
 static char args_doc[] = "";
 static struct argp argp = {options, parse_opt, args_doc, doc};
@@ -133,8 +137,13 @@ int main(int argc, char *argv[]) {
     double alpha = rho_old / r0w;
     double beta_prev = 0.0, omega_prev = 1.0, omega = 0.0;
 
+    // Optional detailed profiling (env HHP_PROF: 1=stderr summary, 2=+per-iter TSV).
+    Prof g_P; prof_init(&g_P, niters, prof_sync_dev, NULL);
+    prof_set_preprocess(&g_P, t_read1 - t_begin);
+
     double t_loop0 = omp_get_wtime();
     for (int i = 0; i < niters; i++) {
+        prof_tick(&g_P);
         double bw = beta_prev * omega_prev;
         // p = r + beta(p - omega s) = beta*p + r - beta*omega*s
         CHECK_CUBLAS(device_vector_scale(bh, beta_prev, P))
@@ -151,11 +160,14 @@ int main(int argc, char *argv[]) {
         // q = r - alpha s ;  y = w - alpha z
         CHECK_CUDA(device_vector_GPUtoGPU(R, Q)) CHECK_CUBLAS(device_vector_axpy(bh, S, -alpha, Q))
         CHECK_CUDA(device_vector_GPUtoGPU(W, Y)) CHECK_CUBLAS(device_vector_axpy(bh, Z, -alpha, Y))
+        prof_lap(&g_P, PF_VECOPS);
         // v = A z
         CHECK_CUSPARSE(device_csr_spmv(ch, dA, Z, V, one, zero, buf))
+        prof_lap(&g_P, PF_SPMV);
         // omega = (q,y)/(y,y)
         double qy, yy; CHECK_CUBLAS(device_vector_dot(bh, Q, Y, &qy)) CHECK_CUBLAS(device_vector_dot(bh, Y, Y, &yy))
         omega = qy / yy;
+        prof_lap(&g_P, PF_DOT);
         // x += alpha p + omega q
         CHECK_CUBLAS(device_vector_axpy(bh, P, alpha, X))
         CHECK_CUBLAS(device_vector_axpy(bh, Q, omega, X))
@@ -165,6 +177,7 @@ int main(int argc, char *argv[]) {
         CHECK_CUDA(device_vector_GPUtoGPU(Y, W))
         CHECK_CUBLAS(device_vector_axpy(bh, T, -omega, W))
         CHECK_CUBLAS(device_vector_axpy(bh, V, omega * alpha, W))
+        prof_lap(&g_P, PF_VECOPS);
         // t = A w
         CHECK_CUSPARSE(device_csr_spmv(ch, dA, W, T, one, zero, buf))
         // --- residual replacement (Sec 4.2): every k iters, reset the recurrence-
@@ -180,12 +193,14 @@ int main(int argc, char *argv[]) {
             CHECK_CUSPARSE(device_csr_spmv(ch, dA, S, Z, one, zero, buf))     // z := A s
             CHECK_CUSPARSE(device_csr_spmv(ch, dA, Z, V, one, zero, buf))     // v := A z
         }
+        prof_lap(&g_P, PF_SPMV);
         // reduction: (r0,r), (r0,w), (r0,s), (r0,z)
         double rho_new, r0w2, r0s, r0z;
         CHECK_CUBLAS(device_vector_dot(bh, R0, R, &rho_new))
         CHECK_CUBLAS(device_vector_dot(bh, R0, W, &r0w2))
         CHECK_CUBLAS(device_vector_dot(bh, R0, S, &r0s))
         CHECK_CUBLAS(device_vector_dot(bh, R0, Z, &r0z))
+        prof_lap(&g_P, PF_DOT);
         double beta = (alpha / omega) * (rho_new / rho_old);
         double denom = r0w2 + beta * r0s - beta * omega * r0z;
         double alpha_next = rho_new / denom;
@@ -196,9 +211,12 @@ int main(int argc, char *argv[]) {
                    i, sqrt(rr) / bnorm, alpha_next, beta, omega);
         }
         rho_old = rho_new; beta_prev = beta; omega_prev = omega; alpha = alpha_next;
+        prof_iter_end(&g_P);
     }
     cudaDeviceSynchronize();
     double t_loop1 = omp_get_wtime();
+    prof_report(&g_P, "gpu-pipelined", arguments.input_matrix);
+    prof_free(&g_P);
 
     // --- final TRUE relative residual ||A x - B|| / ||B|| ---
     CHECK_CUSPARSE(device_csr_spmv(ch, dA, X, TMP, one, zero, buf))   // TMP = A x

@@ -11,6 +11,7 @@
 #include "hhp_util.h"
 #include "hhp_dp_kernels.h"
 #include "hhp_dp_helpers.h"
+#include "hhp_prof.h"
 
 #include <cuda_runtime_api.h>
 #include <cuda_runtime.h>
@@ -67,6 +68,9 @@ static error_t parse_opt(int key, char *arg, struct argp_state *state) {
     }
     return 0;
 }
+
+// prof_sync callback: default-stream solver, so sync the whole device.
+static void prof_sync_dev(void *unused) { (void)unused; cudaDeviceSynchronize(); }
 
 static char doc[] = "Pure-GPU BiCGStab with cuBLAS device-pointer-mode dots";
 static char args_doc[] = "";
@@ -159,45 +163,62 @@ int main(int argc, char *argv[]) {
 
     cudaStream_t s = 0;  // default stream (cuBLAS/cuSPARSE default to it)
 
+    // Optional detailed profiling (env HHP_PROF: 1=stderr summary, 2=+per-iter TSV).
+    Prof PROF; prof_init(&PROF, niters, prof_sync_dev, NULL);
+    prof_set_preprocess(&PROF, t_read1 - t_begin);
+
     double t_loop0 = omp_get_wtime();
     CHECK_CUBLAS(cublasSetPointerMode(bh, CUBLAS_POINTER_MODE_DEVICE))
 
     for (int it = 0; it < niters; it++) {
+        prof_tick(&PROF);
         // rho_new = R . R_0 ;  beta = (rho_new/rho)*(alpha/omega) ; rho = rho_new
         CHECK_CUBLAS(cublasDdot(bh, n, R.vals, 1, R_0.vals, 1, d_rho_new))
+        prof_lap(&PROF, PF_DOT);
         hhp_dp_update_beta(d_beta, d_rho, d_rho_new, d_alpha, d_omega, s);
 
         // P = (P - omega*V)*beta + R   (uses OLD omega) -- one fused kernel
         hhp_dp_vecop_P(P.vals, V.vals, R.vals, d_omega, d_beta, n, s);
+        prof_lap(&PROF, PF_VECOPS);
 
         // V = A*P
         CHECK_CUSPARSE(device_csr_spmv(ch, dA, P, V, h_one, h_zero, dA_buf))
+        prof_lap(&PROF, PF_SPMV);
 
         // rv = R_0 . V ;  alpha = rho/rv ;  neg_a = -alpha
         CHECK_CUBLAS(cublasDdot(bh, n, R_0.vals, 1, V.vals, 1, d_rv))
+        prof_lap(&PROF, PF_DOT);
         hhp_dp_update_alpha(d_alpha, d_neg_a, d_rho, d_rv, s);
 
         // S = R - alpha*V   -- one fused kernel
         hhp_dp_vecop_S(S.vals, R.vals, V.vals, d_neg_a, n, s);
+        prof_lap(&PROF, PF_VECOPS);
 
         // T = A*S
         CHECK_CUSPARSE(device_csr_spmv(ch, dA, S, T, h_one, h_zero, dA_buf))
+        prof_lap(&PROF, PF_SPMV);
 
         // ts = T.S ; tt = T.T ; omega = ts/tt ; neg_w = -omega
         CHECK_CUBLAS(cublasDdot(bh, n, T.vals, 1, S.vals, 1, d_ts))
         CHECK_CUBLAS(cublasDdot(bh, n, T.vals, 1, T.vals, 1, d_tt))
+        prof_lap(&PROF, PF_DOT);
         hhp_dp_update_omega(d_omega, d_neg_w, d_ts, d_tt, s);
 
         // X += alpha*P + omega*S ; R = S - omega*T   -- one fused kernel
         hhp_dp_vecop_XR(X.vals, R.vals, P.vals, S.vals, T.vals, d_alpha, d_omega, d_neg_w, n, s);
+        prof_lap(&PROF, PF_VECOPS);
 
         // tol = S.S  (computed for parity with the reference; result unused)
         CHECK_CUBLAS(cublasDdot(bh, n, S.vals, 1, S.vals, 1, d_tol))
+        prof_lap(&PROF, PF_DOT);
+        prof_iter_end(&PROF);
     }
 
     CHECK_CUBLAS(cublasSetPointerMode(bh, CUBLAS_POINTER_MODE_HOST))
     cudaDeviceSynchronize();
     double t_loop1 = omp_get_wtime();
+    prof_report(&PROF, "gpu-dp", arguments.input_matrix);
+    prof_free(&PROF);
 
     // --- relative residual: ||A*X - B|| / ||B|| ---
     CHECK_CUSPARSE(device_csr_spmv(ch, dA, X, Y, h_one, h_zero, dA_buf))

@@ -1,0 +1,9 @@
+
+	****	Matrix File readed	****Matrix name : /home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/rma10_1c_50g/rma10_1c_50g.mtx
+n_iters : 200 
+spmv : 2.160983 
+file_read : 19.320373 
+relative_residual : 7.227454E+11
+everything_total : 21.677535
+
+----------------------------------------------------------------------

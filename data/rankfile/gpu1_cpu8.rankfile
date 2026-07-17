@@ -1,0 +1,3 @@
+# 2-rank hybrid: rank0 = GPU driver (1 E-core), rank1 = CPU compute (8 P-cores)
+rank 0=localhost slot=0:8
+rank 1=localhost slot=0:0-7

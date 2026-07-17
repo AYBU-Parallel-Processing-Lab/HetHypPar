@@ -10,6 +10,7 @@
 #include "hhp_cuda.h"
 #include "hhp_cpu.h"
 #include "hhp_util.h"
+#include "hhp_prof.h"
 
 #include <cuda_runtime_api.h>    // cudaMalloc, cudaMemcpy, etc.
 #include <cusparse.h> 
@@ -89,16 +90,16 @@ static char args_doc[] = "";  // We don't take non-option arguments
 // Our argp parser
 static struct argp argp = {options, parse_opt, args_doc, doc};
 
-// --- Per-category profiling (enabled by env HHP_PROFILE=1) ---
-// cuBLAS/cuSPARSE here run on the default stream. When profiling we sync the
-// device at each category boundary and accumulate host wall-clock into
-// dot / spmv / vecops buckets. This perturbs the loop total (take total/speedup
-// from a clean HHP_PROFILE-unset run); bucket ratios stay a faithful breakdown.
-static int    g_prof = 0;
-static double g_t_dot = 0.0, g_t_spmv = 0.0, g_t_vec = 0.0;
-static double g_pt = 0.0;
-#define PROF_BEGIN() do { if (g_prof) { cudaDeviceSynchronize(); g_pt = omp_get_wtime(); } } while (0)
-#define PROF_END(acc) do { if (g_prof) { cudaDeviceSynchronize(); (acc) += omp_get_wtime() - g_pt; } } while (0)
+// --- Per-category profiling (unified hhp_prof, enabled by env HHP_PROF) ---
+// cuBLAS/cuSPARSE here run on the default stream, so the sync callback syncs the
+// whole device at each category boundary. HHP_PROF=1 prints a stderr summary and
+// the legacy PROFILE_* stdout lines below; HHP_PROF=2 also dumps a per-iteration
+// TSV. Profiling perturbs the loop total (take total/speedup from a clean run);
+// the bucket ratios stay a faithful breakdown.
+static Prof g_P;
+static void prof_sync_dev(void *unused) { (void)unused; cudaDeviceSynchronize(); }
+#define PROF_BEGIN() prof_tick(&g_P)
+#define PROF_END(sec) prof_lap(&g_P, sec)
 
 // ====================================================================================
 
@@ -368,7 +369,7 @@ if (access(arguments.input_x, F_OK) == -1)
 
 int niters = arguments.n_iters;
 
-g_prof = (getenv("HHP_PROFILE") != NULL);
+prof_init(&g_P, niters, prof_sync_dev, NULL);
 
 time_stamps.begin = omp_get_wtime(); // The very Beginning timestamp
 //-------------------------------------------------------------------------------------------------------
@@ -480,6 +481,7 @@ time_stamps.begin = omp_get_wtime(); // The very Beginning timestamp
 //-------------------------------------------------------------------------------------------------------
     // double times[4] = {};
     time_stamps.spmxv_begin = omp_get_wtime();
+    prof_set_preprocess(&g_P, time_stamps.spmxv_begin - time_stamps.begin);
     // gpu_BiCGStab(cublasHandle, cusparseHandle, Ad.data.m, Ad.desc, B, X, R_0, R, P, S, V, T, Y, Ad_buf, niters, 0.0000000001);
     for (size_t i = 0; i < niters; i++)
     {
@@ -487,7 +489,7 @@ time_stamps.begin = omp_get_wtime(); // The very Beginning timestamp
         double temp_rho; // = vector_dot_seq(R, R_0);
         PROF_BEGIN();
         CHECK_CUBLAS(device_vector_dot(cublasHandle, R, R_0, &temp_rho))
-        PROF_END(g_t_dot);
+        PROF_END(PF_DOT);
         //==============
         // calc Beta
         double beta = (temp_rho / rho) * (alpha / omega);
@@ -503,19 +505,19 @@ time_stamps.begin = omp_get_wtime(); // The very Beginning timestamp
         CHECK_CUBLAS(device_vector_scale(cublasHandle, beta, P))
         // vector_add_seq(P, R, P);
         CHECK_CUBLAS(device_vector_axpy(cublasHandle, R, mx_alpha, P))
-        PROF_END(g_t_vec);
+        PROF_END(PF_VECOPS);
         //==============
         // calc V_n+1
         // CSR_spmxv_seq(A, P, V); // result in V
         PROF_BEGIN();
         CHECK_CUSPARSE(device_csr_spmv(cusparseHandle, dA, P, V, mx_alpha, mx_beta, dA_buf))
-        PROF_END(g_t_spmv);
+        PROF_END(PF_SPMV);
         //==============
         // calc alpha_n+1
         double temp_rv;
         PROF_BEGIN();
         CHECK_CUBLAS(device_vector_dot(cublasHandle, R_0, V, &temp_rv))
-        PROF_END(g_t_dot);
+        PROF_END(PF_DOT);
         alpha = rho/temp_rv; //vector_dot_seq(R_0, V);
         //==============
         // calc S   (vector ops)
@@ -524,13 +526,13 @@ time_stamps.begin = omp_get_wtime(); // The very Beginning timestamp
         CHECK_CUDA(device_vector_GPUtoGPU(R, S))
         // vector_sub_seq(R, S, S);
         CHECK_CUBLAS(device_vector_axpy(cublasHandle, V, -alpha, S))
-        PROF_END(g_t_vec);
+        PROF_END(PF_VECOPS);
         //==============
         // calc T
         // CSR_spmxv_seq(A, S, T);
         PROF_BEGIN();
         CHECK_CUSPARSE(device_csr_spmv(cusparseHandle, dA, S, T, mx_alpha, mx_beta, dA_buf))
-        PROF_END(g_t_spmv);
+        PROF_END(PF_SPMV);
         //==============
         // calc omega_n+1
         double temp_ts;
@@ -538,7 +540,7 @@ time_stamps.begin = omp_get_wtime(); // The very Beginning timestamp
         CHECK_CUBLAS(device_vector_dot(cublasHandle, T, S, &temp_ts))
         double temp_tt;
         CHECK_CUBLAS(device_vector_dot(cublasHandle, T, T, &temp_tt))
-        PROF_END(g_t_dot);
+        PROF_END(PF_DOT);
         // omega = vector_dot_seq(T, S)/vector_dot_seq(T, T);
         omega = temp_ts/temp_tt;
 
@@ -557,14 +559,15 @@ time_stamps.begin = omp_get_wtime(); // The very Beginning timestamp
         // vector_sub_seq(S, R, R);
         CHECK_CUDA(device_vector_GPUtoGPU(S, R))
         CHECK_CUBLAS(device_vector_axpy(cublasHandle, T, -omega, R))
-        PROF_END(g_t_vec);
+        PROF_END(PF_VECOPS);
         //==============
         // calc tol
         double tol;// = vector_dot_seq(S, S);
         PROF_BEGIN();
         CHECK_CUBLAS(device_vector_dot(cublasHandle, S, S, &tol))
-        PROF_END(g_t_dot);
+        PROF_END(PF_DOT);
         //==============
+        prof_iter_end(&g_P);
     }
     time_stamps.spmxv_end = omp_get_wtime();
     time_stamps.end = time_stamps.spmxv_end;
@@ -599,7 +602,8 @@ time_stamps.begin = omp_get_wtime(); // The very Beginning timestamp
 
     printf("everything_total : %lf\n",time_stamps.end - time_stamps.begin) ;
 
-    if (g_prof) {
+    if (g_P.level) {
+        double g_t_dot = g_P.sec[PF_DOT], g_t_spmv = g_P.sec[PF_SPMV], g_t_vec = g_P.sec[PF_VECOPS];
         double psum = g_t_dot + g_t_spmv + g_t_vec;
         printf("PROFILE_enabled : 1\n");
         printf("PROFILE_loop_total : %lf\n", time_stamps.spmxv_end - time_stamps.spmxv_begin);
@@ -611,6 +615,8 @@ time_stamps.begin = omp_get_wtime(); // The very Beginning timestamp
         printf("PROFILE_spmv_pct : %.2f\n", psum > 0 ? 100.0 * g_t_spmv / psum : 0.0);
         printf("PROFILE_vec_pct : %.2f\n",  psum > 0 ? 100.0 * g_t_vec  / psum : 0.0);
     }
+    prof_report(&g_P, "gpu", arguments.input_matrix);
+    prof_free(&g_P);
 
     printf("\n----------------------------------------------------------------------\n");
    

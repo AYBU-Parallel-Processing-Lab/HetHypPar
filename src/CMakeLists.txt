@@ -35,6 +35,7 @@ set(C_SOURCE_FILES
   util/hhp_cuda.c
   util/hhp_dp_kernels.cu
   util/hhp_dp_helpers.c
+  util/hhp_prof.c
 )
 
 include_directories(

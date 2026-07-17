@@ -9,9 +9,10 @@ Run: micromamba run -n octave python tools/python/big_benchmark_summary.py
 from pathlib import Path
 import pandas as pd
 
+import os
 ROOT = Path(__file__).resolve().parent.parent.parent
-PARQ = ROOT / "data/big_benchmark/results.parquet"
-OUT  = ROOT / "data/big_benchmark/summary.md"
+PARQ = Path(os.environ.get("PARQ", ROOT / "data/big_benchmark/results.parquet"))
+OUT  = Path(os.environ.get("SUMMARY_OUT", ROOT / "data/big_benchmark/summary.md"))
 
 SOLVERS = ["gpu", "gpu-dp", "hybrid-async-dp", "hybrid-dist-dp", "hybrid-async",
            "hybrid-dist-pipelined", "gpu-pipelined", "mpi-gpu", "mpi", "cpu"]

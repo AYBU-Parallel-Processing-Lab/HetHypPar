@@ -10,6 +10,7 @@
 #include "hhp_cuda.h"
 #include "hhp_cpu.h"
 #include "hhp_util.h"
+#include "hhp_prof.h"
 
 #include <cuda_runtime_api.h>    // cudaMalloc, cudaMemcpy, etc.
 #include <cusparse.h> 
@@ -196,11 +197,18 @@ time_stamps.begin = omp_get_wtime(); // The very Beginning timestamp
     time_stamps.gpu_transfer_end = omp_get_wtime();
 //-------------------------------------------------------------------------------------------------------
     // double times[4] = {};
+    // Optional detailed profiling (env HHP_PROF: 1=stderr summary, 2=+per-iter TSV).
+    // CPU-only: no device sync callback (NULL).
+    Prof g_P; prof_init(&g_P, niters, NULL, NULL);
+    prof_set_preprocess(&g_P, omp_get_wtime() - time_stamps.begin);
+
     time_stamps.spmxv_begin = omp_get_wtime();
     for (size_t i = 0; i < niters; i++)
     {
+        prof_tick(&g_P);
         // calc rho_n+1
         double temp_rho = vector_dot_seq(R, R_0);
+        prof_lap(&g_P, PF_DOT);
         //==============
         // calc Beta
         double beta = (temp_rho / rho) * (alpha / omega);
@@ -211,22 +219,28 @@ time_stamps.begin = omp_get_wtime(); // The very Beginning timestamp
         vector_sub_seq(P, V, P);
         vector_scale_seq(P, beta, P);
         vector_add_seq(P, R, P);
+        prof_lap(&g_P, PF_VECOPS);
         //==============
         // calc V_n+1
         CSR_spmxv_seq(A, P, V); // result in V
+        prof_lap(&g_P, PF_SPMV);
         //==============
         // calc alpha_n+1
         alpha = rho/vector_dot_seq(R_0, V);
+        prof_lap(&g_P, PF_DOT);
         //==============
         // calc S
         vector_scale_seq(V, alpha, S);
         vector_sub_seq(R, S, S);
+        prof_lap(&g_P, PF_VECOPS);
         //==============
         // calc T
         CSR_spmxv_seq(A, S, T);
+        prof_lap(&g_P, PF_SPMV);
         //==============
         // calc omega_n+1
         omega = vector_dot_seq(T, S)/vector_dot_seq(T, T);
+        prof_lap(&g_P, PF_DOT);
         //==============
         // calc X_n+1
         vector_scale_seq(P, alpha, Y);
@@ -237,12 +251,17 @@ time_stamps.begin = omp_get_wtime(); // The very Beginning timestamp
         // calc R_n+1
         vector_scale_seq(T, omega, R);
         vector_sub_seq(S, R, R);
+        prof_lap(&g_P, PF_VECOPS);
         //==============
         // calc tol
         double tol = vector_dot_seq(S, S);
+        prof_lap(&g_P, PF_DOT);
         //==============
+        prof_iter_end(&g_P);
     }
     time_stamps.spmxv_end = omp_get_wtime();
+    prof_report(&g_P, "cpu", arguments.input_matrix);
+    prof_free(&g_P);
     time_stamps.end = time_stamps.spmxv_end;
     
     //-------------------------------------------------------------------------------------------------------

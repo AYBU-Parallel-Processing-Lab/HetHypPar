@@ -1,0 +1,2085 @@
+================ EXPANSION PREP START Sat Jun 27 23:40:46 +03 2026 ================
+new matrices (36): mac_econ_fwd500 FullChip atmosmodm Zd_Jac3 test1 TSOPF_RS_b2383_c1 nxp1_mc64_1 torso1 para-9 FEM_3D_thermal2 cage13 Goodwin_127 bauru5727 xenon2 ML_Laplace trans5 inlet tmt_unsym pre2 para-5 largebasis trans4 venkat50 appu k3plates marine1 shar_te2-b3 ss1 venkat01 webbase-1M poli4 coupled Ill_Stokes bayer02 wang3 powersim 
+
+[mac_econ_fwd500] vectors present, skipping octave
+[mac_econ_fwd500] patpart w500 (2-rank, imbal 1%)...
+file : /matrices/mac_econ_fwd500.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.217586
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 1071760 [1] 201629 
+cut : 401part vector : 0.163098
+0 : 173696 1 : 32804 
+[mac_econ_fwd500] patpart w700 (2-rank, imbal 1%)...
+file : /matrices/mac_econ_fwd500.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.195932
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 1125336 [1] 148053 
+cut : 322part vector : 0.159212
+0 : 182387 1 : 24113 
+[mac_econ_fwd500] patpart w900 (2-rank, imbal 1%)...
+file : /matrices/mac_econ_fwd500.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.197589
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 1151228 [1] 122161 
+cut : 309part vector : 0.161676
+0 : 186612 1 : 19888 
+[mac_econ_fwd500] patpart w1000 (2-rank, imbal 1%)...
+file : /matrices/mac_econ_fwd500.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.204561
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 1169182 [1] 104207 
+cut : 622part vector : 0.164872
+0 : 189298 1 : 17202 
+[mac_econ_fwd500] patpart w1100 (2-rank, imbal 1%)...
+file : /matrices/mac_econ_fwd500.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.194102
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 1174192 [1] 99197 
+cut : 307part vector : 0.161736
+0 : 190326 1 : 16174 
+[mac_econ_fwd500] naive nnz-balance partitions...
+[mac_econ_fwd500] reading nnz-per-row from /matrices/mac_econ_fwd500.mtx ...
+[mac_econ_fwd500] n=206500 stored_nnz=1273389
+  w100  -> gpu_rows=103275 cpu_rows=103225 cpu_nnz=50.0% (target 50.0%)  w100_2_i1.part
+  w400  -> gpu_rows=165192 cpu_rows=41308 cpu_nnz=20.0% (target 20.0%)  w400_2_i1.part
+  w500  -> gpu_rows=172080 cpu_rows=34420 cpu_nnz=16.7% (target 16.7%)  w500_2_i1.part
+  w600  -> gpu_rows=176997 cpu_rows=29503 cpu_nnz=14.3% (target 14.3%)  w600_2_i1.part
+  w700  -> gpu_rows=180683 cpu_rows=25817 cpu_nnz=12.5% (target 12.5%)  w700_2_i1.part
+  w800  -> gpu_rows=183547 cpu_rows=22953 cpu_nnz=11.1% (target 11.1%)  w800_2_i1.part
+  w900  -> gpu_rows=185836 cpu_rows=20664 cpu_nnz=10.0% (target 10.0%)  w900_2_i1.part
+  w1000 -> gpu_rows=187716 cpu_rows=18784 cpu_nnz=9.1% (target 9.1%)  w1000_2_i1.part
+  w1100 -> gpu_rows=189278 cpu_rows=17222 cpu_nnz=8.3% (target 8.3%)  w1100_2_i1.part
+  w1200 -> gpu_rows=190604 cpu_rows=15896 cpu_nnz=7.7% (target 7.7%)  w1200_2_i1.part
+  w2000 -> gpu_rows=196651 cpu_rows=9849 cpu_nnz=4.8% (target 4.8%)  w2000_2_i1.part
+  w2720 -> gpu_rows=199160 cpu_rows=7340 cpu_nnz=3.5% (target 3.5%)  w2720_2_i1.part
+[mac_econ_fwd500] PREP DONE
+
+[FullChip] generating vectors (octave process_matrixi)...
+octave: X11 DISPLAY environment variable not set
+octave: disabling GUI features
+[FullChip] patpart w100 (2-rank, imbal 1%)...
+file : /matrices/FullChip.mtx part : 2 
+	****	Matrix File readed	****Reading File : 4.023531
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 13444101 [1] 13177889 
+cut : 1757152part vector : 6.117654
+0 : 1217356 1 : 1769656 
+[FullChip] patpart w400 (2-rank, imbal 1%)...
+file : /matrices/FullChip.mtx part : 2 
+	****	Matrix File readed	****Reading File : 4.027867
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 21510567 [1] 5111423 
+cut : 701035part vector : 13.597669
+0 : 2295278 1 : 691734 
+[FullChip] patpart w500 (2-rank, imbal 1%)...
+file : /matrices/FullChip.mtx part : 2 
+	****	Matrix File readed	****Reading File : 4.034895
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 22406840 [1] 4215150 
+cut : 572486part vector : 14.292983
+0 : 2416375 1 : 570637 
+[FullChip] patpart w600 (2-rank, imbal 1%)...
+file : /matrices/FullChip.mtx part : 2 
+	****	Matrix File readed	****Reading File : 4.038241
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 23047036 [1] 3574954 
+cut : 490314part vector : 19.602058
+0 : 2501833 1 : 485179 
+[FullChip] patpart w700 (2-rank, imbal 1%)...
+file : /matrices/FullChip.mtx part : 2 
+	****	Matrix File readed	****Reading File : 4.033598
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 23527183 [1] 3094807 
+cut : 428290part vector : 15.415943
+0 : 2563017 1 : 423995 
+[FullChip] patpart w800 (2-rank, imbal 1%)...
+file : /matrices/FullChip.mtx part : 2 
+	****	Matrix File readed	****Reading File : 4.044481
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 23900630 [1] 2721360 
+cut : 375918part vector : 16.043141
+0 : 2615327 1 : 371685 
+[FullChip] patpart w900 (2-rank, imbal 1%)...
+file : /matrices/FullChip.mtx part : 2 
+	****	Matrix File readed	****Reading File : 4.043621
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 24199387 [1] 2422603 
+cut : 339520part vector : 17.576090
+0 : 2651290 1 : 335722 
+[FullChip] patpart w1000 (2-rank, imbal 1%)...
+file : /matrices/FullChip.mtx part : 2 
+	****	Matrix File readed	****Reading File : 4.039487
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 24443827 [1] 2178163 
+cut : 304930part vector : 19.926991
+0 : 2685976 1 : 301036 
+[FullChip] patpart w1100 (2-rank, imbal 1%)...
+file : /matrices/FullChip.mtx part : 2 
+	****	Matrix File readed	****Reading File : 4.026194
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 24647524 [1] 1974466 
+cut : 279501part vector : 16.930737
+0 : 2711617 1 : 275395 
+[FullChip] patpart w1200 (2-rank, imbal 1%)...
+file : /matrices/FullChip.mtx part : 2 
+	****	Matrix File readed	****Reading File : 4.041553
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 24819886 [1] 1802104 
+cut : 254226part vector : 17.393190
+0 : 2737328 1 : 249684 
+[FullChip] patpart w2000 (2-rank, imbal 1%)...
+file : /matrices/FullChip.mtx part : 2 
+	****	Matrix File readed	****Reading File : 4.046605
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 25607817 [1] 1014173 
+cut : 149220part vector : 23.346098
+0 : 2840230 1 : 146782 
+[FullChip] patpart w2720 (2-rank, imbal 1%)...
+file : /matrices/FullChip.mtx part : 2 
+	****	Matrix File readed	****Reading File : 4.047120
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 25934727 [1] 687263 
+cut : 106017part vector : 20.430800
+0 : 2882928 1 : 104084 
+[FullChip] naive nnz-balance partitions...
+[FullChip] reading nnz-per-row from /matrices/FullChip.mtx ...
+[FullChip] n=2987012 stored_nnz=26621990
+  w100  -> gpu_rows=1035908 cpu_rows=1951104 cpu_nnz=50.0% (target 50.0%)  w100_2_i1.part
+  w400  -> gpu_rows=2206004 cpu_rows=781008 cpu_nnz=20.0% (target 20.0%)  w400_2_i1.part
+  w500  -> gpu_rows=2339044 cpu_rows=647968 cpu_nnz=16.7% (target 16.7%)  w500_2_i1.part
+  w600  -> gpu_rows=2433357 cpu_rows=553655 cpu_nnz=14.3% (target 14.3%)  w600_2_i1.part
+  w700  -> gpu_rows=2502117 cpu_rows=484895 cpu_nnz=12.5% (target 12.5%)  w700_2_i1.part
+  w800  -> gpu_rows=2559125 cpu_rows=427887 cpu_nnz=11.1% (target 11.1%)  w800_2_i1.part
+  w900  -> gpu_rows=2604402 cpu_rows=382610 cpu_nnz=10.0% (target 10.0%)  w900_2_i1.part
+  w1000 -> gpu_rows=2638613 cpu_rows=348399 cpu_nnz=9.1% (target 9.1%)  w1000_2_i1.part
+  w1100 -> gpu_rows=2664709 cpu_rows=322303 cpu_nnz=8.3% (target 8.3%)  w1100_2_i1.part
+  w1200 -> gpu_rows=2689063 cpu_rows=297949 cpu_nnz=7.7% (target 7.7%)  w1200_2_i1.part
+  w2000 -> gpu_rows=2799791 cpu_rows=187221 cpu_nnz=4.8% (target 4.8%)  w2000_2_i1.part
+  w2720 -> gpu_rows=2848032 cpu_rows=138980 cpu_nnz=3.5% (target 3.5%)  w2720_2_i1.part
+[FullChip] PREP DONE
+
+[atmosmodm] generating vectors (octave process_matrixi)...
+octave: X11 DISPLAY environment variable not set
+octave: disabling GUI features
+error: value on right hand side of assignment is undefined
+error: called from
+    process_matrixi at line 6 column 7
+[atmosmodm] PREP FAILED: Command '['octave', '--no-gui', '--eval', "addpath('tools/scripts'); process_matrixi('atmosmodm')"]' returned non-zero exit status 1. — continuing
+
+[Zd_Jac3] vectors present, skipping octave
+[Zd_Jac3] patpart w500 (2-rank, imbal 1%)...
+file : /matrices/Zd_Jac3.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.403277
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 1612735 [1] 303417 
+cut : 1512part vector : 0.850597
+0 : 18969 1 : 3866 
+[Zd_Jac3] patpart w700 (2-rank, imbal 1%)...
+file : /matrices/Zd_Jac3.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.335912
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 1693378 [1] 222774 
+cut : 1633part vector : 0.889745
+0 : 20472 1 : 2363 
+[Zd_Jac3] patpart w900 (2-rank, imbal 1%)...
+file : /matrices/Zd_Jac3.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.341872
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 1741782 [1] 174370 
+cut : 2362part vector : 0.861862
+0 : 17131 1 : 5704 
+[Zd_Jac3] patpart w1000 (2-rank, imbal 1%)...
+file : /matrices/Zd_Jac3.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.335493
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 1759365 [1] 156787 
+cut : 1287part vector : 0.881864
+0 : 19834 1 : 3001 
+[Zd_Jac3] patpart w1100 (2-rank, imbal 1%)...
+file : /matrices/Zd_Jac3.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.338102
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 1774026 [1] 142126 
+cut : 1267part vector : 0.847182
+0 : 20302 1 : 2533 
+[Zd_Jac3] naive nnz-balance partitions...
+[Zd_Jac3] reading nnz-per-row from /matrices/Zd_Jac3.mtx ...
+[Zd_Jac3] n=22835 stored_nnz=1916152
+  w100  -> gpu_rows=9081 cpu_rows=13754 cpu_nnz=50.0% (target 50.0%)  w100_2_i1.part
+  w400  -> gpu_rows=13680 cpu_rows=9155 cpu_nnz=20.0% (target 20.0%)  w400_2_i1.part
+  w500  -> gpu_rows=15630 cpu_rows=7205 cpu_nnz=16.7% (target 16.7%)  w500_2_i1.part
+  w600  -> gpu_rows=15823 cpu_rows=7012 cpu_nnz=14.3% (target 14.3%)  w600_2_i1.part
+  w700  -> gpu_rows=16009 cpu_rows=6826 cpu_nnz=12.5% (target 12.5%)  w700_2_i1.part
+  w800  -> gpu_rows=16356 cpu_rows=6479 cpu_nnz=11.1% (target 11.1%)  w800_2_i1.part
+  w900  -> gpu_rows=16510 cpu_rows=6325 cpu_nnz=10.0% (target 10.0%)  w900_2_i1.part
+  w1000 -> gpu_rows=16552 cpu_rows=6283 cpu_nnz=9.1% (target 9.1%)  w1000_2_i1.part
+  w1100 -> gpu_rows=16604 cpu_rows=6231 cpu_nnz=8.3% (target 8.3%)  w1100_2_i1.part
+  w1200 -> gpu_rows=16709 cpu_rows=6126 cpu_nnz=7.7% (target 7.7%)  w1200_2_i1.part
+  w2000 -> gpu_rows=17225 cpu_rows=5610 cpu_nnz=4.8% (target 4.8%)  w2000_2_i1.part
+  w2720 -> gpu_rows=17314 cpu_rows=5521 cpu_nnz=3.5% (target 3.5%)  w2720_2_i1.part
+[Zd_Jac3] PREP DONE
+
+[test1] vectors present, skipping octave
+[test1] patpart w500 (2-rank, imbal 1%)...
+file : /matrices/test1.mtx part : 2 
+	****	Matrix File readed	****Reading File : 1.896154
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 10914759 [1] 2053441 
+cut : 4176part vector : 1.723378
+0 : 325282 1 : 67626 
+[test1] patpart w700 (2-rank, imbal 1%)...
+file : /matrices/test1.mtx part : 2 
+	****	Matrix File readed	****Reading File : 1.741402
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 11454022 [1] 1514178 
+cut : 3841part vector : 1.721755
+0 : 343222 1 : 49686 
+[test1] patpart w900 (2-rank, imbal 1%)...
+file : /matrices/test1.mtx part : 2 
+	****	Matrix File readed	****Reading File : 1.730017
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 11661358 [1] 1306842 
+cut : 3913part vector : 1.698131
+0 : 350200 1 : 42708 
+[test1] patpart w1000 (2-rank, imbal 1%)...
+file : /matrices/test1.mtx part : 2 
+	****	Matrix File readed	****Reading File : 1.801599
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 11825548 [1] 1142652 
+cut : 4217part vector : 1.837130
+0 : 355768 1 : 37140 
+[test1] patpart w1100 (2-rank, imbal 1%)...
+file : /matrices/test1.mtx part : 2 
+	****	Matrix File readed	****Reading File : 1.733093
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 12006356 [1] 961844 
+cut : 4944part vector : 1.712846
+0 : 360625 1 : 32283 
+[test1] naive nnz-balance partitions...
+[test1] reading nnz-per-row from /matrices/test1.mtx ...
+[test1] n=392908 stored_nnz=12968200
+  w100  -> gpu_rows=162711 cpu_rows=230197 cpu_nnz=50.0% (target 50.0%)  w100_2_i1.part
+  w400  -> gpu_rows=294133 cpu_rows=98775 cpu_nnz=20.0% (target 20.0%)  w400_2_i1.part
+  w500  -> gpu_rows=308491 cpu_rows=84417 cpu_nnz=16.7% (target 16.7%)  w500_2_i1.part
+  w600  -> gpu_rows=318691 cpu_rows=74217 cpu_nnz=14.3% (target 14.3%)  w600_2_i1.part
+  w700  -> gpu_rows=326344 cpu_rows=66564 cpu_nnz=12.5% (target 12.5%)  w700_2_i1.part
+  w800  -> gpu_rows=332294 cpu_rows=60614 cpu_nnz=11.1% (target 11.1%)  w800_2_i1.part
+  w900  -> gpu_rows=337053 cpu_rows=55855 cpu_nnz=10.0% (target 10.0%)  w900_2_i1.part
+  w1000 -> gpu_rows=340950 cpu_rows=51958 cpu_nnz=9.1% (target 9.1%)  w1000_2_i1.part
+  w1100 -> gpu_rows=344195 cpu_rows=48713 cpu_nnz=8.3% (target 8.3%)  w1100_2_i1.part
+  w1200 -> gpu_rows=346938 cpu_rows=45970 cpu_nnz=7.7% (target 7.7%)  w1200_2_i1.part
+  w2000 -> gpu_rows=359510 cpu_rows=33398 cpu_nnz=4.8% (target 4.8%)  w2000_2_i1.part
+  w2720 -> gpu_rows=364699 cpu_rows=28209 cpu_nnz=3.5% (target 3.5%)  w2720_2_i1.part
+[test1] PREP DONE
+
+[TSOPF_RS_b2383_c1] vectors present, skipping octave
+[TSOPF_RS_b2383_c1] patpart w500 (2-rank, imbal 1%)...
+file : /matrices/TSOPF_RS_b2383_c1.mtx part : 2 
+	****	Matrix File readed	****Reading File : 3.137018
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 13604429 [1] 2566740 
+cut : 5181part vector : 16.781626
+0 : 30066 1 : 8054 
+[TSOPF_RS_b2383_c1] patpart w700 (2-rank, imbal 1%)...
+file : /matrices/TSOPF_RS_b2383_c1.mtx part : 2 
+	****	Matrix File readed	****Reading File : 2.865280
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 14291011 [1] 1880158 
+cut : 5086part vector : 16.713771
+0 : 29850 1 : 8270 
+[TSOPF_RS_b2383_c1] patpart w900 (2-rank, imbal 1%)...
+file : /matrices/TSOPF_RS_b2383_c1.mtx part : 2 
+	****	Matrix File readed	****Reading File : 2.857178
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 14699591 [1] 1471578 
+cut : 17632part vector : 16.779220
+0 : 26604 1 : 11516 
+[TSOPF_RS_b2383_c1] patpart w1000 (2-rank, imbal 1%)...
+file : /matrices/TSOPF_RS_b2383_c1.mtx part : 2 
+	****	Matrix File readed	****Reading File : 2.856007
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 14845889 [1] 1325280 
+cut : 3445part vector : 16.743783
+0 : 34104 1 : 4016 
+[TSOPF_RS_b2383_c1] patpart w1100 (2-rank, imbal 1%)...
+file : /matrices/TSOPF_RS_b2383_c1.mtx part : 2 
+	****	Matrix File readed	****Reading File : 2.862418
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 14971805 [1] 1199364 
+cut : 13630part vector : 16.812033
+0 : 29170 1 : 8950 
+[TSOPF_RS_b2383_c1] naive nnz-balance partitions...
+[TSOPF_RS_b2383_c1] reading nnz-per-row from /matrices/TSOPF_RS_b2383_c1.mtx ...
+[TSOPF_RS_b2383_c1] n=38120 stored_nnz=16171169
+  w100  -> gpu_rows=29895 cpu_rows=8225 cpu_nnz=50.0% (target 50.0%)  w100_2_i1.part
+  w400  -> gpu_rows=34830 cpu_rows=3290 cpu_nnz=20.0% (target 20.0%)  w400_2_i1.part
+  w500  -> gpu_rows=35379 cpu_rows=2741 cpu_nnz=16.7% (target 16.7%)  w500_2_i1.part
+  w600  -> gpu_rows=35770 cpu_rows=2350 cpu_nnz=14.3% (target 14.3%)  w600_2_i1.part
+  w700  -> gpu_rows=36064 cpu_rows=2056 cpu_nnz=12.5% (target 12.5%)  w700_2_i1.part
+  w800  -> gpu_rows=36293 cpu_rows=1827 cpu_nnz=11.1% (target 11.1%)  w800_2_i1.part
+  w900  -> gpu_rows=36475 cpu_rows=1645 cpu_nnz=10.0% (target 10.0%)  w900_2_i1.part
+  w1000 -> gpu_rows=36625 cpu_rows=1495 cpu_nnz=9.1% (target 9.1%)  w1000_2_i1.part
+  w1100 -> gpu_rows=36750 cpu_rows=1370 cpu_nnz=8.3% (target 8.3%)  w1100_2_i1.part
+  w1200 -> gpu_rows=36855 cpu_rows=1265 cpu_nnz=7.7% (target 7.7%)  w1200_2_i1.part
+  w2000 -> gpu_rows=37337 cpu_rows=783 cpu_nnz=4.8% (target 4.8%)  w2000_2_i1.part
+  w2720 -> gpu_rows=37537 cpu_rows=583 cpu_nnz=3.5% (target 3.5%)  w2720_2_i1.part
+[TSOPF_RS_b2383_c1] PREP DONE
+
+[nxp1_mc64_1] vectors present, skipping octave
+[nxp1_mc64_1] patpart w500 (2-rank, imbal 1%)...
+file : /matrices/nxp1_mc64_1.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.442742
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 2213097 [1] 442783 
+cut : 900part vector : 0.361699
+0 : 339830 1 : 74774 
+[nxp1_mc64_1] patpart w700 (2-rank, imbal 1%)...
+file : /matrices/nxp1_mc64_1.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.409730
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 2347020 [1] 308860 
+cut : 1278part vector : 0.356867
+0 : 360520 1 : 54084 
+[nxp1_mc64_1] patpart w900 (2-rank, imbal 1%)...
+file : /matrices/nxp1_mc64_1.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.409698
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 2414192 [1] 241688 
+cut : 717part vector : 0.354497
+0 : 373244 1 : 41360 
+[nxp1_mc64_1] patpart w1000 (2-rank, imbal 1%)...
+file : /matrices/nxp1_mc64_1.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.418660
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 2437948 [1] 217932 
+cut : 946part vector : 0.395538
+0 : 376009 1 : 38595 
+[nxp1_mc64_1] patpart w1100 (2-rank, imbal 1%)...
+file : /matrices/nxp1_mc64_1.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.407748
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 2454922 [1] 200958 
+cut : 659part vector : 0.354265
+0 : 379227 1 : 35377 
+[nxp1_mc64_1] naive nnz-balance partitions...
+[nxp1_mc64_1] reading nnz-per-row from /matrices/nxp1_mc64_1.mtx ...
+[nxp1_mc64_1] n=414604 stored_nnz=2655880
+  w100  -> gpu_rows=220073 cpu_rows=194531 cpu_nnz=50.0% (target 50.0%)  w100_2_i1.part
+  w400  -> gpu_rows=345826 cpu_rows=68778 cpu_nnz=20.0% (target 20.0%)  w400_2_i1.part
+  w500  -> gpu_rows=358471 cpu_rows=56133 cpu_nnz=16.7% (target 16.7%)  w500_2_i1.part
+  w600  -> gpu_rows=368018 cpu_rows=46586 cpu_nnz=14.3% (target 14.3%)  w600_2_i1.part
+  w700  -> gpu_rows=375942 cpu_rows=38662 cpu_nnz=12.5% (target 12.5%)  w700_2_i1.part
+  w800  -> gpu_rows=382110 cpu_rows=32494 cpu_nnz=11.1% (target 11.1%)  w800_2_i1.part
+  w900  -> gpu_rows=386615 cpu_rows=27989 cpu_nnz=10.0% (target 10.0%)  w900_2_i1.part
+  w1000 -> gpu_rows=389511 cpu_rows=25093 cpu_nnz=9.1% (target 9.1%)  w1000_2_i1.part
+  w1100 -> gpu_rows=392216 cpu_rows=22388 cpu_nnz=8.3% (target 8.3%)  w1100_2_i1.part
+  w1200 -> gpu_rows=394550 cpu_rows=20054 cpu_nnz=7.7% (target 7.7%)  w1200_2_i1.part
+  w2000 -> gpu_rows=405715 cpu_rows=8889 cpu_nnz=4.8% (target 4.8%)  w2000_2_i1.part
+  w2720 -> gpu_rows=409965 cpu_rows=4639 cpu_nnz=3.5% (target 3.5%)  w2720_2_i1.part
+[nxp1_mc64_1] PREP DONE
+
+[torso1] vectors present, skipping octave
+[torso1] patpart w500 (2-rank, imbal 1%)...
+file : /matrices/torso1.mtx part : 2 
+	****	Matrix File readed	****Reading File : 1.562791
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 7099615 [1] 1416885 
+cut : 2233part vector : 0.098625
+0 : 104137 1 : 12021 
+[torso1] patpart w700 (2-rank, imbal 1%)...
+file : /matrices/torso1.mtx part : 2 
+	****	Matrix File readed	****Reading File : 1.378504
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 7478069 [1] 1038431 
+cut : 3002part vector : 0.098571
+0 : 105827 1 : 10331 
+[torso1] patpart w900 (2-rank, imbal 1%)...
+file : /matrices/torso1.mtx part : 2 
+	****	Matrix File readed	****Reading File : 1.402179
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 7736521 [1] 779979 
+cut : 3001part vector : 0.124246
+0 : 109077 1 : 7081 
+[torso1] patpart w1000 (2-rank, imbal 1%)...
+file : /matrices/torso1.mtx part : 2 
+	****	Matrix File readed	****Reading File : 1.364478
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 7798549 [1] 717951 
+cut : 3001part vector : 0.098253
+0 : 109857 1 : 6301 
+[torso1] patpart w1100 (2-rank, imbal 1%)...
+file : /matrices/torso1.mtx part : 2 
+	****	Matrix File readed	****Reading File : 1.371725
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 7808887 [1] 707613 
+cut : 3001part vector : 0.098377
+0 : 109987 1 : 6171 
+[torso1] naive nnz-balance partitions...
+[torso1] reading nnz-per-row from /matrices/torso1.mtx ...
+[torso1] n=116158 stored_nnz=8516500
+  w100  -> gpu_rows=59206 cpu_rows=56952 cpu_nnz=50.0% (target 50.0%)  w100_2_i1.part
+  w400  -> gpu_rows=99737 cpu_rows=16421 cpu_nnz=20.0% (target 20.0%)  w400_2_i1.part
+  w500  -> gpu_rows=103794 cpu_rows=12364 cpu_nnz=16.6% (target 16.7%)  w500_2_i1.part
+  w600  -> gpu_rows=104941 cpu_rows=11217 cpu_nnz=14.3% (target 14.3%)  w600_2_i1.part
+  w700  -> gpu_rows=107879 cpu_rows=8279 cpu_nnz=12.5% (target 12.5%)  w700_2_i1.part
+  w800  -> gpu_rows=107920 cpu_rows=8238 cpu_nnz=11.1% (target 11.1%)  w800_2_i1.part
+  w900  -> gpu_rows=107961 cpu_rows=8197 cpu_nnz=10.0% (target 10.0%)  w900_2_i1.part
+  w1000 -> gpu_rows=111948 cpu_rows=4210 cpu_nnz=9.1% (target 9.1%)  w1000_2_i1.part
+  w1100 -> gpu_rows=111976 cpu_rows=4182 cpu_nnz=8.3% (target 8.3%)  w1100_2_i1.part
+  w1200 -> gpu_rows=112425 cpu_rows=3733 cpu_nnz=7.7% (target 7.7%)  w1200_2_i1.part
+  w2000 -> gpu_rows=116034 cpu_rows=124 cpu_nnz=4.8% (target 4.8%)  w2000_2_i1.part
+  w2720 -> gpu_rows=116066 cpu_rows=92 cpu_nnz=3.5% (target 3.5%)  w2720_2_i1.part
+[torso1] PREP DONE
+
+[para-9] vectors present, skipping octave
+[para-9] patpart w500 (2-rank, imbal 1%)...
+file : /matrices/para-9.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.694955
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 4558540 [1] 857818 
+cut : 4156part vector : 0.524498
+0 : 132843 1 : 23081 
+[para-9] patpart w700 (2-rank, imbal 1%)...
+file : /matrices/para-9.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.651477
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 4786619 [1] 629739 
+cut : 4140part vector : 0.523129
+0 : 138883 1 : 17041 
+[para-9] patpart w900 (2-rank, imbal 1%)...
+file : /matrices/para-9.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.647665
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 4922774 [1] 493584 
+cut : 3695part vector : 0.515114
+0 : 142429 1 : 13495 
+[para-9] patpart w1000 (2-rank, imbal 1%)...
+file : /matrices/para-9.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.650678
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 4973201 [1] 443157 
+cut : 3851part vector : 0.514243
+0 : 143949 1 : 11975 
+[para-9] patpart w1100 (2-rank, imbal 1%)...
+file : /matrices/para-9.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.652859
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 5014572 [1] 401786 
+cut : 3439part vector : 0.516789
+0 : 144684 1 : 11240 
+[para-9] naive nnz-balance partitions...
+[para-9] reading nnz-per-row from /matrices/para-9.mtx ...
+[para-9] n=155924 stored_nnz=5416358
+  w100  -> gpu_rows=78855 cpu_rows=77069 cpu_nnz=50.0% (target 50.0%)  w100_2_i1.part
+  w400  -> gpu_rows=125520 cpu_rows=30404 cpu_nnz=20.0% (target 20.0%)  w400_2_i1.part
+  w500  -> gpu_rows=130688 cpu_rows=25236 cpu_nnz=16.7% (target 16.7%)  w500_2_i1.part
+  w600  -> gpu_rows=134719 cpu_rows=21205 cpu_nnz=14.3% (target 14.3%)  w600_2_i1.part
+  w700  -> gpu_rows=137539 cpu_rows=18385 cpu_nnz=12.5% (target 12.5%)  w700_2_i1.part
+  w800  -> gpu_rows=140249 cpu_rows=15675 cpu_nnz=11.1% (target 11.1%)  w800_2_i1.part
+  w900  -> gpu_rows=141970 cpu_rows=13954 cpu_nnz=10.0% (target 10.0%)  w900_2_i1.part
+  w1000 -> gpu_rows=143490 cpu_rows=12434 cpu_nnz=9.1% (target 9.1%)  w1000_2_i1.part
+  w1100 -> gpu_rows=144557 cpu_rows=11367 cpu_nnz=8.3% (target 8.3%)  w1100_2_i1.part
+  w1200 -> gpu_rows=145599 cpu_rows=10325 cpu_nnz=7.7% (target 7.7%)  w1200_2_i1.part
+  w2000 -> gpu_rows=149994 cpu_rows=5930 cpu_nnz=4.8% (target 4.8%)  w2000_2_i1.part
+  w2720 -> gpu_rows=151442 cpu_rows=4482 cpu_nnz=3.5% (target 3.5%)  w2720_2_i1.part
+[para-9] PREP DONE
+
+[FEM_3D_thermal2] vectors present, skipping octave
+[FEM_3D_thermal2] patpart w500 (2-rank, imbal 1%)...
+file : /matrices/FEM_3D_thermal2.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.714208
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 2907705 [1] 581595 
+cut : 2046part vector : 0.227709
+0 : 123242 1 : 24658 
+[FEM_3D_thermal2] patpart w700 (2-rank, imbal 1%)...
+file : /matrices/FEM_3D_thermal2.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.618622
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 3053076 [1] 436224 
+cut : 1836part vector : 0.229885
+0 : 129420 1 : 18480 
+[FEM_3D_thermal2] patpart w900 (2-rank, imbal 1%)...
+file : /matrices/FEM_3D_thermal2.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.618571
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 3137910 [1] 351390 
+cut : 1566part vector : 0.223669
+0 : 133015 1 : 14885 
+[FEM_3D_thermal2] patpart w1000 (2-rank, imbal 1%)...
+file : /matrices/FEM_3D_thermal2.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.624797
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 3172056 [1] 317244 
+cut : 1556part vector : 0.226185
+0 : 134456 1 : 13444 
+[FEM_3D_thermal2] patpart w1100 (2-rank, imbal 1%)...
+file : /matrices/FEM_3D_thermal2.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.619066
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 3203694 [1] 285606 
+cut : 1436part vector : 0.221855
+0 : 135804 1 : 12096 
+[FEM_3D_thermal2] naive nnz-balance partitions...
+[FEM_3D_thermal2] reading nnz-per-row from /matrices/FEM_3D_thermal2.mtx ...
+[FEM_3D_thermal2] n=147900 stored_nnz=3489300
+  w100  -> gpu_rows=73950 cpu_rows=73950 cpu_nnz=50.0% (target 50.0%)  w100_2_i1.part
+  w400  -> gpu_rows=118673 cpu_rows=29227 cpu_nnz=20.0% (target 20.0%)  w400_2_i1.part
+  w500  -> gpu_rows=123546 cpu_rows=24354 cpu_nnz=16.7% (target 16.7%)  w500_2_i1.part
+  w600  -> gpu_rows=127026 cpu_rows=20874 cpu_nnz=14.3% (target 14.3%)  w600_2_i1.part
+  w700  -> gpu_rows=129634 cpu_rows=18266 cpu_nnz=12.5% (target 12.5%)  w700_2_i1.part
+  w800  -> gpu_rows=131664 cpu_rows=16236 cpu_nnz=11.1% (target 11.1%)  w800_2_i1.part
+  w900  -> gpu_rows=133288 cpu_rows=14612 cpu_nnz=10.0% (target 10.0%)  w900_2_i1.part
+  w1000 -> gpu_rows=134614 cpu_rows=13286 cpu_nnz=9.1% (target 9.1%)  w1000_2_i1.part
+  w1100 -> gpu_rows=135723 cpu_rows=12177 cpu_nnz=8.3% (target 8.3%)  w1100_2_i1.part
+  w1200 -> gpu_rows=136659 cpu_rows=11241 cpu_nnz=7.7% (target 7.7%)  w1200_2_i1.part
+  w2000 -> gpu_rows=140940 cpu_rows=6960 cpu_nnz=4.8% (target 4.8%)  w2000_2_i1.part
+  w2720 -> gpu_rows=142718 cpu_rows=5182 cpu_nnz=3.5% (target 3.5%)  w2720_2_i1.part
+[FEM_3D_thermal2] PREP DONE
+
+[cage13] vectors present, skipping octave
+[cage13] patpart w700 (2-rank, imbal 1%)...
+file : /matrices/cage13.mtx part : 2 
+	****	Matrix File readed	****Reading File : 1.085174
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 6609748 [1] 869595 
+cut : 27606part vector : 1.608886
+0 : 384971 1 : 60344 
+[cage13] patpart w900 (2-rank, imbal 1%)...
+file : /matrices/cage13.mtx part : 2 
+	****	Matrix File readed	****Reading File : 1.091111
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 6798721 [1] 680622 
+cut : 24282part vector : 1.524207
+0 : 392903 1 : 52412 
+[cage13] patpart w1000 (2-rank, imbal 1%)...
+file : /matrices/cage13.mtx part : 2 
+	****	Matrix File readed	****Reading File : 1.085920
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 6867311 [1] 612032 
+cut : 19238part vector : 1.530453
+0 : 400179 1 : 45136 
+[cage13] patpart w1100 (2-rank, imbal 1%)...
+file : /matrices/cage13.mtx part : 2 
+	****	Matrix File readed	****Reading File : 1.083929
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 6924601 [1] 554742 
+cut : 18144part vector : 1.517253
+0 : 403631 1 : 41684 
+[cage13] naive nnz-balance partitions...
+[cage13] reading nnz-per-row from /matrices/cage13.mtx ...
+[cage13] n=445315 stored_nnz=7479343
+  w100  -> gpu_rows=250344 cpu_rows=194971 cpu_nnz=50.0% (target 50.0%)  w100_2_i1.part
+  w400  -> gpu_rows=374335 cpu_rows=70980 cpu_nnz=20.0% (target 20.0%)  w400_2_i1.part
+  w500  -> gpu_rows=388085 cpu_rows=57230 cpu_nnz=16.7% (target 16.7%)  w500_2_i1.part
+  w600  -> gpu_rows=395931 cpu_rows=49384 cpu_nnz=14.3% (target 14.3%)  w600_2_i1.part
+  w700  -> gpu_rows=402420 cpu_rows=42895 cpu_nnz=12.5% (target 12.5%)  w700_2_i1.part
+  w800  -> gpu_rows=407777 cpu_rows=37538 cpu_nnz=11.1% (target 11.1%)  w800_2_i1.part
+  w900  -> gpu_rows=411188 cpu_rows=34127 cpu_nnz=10.0% (target 10.0%)  w900_2_i1.part
+  w1000 -> gpu_rows=413480 cpu_rows=31835 cpu_nnz=9.1% (target 9.1%)  w1000_2_i1.part
+  w1100 -> gpu_rows=415789 cpu_rows=29526 cpu_nnz=8.3% (target 8.3%)  w1100_2_i1.part
+  w1200 -> gpu_rows=418318 cpu_rows=26997 cpu_nnz=7.7% (target 7.7%)  w1200_2_i1.part
+  w2000 -> gpu_rows=428321 cpu_rows=16994 cpu_nnz=4.8% (target 4.8%)  w2000_2_i1.part
+  w2720 -> gpu_rows=432816 cpu_rows=12499 cpu_nnz=3.5% (target 3.5%)  w2720_2_i1.part
+[cage13] PREP DONE
+
+[Goodwin_127] vectors present, skipping octave
+[Goodwin_127] patpart w500 (2-rank, imbal 1%)...
+file : /matrices/Goodwin_127.mtx part : 2 
+	****	Matrix File readed	****Reading File : 1.005506
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 4833835 [1] 944710 
+cut : 1689part vector : 0.356606
+0 : 149023 1 : 29414 
+[Goodwin_127] patpart w700 (2-rank, imbal 1%)...
+file : /matrices/Goodwin_127.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.930357
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 5086907 [1] 691638 
+cut : 1389part vector : 0.354130
+0 : 156863 1 : 21574 
+[Goodwin_127] patpart w900 (2-rank, imbal 1%)...
+file : /matrices/Goodwin_127.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.929118
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 5200467 [1] 578078 
+cut : 1299part vector : 0.353135
+0 : 160355 1 : 18082 
+[Goodwin_127] patpart w1000 (2-rank, imbal 1%)...
+file : /matrices/Goodwin_127.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.927824
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 5252975 [1] 525570 
+cut : 1164part vector : 0.353003
+0 : 161969 1 : 16468 
+[Goodwin_127] patpart w1100 (2-rank, imbal 1%)...
+file : /matrices/Goodwin_127.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.925956
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 5296395 [1] 482150 
+cut : 1104part vector : 0.351752
+0 : 163338 1 : 15099 
+[Goodwin_127] naive nnz-balance partitions...
+[Goodwin_127] reading nnz-per-row from /matrices/Goodwin_127.mtx ...
+[Goodwin_127] n=178437 stored_nnz=5778545
+  w100  -> gpu_rows=89130 cpu_rows=89307 cpu_nnz=50.0% (target 50.0%)  w100_2_i1.part
+  w400  -> gpu_rows=142259 cpu_rows=36178 cpu_nnz=20.0% (target 20.0%)  w400_2_i1.part
+  w500  -> gpu_rows=148148 cpu_rows=30289 cpu_nnz=16.7% (target 16.7%)  w500_2_i1.part
+  w600  -> gpu_rows=152395 cpu_rows=26042 cpu_nnz=14.3% (target 14.3%)  w600_2_i1.part
+  w700  -> gpu_rows=155551 cpu_rows=22886 cpu_nnz=12.5% (target 12.5%)  w700_2_i1.part
+  w800  -> gpu_rows=158010 cpu_rows=20427 cpu_nnz=11.1% (target 11.1%)  w800_2_i1.part
+  w900  -> gpu_rows=159969 cpu_rows=18468 cpu_nnz=10.0% (target 10.0%)  w900_2_i1.part
+  w1000 -> gpu_rows=161575 cpu_rows=16862 cpu_nnz=9.1% (target 9.1%)  w1000_2_i1.part
+  w1100 -> gpu_rows=162919 cpu_rows=15518 cpu_nnz=8.3% (target 8.3%)  w1100_2_i1.part
+  w1200 -> gpu_rows=164071 cpu_rows=14366 cpu_nnz=7.7% (target 7.7%)  w1200_2_i1.part
+  w2000 -> gpu_rows=169257 cpu_rows=9180 cpu_nnz=4.8% (target 4.8%)  w2000_2_i1.part
+  w2720 -> gpu_rows=171401 cpu_rows=7036 cpu_nnz=3.5% (target 3.5%)  w2720_2_i1.part
+[Goodwin_127] PREP DONE
+
+[bauru5727] vectors present, skipping octave
+[bauru5727] patpart w500 (2-rank, imbal 1%)...
+file : /matrices/bauru5727.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.043636
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 122048 [1] 22971 
+cut : 52part vector : 0.012345
+0 : 32418 1 : 7948 
+[bauru5727] patpart w700 (2-rank, imbal 1%)...
+file : /matrices/bauru5727.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.023698
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 128154 [1] 16865 
+cut : 22part vector : 0.011842
+0 : 34265 1 : 6101 
+[bauru5727] patpart w900 (2-rank, imbal 1%)...
+file : /matrices/bauru5727.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.024479
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 131815 [1] 13204 
+cut : 28part vector : 0.012045
+0 : 35246 1 : 5120 
+[bauru5727] patpart w1000 (2-rank, imbal 1%)...
+file : /matrices/bauru5727.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.022397
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 132358 [1] 12661 
+cut : 10part vector : 0.012088
+0 : 35403 1 : 4963 
+[bauru5727] patpart w1100 (2-rank, imbal 1%)...
+file : /matrices/bauru5727.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.024758
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 132934 [1] 12085 
+cut : 10part vector : 0.012493
+0 : 35946 1 : 4420 
+[bauru5727] naive nnz-balance partitions...
+[bauru5727] reading nnz-per-row from /matrices/bauru5727.mtx ...
+[bauru5727] n=40366 stored_nnz=145019
+  w100  -> gpu_rows=20299 cpu_rows=20067 cpu_nnz=50.0% (target 50.0%)  w100_2_i1.part
+  w400  -> gpu_rows=36614 cpu_rows=3752 cpu_nnz=20.0% (target 20.0%)  w400_2_i1.part
+  w500  -> gpu_rows=37398 cpu_rows=2968 cpu_nnz=16.7% (target 16.7%)  w500_2_i1.part
+  w600  -> gpu_rows=38022 cpu_rows=2344 cpu_nnz=14.3% (target 14.3%)  w600_2_i1.part
+  w700  -> gpu_rows=38387 cpu_rows=1979 cpu_nnz=12.5% (target 12.5%)  w700_2_i1.part
+  w800  -> gpu_rows=38693 cpu_rows=1673 cpu_nnz=11.1% (target 11.1%)  w800_2_i1.part
+  w900  -> gpu_rows=38940 cpu_rows=1426 cpu_nnz=10.0% (target 10.0%)  w900_2_i1.part
+  w1000 -> gpu_rows=39113 cpu_rows=1253 cpu_nnz=9.1% (target 9.1%)  w1000_2_i1.part
+  w1100 -> gpu_rows=39247 cpu_rows=1119 cpu_nnz=8.3% (target 8.3%)  w1100_2_i1.part
+  w1200 -> gpu_rows=39369 cpu_rows=997 cpu_nnz=7.7% (target 7.7%)  w1200_2_i1.part
+  w2000 -> gpu_rows=39807 cpu_rows=559 cpu_nnz=4.8% (target 4.8%)  w2000_2_i1.part
+  w2720 -> gpu_rows=39967 cpu_rows=399 cpu_nnz=3.5% (target 3.5%)  w2720_2_i1.part
+[bauru5727] PREP DONE
+
+[xenon2] vectors present, skipping octave
+[xenon2] patpart w500 (2-rank, imbal 1%)...
+file : /matrices/xenon2.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.738007
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 3254435 [1] 612253 
+cut : 2751part vector : 0.248222
+0 : 132339 1 : 25125 
+[xenon2] patpart w700 (2-rank, imbal 1%)...
+file : /matrices/xenon2.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.647767
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 3411366 [1] 455322 
+cut : 2382part vector : 0.246436
+0 : 138702 1 : 18762 
+[xenon2] patpart w900 (2-rank, imbal 1%)...
+file : /matrices/xenon2.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.645773
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 3514540 [1] 352148 
+cut : 2223part vector : 0.247239
+0 : 142872 1 : 14592 
+[xenon2] patpart w1000 (2-rank, imbal 1%)...
+file : /matrices/xenon2.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.645506
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 3548311 [1] 318377 
+cut : 1981part vector : 0.248230
+0 : 144286 1 : 13178 
+[xenon2] patpart w1100 (2-rank, imbal 1%)...
+file : /matrices/xenon2.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.645818
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 3579805 [1] 286883 
+cut : 1815part vector : 0.248056
+0 : 145544 1 : 11920 
+[xenon2] naive nnz-balance partitions...
+[xenon2] reading nnz-per-row from /matrices/xenon2.mtx ...
+[xenon2] n=157464 stored_nnz=3866688
+  w100  -> gpu_rows=78581 cpu_rows=78883 cpu_nnz=50.0% (target 50.0%)  w100_2_i1.part
+  w400  -> gpu_rows=125594 cpu_rows=31870 cpu_nnz=20.0% (target 20.0%)  w400_2_i1.part
+  w500  -> gpu_rows=130792 cpu_rows=26672 cpu_nnz=16.7% (target 16.7%)  w500_2_i1.part
+  w600  -> gpu_rows=134497 cpu_rows=22967 cpu_nnz=14.3% (target 14.3%)  w600_2_i1.part
+  w700  -> gpu_rows=137254 cpu_rows=20210 cpu_nnz=12.5% (target 12.5%)  w700_2_i1.part
+  w800  -> gpu_rows=139457 cpu_rows=18007 cpu_nnz=11.1% (target 11.1%)  w800_2_i1.part
+  w900  -> gpu_rows=141294 cpu_rows=16170 cpu_nnz=10.0% (target 10.0%)  w900_2_i1.part
+  w1000 -> gpu_rows=142785 cpu_rows=14679 cpu_nnz=9.1% (target 9.1%)  w1000_2_i1.part
+  w1100 -> gpu_rows=144011 cpu_rows=13453 cpu_nnz=8.3% (target 8.3%)  w1100_2_i1.part
+  w1200 -> gpu_rows=145027 cpu_rows=12437 cpu_nnz=7.7% (target 7.7%)  w1200_2_i1.part
+  w2000 -> gpu_rows=149748 cpu_rows=7716 cpu_nnz=4.8% (target 4.8%)  w2000_2_i1.part
+  w2720 -> gpu_rows=151702 cpu_rows=5762 cpu_nnz=3.5% (target 3.5%)  w2720_2_i1.part
+[xenon2] PREP DONE
+
+[ML_Laplace] vectors present, skipping octave
+[ML_Laplace] patpart w700 (2-rank, imbal 1%)...
+file : /matrices/ML_Laplace.mtx part : 2 
+	****	Matrix File readed	****Reading File : 4.561893
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 24194596 [1] 3495376 
+cut : 3040part vector : 2.556462
+0 : 329142 1 : 47860 
+[ML_Laplace] patpart w900 (2-rank, imbal 1%)...
+file : /matrices/ML_Laplace.mtx part : 2 
+	****	Matrix File readed	****Reading File : 4.398813
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 25083064 [1] 2606908 
+cut : 2924part vector : 2.524463
+0 : 341378 1 : 35624 
+[ML_Laplace] patpart w1000 (2-rank, imbal 1%)...
+file : /matrices/ML_Laplace.mtx part : 2 
+	****	Matrix File readed	****Reading File : 4.407135
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 25379664 [1] 2310308 
+cut : 2782part vector : 2.529507
+0 : 345410 1 : 31592 
+[ML_Laplace] patpart w1100 (2-rank, imbal 1%)...
+file : /matrices/ML_Laplace.mtx part : 2 
+	****	Matrix File readed	****Reading File : 4.400069
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 25595192 [1] 2094780 
+cut : 2588part vector : 2.533578
+0 : 348338 1 : 28664 
+[ML_Laplace] naive nnz-balance partitions...
+[ML_Laplace] reading nnz-per-row from /matrices/ML_Laplace.mtx ...
+[ML_Laplace] n=377002 stored_nnz=27689972
+  w100  -> gpu_rows=188414 cpu_rows=188588 cpu_nnz=50.0% (target 50.0%)  w100_2_i1.part
+  w400  -> gpu_rows=301337 cpu_rows=75665 cpu_nnz=20.0% (target 20.0%)  w400_2_i1.part
+  w500  -> gpu_rows=313888 cpu_rows=63114 cpu_nnz=16.7% (target 16.7%)  w500_2_i1.part
+  w600  -> gpu_rows=322848 cpu_rows=54154 cpu_nnz=14.3% (target 14.3%)  w600_2_i1.part
+  w700  -> gpu_rows=329578 cpu_rows=47424 cpu_nnz=12.5% (target 12.5%)  w700_2_i1.part
+  w800  -> gpu_rows=334804 cpu_rows=42198 cpu_nnz=11.1% (target 11.1%)  w800_2_i1.part
+  w900  -> gpu_rows=338992 cpu_rows=38010 cpu_nnz=10.0% (target 10.0%)  w900_2_i1.part
+  w1000 -> gpu_rows=342413 cpu_rows=34589 cpu_nnz=9.1% (target 9.1%)  w1000_2_i1.part
+  w1100 -> gpu_rows=345267 cpu_rows=31735 cpu_nnz=8.3% (target 8.3%)  w1100_2_i1.part
+  w1200 -> gpu_rows=347676 cpu_rows=29326 cpu_nnz=7.7% (target 7.7%)  w1200_2_i1.part
+  w2000 -> gpu_rows=358711 cpu_rows=18291 cpu_nnz=4.8% (target 4.8%)  w2000_2_i1.part
+  w2720 -> gpu_rows=363289 cpu_rows=13713 cpu_nnz=3.5% (target 3.5%)  w2720_2_i1.part
+[ML_Laplace] PREP DONE
+
+[trans5] vectors present, skipping octave
+[trans5] patpart w500 (2-rank, imbal 1%)...
+file : /matrices/trans5.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.160643
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 645049 [1] 121347 
+cut : 17364part vector : 0.114329
+0 : 99239 1 : 17596 
+[trans5] patpart w700 (2-rank, imbal 1%)...
+file : /matrices/trans5.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.110979
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 677302 [1] 89094 
+cut : 12815part vector : 0.128365
+0 : 103910 1 : 12925 
+[trans5] patpart w900 (2-rank, imbal 1%)...
+file : /matrices/trans5.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.113517
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 696652 [1] 69744 
+cut : 10183part vector : 0.113309
+0 : 106886 1 : 9949 
+[trans5] patpart w1000 (2-rank, imbal 1%)...
+file : /matrices/trans5.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.111924
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 703691 [1] 62705 
+cut : 9224part vector : 0.108326
+0 : 107829 1 : 9006 
+[trans5] patpart w1100 (2-rank, imbal 1%)...
+file : /matrices/trans5.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.113329
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 709553 [1] 56843 
+cut : 8286part vector : 0.102783
+0 : 108698 1 : 8137 
+[trans5] naive nnz-balance partitions...
+[trans5] reading nnz-per-row from /matrices/trans5.mtx ...
+[trans5] n=116835 stored_nnz=766396
+  w100  -> gpu_rows=42136 cpu_rows=74699 cpu_nnz=50.0% (target 50.0%)  w100_2_i1.part
+  w400  -> gpu_rows=86702 cpu_rows=30133 cpu_nnz=20.0% (target 20.0%)  w400_2_i1.part
+  w500  -> gpu_rows=91303 cpu_rows=25532 cpu_nnz=16.7% (target 16.7%)  w500_2_i1.part
+  w600  -> gpu_rows=94802 cpu_rows=22033 cpu_nnz=14.3% (target 14.3%)  w600_2_i1.part
+  w700  -> gpu_rows=97636 cpu_rows=19199 cpu_nnz=12.5% (target 12.5%)  w700_2_i1.part
+  w800  -> gpu_rows=99786 cpu_rows=17049 cpu_nnz=11.1% (target 11.1%)  w800_2_i1.part
+  w900  -> gpu_rows=101532 cpu_rows=15303 cpu_nnz=10.0% (target 10.0%)  w900_2_i1.part
+  w1000 -> gpu_rows=102933 cpu_rows=13902 cpu_nnz=9.1% (target 9.1%)  w1000_2_i1.part
+  w1100 -> gpu_rows=104113 cpu_rows=12722 cpu_nnz=8.3% (target 8.3%)  w1100_2_i1.part
+  w1200 -> gpu_rows=105064 cpu_rows=11771 cpu_nnz=7.7% (target 7.7%)  w1200_2_i1.part
+  w2000 -> gpu_rows=109453 cpu_rows=7382 cpu_nnz=4.8% (target 4.8%)  w2000_2_i1.part
+  w2720 -> gpu_rows=111276 cpu_rows=5559 cpu_nnz=3.5% (target 3.5%)  w2720_2_i1.part
+[trans5] PREP DONE
+
+[inlet] vectors present, skipping octave
+[inlet] patpart w500 (2-rank, imbal 1%)...
+file : /matrices/inlet.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.084128
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 273093 [1] 55230 
+cut : 67part vector : 0.018726
+0 : 9591 1 : 2139 
+[inlet] patpart w700 (2-rank, imbal 1%)...
+file : /matrices/inlet.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.057306
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 287557 [1] 40766 
+cut : 67part vector : 0.018972
+0 : 10143 1 : 1587 
+[inlet] patpart w900 (2-rank, imbal 1%)...
+file : /matrices/inlet.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.059286
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 296597 [1] 31726 
+cut : 67part vector : 0.018890
+0 : 10488 1 : 1242 
+[inlet] patpart w1000 (2-rank, imbal 1%)...
+file : /matrices/inlet.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.058206
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 298405 [1] 29918 
+cut : 67part vector : 0.019249
+0 : 10557 1 : 1173 
+[inlet] patpart w1100 (2-rank, imbal 1%)...
+file : /matrices/inlet.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.068540
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 302021 [1] 26302 
+cut : 67part vector : 0.019513
+0 : 10695 1 : 1035 
+[inlet] naive nnz-balance partitions...
+[inlet] reading nnz-per-row from /matrices/inlet.mtx ...
+[inlet] n=11730 stored_nnz=328323
+  w100  -> gpu_rows=5750 cpu_rows=5980 cpu_nnz=50.0% (target 50.0%)  w100_2_i1.part
+  w400  -> gpu_rows=9211 cpu_rows=2519 cpu_nnz=20.0% (target 20.0%)  w400_2_i1.part
+  w500  -> gpu_rows=9629 cpu_rows=2101 cpu_nnz=16.7% (target 16.7%)  w500_2_i1.part
+  w600  -> gpu_rows=9926 cpu_rows=1804 cpu_nnz=14.3% (target 14.3%)  w600_2_i1.part
+  w700  -> gpu_rows=10153 cpu_rows=1577 cpu_nnz=12.5% (target 12.5%)  w700_2_i1.part
+  w800  -> gpu_rows=10325 cpu_rows=1405 cpu_nnz=11.1% (target 11.1%)  w800_2_i1.part
+  w900  -> gpu_rows=10464 cpu_rows=1266 cpu_nnz=10.0% (target 10.0%)  w900_2_i1.part
+  w1000 -> gpu_rows=10579 cpu_rows=1151 cpu_nnz=9.1% (target 9.1%)  w1000_2_i1.part
+  w1100 -> gpu_rows=10672 cpu_rows=1058 cpu_nnz=8.3% (target 8.3%)  w1100_2_i1.part
+  w1200 -> gpu_rows=10752 cpu_rows=978 cpu_nnz=7.7% (target 7.7%)  w1200_2_i1.part
+  w2000 -> gpu_rows=11122 cpu_rows=608 cpu_nnz=4.8% (target 4.8%)  w2000_2_i1.part
+  w2720 -> gpu_rows=11274 cpu_rows=456 cpu_nnz=3.5% (target 3.5%)  w2720_2_i1.part
+[inlet] PREP DONE
+
+[tmt_unsym] vectors present, skipping octave
+[tmt_unsym] patpart w500 (2-rank, imbal 1%)...
+file : /matrices/tmt_unsym.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.904465
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 3820666 [1] 764135 
+cut : 1523part vector : 0.397941
+0 : 764790 1 : 153035 
+[tmt_unsym] patpart w700 (2-rank, imbal 1%)...
+file : /matrices/tmt_unsym.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.753602
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 4011691 [1] 573110 
+cut : 1277part vector : 0.396913
+0 : 803039 1 : 114786 
+[tmt_unsym] patpart w900 (2-rank, imbal 1%)...
+file : /matrices/tmt_unsym.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.755402
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 4126227 [1] 458574 
+cut : 1265part vector : 0.396747
+0 : 825982 1 : 91843 
+[tmt_unsym] patpart w1000 (2-rank, imbal 1%)...
+file : /matrices/tmt_unsym.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.752545
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 4167996 [1] 416805 
+cut : 1171part vector : 0.399650
+0 : 834349 1 : 83476 
+[tmt_unsym] patpart w1100 (2-rank, imbal 1%)...
+file : /matrices/tmt_unsym.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.756670
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 4205795 [1] 379006 
+cut : 1051part vector : 0.395952
+0 : 841914 1 : 75911 
+[tmt_unsym] naive nnz-balance partitions...
+[tmt_unsym] reading nnz-per-row from /matrices/tmt_unsym.mtx ...
+[tmt_unsym] n=917825 stored_nnz=4584801
+  w100  -> gpu_rows=458913 cpu_rows=458912 cpu_nnz=50.0% (target 50.0%)  w100_2_i1.part
+  w400  -> gpu_rows=734136 cpu_rows=183689 cpu_nnz=20.0% (target 20.0%)  w400_2_i1.part
+  w500  -> gpu_rows=764722 cpu_rows=153103 cpu_nnz=16.7% (target 16.7%)  w500_2_i1.part
+  w600  -> gpu_rows=786572 cpu_rows=131253 cpu_nnz=14.3% (target 14.3%)  w600_2_i1.part
+  w700  -> gpu_rows=802960 cpu_rows=114865 cpu_nnz=12.5% (target 12.5%)  w700_2_i1.part
+  w800  -> gpu_rows=815706 cpu_rows=102119 cpu_nnz=11.1% (target 11.1%)  w800_2_i1.part
+  w900  -> gpu_rows=825904 cpu_rows=91921 cpu_nnz=10.0% (target 10.0%)  w900_2_i1.part
+  w1000 -> gpu_rows=834249 cpu_rows=83576 cpu_nnz=9.1% (target 9.1%)  w1000_2_i1.part
+  w1100 -> gpu_rows=841203 cpu_rows=76622 cpu_nnz=8.3% (target 8.3%)  w1100_2_i1.part
+  w1200 -> gpu_rows=847088 cpu_rows=70737 cpu_nnz=7.7% (target 7.7%)  w1200_2_i1.part
+  w2000 -> gpu_rows=873994 cpu_rows=43831 cpu_nnz=4.8% (target 4.8%)  w2000_2_i1.part
+  w2720 -> gpu_rows=885161 cpu_rows=32664 cpu_nnz=3.5% (target 3.5%)  w2720_2_i1.part
+[tmt_unsym] PREP DONE
+
+[pre2] vectors present, skipping octave
+[pre2] patpart w500 (2-rank, imbal 1%)...
+file : /matrices/pre2.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.989449
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 5015687 [1] 943595 
+cut : 5792part vector : 1.245328
+0 : 550255 1 : 108778 
+[pre2] patpart w700 (2-rank, imbal 1%)...
+file : /matrices/pre2.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.862853
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 5222547 [1] 736735 
+cut : 504part vector : 1.234684
+0 : 575022 1 : 84011 
+[pre2] patpart w900 (2-rank, imbal 1%)...
+file : /matrices/pre2.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.864900
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 5357396 [1] 601886 
+cut : 1283part vector : 1.238324
+0 : 590833 1 : 68200 
+[pre2] patpart w1000 (2-rank, imbal 1%)...
+file : /matrices/pre2.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.862328
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 5459267 [1] 500015 
+cut : 982part vector : 1.239205
+0 : 602406 1 : 56627 
+[pre2] patpart w1100 (2-rank, imbal 1%)...
+file : /matrices/pre2.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.863270
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 5459326 [1] 499956 
+cut : 982part vector : 1.240619
+0 : 602433 1 : 56600 
+[pre2] naive nnz-balance partitions...
+[pre2] reading nnz-per-row from /matrices/pre2.mtx ...
+[pre2] n=659033 stored_nnz=5959282
+  w100  -> gpu_rows=328236 cpu_rows=330797 cpu_nnz=50.0% (target 50.0%)  w100_2_i1.part
+  w400  -> gpu_rows=524856 cpu_rows=134177 cpu_nnz=20.0% (target 20.0%)  w400_2_i1.part
+  w500  -> gpu_rows=546538 cpu_rows=112495 cpu_nnz=16.7% (target 16.7%)  w500_2_i1.part
+  w600  -> gpu_rows=561996 cpu_rows=97037 cpu_nnz=14.3% (target 14.3%)  w600_2_i1.part
+  w700  -> gpu_rows=574367 cpu_rows=84666 cpu_nnz=12.5% (target 12.5%)  w700_2_i1.part
+  w800  -> gpu_rows=583732 cpu_rows=75301 cpu_nnz=11.1% (target 11.1%)  w800_2_i1.part
+  w900  -> gpu_rows=591275 cpu_rows=67758 cpu_nnz=10.0% (target 10.0%)  w900_2_i1.part
+  w1000 -> gpu_rows=597363 cpu_rows=61670 cpu_nnz=9.1% (target 9.1%)  w1000_2_i1.part
+  w1100 -> gpu_rows=602485 cpu_rows=56548 cpu_nnz=8.3% (target 8.3%)  w1100_2_i1.part
+  w1200 -> gpu_rows=606817 cpu_rows=52216 cpu_nnz=7.7% (target 7.7%)  w1200_2_i1.part
+  w2000 -> gpu_rows=626624 cpu_rows=32409 cpu_nnz=4.8% (target 4.8%)  w2000_2_i1.part
+  w2720 -> gpu_rows=634839 cpu_rows=24194 cpu_nnz=3.5% (target 3.5%)  w2720_2_i1.part
+[pre2] PREP DONE
+
+[para-5] vectors present, skipping octave
+[para-5] patpart w500 (2-rank, imbal 1%)...
+file : /matrices/para-5.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.692259
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 4558540 [1] 857818 
+cut : 4156part vector : 0.526953
+0 : 132843 1 : 23081 
+[para-5] patpart w700 (2-rank, imbal 1%)...
+file : /matrices/para-5.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.670201
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 4786619 [1] 629739 
+cut : 4140part vector : 0.526111
+0 : 138883 1 : 17041 
+[para-5] patpart w900 (2-rank, imbal 1%)...
+file : /matrices/para-5.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.653374
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 4922774 [1] 493584 
+cut : 3695part vector : 0.516716
+0 : 142429 1 : 13495 
+[para-5] patpart w1000 (2-rank, imbal 1%)...
+file : /matrices/para-5.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.651299
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 4973201 [1] 443157 
+cut : 3851part vector : 0.516667
+0 : 143949 1 : 11975 
+[para-5] patpart w1100 (2-rank, imbal 1%)...
+file : /matrices/para-5.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.658150
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 5014572 [1] 401786 
+cut : 3439part vector : 0.518000
+0 : 144684 1 : 11240 
+[para-5] naive nnz-balance partitions...
+[para-5] reading nnz-per-row from /matrices/para-5.mtx ...
+[para-5] n=155924 stored_nnz=5416358
+  w100  -> gpu_rows=78855 cpu_rows=77069 cpu_nnz=50.0% (target 50.0%)  w100_2_i1.part
+  w400  -> gpu_rows=125520 cpu_rows=30404 cpu_nnz=20.0% (target 20.0%)  w400_2_i1.part
+  w500  -> gpu_rows=130688 cpu_rows=25236 cpu_nnz=16.7% (target 16.7%)  w500_2_i1.part
+  w600  -> gpu_rows=134719 cpu_rows=21205 cpu_nnz=14.3% (target 14.3%)  w600_2_i1.part
+  w700  -> gpu_rows=137539 cpu_rows=18385 cpu_nnz=12.5% (target 12.5%)  w700_2_i1.part
+  w800  -> gpu_rows=140249 cpu_rows=15675 cpu_nnz=11.1% (target 11.1%)  w800_2_i1.part
+  w900  -> gpu_rows=141970 cpu_rows=13954 cpu_nnz=10.0% (target 10.0%)  w900_2_i1.part
+  w1000 -> gpu_rows=143490 cpu_rows=12434 cpu_nnz=9.1% (target 9.1%)  w1000_2_i1.part
+  w1100 -> gpu_rows=144557 cpu_rows=11367 cpu_nnz=8.3% (target 8.3%)  w1100_2_i1.part
+  w1200 -> gpu_rows=145599 cpu_rows=10325 cpu_nnz=7.7% (target 7.7%)  w1200_2_i1.part
+  w2000 -> gpu_rows=149994 cpu_rows=5930 cpu_nnz=4.8% (target 4.8%)  w2000_2_i1.part
+  w2720 -> gpu_rows=151442 cpu_rows=4482 cpu_nnz=3.5% (target 3.5%)  w2720_2_i1.part
+[para-5] PREP DONE
+
+[largebasis] vectors present, skipping octave
+[largebasis] patpart w500 (2-rank, imbal 1%)...
+file : /matrices/largebasis.mtx part : 2 
+	****	Matrix File readed	****Reading File : 1.050507
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 4624302 [1] 935798 
+cut : 16part vector : 0.272880
+0 : 365958 1 : 74062 
+[largebasis] patpart w700 (2-rank, imbal 1%)...
+file : /matrices/largebasis.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.922449
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 4858378 [1] 701722 
+cut : 16part vector : 0.246384
+0 : 384482 1 : 55538 
+[largebasis] patpart w900 (2-rank, imbal 1%)...
+file : /matrices/largebasis.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.923130
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 4998768 [1] 561332 
+cut : 16part vector : 0.249570
+0 : 395592 1 : 44428 
+[largebasis] patpart w1000 (2-rank, imbal 1%)...
+file : /matrices/largebasis.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.918702
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 5049642 [1] 510458 
+cut : 16part vector : 0.251571
+0 : 399618 1 : 40402 
+[largebasis] patpart w1100 (2-rank, imbal 1%)...
+file : /matrices/largebasis.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.923354
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 5092176 [1] 467924 
+cut : 16part vector : 0.250960
+0 : 402984 1 : 37036 
+[largebasis] naive nnz-balance partitions...
+[largebasis] reading nnz-per-row from /matrices/largebasis.mtx ...
+[largebasis] n=440020 stored_nnz=5560100
+  w100  -> gpu_rows=201829 cpu_rows=238191 cpu_nnz=50.0% (target 50.0%)  w100_2_i1.part
+  w400  -> gpu_rows=347352 cpu_rows=92668 cpu_nnz=20.0% (target 20.0%)  w400_2_i1.part
+  w500  -> gpu_rows=362797 cpu_rows=77223 cpu_nnz=16.7% (target 16.7%)  w500_2_i1.part
+  w600  -> gpu_rows=373829 cpu_rows=66191 cpu_nnz=14.3% (target 14.3%)  w600_2_i1.part
+  w700  -> gpu_rows=382103 cpu_rows=57917 cpu_nnz=12.5% (target 12.5%)  w700_2_i1.part
+  w800  -> gpu_rows=388538 cpu_rows=51482 cpu_nnz=11.1% (target 11.1%)  w800_2_i1.part
+  w900  -> gpu_rows=393686 cpu_rows=46334 cpu_nnz=10.0% (target 10.0%)  w900_2_i1.part
+  w1000 -> gpu_rows=397899 cpu_rows=42121 cpu_nnz=9.1% (target 9.1%)  w1000_2_i1.part
+  w1100 -> gpu_rows=401409 cpu_rows=38611 cpu_nnz=8.3% (target 8.3%)  w1100_2_i1.part
+  w1200 -> gpu_rows=404379 cpu_rows=35641 cpu_nnz=7.7% (target 7.7%)  w1200_2_i1.part
+  w2000 -> gpu_rows=417957 cpu_rows=22063 cpu_nnz=4.8% (target 4.8%)  w2000_2_i1.part
+  w2720 -> gpu_rows=423590 cpu_rows=16430 cpu_nnz=3.5% (target 3.5%)  w2720_2_i1.part
+[largebasis] PREP DONE
+
+[trans4] vectors present, skipping octave
+[trans4] patpart w500 (2-rank, imbal 1%)...
+file : /matrices/trans4.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.137196
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 645049 [1] 121347 
+cut : 17364part vector : 0.113825
+0 : 99239 1 : 17596 
+[trans4] patpart w700 (2-rank, imbal 1%)...
+file : /matrices/trans4.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.113743
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 677302 [1] 89094 
+cut : 12815part vector : 0.131402
+0 : 103910 1 : 12925 
+[trans4] patpart w900 (2-rank, imbal 1%)...
+file : /matrices/trans4.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.108840
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 696652 [1] 69744 
+cut : 10183part vector : 0.115166
+0 : 106886 1 : 9949 
+[trans4] patpart w1000 (2-rank, imbal 1%)...
+file : /matrices/trans4.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.113632
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 703691 [1] 62705 
+cut : 9224part vector : 0.108425
+0 : 107829 1 : 9006 
+[trans4] patpart w1100 (2-rank, imbal 1%)...
+file : /matrices/trans4.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.108960
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 709553 [1] 56843 
+cut : 8286part vector : 0.102735
+0 : 108698 1 : 8137 
+[trans4] naive nnz-balance partitions...
+[trans4] reading nnz-per-row from /matrices/trans4.mtx ...
+[trans4] n=116835 stored_nnz=766396
+  w100  -> gpu_rows=42136 cpu_rows=74699 cpu_nnz=50.0% (target 50.0%)  w100_2_i1.part
+  w400  -> gpu_rows=86702 cpu_rows=30133 cpu_nnz=20.0% (target 20.0%)  w400_2_i1.part
+  w500  -> gpu_rows=91303 cpu_rows=25532 cpu_nnz=16.7% (target 16.7%)  w500_2_i1.part
+  w600  -> gpu_rows=94802 cpu_rows=22033 cpu_nnz=14.3% (target 14.3%)  w600_2_i1.part
+  w700  -> gpu_rows=97636 cpu_rows=19199 cpu_nnz=12.5% (target 12.5%)  w700_2_i1.part
+  w800  -> gpu_rows=99786 cpu_rows=17049 cpu_nnz=11.1% (target 11.1%)  w800_2_i1.part
+  w900  -> gpu_rows=101532 cpu_rows=15303 cpu_nnz=10.0% (target 10.0%)  w900_2_i1.part
+  w1000 -> gpu_rows=102933 cpu_rows=13902 cpu_nnz=9.1% (target 9.1%)  w1000_2_i1.part
+  w1100 -> gpu_rows=104113 cpu_rows=12722 cpu_nnz=8.3% (target 8.3%)  w1100_2_i1.part
+  w1200 -> gpu_rows=105064 cpu_rows=11771 cpu_nnz=7.7% (target 7.7%)  w1200_2_i1.part
+  w2000 -> gpu_rows=109453 cpu_rows=7382 cpu_nnz=4.8% (target 4.8%)  w2000_2_i1.part
+  w2720 -> gpu_rows=111276 cpu_rows=5559 cpu_nnz=3.5% (target 3.5%)  w2720_2_i1.part
+[trans4] PREP DONE
+
+[venkat50] vectors present, skipping octave
+[venkat50] patpart w500 (2-rank, imbal 1%)...
+file : /matrices/venkat50.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.319624
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 1431488 [1] 286304 
+cut : 552part vector : 0.082526
+0 : 52024 1 : 10400 
+[venkat50] patpart w700 (2-rank, imbal 1%)...
+file : /matrices/venkat50.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.277700
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 1516192 [1] 201600 
+cut : 424part vector : 0.083972
+0 : 55088 1 : 7336 
+[venkat50] patpart w900 (2-rank, imbal 1%)...
+file : /matrices/venkat50.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.276832
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 1561280 [1] 156512 
+cut : 476part vector : 0.084327
+0 : 56744 1 : 5680 
+[venkat50] patpart w1000 (2-rank, imbal 1%)...
+file : /matrices/venkat50.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.287570
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 1568320 [1] 149472 
+cut : 372part vector : 0.084617
+0 : 56992 1 : 5432 
+[venkat50] patpart w1100 (2-rank, imbal 1%)...
+file : /matrices/venkat50.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.280981
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 1573296 [1] 144496 
+cut : 384part vector : 0.084946
+0 : 57176 1 : 5248 
+[venkat50] naive nnz-balance partitions...
+[venkat50] reading nnz-per-row from /matrices/venkat50.mtx ...
+[venkat50] n=62424 stored_nnz=1717792
+  w100  -> gpu_rows=31211 cpu_rows=31213 cpu_nnz=50.0% (target 50.0%)  w100_2_i1.part
+  w400  -> gpu_rows=49911 cpu_rows=12513 cpu_nnz=20.0% (target 20.0%)  w400_2_i1.part
+  w500  -> gpu_rows=52004 cpu_rows=10420 cpu_nnz=16.7% (target 16.7%)  w500_2_i1.part
+  w600  -> gpu_rows=53485 cpu_rows=8939 cpu_nnz=14.3% (target 14.3%)  w600_2_i1.part
+  w700  -> gpu_rows=54604 cpu_rows=7820 cpu_nnz=12.5% (target 12.5%)  w700_2_i1.part
+  w800  -> gpu_rows=55473 cpu_rows=6951 cpu_nnz=11.1% (target 11.1%)  w800_2_i1.part
+  w900  -> gpu_rows=56172 cpu_rows=6252 cpu_nnz=10.0% (target 10.0%)  w900_2_i1.part
+  w1000 -> gpu_rows=56746 cpu_rows=5678 cpu_nnz=9.1% (target 9.1%)  w1000_2_i1.part
+  w1100 -> gpu_rows=57224 cpu_rows=5200 cpu_nnz=8.3% (target 8.3%)  w1100_2_i1.part
+  w1200 -> gpu_rows=57632 cpu_rows=4792 cpu_nnz=7.7% (target 7.7%)  w1200_2_i1.part
+  w2000 -> gpu_rows=59464 cpu_rows=2960 cpu_nnz=4.8% (target 4.8%)  w2000_2_i1.part
+  w2720 -> gpu_rows=60209 cpu_rows=2215 cpu_nnz=3.5% (target 3.5%)  w2720_2_i1.part
+[venkat50] PREP DONE
+
+[appu] vectors present, skipping octave
+[appu] patpart w500 (2-rank, imbal 1%)...
+file : /matrices/appu.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.343960
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 1543543 [1] 309561 
+cut : 13945part vector : 1.248446
+0 : 11671 1 : 2329 
+[appu] patpart w700 (2-rank, imbal 1%)...
+file : /matrices/appu.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.320942
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 1621293 [1] 231811 
+cut : 13832part vector : 1.232441
+0 : 12220 1 : 1780 
+[appu] patpart w900 (2-rank, imbal 1%)...
+file : /matrices/appu.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.317032
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 1666147 [1] 186957 
+cut : 13707part vector : 1.253258
+0 : 12536 1 : 1464 
+[appu] patpart w1000 (2-rank, imbal 1%)...
+file : /matrices/appu.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.297791
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 1689466 [1] 163638 
+cut : 13522part vector : 1.229205
+0 : 12609 1 : 1391 
+[appu] patpart w1100 (2-rank, imbal 1%)...
+file : /matrices/appu.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.323561
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 1715654 [1] 137450 
+cut : 13354part vector : 1.230987
+0 : 12842 1 : 1158 
+[appu] naive nnz-balance partitions...
+[appu] reading nnz-per-row from /matrices/appu.mtx ...
+[appu] n=14000 stored_nnz=1853104
+  w100  -> gpu_rows=7000 cpu_rows=7000 cpu_nnz=50.0% (target 50.0%)  w100_2_i1.part
+  w400  -> gpu_rows=11184 cpu_rows=2816 cpu_nnz=20.0% (target 20.0%)  w400_2_i1.part
+  w500  -> gpu_rows=11661 cpu_rows=2339 cpu_nnz=16.7% (target 16.7%)  w500_2_i1.part
+  w600  -> gpu_rows=11993 cpu_rows=2007 cpu_nnz=14.3% (target 14.3%)  w600_2_i1.part
+  w700  -> gpu_rows=12245 cpu_rows=1755 cpu_nnz=12.5% (target 12.5%)  w700_2_i1.part
+  w800  -> gpu_rows=12442 cpu_rows=1558 cpu_nnz=11.1% (target 11.1%)  w800_2_i1.part
+  w900  -> gpu_rows=12597 cpu_rows=1403 cpu_nnz=10.0% (target 10.0%)  w900_2_i1.part
+  w1000 -> gpu_rows=12722 cpu_rows=1278 cpu_nnz=9.1% (target 9.1%)  w1000_2_i1.part
+  w1100 -> gpu_rows=12823 cpu_rows=1177 cpu_nnz=8.3% (target 8.3%)  w1100_2_i1.part
+  w1200 -> gpu_rows=12916 cpu_rows=1084 cpu_nnz=7.7% (target 7.7%)  w1200_2_i1.part
+  w2000 -> gpu_rows=13330 cpu_rows=670 cpu_nnz=4.8% (target 4.8%)  w2000_2_i1.part
+  w2720 -> gpu_rows=13506 cpu_rows=494 cpu_nnz=3.5% (target 3.5%)  w2720_2_i1.part
+[appu] PREP DONE
+
+[k3plates] vectors present, skipping octave
+[k3plates] patpart w500 (2-rank, imbal 1%)...
+file : /matrices/k3plates.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.092645
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 315727 [1] 63200 
+cut : 200part vector : 0.021704
+0 : 9222 1 : 1885 
+[k3plates] patpart w700 (2-rank, imbal 1%)...
+file : /matrices/k3plates.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.063081
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 332127 [1] 46800 
+cut : 215part vector : 0.021755
+0 : 9707 1 : 1400 
+[k3plates] patpart w900 (2-rank, imbal 1%)...
+file : /matrices/k3plates.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.063765
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 341477 [1] 37450 
+cut : 215part vector : 0.021455
+0 : 9977 1 : 1130 
+[k3plates] patpart w1000 (2-rank, imbal 1%)...
+file : /matrices/k3plates.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.063898
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 344477 [1] 34450 
+cut : 225part vector : 0.021467
+0 : 10067 1 : 1040 
+[k3plates] patpart w1100 (2-rank, imbal 1%)...
+file : /matrices/k3plates.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.067522
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 348832 [1] 30095 
+cut : 245part vector : 0.021332
+0 : 10208 1 : 899 
+[k3plates] naive nnz-balance partitions...
+[k3plates] reading nnz-per-row from /matrices/k3plates.mtx ...
+[k3plates] n=11107 stored_nnz=378927
+  w100  -> gpu_rows=5566 cpu_rows=5541 cpu_nnz=50.0% (target 50.0%)  w100_2_i1.part
+  w400  -> gpu_rows=8859 cpu_rows=2248 cpu_nnz=20.0% (target 20.0%)  w400_2_i1.part
+  w500  -> gpu_rows=9229 cpu_rows=1878 cpu_nnz=16.7% (target 16.7%)  w500_2_i1.part
+  w600  -> gpu_rows=9495 cpu_rows=1612 cpu_nnz=14.3% (target 14.3%)  w600_2_i1.part
+  w700  -> gpu_rows=9694 cpu_rows=1413 cpu_nnz=12.5% (target 12.5%)  w700_2_i1.part
+  w800  -> gpu_rows=9850 cpu_rows=1257 cpu_nnz=11.1% (target 11.1%)  w800_2_i1.part
+  w900  -> gpu_rows=9977 cpu_rows=1130 cpu_nnz=10.0% (target 10.0%)  w900_2_i1.part
+  w1000 -> gpu_rows=10085 cpu_rows=1022 cpu_nnz=9.1% (target 9.1%)  w1000_2_i1.part
+  w1100 -> gpu_rows=10171 cpu_rows=936 cpu_nnz=8.3% (target 8.3%)  w1100_2_i1.part
+  w1200 -> gpu_rows=10247 cpu_rows=860 cpu_nnz=7.7% (target 7.7%)  w1200_2_i1.part
+  w2000 -> gpu_rows=10574 cpu_rows=533 cpu_nnz=4.8% (target 4.8%)  w2000_2_i1.part
+  w2720 -> gpu_rows=10708 cpu_rows=399 cpu_nnz=3.5% (target 3.5%)  w2720_2_i1.part
+[k3plates] PREP DONE
+
+[marine1] vectors present, skipping octave
+[marine1] patpart w500 (2-rank, imbal 1%)...
+file : /matrices/marine1.mtx part : 2 
+	****	Matrix File readed	****Reading File : 1.132195
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 5189348 [1] 1037190 
+cut : 1819part vector : 0.690741
+0 : 330200 1 : 70120 
+[marine1] patpart w700 (2-rank, imbal 1%)...
+file : /matrices/marine1.mtx part : 2 
+	****	Matrix File readed	****Reading File : 1.073863
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 5502696 [1] 723842 
+cut : 1868part vector : 0.683594
+0 : 350942 1 : 49378 
+[marine1] patpart w900 (2-rank, imbal 1%)...
+file : /matrices/marine1.mtx part : 2 
+	****	Matrix File readed	****Reading File : 1.074221
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 5659636 [1] 566902 
+cut : 516part vector : 0.686570
+0 : 361408 1 : 38912 
+[marine1] patpart w1000 (2-rank, imbal 1%)...
+file : /matrices/marine1.mtx part : 2 
+	****	Matrix File readed	****Reading File : 1.077308
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 5670214 [1] 556324 
+cut : 318part vector : 0.681202
+0 : 362140 1 : 38180 
+[marine1] patpart w1100 (2-rank, imbal 1%)...
+file : /matrices/marine1.mtx part : 2 
+	****	Matrix File readed	****Reading File : 1.101044
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 5764681 [1] 461857 
+cut : 767part vector : 0.763610
+0 : 368533 1 : 31787 
+[marine1] naive nnz-balance partitions...
+[marine1] reading nnz-per-row from /matrices/marine1.mtx ...
+[marine1] n=400320 stored_nnz=6226538
+  w100  -> gpu_rows=192519 cpu_rows=207801 cpu_nnz=50.0% (target 50.0%)  w100_2_i1.part
+  w400  -> gpu_rows=317146 cpu_rows=83174 cpu_nnz=20.0% (target 20.0%)  w400_2_i1.part
+  w500  -> gpu_rows=330376 cpu_rows=69944 cpu_nnz=16.7% (target 16.7%)  w500_2_i1.part
+  w600  -> gpu_rows=339867 cpu_rows=60453 cpu_nnz=14.3% (target 14.3%)  w600_2_i1.part
+  w700  -> gpu_rows=346973 cpu_rows=53347 cpu_nnz=12.5% (target 12.5%)  w700_2_i1.part
+  w800  -> gpu_rows=352593 cpu_rows=47727 cpu_nnz=11.1% (target 11.1%)  w800_2_i1.part
+  w900  -> gpu_rows=356974 cpu_rows=43346 cpu_nnz=10.0% (target 10.0%)  w900_2_i1.part
+  w1000 -> gpu_rows=360679 cpu_rows=39641 cpu_nnz=9.1% (target 9.1%)  w1000_2_i1.part
+  w1100 -> gpu_rows=363747 cpu_rows=36573 cpu_nnz=8.3% (target 8.3%)  w1100_2_i1.part
+  w1200 -> gpu_rows=366324 cpu_rows=33996 cpu_nnz=7.7% (target 7.7%)  w1200_2_i1.part
+  w2000 -> gpu_rows=378374 cpu_rows=21946 cpu_nnz=4.8% (target 4.8%)  w2000_2_i1.part
+  w2720 -> gpu_rows=383391 cpu_rows=16929 cpu_nnz=3.5% (target 3.5%)  w2720_2_i1.part
+[marine1] PREP DONE
+
+[shar_te2-b3] vectors present, skipping octave
+[shar_te2-b3] patpart w500 (2-rank, imbal 1%)...
+file : /matrices/shar_te2-b3.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.094924
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 667332 [1] 133468 
+cut : 28000part vector : 0.298499
+0 : 166833 1 : 33367 
+[shar_te2-b3] patpart w700 (2-rank, imbal 1%)...
+file : /matrices/shar_te2-b3.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.084466
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 707704 [1] 93096 
+cut : 21758part vector : 0.286555
+0 : 176926 1 : 23274 
+[shar_te2-b3] patpart w900 (2-rank, imbal 1%)...
+file : /matrices/shar_te2-b3.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.081800
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 727904 [1] 72896 
+cut : 17959part vector : 0.314152
+0 : 181976 1 : 18224 
+[shar_te2-b3] patpart w1000 (2-rank, imbal 1%)...
+file : /matrices/shar_te2-b3.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.092203
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 735264 [1] 65536 
+cut : 16710part vector : 0.315186
+0 : 183816 1 : 16384 
+[shar_te2-b3] patpart w1100 (2-rank, imbal 1%)...
+file : /matrices/shar_te2-b3.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.081821
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 741404 [1] 59396 
+cut : 16201part vector : 0.293361
+0 : 185351 1 : 14849 
+[shar_te2-b3] naive nnz-balance partitions...
+[shar_te2-b3] reading nnz-per-row from /matrices/shar_te2-b3.mtx ...
+[shar_te2-b3] n=200200 stored_nnz=800800
+  w100  -> gpu_rows=100100 cpu_rows=100100 cpu_nnz=50.0% (target 50.0%)  w100_2_i1.part
+  w400  -> gpu_rows=160160 cpu_rows=40040 cpu_nnz=20.0% (target 20.0%)  w400_2_i1.part
+  w500  -> gpu_rows=166834 cpu_rows=33366 cpu_nnz=16.7% (target 16.7%)  w500_2_i1.part
+  w600  -> gpu_rows=171600 cpu_rows=28600 cpu_nnz=14.3% (target 14.3%)  w600_2_i1.part
+  w700  -> gpu_rows=175175 cpu_rows=25025 cpu_nnz=12.5% (target 12.5%)  w700_2_i1.part
+  w800  -> gpu_rows=177956 cpu_rows=22244 cpu_nnz=11.1% (target 11.1%)  w800_2_i1.part
+  w900  -> gpu_rows=180180 cpu_rows=20020 cpu_nnz=10.0% (target 10.0%)  w900_2_i1.part
+  w1000 -> gpu_rows=182000 cpu_rows=18200 cpu_nnz=9.1% (target 9.1%)  w1000_2_i1.part
+  w1100 -> gpu_rows=183517 cpu_rows=16683 cpu_nnz=8.3% (target 8.3%)  w1100_2_i1.part
+  w1200 -> gpu_rows=184800 cpu_rows=15400 cpu_nnz=7.7% (target 7.7%)  w1200_2_i1.part
+  w2000 -> gpu_rows=190667 cpu_rows=9533 cpu_nnz=4.8% (target 4.8%)  w2000_2_i1.part
+  w2720 -> gpu_rows=193101 cpu_rows=7099 cpu_nnz=3.5% (target 3.5%)  w2720_2_i1.part
+[shar_te2-b3] PREP DONE
+
+[ss1] vectors present, skipping octave
+[ss1] patpart w500 (2-rank, imbal 1%)...
+file : /matrices/ss1.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.136494
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 706899 [1] 138190 
+cut : 1220part vector : 0.100287
+0 : 104917 1 : 100365 
+[ss1] patpart w700 (2-rank, imbal 1%)...
+file : /matrices/ss1.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.116125
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 746827 [1] 98262 
+cut : 439part vector : 0.092422
+0 : 111127 1 : 94155 
+[ss1] patpart w900 (2-rank, imbal 1%)...
+file : /matrices/ss1.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.117562
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 760580 [1] 84509 
+cut : 0part vector : 0.092720
+0 : 120773 1 : 84509 
+[ss1] patpart w1000 (2-rank, imbal 1%)...
+file : /matrices/ss1.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.114310
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 768263 [1] 76826 
+cut : 0part vector : 0.089158
+0 : 128456 1 : 76826 
+[ss1] patpart w1100 (2-rank, imbal 1%)...
+file : /matrices/ss1.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.115857
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 774665 [1] 70424 
+cut : 0part vector : 0.092508
+0 : 134858 1 : 70424 
+[ss1] naive nnz-balance partitions...
+[ss1] reading nnz-per-row from /matrices/ss1.mtx ...
+[ss1] n=205282 stored_nnz=845089
+  w100  -> gpu_rows=104833 cpu_rows=100449 cpu_nnz=50.0% (target 50.0%)  w100_2_i1.part
+  w400  -> gpu_rows=166057 cpu_rows=39225 cpu_nnz=20.0% (target 20.0%)  w400_2_i1.part
+  w500  -> gpu_rows=172857 cpu_rows=32425 cpu_nnz=16.7% (target 16.7%)  w500_2_i1.part
+  w600  -> gpu_rows=177720 cpu_rows=27562 cpu_nnz=14.3% (target 14.3%)  w600_2_i1.part
+  w700  -> gpu_rows=181362 cpu_rows=23920 cpu_nnz=12.5% (target 12.5%)  w700_2_i1.part
+  w800  -> gpu_rows=184197 cpu_rows=21085 cpu_nnz=11.1% (target 11.1%)  w800_2_i1.part
+  w900  -> gpu_rows=186465 cpu_rows=18817 cpu_nnz=10.0% (target 10.0%)  w900_2_i1.part
+  w1000 -> gpu_rows=188322 cpu_rows=16960 cpu_nnz=9.1% (target 9.1%)  w1000_2_i1.part
+  w1100 -> gpu_rows=189865 cpu_rows=15417 cpu_nnz=8.3% (target 8.3%)  w1100_2_i1.part
+  w1200 -> gpu_rows=191172 cpu_rows=14110 cpu_nnz=7.7% (target 7.7%)  w1200_2_i1.part
+  w2000 -> gpu_rows=197154 cpu_rows=8128 cpu_nnz=4.8% (target 4.8%)  w2000_2_i1.part
+  w2720 -> gpu_rows=199372 cpu_rows=5910 cpu_nnz=3.5% (target 3.5%)  w2720_2_i1.part
+[ss1] PREP DONE
+
+[venkat01] vectors present, skipping octave
+[venkat01] patpart w500 (2-rank, imbal 1%)...
+file : /matrices/venkat01.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.337965
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 1431488 [1] 286304 
+cut : 552part vector : 0.082755
+0 : 52024 1 : 10400 
+[venkat01] patpart w700 (2-rank, imbal 1%)...
+file : /matrices/venkat01.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.286370
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 1516192 [1] 201600 
+cut : 424part vector : 0.086407
+0 : 55088 1 : 7336 
+[venkat01] patpart w900 (2-rank, imbal 1%)...
+file : /matrices/venkat01.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.288236
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 1561280 [1] 156512 
+cut : 476part vector : 0.084367
+0 : 56744 1 : 5680 
+[venkat01] patpart w1000 (2-rank, imbal 1%)...
+file : /matrices/venkat01.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.277554
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 1568320 [1] 149472 
+cut : 372part vector : 0.083241
+0 : 56992 1 : 5432 
+[venkat01] patpart w1100 (2-rank, imbal 1%)...
+file : /matrices/venkat01.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.283810
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 1573296 [1] 144496 
+cut : 384part vector : 0.081399
+0 : 57176 1 : 5248 
+[venkat01] naive nnz-balance partitions...
+[venkat01] reading nnz-per-row from /matrices/venkat01.mtx ...
+[venkat01] n=62424 stored_nnz=1717792
+  w100  -> gpu_rows=31211 cpu_rows=31213 cpu_nnz=50.0% (target 50.0%)  w100_2_i1.part
+  w400  -> gpu_rows=49911 cpu_rows=12513 cpu_nnz=20.0% (target 20.0%)  w400_2_i1.part
+  w500  -> gpu_rows=52004 cpu_rows=10420 cpu_nnz=16.7% (target 16.7%)  w500_2_i1.part
+  w600  -> gpu_rows=53485 cpu_rows=8939 cpu_nnz=14.3% (target 14.3%)  w600_2_i1.part
+  w700  -> gpu_rows=54604 cpu_rows=7820 cpu_nnz=12.5% (target 12.5%)  w700_2_i1.part
+  w800  -> gpu_rows=55473 cpu_rows=6951 cpu_nnz=11.1% (target 11.1%)  w800_2_i1.part
+  w900  -> gpu_rows=56172 cpu_rows=6252 cpu_nnz=10.0% (target 10.0%)  w900_2_i1.part
+  w1000 -> gpu_rows=56746 cpu_rows=5678 cpu_nnz=9.1% (target 9.1%)  w1000_2_i1.part
+  w1100 -> gpu_rows=57224 cpu_rows=5200 cpu_nnz=8.3% (target 8.3%)  w1100_2_i1.part
+  w1200 -> gpu_rows=57632 cpu_rows=4792 cpu_nnz=7.7% (target 7.7%)  w1200_2_i1.part
+  w2000 -> gpu_rows=59464 cpu_rows=2960 cpu_nnz=4.8% (target 4.8%)  w2000_2_i1.part
+  w2720 -> gpu_rows=60209 cpu_rows=2215 cpu_nnz=3.5% (target 3.5%)  w2720_2_i1.part
+[venkat01] PREP DONE
+
+[webbase-1M] vectors present, skipping octave
+[webbase-1M] patpart w500 (2-rank, imbal 1%)...
+file : /matrices/webbase-1M.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.505668
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 2598133 [1] 507403 
+cut : 65part vector : 0.332131
+0 : 806906 1 : 193099 
+[webbase-1M] patpart w700 (2-rank, imbal 1%)...
+file : /matrices/webbase-1M.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.396614
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 2717344 [1] 388192 
+cut : 57part vector : 0.329809
+0 : 861240 1 : 138765 
+[webbase-1M] patpart w900 (2-rank, imbal 1%)...
+file : /matrices/webbase-1M.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.398399
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 2821620 [1] 283916 
+cut : 55part vector : 0.343068
+0 : 890420 1 : 109585 
+[webbase-1M] patpart w1000 (2-rank, imbal 1%)...
+file : /matrices/webbase-1M.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.400943
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 2827026 [1] 278510 
+cut : 50part vector : 0.343866
+0 : 892358 1 : 107647 
+[webbase-1M] patpart w1100 (2-rank, imbal 1%)...
+file : /matrices/webbase-1M.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.396597
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 2844870 [1] 260666 
+cut : 33part vector : 0.327553
+0 : 900690 1 : 99315 
+[webbase-1M] naive nnz-balance partitions...
+[webbase-1M] reading nnz-per-row from /matrices/webbase-1M.mtx ...
+[webbase-1M] n=1000005 stored_nnz=3105536
+  w100  -> gpu_rows=447833 cpu_rows=552172 cpu_nnz=50.0% (target 50.0%)  w100_2_i1.part
+  w400  -> gpu_rows=719204 cpu_rows=280801 cpu_nnz=20.0% (target 20.0%)  w400_2_i1.part
+  w500  -> gpu_rows=767204 cpu_rows=232801 cpu_nnz=16.7% (target 16.7%)  w500_2_i1.part
+  w600  -> gpu_rows=799319 cpu_rows=200686 cpu_nnz=14.3% (target 14.3%)  w600_2_i1.part
+  w700  -> gpu_rows=822341 cpu_rows=177664 cpu_nnz=12.5% (target 12.5%)  w700_2_i1.part
+  w800  -> gpu_rows=838613 cpu_rows=161392 cpu_nnz=11.1% (target 11.1%)  w800_2_i1.part
+  w900  -> gpu_rows=854788 cpu_rows=145217 cpu_nnz=10.0% (target 10.0%)  w900_2_i1.part
+  w1000 -> gpu_rows=867202 cpu_rows=132803 cpu_nnz=9.1% (target 9.1%)  w1000_2_i1.part
+  w1100 -> gpu_rows=877647 cpu_rows=122358 cpu_nnz=8.3% (target 8.3%)  w1100_2_i1.part
+  w1200 -> gpu_rows=886961 cpu_rows=113044 cpu_nnz=7.7% (target 7.7%)  w1200_2_i1.part
+  w2000 -> gpu_rows=928607 cpu_rows=71398 cpu_nnz=4.8% (target 4.8%)  w2000_2_i1.part
+  w2720 -> gpu_rows=946333 cpu_rows=53672 cpu_nnz=3.5% (target 3.5%)  w2720_2_i1.part
+[webbase-1M] PREP DONE
+
+[poli4] vectors present, skipping octave
+[poli4] patpart w500 (2-rank, imbal 1%)...
+file : /matrices/poli4.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.028021
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 60969 [1] 12280 
+cut : 31part vector : 0.012263
+0 : 27845 1 : 5988 
+[poli4] patpart w700 (2-rank, imbal 1%)...
+file : /matrices/poli4.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.008181
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 64090 [1] 9159 
+cut : 25part vector : 0.011986
+0 : 29331 1 : 4502 
+[poli4] patpart w900 (2-rank, imbal 1%)...
+file : /matrices/poli4.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.014705
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 65923 [1] 7326 
+cut : 15part vector : 0.014592
+0 : 30225 1 : 3608 
+[poli4] patpart w1000 (2-rank, imbal 1%)...
+file : /matrices/poli4.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.008258
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 66589 [1] 6660 
+cut : 12part vector : 0.011893
+0 : 30546 1 : 3287 
+[poli4] patpart w1100 (2-rank, imbal 1%)...
+file : /matrices/poli4.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.018236
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 67144 [1] 6105 
+cut : 11part vector : 0.011788
+0 : 30817 1 : 3016 
+[poli4] naive nnz-balance partitions...
+[poli4] reading nnz-per-row from /matrices/poli4.mtx ...
+[poli4] n=33833 stored_nnz=73249
+  w100  -> gpu_rows=5517 cpu_rows=28316 cpu_nnz=50.0% (target 50.0%)  w100_2_i1.part
+  w400  -> gpu_rows=19184 cpu_rows=14649 cpu_nnz=20.0% (target 20.0%)  w400_2_i1.part
+  w500  -> gpu_rows=21625 cpu_rows=12208 cpu_nnz=16.7% (target 16.7%)  w500_2_i1.part
+  w600  -> gpu_rows=23369 cpu_rows=10464 cpu_nnz=14.3% (target 14.3%)  w600_2_i1.part
+  w700  -> gpu_rows=24677 cpu_rows=9156 cpu_nnz=12.5% (target 12.5%)  w700_2_i1.part
+  w800  -> gpu_rows=25695 cpu_rows=8138 cpu_nnz=11.1% (target 11.1%)  w800_2_i1.part
+  w900  -> gpu_rows=26509 cpu_rows=7324 cpu_nnz=10.0% (target 10.0%)  w900_2_i1.part
+  w1000 -> gpu_rows=27174 cpu_rows=6659 cpu_nnz=9.1% (target 9.1%)  w1000_2_i1.part
+  w1100 -> gpu_rows=27729 cpu_rows=6104 cpu_nnz=8.3% (target 8.3%)  w1100_2_i1.part
+  w1200 -> gpu_rows=28199 cpu_rows=5634 cpu_nnz=7.7% (target 7.7%)  w1200_2_i1.part
+  w2000 -> gpu_rows=30345 cpu_rows=3488 cpu_nnz=4.8% (target 4.8%)  w2000_2_i1.part
+  w2720 -> gpu_rows=31236 cpu_rows=2597 cpu_nnz=3.5% (target 3.5%)  w2720_2_i1.part
+[poli4] PREP DONE
+
+[coupled] vectors present, skipping octave
+[coupled] patpart w500 (2-rank, imbal 1%)...
+file : /matrices/coupled.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.033795
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 82922 [1] 15601 
+cut : 811part vector : 0.020877
+0 : 9440 1 : 1901 
+[coupled] patpart w700 (2-rank, imbal 1%)...
+file : /matrices/coupled.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.022703
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 87069 [1] 11454 
+cut : 599part vector : 0.020390
+0 : 9917 1 : 1424 
+[coupled] patpart w900 (2-rank, imbal 1%)...
+file : /matrices/coupled.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.019833
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 89557 [1] 8966 
+cut : 484part vector : 0.019746
+0 : 10232 1 : 1109 
+[coupled] patpart w1000 (2-rank, imbal 1%)...
+file : /matrices/coupled.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.020653
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 90398 [1] 8125 
+cut : 451part vector : 0.019862
+0 : 10321 1 : 1020 
+[coupled] patpart w1100 (2-rank, imbal 1%)...
+file : /matrices/coupled.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.019271
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 91213 [1] 7310 
+cut : 421part vector : 0.019960
+0 : 10422 1 : 919 
+[coupled] naive nnz-balance partitions...
+[coupled] reading nnz-per-row from /matrices/coupled.mtx ...
+[coupled] n=11341 stored_nnz=98523
+  w100  -> gpu_rows=5825 cpu_rows=5516 cpu_nnz=50.0% (target 50.0%)  w100_2_i1.part
+  w400  -> gpu_rows=9363 cpu_rows=1978 cpu_nnz=20.0% (target 20.0%)  w400_2_i1.part
+  w500  -> gpu_rows=9790 cpu_rows=1551 cpu_nnz=16.7% (target 16.7%)  w500_2_i1.part
+  w600  -> gpu_rows=10017 cpu_rows=1324 cpu_nnz=11.4% (target 14.3%)  w600_2_i1.part
+  w700  -> gpu_rows=10017 cpu_rows=1324 cpu_nnz=11.4% (target 12.5%)  w700_2_i1.part
+  w800  -> gpu_rows=10040 cpu_rows=1301 cpu_nnz=11.1% (target 11.1%)  w800_2_i1.part
+  w900  -> gpu_rows=10159 cpu_rows=1182 cpu_nnz=10.0% (target 10.0%)  w900_2_i1.part
+  w1000 -> gpu_rows=10272 cpu_rows=1069 cpu_nnz=9.1% (target 9.1%)  w1000_2_i1.part
+  w1100 -> gpu_rows=10367 cpu_rows=974 cpu_nnz=8.3% (target 8.3%)  w1100_2_i1.part
+  w1200 -> gpu_rows=10448 cpu_rows=893 cpu_nnz=7.7% (target 7.7%)  w1200_2_i1.part
+  w2000 -> gpu_rows=10791 cpu_rows=550 cpu_nnz=4.7% (target 4.8%)  w2000_2_i1.part
+  w2720 -> gpu_rows=10934 cpu_rows=407 cpu_nnz=3.5% (target 3.5%)  w2720_2_i1.part
+[coupled] PREP DONE
+
+[Ill_Stokes] vectors present, skipping octave
+[Ill_Stokes] patpart w500 (2-rank, imbal 1%)...
+file : /matrices/Ill_Stokes.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.038409
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 160619 [1] 30749 
+cut : 627part vector : 0.026484
+0 : 17402 1 : 3494 
+[Ill_Stokes] patpart w700 (2-rank, imbal 1%)...
+file : /matrices/Ill_Stokes.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.028746
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 168497 [1] 22871 
+cut : 632part vector : 0.025203
+0 : 18316 1 : 2580 
+[Ill_Stokes] patpart w900 (2-rank, imbal 1%)...
+file : /matrices/Ill_Stokes.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.030361
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 173943 [1] 17425 
+cut : 506part vector : 0.024953
+0 : 18879 1 : 2017 
+[Ill_Stokes] patpart w1000 (2-rank, imbal 1%)...
+file : /matrices/Ill_Stokes.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.028735
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 175119 [1] 16249 
+cut : 536part vector : 0.024806
+0 : 19076 1 : 1820 
+[Ill_Stokes] patpart w1100 (2-rank, imbal 1%)...
+file : /matrices/Ill_Stokes.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.029860
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 177139 [1] 14229 
+cut : 470part vector : 0.024684
+0 : 19276 1 : 1620 
+[Ill_Stokes] naive nnz-balance partitions...
+[Ill_Stokes] reading nnz-per-row from /matrices/Ill_Stokes.mtx ...
+[Ill_Stokes] n=20896 stored_nnz=191368
+  w100  -> gpu_rows=11385 cpu_rows=9511 cpu_nnz=50.0% (target 50.0%)  w100_2_i1.part
+  w400  -> gpu_rows=17526 cpu_rows=3370 cpu_nnz=20.0% (target 20.0%)  w400_2_i1.part
+  w500  -> gpu_rows=18081 cpu_rows=2815 cpu_nnz=16.7% (target 16.7%)  w500_2_i1.part
+  w600  -> gpu_rows=18482 cpu_rows=2414 cpu_nnz=14.3% (target 14.3%)  w600_2_i1.part
+  w700  -> gpu_rows=18785 cpu_rows=2111 cpu_nnz=12.5% (target 12.5%)  w700_2_i1.part
+  w800  -> gpu_rows=19019 cpu_rows=1877 cpu_nnz=11.1% (target 11.1%)  w800_2_i1.part
+  w900  -> gpu_rows=19204 cpu_rows=1692 cpu_nnz=10.0% (target 10.0%)  w900_2_i1.part
+  w1000 -> gpu_rows=19358 cpu_rows=1538 cpu_nnz=9.1% (target 9.1%)  w1000_2_i1.part
+  w1100 -> gpu_rows=19483 cpu_rows=1413 cpu_nnz=8.3% (target 8.3%)  w1100_2_i1.part
+  w1200 -> gpu_rows=19589 cpu_rows=1307 cpu_nnz=7.7% (target 7.7%)  w1200_2_i1.part
+  w2000 -> gpu_rows=20089 cpu_rows=807 cpu_nnz=4.8% (target 4.8%)  w2000_2_i1.part
+  w2720 -> gpu_rows=20293 cpu_rows=603 cpu_nnz=3.5% (target 3.5%)  w2720_2_i1.part
+[Ill_Stokes] PREP DONE
+
+[bayer02] vectors present, skipping octave
+[bayer02] patpart w500 (2-rank, imbal 1%)...
+file : /matrices/bayer02.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.027542
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 53595 [1] 10084 
+cut : 79part vector : 0.004952
+0 : 11668 1 : 2267 
+[bayer02] patpart w700 (2-rank, imbal 1%)...
+file : /matrices/bayer02.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.013012
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 55781 [1] 7898 
+cut : 27part vector : 0.008600
+0 : 12188 1 : 1747 
+[bayer02] patpart w900 (2-rank, imbal 1%)...
+file : /matrices/bayer02.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.012744
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 57309 [1] 6370 
+cut : 28part vector : 0.004864
+0 : 12526 1 : 1409 
+[bayer02] patpart w1000 (2-rank, imbal 1%)...
+file : /matrices/bayer02.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.010560
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 58465 [1] 5214 
+cut : 91part vector : 0.004774
+0 : 12722 1 : 1213 
+[bayer02] patpart w1100 (2-rank, imbal 1%)...
+file : /matrices/bayer02.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.012614
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 58955 [1] 4724 
+cut : 71part vector : 0.005144
+0 : 12851 1 : 1084 
+[bayer02] naive nnz-balance partitions...
+[bayer02] reading nnz-per-row from /matrices/bayer02.mtx ...
+[bayer02] n=13935 stored_nnz=63679
+  w100  -> gpu_rows=6939 cpu_rows=6996 cpu_nnz=50.0% (target 50.0%)  w100_2_i1.part
+  w400  -> gpu_rows=11117 cpu_rows=2818 cpu_nnz=20.0% (target 20.0%)  w400_2_i1.part
+  w500  -> gpu_rows=11644 cpu_rows=2291 cpu_nnz=16.7% (target 16.7%)  w500_2_i1.part
+  w600  -> gpu_rows=11944 cpu_rows=1991 cpu_nnz=14.3% (target 14.3%)  w600_2_i1.part
+  w700  -> gpu_rows=12187 cpu_rows=1748 cpu_nnz=12.5% (target 12.5%)  w700_2_i1.part
+  w800  -> gpu_rows=12386 cpu_rows=1549 cpu_nnz=11.1% (target 11.1%)  w800_2_i1.part
+  w900  -> gpu_rows=12542 cpu_rows=1393 cpu_nnz=10.0% (target 10.0%)  w900_2_i1.part
+  w1000 -> gpu_rows=12666 cpu_rows=1269 cpu_nnz=9.1% (target 9.1%)  w1000_2_i1.part
+  w1100 -> gpu_rows=12761 cpu_rows=1174 cpu_nnz=8.3% (target 8.3%)  w1100_2_i1.part
+  w1200 -> gpu_rows=12848 cpu_rows=1087 cpu_nnz=7.7% (target 7.7%)  w1200_2_i1.part
+  w2000 -> gpu_rows=13264 cpu_rows=671 cpu_nnz=4.8% (target 4.8%)  w2000_2_i1.part
+  w2720 -> gpu_rows=13434 cpu_rows=501 cpu_nnz=3.5% (target 3.5%)  w2720_2_i1.part
+[bayer02] PREP DONE
+
+[wang3] vectors present, skipping octave
+[wang3] patpart w500 (2-rank, imbal 1%)...
+file : /matrices/wang3.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.031568
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 147633 [1] 29535 
+cut : 1053part vector : 0.024181
+0 : 21663 1 : 4401 
+[wang3] patpart w700 (2-rank, imbal 1%)...
+file : /matrices/wang3.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.024250
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 155040 [1] 22128 
+cut : 763part vector : 0.021471
+0 : 22764 1 : 3300 
+[wang3] patpart w900 (2-rank, imbal 1%)...
+file : /matrices/wang3.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.027038
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 159685 [1] 17483 
+cut : 676part vector : 0.021241
+0 : 23451 1 : 2613 
+[wang3] patpart w1000 (2-rank, imbal 1%)...
+file : /matrices/wang3.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.024549
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 161055 [1] 16113 
+cut : 658part vector : 0.021373
+0 : 23656 1 : 2408 
+[wang3] patpart w1100 (2-rank, imbal 1%)...
+file : /matrices/wang3.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.023135
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 162653 [1] 14515 
+cut : 583part vector : 0.020605
+0 : 23894 1 : 2170 
+[wang3] naive nnz-balance partitions...
+[wang3] reading nnz-per-row from /matrices/wang3.mtx ...
+[wang3] n=26064 stored_nnz=177168
+  w100  -> gpu_rows=13032 cpu_rows=13032 cpu_nnz=50.0% (target 50.0%)  w100_2_i1.part
+  w400  -> gpu_rows=20776 cpu_rows=5288 cpu_nnz=20.0% (target 20.0%)  w400_2_i1.part
+  w500  -> gpu_rows=21637 cpu_rows=4427 cpu_nnz=16.7% (target 16.7%)  w500_2_i1.part
+  w600  -> gpu_rows=22245 cpu_rows=3819 cpu_nnz=14.3% (target 14.3%)  w600_2_i1.part
+  w700  -> gpu_rows=22710 cpu_rows=3354 cpu_nnz=12.5% (target 12.5%)  w700_2_i1.part
+  w800  -> gpu_rows=23065 cpu_rows=2999 cpu_nnz=11.1% (target 11.1%)  w800_2_i1.part
+  w900  -> gpu_rows=23349 cpu_rows=2715 cpu_nnz=10.0% (target 10.0%)  w900_2_i1.part
+  w1000 -> gpu_rows=23590 cpu_rows=2474 cpu_nnz=9.1% (target 9.1%)  w1000_2_i1.part
+  w1100 -> gpu_rows=23783 cpu_rows=2281 cpu_nnz=8.3% (target 8.3%)  w1100_2_i1.part
+  w1200 -> gpu_rows=23947 cpu_rows=2117 cpu_nnz=7.7% (target 7.7%)  w1200_2_i1.part
+  w2000 -> gpu_rows=24710 cpu_rows=1354 cpu_nnz=4.8% (target 4.8%)  w2000_2_i1.part
+  w2720 -> gpu_rows=25020 cpu_rows=1044 cpu_nnz=3.5% (target 3.5%)  w2720_2_i1.part
+[wang3] PREP DONE
+
+[powersim] vectors present, skipping octave
+[powersim] patpart w500 (2-rank, imbal 1%)...
+file : /matrices/powersim.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.020707
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 56865 [1] 10697 
+cut : 22part vector : 0.004321
+0 : 13359 1 : 2479 
+[powersim] patpart w700 (2-rank, imbal 1%)...
+file : /matrices/powersim.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.013340
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 59697 [1] 7865 
+cut : 20part vector : 0.004696
+0 : 14017 1 : 1821 
+[powersim] patpart w900 (2-rank, imbal 1%)...
+file : /matrices/powersim.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.012370
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 61133 [1] 6429 
+cut : 15part vector : 0.004432
+0 : 14362 1 : 1476 
+[powersim] patpart w1000 (2-rank, imbal 1%)...
+file : /matrices/powersim.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.011308
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 61388 [1] 6174 
+cut : 15part vector : 0.004415
+0 : 14435 1 : 1403 
+[powersim] patpart w1100 (2-rank, imbal 1%)...
+file : /matrices/powersim.mtx part : 2 
+	****	Matrix File readed	****Reading File : 0.012181
+---------------------------------------------------------------------
+PATOH PARAMS: final_imbal=0.010000, seed=1, nparts=2
+[0] 62506 [1] 5056 
+cut : 18part vector : 0.004532
+0 : 14670 1 : 1168 
+[powersim] naive nnz-balance partitions...
+[powersim] reading nnz-per-row from /matrices/powersim.mtx ...
+[powersim] n=15838 stored_nnz=67562
+  w100  -> gpu_rows=10593 cpu_rows=5245 cpu_nnz=50.0% (target 50.0%)  w100_2_i1.part
+  w400  -> gpu_rows=14568 cpu_rows=1270 cpu_nnz=20.0% (target 20.0%)  w400_2_i1.part
+  w500  -> gpu_rows=14849 cpu_rows=989 cpu_nnz=16.7% (target 16.7%)  w500_2_i1.part
+  w600  -> gpu_rows=15051 cpu_rows=787 cpu_nnz=14.3% (target 14.3%)  w600_2_i1.part
+  w700  -> gpu_rows=15196 cpu_rows=642 cpu_nnz=12.5% (target 12.5%)  w700_2_i1.part
+  w800  -> gpu_rows=15289 cpu_rows=549 cpu_nnz=11.1% (target 11.1%)  w800_2_i1.part
+  w900  -> gpu_rows=15364 cpu_rows=474 cpu_nnz=10.0% (target 10.0%)  w900_2_i1.part
+  w1000 -> gpu_rows=15426 cpu_rows=412 cpu_nnz=9.1% (target 9.1%)  w1000_2_i1.part
+  w1100 -> gpu_rows=15470 cpu_rows=368 cpu_nnz=8.3% (target 8.3%)  w1100_2_i1.part
+  w1200 -> gpu_rows=15506 cpu_rows=332 cpu_nnz=7.7% (target 7.7%)  w1200_2_i1.part
+  w2000 -> gpu_rows=15659 cpu_rows=179 cpu_nnz=4.8% (target 4.8%)  w2000_2_i1.part
+  w2720 -> gpu_rows=15714 cpu_rows=124 cpu_nnz=3.5% (target 3.5%)  w2720_2_i1.part
+[powersim] PREP DONE
+
+
+================ EXPANSION PREP DONE Sat Jun 27 23:51:11 +03 2026 ================

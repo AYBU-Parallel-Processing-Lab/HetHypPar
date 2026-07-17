@@ -13,6 +13,7 @@
 #include "hhp_cuda.h"
 #include "hhp_cpu.h"
 #include "hhp_util.h"
+#include "hhp_prof.h"
 
 #include <cuda_runtime_api.h>    // cudaMalloc, cudaMemcpy, etc.
 #include <cusparse.h> 
@@ -251,45 +252,62 @@ int main(int argc, char* argv[]) {  // matrix file ve part vector
 //-------------------------------------------------------------------------------------------------------
     Iter_Profile *iprof = calloc(niters, sizeof(Iter_Profile));
 
+    // Unified profiling (env HHP_PROF: 1=stderr summary, 2=+per-iter TSV). Runs
+    // alongside the existing PROFILE_ITER/PROFILE_ACCUM lines (untouched, still
+    // consumed by parse_benchmark_results.py). CPU/MPI: no device sync (NULL). For
+    // MPI the PF_DOT bucket includes each distributed dot's MPI_Allreduce.
+    Prof g_P; prof_init(&g_P, niters, NULL, NULL);
+    prof_set_preprocess(&g_P, omp_get_wtime() - time_stamps.begin);
+
     time_stamps.spmxv_begin = omp_get_wtime();
 
     for (size_t i = 0; i < niters; i++)
     {
         SpMV_Profile sp = {0};
         double t_vec0 = omp_get_wtime();
+        prof_tick(&g_P);
 
         // calc rho_n+1
         double temp_rho = MPI_vector_dot(R, R_0, MPI_COMM_WORLD);
         double beta = (temp_rho / rho) * (alpha / omega);
         rho = temp_rho;
+        prof_lap(&g_P, PF_DOT);
         // calc P_n+1
         vector_scale_seq(V, omega, V);
         vector_sub_seq(P, V, P);
         vector_scale_seq(P, beta, P);
         vector_add_seq(P, R, P);
+        prof_lap(&g_P, PF_VECOPS);
 
         double t_spmv0 = omp_get_wtime();
         MPI_SHARD_CSC_mpi_spmxv_seq(A, P, V, MPI_COMM_WORLD, &sp);
         double t_spmv1 = omp_get_wtime();
+        prof_lap(&g_P, PF_SPMV);
 
         // calc alpha, S
         alpha = rho/MPI_vector_dot(R_0, V, MPI_COMM_WORLD);
+        prof_lap(&g_P, PF_DOT);
         vector_scale_seq(V, alpha, S);
         vector_sub_seq(R, S, S);
+        prof_lap(&g_P, PF_VECOPS);
 
         double t_spmv2 = omp_get_wtime();
         MPI_SHARD_CSC_mpi_spmxv_seq(A, S, T, MPI_COMM_WORLD, &sp);
         double t_spmv3 = omp_get_wtime();
+        prof_lap(&g_P, PF_SPMV);
 
         // calc omega, X, R, tol
         omega = MPI_vector_dot(T, S,MPI_COMM_WORLD)/MPI_vector_dot(T, T,MPI_COMM_WORLD);
+        prof_lap(&g_P, PF_DOT);
         vector_scale_seq(P, alpha, Y);
         vector_add_seq(X, Y, X);
         vector_scale_seq(S, omega, Y);
         vector_add_seq(X, Y, X);
         vector_scale_seq(T, omega, R);
         vector_sub_seq(S, R, R);
+        prof_lap(&g_P, PF_VECOPS);
         double tol = MPI_vector_dot(S, S,MPI_COMM_WORLD);
+        prof_lap(&g_P, PF_DOT);
 
         double t_vec1 = omp_get_wtime();
 
@@ -297,6 +315,7 @@ int main(int argc, char* argv[]) {  // matrix file ve part vector
         iprof[i].spmv = spmv_total;
         iprof[i].vector_ops = (t_vec1 - t_vec0) - spmv_total;
         iprof[i].spmv_detail = sp;
+        prof_iter_end(&g_P);
     }
 
     time_stamps.spmxv_end = omp_get_wtime();
@@ -356,7 +375,15 @@ int main(int argc, char* argv[]) {  // matrix file ve part vector
             mpi_rank, acc_spmv, acc_vecops,
             acc.send_fill, acc.local_spmv, acc.comm_wait, acc.shared_spmv, acc.send_wait);
     }
-    free(iprof);   
+    free(iprof);
+
+    // Unified hhp_prof report (per-rank label so per-iteration TSVs don't collide).
+    {
+        char solver_label[32];
+        snprintf(solver_label, sizeof(solver_label), "mpi-r%d", mpi_rank);
+        prof_report(&g_P, solver_label, arguments.input_matrix);
+        prof_free(&g_P);
+    }
 
 //-------------------------------------------------------------------------------------------------------
 

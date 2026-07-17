@@ -10,3 +10,6 @@
 /data/circuit5M_dc/*
 /data/temporary/*
 /octave-workspace
+# Python bytecode
+__pycache__/
+*.pyc

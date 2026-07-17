@@ -12,6 +12,7 @@
 #include "hhp_util.h"
 #include "hhp_dp_kernels.h"
 #include "hhp_dp_helpers.h"
+#include "hhp_prof.h"
 
 #include <cuda_runtime_api.h>
 #include <cuda_runtime.h>
@@ -74,6 +75,9 @@ static error_t parse_opt(int key, char *arg, struct argp_state *state) {
     }
     return 0;
 }
+
+// prof_sync callback: sync the compute stream so async work lands in its section.
+static void prof_sync_stream(void *s) { cudaStreamSynchronize((cudaStream_t)s); }
 
 static char doc[] = "Hybrid GPU+CPU BiCGStab (no MPI) with device-pointer-mode dots";
 static char args_doc[] = "";
@@ -285,51 +289,68 @@ int main(int argc, char *argv[]) {
     double *d_tt      = dscalar(0.0);
     double *d_tol     = dscalar(0.0);
 
+    // Optional detailed profiling (env HHP_PROF: 1=stderr summary, 2=+per-iter TSV).
+    Prof PROF; prof_init(&PROF, niters, prof_sync_stream, (void *)compute_s);
+    prof_set_preprocess(&PROF, t_read1 - t_begin);
+
     double t_loop0 = omp_get_wtime();
     CHECK_CUBLAS(cublasSetPointerMode(bh, CUBLAS_POINTER_MODE_DEVICE))
 
     for (int it = 0; it < niters; it++) {
+        prof_tick(&PROF);
         // rho_new = R . R_0 ; beta = (rho_new/rho)*(alpha/omega) ; rho = rho_new
         CHECK_CUBLAS(cublasDdot(bh, n, R.vals, 1, R_0.vals, 1, d_rho_new))
+        prof_lap(&PROF, PF_DOT);
         hhp_dp_update_beta(d_beta, d_rho, d_rho_new, d_alpha, d_omega, compute_s);
 
         // P = (P - omega*V)*beta + R   (uses OLD omega) -- one fused kernel
         hhp_dp_vecop_P(P.vals, V.vals, R.vals, d_omega, d_beta, n, compute_s);
+        prof_lap(&PROF, PF_VECOPS);
 
         // V = A * P  (overlapped hybrid SpMV)
         CHECK_CUSPARSE(hybrid_spmv(ch, dAgpu.desc, P.desc, V_gpu_desc, Acpu,
                                    P, pin_input, V, pin_cpu_out,
                                    n_gpu, n_cpu, n, compute_s, copy_s,
                                    in_ready_event, scatter_done_event, spmv_buf))
+        prof_lap(&PROF, PF_SPMV);
 
         // rv = R_0 . V ; alpha = rho/rv ; neg_a = -alpha
         CHECK_CUBLAS(cublasDdot(bh, n, R_0.vals, 1, V.vals, 1, d_rv))
+        prof_lap(&PROF, PF_DOT);
         hhp_dp_update_alpha(d_alpha, d_neg_a, d_rho, d_rv, compute_s);
 
         // S = R - alpha*V   -- one fused kernel
         hhp_dp_vecop_S(S.vals, R.vals, V.vals, d_neg_a, n, compute_s);
+        prof_lap(&PROF, PF_VECOPS);
 
         // T = A * S  (overlapped hybrid SpMV)
         CHECK_CUSPARSE(hybrid_spmv(ch, dAgpu.desc, S.desc, T_gpu_desc, Acpu,
                                    S, pin_input, T, pin_cpu_out,
                                    n_gpu, n_cpu, n, compute_s, copy_s,
                                    in_ready_event, scatter_done_event, spmv_buf))
+        prof_lap(&PROF, PF_SPMV);
 
         // ts = T.S ; tt = T.T ; omega = ts/tt ; neg_w = -omega
         CHECK_CUBLAS(cublasDdot(bh, n, T.vals, 1, S.vals, 1, d_ts))
         CHECK_CUBLAS(cublasDdot(bh, n, T.vals, 1, T.vals, 1, d_tt))
+        prof_lap(&PROF, PF_DOT);
         hhp_dp_update_omega(d_omega, d_neg_w, d_ts, d_tt, compute_s);
 
         // X += alpha*P + omega*S ; R = S - omega*T   -- one fused kernel
         hhp_dp_vecop_XR(X.vals, R.vals, P.vals, S.vals, T.vals, d_alpha, d_omega, d_neg_w, n, compute_s);
+        prof_lap(&PROF, PF_VECOPS);
 
         // tol = S.S  (parity with reference; result unused)
         CHECK_CUBLAS(cublasDdot(bh, n, S.vals, 1, S.vals, 1, d_tol))
+        prof_lap(&PROF, PF_DOT);
+        prof_iter_end(&PROF);
     }
 
     CHECK_CUBLAS(cublasSetPointerMode(bh, CUBLAS_POINTER_MODE_HOST))
     cudaDeviceSynchronize();
     double t_loop1 = omp_get_wtime();
+    prof_report(&PROF, "hybrid-async-dp", arguments.input_matrix);
+    prof_free(&PROF);
 
     // --- Final relative residual: ||A*X - B|| / ||B|| ---
     CHECK_CUSPARSE(hybrid_spmv(ch, dAgpu.desc, X.desc, Y_gpu_desc, Acpu,

@@ -1,0 +1,9 @@
+
+	****	Matrix File readed	****Matrix name : /home/bugra/Workspace/C/HetHypPar_rewrite/data/matrices/cage12_1c_3g/cage12_1c_3g.mtx
+n_iters : 200 
+spmv : 0.243252 
+file_read : 1.255957 
+relative_residual : 2.519555E-16
+everything_total : 1.652653
+
+----------------------------------------------------------------------

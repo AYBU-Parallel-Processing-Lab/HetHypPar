@@ -21,6 +21,9 @@ cmake -S src -B build -G "Ninja"
 # Build all targets
 cmake --build build
 
+# Build one target (fast iteration when editing a single solver)
+cmake --build build --target bicgstab-hybrid-async-dp
+
 # Run tests
 cd build && ctest
 ```
@@ -45,7 +48,7 @@ MPI+GPU variant also accepts: `-g <is_gpu_file>`
 Beyond the 4 base solvers, the build has dp (cuBLAS device-pointer-mode dots), pipelined (Cools & Vanroose 2017), and hybrid (CPU+GPU split) families: `bicgstab-gpu-dp`, `bicgstab-gpu-pipelined`, `bicgstab-hybrid-async-dp` (SpMV split, dots stay on GPU), `bicgstab-hybrid-dist-dp` (fully distributed), `bicgstab-hybrid-dist-pipelined`. Hybrid variants take `-p <part>` and `-g <is_gpu>` like the MPI solvers.
 
 - **Key perf finding:** distribute the SpMV but keep dots GPU-resident. `hybrid-async-dp` ≈ 1.3× over `bicgstab-gpu`; distributing the dots too (`dist-dp` ≈ 1.1×) costs more CPU↔GPU sync than it saves; pipelining loses single-node (<1.0×) — it only pays multi-node. See `docs/dot-product-profiling.md`, `docs/ca-sgd-relation.md`.
-- **Env vars** (dp/pipelined solvers): `HHP_REPLACE=k` = residual-replacement period (recompute true residual every k iters; needed for pipelined accuracy), `HHP_PROF=1` = per-section wall-time breakdown to stderr.
+- **Env vars** (dp/pipelined solvers): `HHP_REPLACE=k` = residual-replacement period (recompute true residual every k iters; needed for pipelined accuracy). `HHP_PROF` = unified profiling (see below).
 - **Hybrid OMP threads:** tune `OMP_NUM_THREADS` to 1–4 — the default (24) is pathological for the small CPU row-slices.
 
 ## Solver Output Format
@@ -82,7 +85,8 @@ To run MPI solvers locally (fewer cores than ranks): `mpirun --oversubscribe -bi
 - **Weight file parsing:** Count ranks via `.read_text().split()`, not line count — some weight files lack a trailing newline, so `wc -l` undercounts.
 - **Vector file format:** `vector_read` reads raw whitespace-separated floats with NO header line. Generators must be header-less (`process_matrixi.m`, `prepare_spmv_input.m` use bare `dlmwrite` — correct). Note: `setup_n_block_diag.py` writes a `<rows> 1` header that `vector_read` misreads as data (latent bug; fine for timing-only tests where residual is ignored).
 - **Locale / benchmark parsing:** solver stdout prints decimals with the locale separator (e.g. `spmv : 0,947686` with a comma), which breaks `awk` numeric compares and bash `printf`. Always run benchmark loops with `LC_ALL=C` so decimals are dots.
-- **Rendering docs/*.svg:** no system SVG renderer; install one into the octave env (`micromamba run -n octave pip install cairosvg`) then `cairosvg.svg2png(...)` to preview/verify diagram layout.
+- **octave env extras:** `pyarrow` (zstd parquet), `matplotlib`, and `cairosvg` are pip-installed into the `octave` micromamba env for the benchmark analysis/plot scripts (`cairosvg.svg2png(...)` to preview docs/*.svg). `micromamba` is a binary on PATH even in detached tmux.
+- **Octave `mmread` fails on `integer`-field `.mtx`** (e.g. `atmosmodm`) — `process_matrixi.m` errors out. Select `real`-field matrices for benchmarks.
 - **Commits:** do NOT add any AI/Claude attribution or `Co-Authored-By` trailer to commit messages (project convention).
 
 ## Known Issues & Fixes
@@ -90,6 +94,7 @@ To run MPI solvers locally (fewer cores than ranks): `mpirun --oversubscribe -bi
 - **MPI send buffer use-after-free (fixed):** `internal_setup_communication` in `hhp_matrix.c` had a send buffer freed before `MPI_Isend` completed. Fixed by tracking send requests and calling `MPI_Waitall` before freeing. See commit `0814a13`.
 - **"Vector of size 0" from cutsize-0 partitions (fixed):** `internal_setup_communication` called `ivector_init(result->shr.n)` unconditionally — crashes when `shr.n == 0` (no shared columns). Fixed by guarding the allocation. GPU path also needed guards around `device_csc_create`/`device_vector_init`/`device_buffer_spmv_create` for empty shared matrices (`bicgstab_mpi_gpu.c`, `hhp_cuda.c`).
 - **"Vector of size 0" from zero-row partitions (open):** Remaining failures across matrices like `std1_Jac2_db`, `shyy161`, `ex35`. Caused by partitions that assign zero rows to a rank. The solver should either reject these partitions at startup or handle empty ranks gracefully.
+- **`patpart` segfaults on matrices >~2.1M rows (workaround in place):** `CalcPartVec` in the patpart source (`~/Workspace/C/HetHypPar/src/partition.c`) uses a stack VLA `int nweights[n]` that overflows the 8 MB stack. Raise the child stack before calling it — `prep_big_matrix.py` sets `RLIMIT_STACK`=1 GiB; manually `ulimit -s 262144`.
 
 ## SpMV-Only Benchmarking
 
@@ -108,6 +113,23 @@ micromamba run -n octave octave --no-gui --eval "addpath('tools/scripts'); prepa
 
 ## Profiling
 
+### Unified `HHP_PROF` profiling (`hhp_prof.h`/`.c`)
+
+All 12 BiCGStab solvers share one optional profiler (`src/util/hhp_prof.c`, built into `inner_lib`). Off by default — every `prof_tick`/`prof_lap` early-returns, so a normal run has zero overhead. Env `HHP_PROF`:
+- unset/`0` → off
+- `1` → per-section wall-time summary to **stderr** (`spmv`/`dot`/`vecops`/`comm`/`allreduce`/`sync`, with total_s, µs/iter, %loop, plus a one-off `preprocess` time)
+- `2` → also dumps a per-iteration TSV to `data/prof/<solver>__<matrix>.tsv` (one row per iteration, one column per section)
+
+Device-agnostic: GPU solvers pass a sync callback (`cudaStreamSynchronize(compute_s)` for stream solvers, `cudaDeviceSynchronize()` for default-stream ones); CPU/MPI pass `NULL`. Sections are attributed via `prof_tick` (arm) + `prof_lap(&P, PF_*)` (attribute+re-arm) at region boundaries, `prof_iter_end` per iteration, `prof_report(&P, "<solver>", matrix_path)` at the end. **Profiling perturbs the absolute loop time** (it inserts syncs) — take the headline `spmv`/speedup number from a clean `HHP_PROF`-unset run; the bucket *ratios* stay faithful.
+
+- **MPI solvers** (`mpi`, `mpi-gpu`, `mpi-gpu-mt`, `mpi-gpu-pipelined`): report per-rank with a rank-suffixed label (`mpi-r0`, `mpi-gpu-r1`, …) so per-iteration TSVs don't collide, and their existing `PROFILE_ITER`/`PROFILE_ACCUM` stdout lines are **untouched** (still consumed by `parse_benchmark_results.py`). For distributed dots the `dot` bucket includes each `MPI_Allreduce`; `mpi-gpu-pipelined` has an explicit `PF_ALLREDUCE` bucket around its `MPI_Iallreduce` regions.
+- **`gpu` and `hybrid-async`** additionally keep their legacy `PROFILE_*` stdout lines (now driven from the same `Prof` accumulators) — the old `HHP_PROFILE` env name is gone; use `HHP_PROF`.
+- **`hybrid-dist-dp`/`hybrid-dist-pipelined`**: the `sync` bucket (`PF_SYNC`) isolates the mapped-host spin-wait CPU↔GPU rendezvous — the extra cost of distributing the reduction (tiny for pipelined, ~10% for `dist-dp`).
+- **Profiler var naming:** several solvers declare a `Device_Vector P`, so the `Prof` struct must be named `PROF` (gpu-dp, hybrid-async-dp) or file-static `g_P` — never `P`, or it shadows the vector and the build fails cryptically.
+- **`bicgstab_gpu.c` has TWO BiCGStab implementations:** an unused reference `gpu_BiCGStab()` function (never called) and the *actual* solver as an inline loop in `main()`. Instrument/edit the loop in `main()`, not the dead function.
+
+### Legacy MPI SpMV profiling structs
+
 `SpMV_Profile` and `Iter_Profile` structs defined in `hhp_common.h`. Both MPI SpMV functions (`hhp_cpu.c`, `hhp_cuda.c`) accept an optional `SpMV_Profile *prof` parameter (NULL skips profiling). GPU path uses `cudaDeviceSynchronize()` before timing boundaries only when `prof != NULL`.
 
 Solver output includes `PROFILE_ITER` (per-rank per-iteration) and `PROFILE_ACCUM` (per-rank totals) lines. `parse_benchmark_results.py` extracts these into per-rank accumulated columns (`r0_spmv`, `r1_comm_wait`, etc.) and a `profile_iterations` JSON column.
@@ -116,6 +138,7 @@ Solver output includes `PROFILE_ITER` (per-rank per-iteration) and `PROFILE_ACCU
 - **The top-level `spmv` column is rank 0's loop time only**, not a max across ranks. For the slower rank's perspective, use per-rank profile fields.
 - `tools/python/plot_profile_boxplots.py` generates per-component box plots normalized to single-GPU per-iteration baseline.
 - **Don't run `nsys` on the spin-wait solvers** (dp/dist/pipelined use a mapped-host `while(*flag<seq){}` busy-loop) — it hangs and piles up stuck processes. Use `HHP_PROF=1` for their section timings instead.
+- **The top-level `spmv` line is the full solver LOOP time, not the isolated SpMV.** For SpMV-isolated timing (e.g. partition-quality comparison) use `spmv-hybrid-async` (reports `hybrid_per_iter`); a ones-vector (`X_init.txt`) suffices since only timing matters (its `max_abs_err` is then meaningless).
 
 ## Error Checking Macros
 
@@ -261,6 +284,16 @@ There are two independent benchmark pipelines — do not confuse them:
 
 - `tools/python/gpu_matrix_partition.py` — Hierarchical GPU/CPU partitioner using PaToH directly. Designed to do a two-step partition (GPU vs CPU, then P-core vs E-core) but is not currently functional.
 - `tools/notebook/kahypar.py` and `tools/notebook/kahypar-gpu.ipynb` — mt-KaHyPar-based partitioning. Abandoned because KaHyPar does not support heterogeneous partitioning with different block weights.
+
+## Large-Matrix Hybrid Benchmark Suite
+
+Pipeline for the GPU+CPU hybrid study (50+ SuiteSparse matrices). Run long sweeps under **tmux** (survives SSH/VPN drops), output `tee`'d to a logfile.
+
+- `survey_matrices.py`/`select_matrices.py` — pool survey (`data/matrix_survey.tsv`) + stratified selection.
+- `prep_big_matrix.py [--patoh-only]` — vectors + **2-rank** PaToH (`in/part/gpu-cpu/`) + naive nnz-balance (`in/part/gpu-cpu-naive/`, via `gen_naive_partition.py`, the cut-blind baseline). Both compared at the same weight.
+- `big_benchmark_sweep.py` (full solver; `WEIGHTS`/`SOLVERS`/`PARTSRCS`/`OUT` env) and `spmv_patoh_sweep.py` (isolated SpMV) → TSVs.
+- `results_to_parquet.py` (zstd parquet; `PARQ`/`SUMMARY_OUT` env on analysis scripts), `big_benchmark_summary.py`, `perf_profile.py` (Dolan-Moré profiles), `weight_runtime_plot.py`, `matrix_features.py`.
+- **Findings** (`docs/big-benchmark-findings.md`): `hybrid-async-dp` wins most, `gpu-dp` (no CPU) wins ~1/3; **matrix density (nnz/row) predicts if the CPU split helps** (threshold ~8-10, Spearman 0.91); **PaToH ≈ naive** — not worth it for the 2-way split.
 
 ## Multi-Rank Benchmark Configurations
 

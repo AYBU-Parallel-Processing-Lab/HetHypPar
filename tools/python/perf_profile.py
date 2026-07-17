@@ -26,8 +26,9 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 from matplotlib.ticker import FixedLocator, FuncFormatter, NullLocator
 
+import os
 ROOT = Path(__file__).resolve().parent.parent.parent
-PARQ = ROOT / "data/big_benchmark/results.parquet"
+PARQ = Path(os.environ.get("PARQ", ROOT / "data/big_benchmark/results.parquet"))
 DOCS = ROOT / "docs"
 
 # competitive solvers (cpu/mpi are ~10x slower and would blow out the x-axis)
