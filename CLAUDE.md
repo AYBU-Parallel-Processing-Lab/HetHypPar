@@ -295,6 +295,10 @@ Pipeline for the GPU+CPU hybrid study (50+ SuiteSparse matrices). Run long sweep
 - `results_to_parquet.py` (zstd parquet; `PARQ`/`SUMMARY_OUT` env on analysis scripts), `big_benchmark_summary.py`, `perf_profile.py` (Dolan-Moré profiles), `weight_runtime_plot.py`, `matrix_features.py`.
 - **Findings** (`docs/big-benchmark-findings.md`): `hybrid-async-dp` wins most, `gpu-dp` (no CPU) wins ~1/3; **matrix density (nnz/row) predicts if the CPU split helps** (threshold ~8-10, Spearman 0.91); **PaToH ≈ naive** — not worth it for the 2-way split.
 
+## Running on TRUBA (multi-node HPC)
+
+`docs/truba-hpc-guide.md` — connecting, storage/quota rules, module system, queue selection (`orfoz` for CPU-only MPI scaling, `akya-cuda` for multi-node MPI+GPU hybrid), and SLURM templates (`tools/slurm/`). Local `/matrices/` tops out at 111M nnz (finishes in ~1s) — too small to exercise real multi-node communication cost; the guide identifies larger matrices (up to 6.7B nnz) pulled directly from `sparse.tamu.edu` via `tools/scripts/fetch_suitesparse_matrix.sh`.
+
 ## Multi-Rank Benchmark Configurations
 
 The number of MPI ranks is determined by the **weight file** (one line per rank) → **partition file** (one partition ID per rank) chain. Rankfile and is_gpu file must match.
