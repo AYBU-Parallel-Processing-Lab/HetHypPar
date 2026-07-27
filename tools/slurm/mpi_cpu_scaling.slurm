@@ -22,7 +22,14 @@ set -euo pipefail
 cd /arf/scratch/"$USER"/HetHypPar   # EDIT: path to your checked-out repo on scratch
 
 module purge
-module load <openmpi-version>       # EDIT: from `avci openmpi` for your account
+# No CUDA here (orfoz has no GPU), but the binary is still dynamically linked
+# against MKL + iomp5 (find_package(MKL) is unconditional in src/CMakeLists.txt,
+# even for the CPU-only targets) -- oneapi must be loaded at RUNTIME too, not
+# just when you built it, or the loader can't find libmkl_intel_lp64.so etc.
+# Verified against `avci openmpi`/`avci` output on this account (2026-07-27).
+module load comp/gcc/12.3.0
+module load lib/openmpi/5.0.4
+module load comp/oneapi/2024
 
 export OMP_NUM_THREADS=112          # 1 rank/node here, so the full core count is correct
                                      # (CLAUDE.md's "tune down to 1-4" warning is for the

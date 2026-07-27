@@ -23,8 +23,15 @@ set -euo pipefail
 cd /arf/scratch/"$USER"/HetHypPar   # EDIT: path to your checked-out repo on scratch
 
 module purge
-module load <openmpi-version>       # EDIT: from `avci openmpi` for your account
-module load <cuda-version>          # EDIT: from `avci cuda` for your account
+# Verified against `avci` output on this account (2026-07-27). Order: compiler,
+# CUDA, the CUDA-aware OpenMPI build matching that CUDA version, then oneapi
+# last (MKL/iomp5 -- CMakeLists needs it even alongside CUDA). Swap to the
+# 13.0 pair if the V100 driver on akya-cuda rejects CUDA 12.4 at runtime.
+module load comp/gcc/12.3.0
+module load lib/cuda/12.4
+module load lib/openmpi/5.0.4-cuda-12.4
+module load comp/oneapi/2024
+# module load lib/cuda/13.0 lib/openmpi/5.0.10-cuda-13.0   # alternate pairing
 
 export OMP_NUM_THREADS=2            # CLAUDE.md: keep this 1-4 for hybrid solvers -- the
                                      # default core count is pathological for the small

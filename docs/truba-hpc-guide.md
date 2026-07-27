@@ -103,13 +103,41 @@ highlighting):
 avci gcc
 avci openmpi
 avci cuda
-avci mkl        # Intel MKL ships inside the `oneapi` module, per the docs' MPI example
+avci mkl        # returns nothing directly -- MKL ships inside comp/oneapi/*
 avci octave     # check whether Octave is available before assuming you need conda
 ```
-`module load lib/openmpi/<version>` and a bare `oneapi` module both appear as
-worked examples in the TRUBA docs (giving you OpenMPI and Intel's MKL/compiler
-stack respectively) — but the **exact version strings are per-account/per-year
-and not something to guess**; run `avci` yourself and pick current ones.
+**Confirmed on this account (2026-07-27)** — there is no bare `mkl` module;
+MKL (`mkl_intel_lp64`/`mkl_intel_thread`/`mkl_core`) and `iomp5` come from
+`comp/oneapi/{2022,2023,2024}`, which `src/CMakeLists.txt`'s
+`find_package(MKL REQUIRED)` needs regardless of whether you're also building
+CUDA targets. NVHPC (`comp/nvhpc/nvhpc-23.11`/`25.3`) looks like an
+all-in-one CUDA+MPI+compiler stack but does **not** substitute for this — it
+doesn't provide Intel MKL, which this project links unconditionally.
+
+Working module set for a GPU build (`akya-cuda`, V100):
+```bash
+module purge
+module load comp/gcc/12.3.0
+module load lib/cuda/12.4
+module load lib/openmpi/5.0.4-cuda-12.4    # CUDA-aware build, paired with the CUDA version above
+module load comp/oneapi/2024                # MKL + iomp5 -- load last
+```
+For CPU-only builds/runs (`orfoz`, no GPU) drop the two CUDA lines — but
+**keep `comp/oneapi/2024` loaded even there**: MKL is linked unconditionally,
+so a CPU-only binary still needs `libmkl_intel_lp64.so`/`libiomp5.so`
+resolvable at runtime, not just at build time. An alternate CUDA/MPI pairing
+exists if 12.4 has driver issues on the older V100 nodes:
+`lib/cuda/13.0` + `lib/openmpi/5.0.10-cuda-13.0`.
+
+Because `comp/oneapi/*` and `comp/gcc/*` can both land `cc`/`gcc` on `PATH`,
+don't rely on load order to pick the compiler — pass it explicitly:
+```bash
+cmake -S src -B build -G Ninja -DCMAKE_C_COMPILER=$(command -v gcc) -DCMAKE_CUDA_ARCHITECTURES=70
+```
+and sanity-check after loading modules, before trusting a build:
+```bash
+which gcc mpicc nvcc; echo "MKLROOT=$MKLROOT"
+```
 
 CUDA architecture flag — same gotcha as the local RTX 3070 (`CMAKE_CUDA_ARCHITECTURES`
 defaulting wrong causes an in-loop JIT compile that wrecks the timing):
@@ -121,13 +149,8 @@ defaulting wrong causes an in-loop JIT compile that wrecks the timing):
 | A100 (palamut-cuda) | Ampere | `80` |
 | H100 / H200 (kolyoz-cuda) | Hopper | `90` |
 
-```bash
-module purge
-module load <gcc-version> <openmpi-version> <cuda-version> <oneapi-or-mkl-version>   # fill in from `avci`
-cmake -S src -B build -G Ninja -DCMAKE_CUDA_ARCHITECTURES=70   # match the queue you'll run on
-cmake --build build
-```
-Do this inside a `debug` interactive session (§5), never on the login node.
+Do the module load + cmake configure/build from the recipe above inside a
+`debug` interactive session (§5), never on the login node.
 
 ## 5. Interactive / debug testing
 
