@@ -4,6 +4,8 @@
 /compile_commands.json
 /data/matrices/*
 /data/weights/*
+!/data/weights/
+!/data/weights/**
 /data/cage13/*
 /data/logs*
 /data/result*
